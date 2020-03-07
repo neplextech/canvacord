@@ -78,7 +78,7 @@ client.login("Your_Bot_Token_here");
 ```
 
 # Preview
-![image](screenshot.png)
+![image](https://raw.githubusercontent.com/INEX07/canvacord/master/screenshot.png)
 
 # Discord
 **[https://discord.gg/AHdaSqr](https://discord.gg/AHdaSqr)**
