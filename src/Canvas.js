@@ -1,6 +1,5 @@
 const Canvas = require("canvas");
 const jimp = require("jimp");
-const CanvaError = require("./CanvaError");
 const GIFEncoder = require("gifencoder");
 
 class Canvacord {
@@ -12,8 +11,8 @@ class Canvacord {
      * @returns <Buffer>
      */
     async batslap(image1, image2) {
-        if (!image1) new CanvaError("first image was not provided!");
-        if (!image2) new CanvaError("second image was not provided!");
+        if (!image1) throw new Error("first image was not provided!");
+        if (!image2) throw new Error("second image was not provided!");
         let base = await jimp.read(__dirname+"/assets/batslap.png");
         image1 = await jimp.read(image1);
         image2 = await jimp.read(image2);
@@ -35,7 +34,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async beautiful(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         let base = await jimp.read(__dirname +"/assets/beautiful.png");
         base.resize(376, 400);
         let img = await jimp.read(image);
@@ -55,7 +54,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async facepalm(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         let canvas = Canvas.createCanvas(632, 357);
         let ctx = canvas.getContext("2d");
         ctx.fillStyle = "black";
@@ -73,7 +72,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async gay(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         let bg = await Canvas.loadImage(__dirname +"/assets/gay.png");
         let img = await Canvas.loadImage(image);
         const canvas = Canvas.createCanvas(400, 400);
@@ -90,8 +89,8 @@ class Canvacord {
      * @returns <Buffer>
      */
     async kiss(image1, image2) {
-        if (!image1) new CanvaError("first image was not provided!");
-        if (!image2) new CanvaError("second image was not provided!");
+        if (!image1) throw new Error("first image was not provided!");
+        if (!image2) throw new Error("second image was not provided!");
         const canvas = Canvas.createCanvas(768, 574);
         const ctx = canvas.getContext("2d");
         const background = await Canvas.loadImage(__dirname +"/assets/kiss.png");
@@ -109,7 +108,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async rip(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         const canvas = Canvas.createCanvas(244, 253);
         const ctx = canvas.getContext("2d");
         const background = await Canvas.loadImage(__dirname +"/assets/rip.png");
@@ -126,8 +125,8 @@ class Canvacord {
      * @returns <Buffer>
      */
     async spank(image1, image2) {
-        if (!image1) new CanvaError("first image was not provided!");
-        if (!image2) new CanvaError("second image was not provided!");
+        if (!image1) throw new Error("first image was not provided!");
+        if (!image2) throw new Error("second image was not provided!");
         let bg = await jimp.read(__dirname +"/assets/spank.png");
         image1 = await jimp.read(image1);
         image2 = await jimp.read(image2);
@@ -149,7 +148,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async trash(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         let bg = await jimp.read(__dirname +"/assets/trash.png");
         image = await jimp.read(image);
         image.resize(309, 309);
@@ -169,7 +168,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async blur(image, level = 5) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         image = await jimp.read(image);
         image.blur(isNaN(level) ? 5 : parseInt(level));
         let raw;
@@ -185,7 +184,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async greyscale(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         image = await jimp.read(image);
         image.greyscale();
         let raw;
@@ -201,7 +200,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async sepia(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         image = await jimp.read(image);
         image.sepia();
         let raw;
@@ -217,7 +216,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async invert(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         image = await jimp.read(image);
         image.invert();
         let raw;
@@ -233,7 +232,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async delete(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         let bg = await jimp.read(__dirname + "/assets/delete.png");
         image = await jimp.read(image);
         image.resize(195, 195);
@@ -264,7 +263,7 @@ class Canvacord {
      * @returns <Buffer>
      */
     async trigger(image) {
-        if (!image) new CanvaError("image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         const base = await Canvas.loadImage(__dirname +"/assets/triggered.png");
         const img = await Canvas.loadImage(image);
         const GIF = new GIFEncoder(256, 310)
