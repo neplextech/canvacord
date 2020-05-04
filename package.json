@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "0.0.3",
+  "version": "1.0.0",
   "description": "Simple & easy to use image manipulation module.",
   "main": "index.js",
   "scripts": {
@@ -8,14 +8,16 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/INEX07/Canvacord"
+    "url": "https://github.com/Snowflake107/Canvacord"
   },
   "keywords": [
     "Canvacord",
     "discord-canvas",
-    "discord.js-canvas"
+    "discord.js-canvas",
+    "discord.js-image",
+    "memes"
   ],
-  "author": "INEX07",
+  "author": "Snowflake7",
   "license": "ISC",
   "dependencies": {
     "canvas": "^2.6.1",
