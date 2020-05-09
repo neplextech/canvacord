@@ -285,7 +285,24 @@ class Canvacord {
         GIF.finish();
         return GIF.out.getData();
     }
-
+    
+    /**
+     * hitler
+     * @param {Image} image Image
+     * @returns <Buffer>
+     */
+    async hitler(image) {
+        if (!image) throw new Error("Image was not provided!");
+        let bg = await jimp.read(__dirname + "/assets/hitler.png");
+        let img = await jimp.read(image);
+        img.resize(140, 140);
+        bg.composite(image, 46, 46);
+        let raw;
+        bg.getBuffer("image/png", (err, buffer) => {
+            raw = buffer;
+        });
+        return raw;
+    }
 }
 
 module.exports = Canvacord;
