@@ -22,6 +22,6 @@
   "dependencies": {
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
-    "jimp": "^0.9.5"
+    "jimp": "^0.10.3"
   }
 }
