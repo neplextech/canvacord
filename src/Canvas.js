@@ -303,6 +303,32 @@ class Canvacord {
         });
         return raw;
     }
+    
+    /**
+     * bed
+     * @param {image1} image1 first image
+     * @param {image2} image2 second image
+     * @returns <Buffer>
+     */
+    async bed(image1, image2) {
+        if (!image1) throw new Error("first image was not provided!");
+        if (!image2) throw new Error("second image was not provided!");
+        let bg = await jimp.read(__dirname +"/assets/bed.png");
+        image1 = await jimp.read(image1);
+        image2 = await jimp.read(image2);
+        image1.resize(100, 100);
+        image2.resize(70, 70);
+        let image3 = image1.clone().resize(70, 70);
+        bg.composite(image1, 25, 100);
+        bg.composite(image1, 25, 300);
+        bg.composite(image3, 53, 450);
+        bg.composite(image2, 53, 575);
+        let raw;
+        bg.getBuffer("image/png", (err, buffer) => {
+            raw = buffer;
+        });
+        return raw;
+    }
 }
 
 module.exports = Canvacord;
