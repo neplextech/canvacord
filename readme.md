@@ -23,6 +23,8 @@ npm i --save canvacord
 - delete(image)
 - color(color_hex_or_html5_color_name)
 - trigger(image)
+- hitler(image)
+- bed(image1, image2)
 
 # Example
 
@@ -78,7 +80,7 @@ client.login("Your_Bot_Token_here");
 ```
 
 # Preview
-![image](https://raw.githubusercontent.com/INEX07/canvacord/master/screenshot.png)
+![image](https://raw.githubusercontent.com/Snowflake107/canvacord/master/screenshot.png)
 
-# Discord
-**[Click Here](https://discord.gg/uqB8kxh)**
+# Join Our Discord Server
+**[discord.gg/uqB8kxh](https://discord.gg/uqB8kxh)**
