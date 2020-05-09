@@ -296,7 +296,7 @@ class Canvacord {
         let bg = await jimp.read(__dirname + "/assets/hitler.png");
         let img = await jimp.read(image);
         img.resize(140, 140);
-        bg.composite(image, 46, 46);
+        bg.composite(img, 46, 43);
         let raw;
         bg.getBuffer("image/png", (err, buffer) => {
             raw = buffer;
