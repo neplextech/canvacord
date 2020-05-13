@@ -368,6 +368,25 @@ class Canvacord {
         });
         return raw;
     }
+    
+    /**
+     * jail
+     * @param {image} Image
+     * @returns <Buffer>
+     */
+    async jail(image) {
+        if (!image) throw new Error("no image provided!");
+        let base = await jimp.read(__dirname + "/assets/jail.png");
+        base.resize(350, 350);
+        let img = await jimp.read(image);
+        img.resize(350, 350);
+        base.composite(img, 0, 0);
+        let raw;
+        base.getBuffer("image/png", (err, buffer) => {
+            raw = buffer;
+        });
+        return raw;
+    }
 }
 
 module.exports = Canvacord;
