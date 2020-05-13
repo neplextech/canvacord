@@ -25,6 +25,7 @@ npm i --save canvacord
 - trigger(image)
 - hitler(image)
 - bed(image1, image2)
+- wanted(image)
 
 # Example
 
