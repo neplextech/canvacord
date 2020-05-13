@@ -329,6 +329,24 @@ class Canvacord {
         });
         return raw;
     }
+    
+    /**
+     * wanted
+     * @param {image} Image
+     * @returns <Buffer>
+     */
+    async wanted(image) {
+        if (!image) throw new Error("no image provided!");
+        let base = await jimp.read(__dirname + "/assets/wanted.png");
+        let img = await jimp.read(image);
+        img.resize(447, 447);
+        base.composite(img, 145, 282);
+        let raw;
+        bg.getBuffer("image/png", (err, buffer) => {
+            raw = buffer;
+        });
+        return raw;
+    }
 }
 
 module.exports = Canvacord;
