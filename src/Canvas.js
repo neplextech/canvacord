@@ -1,6 +1,11 @@
 const Canvas = require("canvas");
 const jimp = require("jimp");
 const GIFEncoder = require("gifencoder");
+const circle = require('@jimp/plugin-circle')
+const configure = require('@jimp/custom')
+
+// load custom plugins
+configure({ plugins: [circle] }, jimp);
 
 class Canvacord {
 
@@ -343,6 +348,22 @@ class Canvacord {
         base.composite(img, 145, 282);
         let raw;
         base.getBuffer("image/png", (err, buffer) => {
+            raw = buffer;
+        });
+        return raw;
+    }
+
+    /**
+     * circle
+     * @param {Image} image Image
+     * @returns <Buffer>
+     */
+    async circle(image) {
+        if (!image) throw new Error("image was not provided!");
+        image = await jimp.read(image);
+        image.circle();
+        let raw;
+        image.getBuffer("image/png", (err, buffer) => {
             raw = buffer;
         });
         return raw;
