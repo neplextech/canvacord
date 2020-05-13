@@ -342,7 +342,7 @@ class Canvacord {
         img.resize(447, 447);
         base.composite(img, 145, 282);
         let raw;
-        bg.getBuffer("image/png", (err, buffer) => {
+        base.getBuffer("image/png", (err, buffer) => {
             raw = buffer;
         });
         return raw;
