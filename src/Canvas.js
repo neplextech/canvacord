@@ -380,7 +380,7 @@ class Canvacord {
         base.resize(350, 350);
         let img = await jimp.read(image);
         img.resize(350, 350);
-        base.composite(img, 0, 0);
+        img.composite(base, 0, 0);
         let raw;
         base.getBuffer("image/png", (err, buffer) => {
             raw = buffer;
