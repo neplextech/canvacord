@@ -26,6 +26,7 @@ npm i --save canvacord
 - hitler(image)
 - bed(image1, image2)
 - wanted(image)
+- circle(image)
 
 # Example
 
