@@ -400,7 +400,6 @@ class Canvacord {
         let base = await jimp.read(__dirname + "/assets/affect.png");
         let img = await jimp.read(image);
         img.resize(200, 157);
-        img.crop(0,0,380,540);
         base.composite(img, 180, 383);
         let raw;
         base.getBuffer("image/png", (err, buffer) => {
