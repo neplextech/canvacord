@@ -368,6 +368,8 @@ class Canvacord {
         });
         return raw;
     }
+
+    // Beta endpoints
     
     /**
      * jail
@@ -381,6 +383,25 @@ class Canvacord {
         let img = await jimp.read(image);
         img.resize(350, 350);
         img.composite(base, 0, 0);
+        let raw;
+        base.getBuffer("image/png", (err, buffer) => {
+            raw = buffer;
+        });
+        return raw;
+    }
+
+    /**
+     * affect
+     * @param {image} Image
+     * @returns <Buffer>
+     */
+    async affect(image) {
+        if (!image) throw new Error("no image provided!");
+        let base = await jimp.read(__dirname + "/assets/affect.png");
+        let img = await jimp.read(image);
+        img.resize(200, 157);
+        img.crop(0,0,380,540);
+        base.composite(img, 180, 383);
         let raw;
         base.getBuffer("image/png", (err, buffer) => {
             raw = buffer;
