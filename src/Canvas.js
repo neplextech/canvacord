@@ -1,8 +1,9 @@
 const Canvas = require("canvas");
 const jimp = require("jimp");
 const GIFEncoder = require("gifencoder");
-const circle = require('@jimp/plugin-circle')
-const configure = require('@jimp/custom')
+const circle = require('@jimp/plugin-circle');
+const configure = require('@jimp/custom');
+const NEKO = "https://nekobot.xyz/api/imagegen?type";
 
 // load custom plugins
 configure({ plugins: [circle] }, jimp);
@@ -359,6 +360,20 @@ class Canvacord {
         let img = await jimp.read(image);
         img.resize(200, 157);
         base.composite(img, 180, 383);
+        let raw = await base.getBufferAsync("image/png");
+        return raw;
+    }
+
+
+   // External apis
+   /**
+     * clyde
+     * @param {string} Text
+     * @returns <Buffer>
+     */
+    async clyde(text) {
+        if (!text) throw new Error("no text provided!");
+        let base = await jimp.read(`${NEKO}=clyde&text=${text}`);
         let raw = await base.getBufferAsync("image/png");
         return raw;
     }
