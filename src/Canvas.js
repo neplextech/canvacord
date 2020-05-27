@@ -377,6 +377,18 @@ class Canvacord {
         let raw = await base.getBufferAsync("image/png");
         return raw;
     }
+
+    /**
+     * blurple
+     * @param {image} image
+     * @returns <Buffer>
+     */
+    async blurple(image) {
+        if (!image) throw new Error("no image provided!");
+        let base = await jimp.read(`${NEKO}=blurpify&image=${image}`);
+        let raw = await base.getBufferAsync("image/png");
+        return raw;
+    }
 }
 
 module.exports = Canvacord;
