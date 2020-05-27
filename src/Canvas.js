@@ -26,10 +26,7 @@ class Canvacord {
         image2.resize(200, 200);
         base.composite(image2, 580, 260);
         base.composite(image1, 350, 70);
-        let raw;
-        base.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -46,10 +43,7 @@ class Canvacord {
         img.resize(84, 95);
         base.composite(img, 258, 28);
         base.composite(img, 258, 229);
-        let raw;
-        base.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -140,10 +134,7 @@ class Canvacord {
         image2.resize(120, 120);
         bg.composite(image2, 350, 220);
         bg.composite(image1, 225, 5);
-        let raw;
-        bg.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -159,10 +150,7 @@ class Canvacord {
         image.resize(309, 309);
         image.blur(5);
         bg.composite(image, 309, 0);
-        let raw;
-        bg.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -176,10 +164,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         image = await jimp.read(image);
         image.blur(isNaN(level) ? 5 : parseInt(level));
-        let raw;
-        image.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -192,10 +177,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         image = await jimp.read(image);
         image.greyscale();
-        let raw;
-        image.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -208,10 +190,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         image = await jimp.read(image);
         image.sepia();
-        let raw;
-        image.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -224,10 +203,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         image = await jimp.read(image);
         image.invert();
-        let raw;
-        image.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -242,10 +218,7 @@ class Canvacord {
         image = await jimp.read(image);
         image.resize(195, 195);
         bg.composite(image, 120, 135);
-        let raw;
-        bg.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -302,10 +275,7 @@ class Canvacord {
         let img = await jimp.read(image);
         img.resize(140, 140);
         bg.composite(img, 46, 43);
-        let raw;
-        bg.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
     
@@ -328,10 +298,7 @@ class Canvacord {
         bg.composite(image1, 25, 300);
         bg.composite(image3, 53, 450);
         bg.composite(image2, 53, 575);
-        let raw;
-        bg.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
     
@@ -346,10 +313,7 @@ class Canvacord {
         let img = await jimp.read(image);
         img.resize(447, 447);
         base.composite(img, 145, 282);
-        let raw;
-        base.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -362,10 +326,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         image = await jimp.read(image);
         image.circle();
-        let raw;
-        image.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -383,10 +344,7 @@ class Canvacord {
         let img = await jimp.read(image);
         img.resize(350, 350);
         img.composite(base, 0, 0);
-        let raw;
-        base.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 
@@ -401,10 +359,7 @@ class Canvacord {
         let img = await jimp.read(image);
         img.resize(200, 157);
         base.composite(img, 180, 383);
-        let raw;
-        base.getBuffer("image/png", (err, buffer) => {
-            raw = buffer;
-        });
+        let raw = base.getBufferAync("image/png");
         return raw;
     }
 }
