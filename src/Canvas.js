@@ -366,6 +366,7 @@ class Canvacord {
 
 
    // External apis
+   /*
    /**
      * clyde
      * @param {string} Text
@@ -388,7 +389,7 @@ class Canvacord {
         let base = await jimp.read(`${NEKO}=blurpify&image=${image}`);
         let raw = await base.getBufferAsync("image/png");
         return raw;
-    }
+    }*/
 }
 
 module.exports = Canvacord;
