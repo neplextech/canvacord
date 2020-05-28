@@ -3,6 +3,7 @@ const jimp = require("jimp");
 const GIFEncoder = require("gifencoder");
 const circle = require('@jimp/plugin-circle');
 const configure = require('@jimp/custom');
+const fetch = require("node-fetch");
 const NEKO = "https://nekobot.xyz/api/imagegen?type";
 
 // load custom plugins
@@ -366,7 +367,6 @@ class Canvacord {
 
 
    // External apis
-   /*
    /**
      * clyde
      * @param {string} Text
@@ -374,7 +374,9 @@ class Canvacord {
      */
     async clyde(text) {
         if (!text) throw new Error("no text provided!");
-        let base = await jimp.read(`${NEKO}=clyde&text=${text}`);
+        let i = await fetch(`${NEKO}=clyde&text=${text}`);
+        i = i.json();
+        let base = await jimp.read(i.message);
         let raw = await base.getBufferAsync("image/png");
         return raw;
     }
@@ -386,10 +388,12 @@ class Canvacord {
      */
     async blurple(image) {
         if (!image) throw new Error("no image provided!");
-        let base = await jimp.read(`${NEKO}=blurpify&image=${image}`);
+        let i = await fetch(`${NEKO}=blurpify&image=${image}`);
+        i = i.json();
+        let base = await jimp.read(i.message);
         let raw = await base.getBufferAsync("image/png");
         return raw;
-    }*/
+    }
 }
 
 module.exports = Canvacord;
