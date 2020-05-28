@@ -369,12 +369,11 @@ class Canvacord {
 
 
    // External apis
-   /*
    /**
      * clyde
      * @param {string} Text
      * @returns <Buffer>
-     */
+     *//*
     async clyde(text) {
         if (!text) throw new Error("no text provided!");
         let i = await fetch(`${NEKO}=clyde&text=${text}`);
@@ -383,12 +382,12 @@ class Canvacord {
         let raw = await base.getBufferAsync("image/png");
         return raw;
     }
-
+   
     /**
      * blurple
      * @param {image} image
      * @returns <Buffer>
-     */
+     *//*
     async blurple(image) {
         if (!image) throw new Error("no image provided!");
         let i = await fetch(`${NEKO}=blurpify&image=${image}`);
