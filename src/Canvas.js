@@ -341,13 +341,15 @@ class Canvacord {
      */
     async jail(image) {
         if (!image) throw new Error("no image provided!");
-        let base = await jimp.read(__dirname + "/assets/jail.png");
-        base.resize(350, 350);
-        let img = await jimp.read(image);
-        img.resize(350, 350);
-        img.composite(base, 0, 0);
-        let raw = await base.getBufferAsync("image/png");
-        return raw;
+        let canvas = Canvas.createCanvas(350, 350);
+        let ctx = canvas.getContext("2d");
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 350, 350);
+        let avatar = await Canvas.loadImage(image);
+        ctx.drawImage(avatar, 0, 0, 350, 350);
+        let layer = await Canvas.loadImage(__dirname +"/assets/jail.png");
+        ctx.drawImage(layer, 0, 0, 350, 350);
+        return canvas.toBuffer();
     }
 
     /**
@@ -367,6 +369,7 @@ class Canvacord {
 
 
    // External apis
+   /*
    /**
      * clyde
      * @param {string} Text
@@ -393,7 +396,7 @@ class Canvacord {
         let base = await jimp.read(i.message);
         let raw = await base.getBufferAsync("image/png");
         return raw;
-    }
+    }*/
 }
 
 module.exports = Canvacord;
