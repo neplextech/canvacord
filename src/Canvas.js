@@ -4,7 +4,6 @@ const GIFEncoder = require("gifencoder");
 const circle = require('@jimp/plugin-circle');
 const configure = require('@jimp/custom');
 const fetch = require("node-fetch");
-const NEKO = "https://nekobot.xyz/api/imagegen?type";
 
 // load custom plugins
 configure({ plugins: [circle] }, jimp);
@@ -246,21 +245,23 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         const base = await Canvas.loadImage(__dirname +"/assets/triggered.png");
         const img = await Canvas.loadImage(image);
-        const GIF = new GIFEncoder(256, 310)
+        const GIF = new GIFEncoder(256, 256)
         GIF.start();
         GIF.setRepeat(0);
         GIF.setDelay(15);
-        const canvas = Canvas.createCanvas(256, 310);
+        const canvas = Canvas.createCanvas(256, 256);
         const ctx = canvas.getContext('2d');
         const BR = 20;
         const LR = 10;
-        for (var i = 0; i < 9; i++) {
-            ctx.clearRect(0, 0, 256, 310);
+        let i = 0;
+        while (i < 9) {
+            ctx.clearRect(0, 0, 256, 256);
             ctx.drawImage(img, Math.floor(Math.random() * BR) - BR, Math.floor(Math.random() * BR) - BR, 256 + BR, 310 - 54 + BR);
-             ctx.fillStyle = '#FF000033';
-            ctx.fillRect(0, 0, 256, 310);
+            ctx.fillStyle = '#FF000033';
+            ctx.fillRect(0, 0, 256, 256);
             ctx.drawImage(base, Math.floor(Math.random() * LR) - LR, 310 - 54 + Math.floor(Math.random() * LR) - LR, 256 + LR, 54 + LR);
             GIF.addFrame(ctx);
+            i++
         };
         GIF.finish();
         return GIF.out.getData();
@@ -367,35 +368,18 @@ class Canvacord {
         return raw;
     }
 
-
-   // External apis
-   /**
-     * clyde
-     * @param {string} Text
+    /**
+     * dither
+     * @param {Image} image Image
      * @returns <Buffer>
-     *//*
-    async clyde(text) {
-        if (!text) throw new Error("no text provided!");
-        let i = await fetch(`${NEKO}=clyde&text=${text}`);
-        i = i.json();
-        let base = await jimp.read(i.message);
-        let raw = await base.getBufferAsync("image/png");
+     */
+    async dither(image) {
+        if (!image) throw new Error("image was not provided!");
+        image = await jimp.read(image);
+        image.dither565();
+        let raw = await image.getBufferAsync("image/png");
         return raw;
     }
-   
-    /**
-     * blurple
-     * @param {image} image
-     * @returns <Buffer>
-     *//*
-    async blurple(image) {
-        if (!image) throw new Error("no image provided!");
-        let i = await fetch(`${NEKO}=blurpify&image=${image}`);
-        i = i.json();
-        let base = await jimp.read(i.message);
-        let raw = await base.getBufferAsync("image/png");
-        return raw;
-    }*/
 }
 
 module.exports = Canvacord;
