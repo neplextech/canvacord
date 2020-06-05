@@ -380,6 +380,28 @@ class Canvacord {
         let raw = await image.getBufferAsync("image/png");
         return raw;
     }
+
+    async captchagen(txt) {
+        const randomText = (len) => {
+            let str = "";
+            let c = "qwertyuiopasdfghjklzxcvbnmMNBVCXZLKJHGFDSAPOIUYTREWQ1234567890=_.";
+            for (var i = 0; i < len; i++) {
+                str += c[Math.floor(Math.random * c.length)];
+            }
+            return str;
+        };
+        const canvas = Canvas.createCanvas(125, 32);
+        let ctx = canvas.getContext("2d");
+        let text = randomText(7);
+        ctx.fillStyle = "#406da2";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.beginPath();
+        ctx.strokeStyle = "#ffff0d";
+        ctx.font = "26px Sans-serif";
+        ctx.rotate(-0.05);
+        ctx.strokeText(text, 15, 26);
+        return canvas.toBuffer();
+    }
 }
 
 module.exports = Canvacord;
