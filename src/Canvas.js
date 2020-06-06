@@ -245,20 +245,20 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         const base = await Canvas.loadImage(__dirname +"/assets/triggered.png");
         const img = await Canvas.loadImage(image);
-        const GIF = new GIFEncoder(256, 256)
+        const GIF = new GIFEncoder(256, 310)
         GIF.start();
         GIF.setRepeat(0);
         GIF.setDelay(15);
-        const canvas = Canvas.createCanvas(256, 256);
+        const canvas = Canvas.createCanvas(256, 310);
         const ctx = canvas.getContext('2d');
         const BR = 20;
         const LR = 10;
         let i = 0;
         while (i < 9) {
-            ctx.clearRect(0, 0, 256, 256);
+            ctx.clearRect(0, 0, 256, 310);
             ctx.drawImage(img, Math.floor(Math.random() * BR) - BR, Math.floor(Math.random() * BR) - BR, 256 + BR, 310 - 54 + BR);
             ctx.fillStyle = '#FF000033';
-            ctx.fillRect(0, 0, 256, 256);
+            ctx.fillRect(0, 0, 256, 310);
             ctx.drawImage(base, Math.floor(Math.random() * LR) - LR, 310 - 54 + Math.floor(Math.random() * LR) - LR, 256 + LR, 54 + LR);
             GIF.addFrame(ctx);
             i++
@@ -455,7 +455,7 @@ class Canvacord {
         ctx.arc(257 + 18.5 + widthXP, 147.5 + 18.5 + 36.25, 18.75, 1.5 * Math.PI, 0.5 * Math.PI, false);
         ctx.fill();
 
-        const avatar = await Canvas.loadImage(avatarURL);
+        const avatar = await Canvas.loadImage(await this.circle(avatarURL));
         ctx.drawImage(avatar, 85, 66, 150, 150);
 
         return canvas.toBuffer();
