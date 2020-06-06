@@ -7,6 +7,12 @@ Simple & easy to use image manipulation module.
 npm i --save canvacord
 ```
 
+# Features
+- Super fast image manipulation
+- Welcomer abd leaver images
+- Rank card
+- and more...
+
 # Functions
 - batslap(image1, image2)
 - beautiful(image)
@@ -27,6 +33,10 @@ npm i --save canvacord
 - bed(image1, image2)
 - wanted(image)
 - circle(image)
+- jail(image)
+- welcomer({ username, discrim, avatarURL })
+- leaver({ username, discrim, avatarURL })
+- rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL })
 
 # Example
 
