@@ -384,14 +384,14 @@ class Canvacord {
      * @param {Image} image Image
      * @returns <Buffer>
      */
-    async rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL, /*color*/ }) {
+    async rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL, color }) {
         if(!username) throw new Error("No username was provided!");
         if(!level) throw new Error("No level was provided!");
         if(!rank) throw new Error("No rank was provided!");
         if(!neededXP) throw new Error("No totalXP was provided!");
         if(!currentXP) throw new Error("No currentXP was provided!");
         if(!avatarURL) throw new Error("No avatarURL was provided!");
-        // if(!color || typeof color !== "string") color ="#FFFFFF";
+        if(!color || typeof color !== "string") color ="#FFFFFF";
 
         Canvas.registerFont(__dirname + '/assets/regular-font.ttf', { family: 'Manrope', weight: "regular", style: "normal" });
         Canvas.registerFont(__dirname + '/assets/bold-font.ttf', { family: 'Manrope', weight: "bold", style: "normal" });
@@ -415,7 +415,7 @@ class Canvacord {
         if(discrim) ctx.fillText(`#${discrim}`, ctx.measureText(name).width + 10 + 316, 164);
 
         ctx.font = `bold 36px ${font}`;
-        ctx.fillStyle = "#FFFFFF";
+        ctx.fillStyle = color;
         ctx.textAlign = "end";
         ctx.fillText(level, 934 - 64, 82);
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
@@ -447,7 +447,7 @@ class Canvacord {
         ctx.fill();
 
         ctx.beginPath();
-        ctx.fillStyle = "#FFFFFF";
+        ctx.fillStyle = color;
         ctx.arc(257 + 18.5, 147.5 + 18.5 + 36.25, 18.5, 1.5 * Math.PI, 0.5 * Math.PI, true);
         ctx.fill();
         ctx.fillRect(257 + 18.5, 147.5 + 36.25, widthXP, 37.5);
