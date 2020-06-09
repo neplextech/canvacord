@@ -245,7 +245,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         const base = await Canvas.loadImage(__dirname +"/assets/triggered.png");
         const img = await Canvas.loadImage(image);
-        const GIF = new GIFEncoder(256, 310)
+        const GIF = new GIFEncoder(256, 310);
         GIF.start();
         GIF.setRepeat(0);
         GIF.setDelay(15);
@@ -332,8 +332,6 @@ class Canvacord {
         let raw = await image.getBufferAsync("image/png");
         return raw;
     }
-
-    // Beta endpoints
     
     /**
      * jail
@@ -386,13 +384,14 @@ class Canvacord {
      * @param {Image} image Image
      * @returns <Buffer>
      */
-    async rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL }) {
+    async rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL, color }) {
         if(!username) throw new Error("No username was provided!");
         if(!level) throw new Error("No level was provided!");
         if(!rank) throw new Error("No rank was provided!");
         if(!neededXP) throw new Error("No totalXP was provided!");
         if(!currentXP) throw new Error("No currentXP was provided!");
         if(!avatarURL) throw new Error("No avatarURL was provided!");
+        if(!color || typeof color !== "string") color ="#FFFFFF";
 
         Canvas.registerFont(__dirname + '/assets/regular-font.ttf', { family: 'Manrope', weight: "regular", style: "normal" });
         Canvas.registerFont(__dirname + '/assets/bold-font.ttf', { family: 'Manrope', weight: "bold", style: "normal" });
@@ -408,7 +407,7 @@ class Canvacord {
         ctx.font = `bold 36px ${font}`;
         ctx.fillStyle = "#FFFFFF";
         ctx.textAlign = "start";
-        const name = username > 7 ? username.substring(0, 7).trim() + '...' : username;
+        const name = username >= 7 ? username.substring(0, 7).trim() + '...' : username;
         ctx.fillText(`${name}`, 264, 164);
         ctx.font = `36px ${font}`;
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
@@ -416,14 +415,14 @@ class Canvacord {
         if(discrim) ctx.fillText(`#${discrim}`, ctx.measureText(name).width + 10 + 316, 164);
 
         ctx.font = `bold 36px ${font}`;
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = color;
         ctx.textAlign = "end";
         ctx.fillText(level, 934 - 64, 82);
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
         ctx.fillText("LEVEL", 934 - 64 - ctx.measureText(level).width - 16, 82);
 
         ctx.font = `bold 36px ${font}`;
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle = "#FFFFFF";
         ctx.textAlign = "end";
         ctx.fillText(rank, 934 - 64 - ctx.measureText(level).width - 16 - ctx.measureText(`LEVEL`).width - 16, 82);
         ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
@@ -448,7 +447,7 @@ class Canvacord {
         ctx.fill();
 
         ctx.beginPath();
-        ctx.fillStyle = "#ffffff";
+        ctx.fillStyle = color;
         ctx.arc(257 + 18.5, 147.5 + 18.5 + 36.25, 18.5, 1.5 * Math.PI, 0.5 * Math.PI, true);
         ctx.fill();
         ctx.fillRect(257 + 18.5, 147.5 + 36.25, widthXP, 37.5);
@@ -487,7 +486,7 @@ class Canvacord {
         ctx.textAlign = "start";
         ctx.shadowBlur = 10;
         ctx.shadowColor = "black";
-	    ctx.fillText('Welcome', 260, 100);
+	ctx.fillText('Welcome', 260, 100);
   
         const welcometextPosition = { width: 260, height: 150 };
         
@@ -495,17 +494,17 @@ class Canvacord {
         ctx.font = `bold ${fontSize}px ${font}`;
         
         do {
-            fontSize -= 1;
-	        ctx.font = `bold ${fontSize}px ${font}`;
-	    } while (ctx.measureText(`${username}#${discrim}!`).width > 430);
+           fontSize -= 1;
+	   ctx.font = `bold ${fontSize}px ${font}`;
+        } while (ctx.measureText(`${username}#${discrim}!`).width > 430);
         
-	    ctx.fillStyle = '#ffffff';
+	ctx.fillStyle = '#ffffff';
         ctx.textAlign = "start";
-	    ctx.fillText(`${username}`, welcometextPosition.width, welcometextPosition.height, 455);
+	ctx.fillText(`${username}`, welcometextPosition.width, welcometextPosition.height, 455);
         
-	    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+	ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         ctx.textAlign = "start";
-	    ctx.fillText(`#${discrim}!`, ctx.measureText(`${username}`).width + welcometextPosition.width, welcometextPosition.height);
+        ctx.fillText(`#${discrim}!`, ctx.measureText(`${username}`).width + welcometextPosition.width, welcometextPosition.height);
 
         ctx.shadowBlur = 0;
       	ctx.beginPath();
@@ -524,7 +523,7 @@ class Canvacord {
      * @param {Image} image Image
      * @returns <Buffer>
      */
-    async leaver({ username, discrim, avatarURL }) {
+    async leaver({ username, discrim, avatarURL, color }) {
         if(!username) throw new Error("No username was provided!");
         if(!discrim) throw new Error("No discrim was provided!");
         if(!avatarURL) throw new Error("No avatarURL was provided!");
@@ -545,7 +544,7 @@ class Canvacord {
         ctx.textAlign = "start";
         ctx.shadowBlur = 10;
         ctx.shadowColor = "black";
-	    ctx.fillText('Goodbye', 260, 100);
+	ctx.fillText('Goodbye', 260, 100);
   
         const welcometextPosition = { width: 260, height: 150 };
         
@@ -553,17 +552,17 @@ class Canvacord {
         ctx.font = `bold ${fontSize}px ${font}`;
         
         do {
-            fontSize -= 1;
-	        ctx.font = `bold ${fontSize}px ${font}`;
-	    } while (ctx.measureText(`${username}#${discrim}!`).width > 430);
+           fontSize -= 1;
+	   ctx.font = `bold ${fontSize}px ${font}`;
+	} while (ctx.measureText(`${username}#${discrim}!`).width > 430);
         
-	    ctx.fillStyle = '#ffffff';
+	ctx.fillStyle = '#ffffff';
         ctx.textAlign = "start";
-	    ctx.fillText(`${username}`, welcometextPosition.width, welcometextPosition.height, 455);
+	ctx.fillText(`${username}`, welcometextPosition.width, welcometextPosition.height, 455);
         
-	    ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+	ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         ctx.textAlign = "start";
-	    ctx.fillText(`#${discrim}!`, ctx.measureText(`${username}`).width + welcometextPosition.width, welcometextPosition.height);
+	ctx.fillText(`#${discrim}!`, ctx.measureText(`${username}`).width + welcometextPosition.width, welcometextPosition.height);
 
         ctx.shadowBlur = 0;
       	ctx.beginPath();
