@@ -407,12 +407,12 @@ class Canvacord {
       */
     async wasted(Image) {
         let converted = await this.greyscale(Image);
-        const canvas = Canvas.createCanvas(1024, 1024);
+        const canvas = Canvas.createCanvas(500, 500);
         const ctx = canvas.getContext('2d');
         const base = await Canvas.loadImage(__dirname + "/assets/wasted.png");
         const img = await Canvas.loadImage(converted);
-        ctx.drawImage(img, 0, 0, 1024, 1024);
-        ctx.drawImage(base, 0, 0, 1024, 1024);
+        ctx.drawImage(img, 0, 0, 500, 500);
+        ctx.drawImage(base, 0, 0, 500, 500);
         return canvas.toBuffer();
     }
 
