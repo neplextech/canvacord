@@ -1,7 +1,7 @@
 /**
+  * Initial Release - 7 March 2020
   * @author Snowflake107, Zyrouge
   * @license Apache License 2.0
-  * Initial Release - 7 March 2020
   * xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
   * A permissive license whose main conditions 
   * require preservation of copyright and license 
