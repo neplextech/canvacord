@@ -1,3 +1,17 @@
+/**
+  * @author Snowflake107, Zyrouge
+  * @license Apache License 2.0
+  * Initial Release - 7 March 2020
+  * xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  * A permissive license whose main conditions 
+  * require preservation of copyright and license 
+  * notices. Contributors provide an express grant 
+  * of patent rights. Licensed works, modifications, 
+  * and larger works may be distributed under different
+  * terms and without source code.
+  * xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+  */
+
 const Canvas = require("canvas");
 const jimp = require("jimp");
 const GIFEncoder = require("gifencoder");
@@ -8,6 +22,13 @@ const fetch = require("node-fetch");
 // load custom plugins
 configure({ plugins: [circle] }, jimp);
 
+/**
+  * Canvacord
+  * Simple and easy to use image manipulation module 
+  * created and maintained by Snowflake107.
+  * @example const Canvacord = require("canvacord");
+  * const canva = new Canvacord.Canvas();
+  */
 class Canvacord {
 
     /**
@@ -381,7 +402,14 @@ class Canvacord {
 
     /**
      * rank
-     * @param {Image} image Image
+     * @param {String} username Username
+     * @param {String} discrim Discriminator
+     * @param {String} level User level
+     * @param {String} rank User rank
+     * @param {String} neededXP XP needed to reach next level
+     * @param {String} currentXP Current XP of a user
+     * @param {Buffer} avatarURL Avatar URL or Buffer or Canvacord Buffer itself
+     * @param {String} color Hex or HTML5 color name or rgb
      * @returns <Buffer>
      */
     async rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL, color }) {
@@ -462,7 +490,10 @@ class Canvacord {
 
     /**
      * welcome
-     * @param {Image} image Image
+     * @param {String} username Username
+     * @param {String} discrim Discriminator
+     * @param {String} avatarURL Avatar URL or Buffer or Canvacord Buffer itself
+     * @param {String} color Hex or HTML5 color name or rgb
      * @returns <Buffer>
      */
     async welcome({ username, discrim, avatarURL }) {
@@ -520,7 +551,10 @@ class Canvacord {
 
     /**
      * leaver
-     * @param {Image} image Image
+     * @param {String} username Username
+     * @param {String} discrim Discriminator
+     * @param {String} avatarURL Avatar URL or Buffer or Canvacord Buffer itself
+     * @param {String} color Hex or HTML5 color name or rgb
      * @returns <Buffer>
      */
     async leaver({ username, discrim, avatarURL, color }) {
