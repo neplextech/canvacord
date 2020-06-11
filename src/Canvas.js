@@ -401,6 +401,22 @@ class Canvacord {
     }
 
     /**
+      * wasted
+      * @param {Buffer} Image Image to manipulate
+      * @returns <Buffer>
+      */
+    async wasted(Image) {
+        let converted = await this.greyscale(Image);
+        const canvas = Canvas.createCanvas(1024, 1024);
+        const ctx = canvas.getContext('2d');
+        const base = await Canvas.loadImage(__dirname + "/assets/wasted.png");
+        const img = await Canvas.loadImage(converted);
+        ctx.drawImage(img, 0, 0, 1024, 1024);
+        ctx.drawImage(base, 0, 0, 1024, 1024);
+        return canvas.toBuffer();
+    }
+
+    /**
      * rank
      * @param {String} username Username
      * @param {String} discrim Discriminator
