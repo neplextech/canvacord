@@ -35,6 +35,7 @@ npm i --save canvacord
 - circle(image)
 - jail(image)
 - dither(image)
+- wasted(image)
 - welcomer({ username, discrim, avatarURL })
 - leaver({ username, discrim, avatarURL })
 - rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL })
