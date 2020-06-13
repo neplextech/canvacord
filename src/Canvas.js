@@ -625,6 +625,20 @@ class Canvacord {
         
         return canvas.toBuffer();
     }
+
+    /**
+     * pixelate
+     * @param {Image} image Image
+     * @param {Number} level pixelation level
+     * @returns <Buffer>
+     */
+    async pixelate(image, level = 10) {
+        if (!image) throw new Error("image was not provided!");
+        image = await jimp.read(image);
+        image.pixelate(isNaN(level) ? 10 : parseInt(level));
+        let raw = await image.getBufferAsync("image/png");
+        return raw;
+    }
 }
 
 module.exports = Canvacord;
