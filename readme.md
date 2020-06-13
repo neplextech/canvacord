@@ -39,6 +39,7 @@ npm i --save canvacord
 - welcomer({ username, discrim, avatarURL })
 - leaver({ username, discrim, avatarURL })
 - rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL })
+- pixelate(image, level)
 
 # Example
 
