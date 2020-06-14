@@ -503,6 +503,9 @@ class Canvacord {
 
         return canvas.toBuffer();
     }
+    async rankCard(...options) {
+        return this.rank(...options);
+    }
 
     /**
      * welcome
@@ -564,6 +567,9 @@ class Canvacord {
         
         return canvas.toBuffer();
     }
+    async welcomer(...options) {
+        return this.welcome(...options);
+    }
 
     /**
      * leaver
@@ -624,6 +630,9 @@ class Canvacord {
         ctx.drawImage(avatar, 25, 25, 200, 200);
         
         return canvas.toBuffer();
+    }
+    async leave(...options) {
+        return this.leaver(...options);
     }
 
     /**
