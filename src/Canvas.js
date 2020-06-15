@@ -249,12 +249,25 @@ class Canvacord {
      * @param {Color} color name/hex
      * @returns <Buffer>
      */
-    async color(color = "#FFFFFF") {
+    async color(color = "RANDOM") {
         const canvas = Canvas.createCanvas(2048, 2048);
         const ctx = canvas.getContext("2d");
-        ctx.fillStyle = color;
+        ctx.fillStyle = this._getHex(color);
         ctx.fillRect(0, 0, canvas.width, canvas.height);
         return canvas.toBuffer();
+    }
+
+    /**
+      * Resolves Color
+      * @param {Color} color HTML5 color
+      * @private
+      */
+    _getHex(color) {
+        if (!color) return "#000000";
+        if (color.startsWith("#") || color.startsWith("0x")) return color.replace("0x", "#");;
+        if (!isNaN(color) && String(color).startsWith("0x")) return String(color).replace("0x", "#");
+        if (!isNaN(color)) return `#${color.toString(16)}`;
+        return color;
     }
 
     /**
