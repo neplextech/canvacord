@@ -265,7 +265,7 @@ class Canvacord {
     _getHex(color) {
         if (!color) return "#000000";
         if (color === "RANDOM") return "#"+(Math.floor(Math.random() * (0xFFFFFF + 1))).toString(16);
-        if (typeof color == "string" && color.startsWith("rgb(") return this._getHex(color.replace("rgb(", "").replace(")", "").split(",").map(x => parseInt(x)));
+        if (typeof color == "string" && color.startsWith("rgb(") return (this._getHex(color.replace("rgb(", "").replace(")", "").split(",").map(x => parseInt(x)));
         if (Array.isArray(color)) return "#"+((color[0] << 16) + (color[1] << 8) + color[2]).toString(16);
         if (isNaN(color) && (color.startsWith("#") || color.startsWith("0x"))) return color.replace("0x", "#");;
         if (!isNaN(color) && String(color).startsWith("0x")) return String(color).replace("0x", "#");
