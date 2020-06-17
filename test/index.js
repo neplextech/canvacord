@@ -1,14 +1,12 @@
 const Canvacord = require("../index");
-const canva = new Canvacord.Canvas();
-const fs = require("fs");
+const canva = new Canvacord();
 
-function create() {
-    fs.readFile("./image.png", async (err, data) => {
-        let img = await canva.trigger(data);
-        return fs.writeFile("./triggered.gif", img, (err) => {
-            if (err) console.error(err);
-        });
-    });
+async function create() {
+    let img = await canva.trigger("./image.png");
+    canva.write(img, "triggered.gif");
+
+    let color = await canva.color("#4E5D94");
+    canva.write(color, "color.png");
 }
 
 create();

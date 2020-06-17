@@ -1,10 +1,12 @@
 {
   "name": "canvacord",
-  "version": "2.0.3-dev",
+  "version": "2.0.5",
   "description": "Simple & easy to use image manipulation module.",
   "main": "index.js",
   "scripts": {
-    "test": "cd test && node index.js"
+    "docsgen": "jsdoc --configure .jsdoc.json --verbose",
+    "test": "cd test && node index.js",
+    "format": "prettier --write \"src/**/*.js\""
   },
   "repository": {
     "type": "git",
@@ -15,16 +17,24 @@
     "discord-canvas",
     "discord.js-canvas",
     "discord.js-image",
-    "memes"
+    "memes",
+    "rank",
+    "rank-card",
+    "welcomer",
+    "leaver"
   ],
   "author": "Snowflake107",
   "license": "ISC",
   "dependencies": {
+    "@jimp/custom": "^0.13.0",
+    "@jimp/plugin-circle": "^0.13.0",
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
-    "jimp": "^0.12.0",
-    "@jimp/plugin-circle": "^0.13.0",
-    "@jimp/custom": "^0.13.0",
-    "node-fetch": "^2.6.0"
+    "jimp": "^0.12.0"
+  },
+  "devDependencies": {
+    "jsdoc": "^3.6.4",
+    "loke-jsdoc-theme": "^2.1.0",
+    "prettier": "^2.0.5"
   }
 }

@@ -8,8 +8,9 @@ npm i --save canvacord
 ```
 
 # Features
+- Supports Buffer, image url or path
 - Super fast image manipulation
-- Welcomer abd leaver images
+- Welcomer and leaver images
 - Rank card
 - and more...
 
@@ -40,22 +41,21 @@ npm i --save canvacord
 - leaver({ username, discrim, avatarURL })
 - rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL })
 - pixelate(image, level)
+- write(buffer, filename)
 
 # Example
 
 ```js
 
 const Canvacord = require("canvacord");
-const canva = new Canvacord.Canvas();
-const fs = require("fs");
+const canva = new Canvacord();
 
-function create() {
-    fs.readFile("./image.png", async (err, data) => {
-        let img = await canva.trigger(data);
-        return fs.writeFile("./triggered.gif", img, (err) => {
-            if (err) console.error(err);
-        });
-    });
+async function create() {
+    let img = await canva.trigger("./image.png");
+    canva.write(img, "triggered.gif");
+
+    let color = await canva.color("#4E5D94");
+    canva.write(color, "color.png");
 }
 
 create();
@@ -68,7 +68,7 @@ create();
 const Discord = require("discord.js");
 const client = new Discord.Client();
 const Canvacord = require("canvacord");
-const canva = new Canvacord.Canvas();
+const canva = new Canvacord();
 
 client.on("ready", () => {
     console.log("I'm online!");

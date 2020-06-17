@@ -1,4 +1,52 @@
-/**
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Canvas.js - Documentation</title>
+
+    <script src="scripts/prettify/prettify.js"></script>
+    <script src="scripts/prettify/lang-css.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+    <link type="text/css" rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+<body>
+
+<input type="checkbox" id="nav-trigger" class="nav-trigger" />
+<label for="nav-trigger" class="navicon-button x">
+  <div class="navicon"></div>
+</label>
+
+<label for="nav-trigger" class="overlay"></label>
+
+<nav class="nav">
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="Canvacord.html">Canvacord</a><ul class='methods'><li data-type='method'><a href="Canvacord.html#_getHex">_getHex</a></li><li data-type='method'><a href="Canvacord.html#affect">affect</a></li><li data-type='method'><a href="Canvacord.html#batslap">batslap</a></li><li data-type='method'><a href="Canvacord.html#beautiful">beautiful</a></li><li data-type='method'><a href="Canvacord.html#bed">bed</a></li><li data-type='method'><a href="Canvacord.html#blur">blur</a></li><li data-type='method'><a href="Canvacord.html#circle">circle</a></li><li data-type='method'><a href="Canvacord.html#color">color</a></li><li data-type='method'><a href="Canvacord.html#delete">delete</a></li><li data-type='method'><a href="Canvacord.html#dither">dither</a></li><li data-type='method'><a href="Canvacord.html#facepalm">facepalm</a></li><li data-type='method'><a href="Canvacord.html#gay">gay</a></li><li data-type='method'><a href="Canvacord.html#greyscale">greyscale</a></li><li data-type='method'><a href="Canvacord.html#hitler">hitler</a></li><li data-type='method'><a href="Canvacord.html#invert">invert</a></li><li data-type='method'><a href="Canvacord.html#jail">jail</a></li><li data-type='method'><a href="Canvacord.html#kiss">kiss</a></li><li data-type='method'><a href="Canvacord.html#leave">leave</a></li><li data-type='method'><a href="Canvacord.html#leaver">leaver</a></li><li data-type='method'><a href="Canvacord.html#pixelate">pixelate</a></li><li data-type='method'><a href="Canvacord.html#rank">rank</a></li><li data-type='method'><a href="Canvacord.html#rankCard">rankCard</a></li><li data-type='method'><a href="Canvacord.html#rip">rip</a></li><li data-type='method'><a href="Canvacord.html#sepia">sepia</a></li><li data-type='method'><a href="Canvacord.html#spank">spank</a></li><li data-type='method'><a href="Canvacord.html#trash">trash</a></li><li data-type='method'><a href="Canvacord.html#trigger">trigger</a></li><li data-type='method'><a href="Canvacord.html#wanted">wanted</a></li><li data-type='method'><a href="Canvacord.html#wasted">wasted</a></li><li data-type='method'><a href="Canvacord.html#welcome">welcome</a></li><li data-type='method'><a href="Canvacord.html#welcomer">welcomer</a></li><li data-type='method'><a href="Canvacord.html#write">write</a></li></ul></li></ul>
+</nav>
+
+<div id="main">
+    
+    <h1 class="page-title">Canvas.js</h1>
+    
+
+    <!--container.tmpl-->
+
+
+
+
+    <!--source.tmpl-->
+
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
  * Initial Release - 7 March 2020
  * @author Snowflake107, Zyrouge
  * @license Apache License 2.0
@@ -343,9 +391,9 @@ class Canvacord {
     _getHex(color) {
         if (!color) return '#000000';
         if (color === 'RANDOM') return '#' + Math.floor(Math.random() * (0xffffff + 1)).toString(16);
-        if (Array.isArray(color)) return '#' + ((color[0] << 16) + (color[1] << 8) + color[2]).toString(16);
-        if (isNaN(color) && (color.startsWith('#') || color.startsWith('0x'))) return color.replace('0x', '#');
-        if (!isNaN(color) && String(color).startsWith('0x')) return String(color).replace('0x', '#');
+        if (Array.isArray(color)) return '#' + ((color[0] &lt;&lt; 16) + (color[1] &lt;&lt; 8) + color[2]).toString(16);
+        if (isNaN(color) &amp;&amp; (color.startsWith('#') || color.startsWith('0x'))) return color.replace('0x', '#');
+        if (!isNaN(color) &amp;&amp; String(color).startsWith('0x')) return String(color).replace('0x', '#');
         if (!isNaN(color)) return `#${color.toString(16)}`;
         return color;
     }
@@ -370,7 +418,7 @@ class Canvacord {
         const BR = 20;
         const LR = 10;
         let i = 0;
-        while (i < 9) {
+        while (i &lt; 9) {
             ctx.clearRect(0, 0, 256, 310);
             ctx.drawImage(
                 img,
@@ -864,7 +912,7 @@ class Canvacord {
      * writes the buffer to a file
      * @param {{Buffer}} buffer
      * @param {String} filename
-     * @returns {Promise<void>}
+     * @returns {Promise&lt;void>}
      * @example canva.write(await canva.color("RED"), "redColor.png");
      */
     async write(buffer, filename) {
@@ -875,3 +923,23 @@ class Canvacord {
 }
 
 module.exports = Canvacord;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+
+</div>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.6.4</a> on Thu Jun 18 2020 00:30:24 GMT+0545 (Nepal Time) using the LOKE theme.
+</footer>
+
+<script>prettyPrint();</script>
+<script src="scripts/linenumber.js"></script>
+</body>
+</html>

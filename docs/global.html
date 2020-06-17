@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>Home - Documentation</title>
+    <title>Global - Documentation</title>
 
     <script src="scripts/prettify/prettify.js"></script>
     <script src="scripts/prettify/lang-css.js"></script>
@@ -34,14 +34,43 @@
 
 <div id="main">
     
+    <h1 class="page-title">Global</h1>
+    
 
     <!--container.tmpl-->
 
 
 
 
+
+<section>
+
+
+
+<header data-tmpl="container.tmpl">
+    
+        <h2>
+        
+        </h2>
+        
     
 
+    
+      <div class="bs-callout bs-callout-default">
+        <h5>Members</h5>
+        <br />
+        <dl class="dl-horizontal methods-members">
+        <dt>Fields &amp; Properties</dt><dd><ul>
+            <li><a href="#Canvas">Canvas</a></li>
+            </ul></dd></dl></div>
+</header>
+
+<article>
+    <div class="container-overview">
+    
+        
+
+        <!-- details.tmpl -->
 
 
 
@@ -49,106 +78,169 @@
 
 
 
+
+<dl class="dl-horizontal">
 
     
 
+    
 
-    <section class="readme">
-        <article><h1>Canvacord</h1>
-<p>Simple &amp; easy to use image manipulation module.</p>
-<h1>Installing</h1>
-<pre class="prettyprint source lang-bash"><code>npm i --save canvacord
-</code></pre>
-<h1>Features</h1>
-<ul>
-<li>Supports Buffer, image url or path</li>
-<li>Super fast image manipulation</li>
-<li>Welcomer and leaver images</li>
-<li>Rank card</li>
-<li>and more...</li>
-</ul>
-<h1>Functions</h1>
-<ul>
-<li>batslap(image1, image2)</li>
-<li>beautiful(image)</li>
-<li>facepalm(image)</li>
-<li>gay(image)</li>
-<li>kiss(image1, image2)</li>
-<li>rip(image)</li>
-<li>spank(image1, image2)</li>
-<li>trash(image)</li>
-<li>blur(image, level = 5)</li>
-<li>greyscale(image)</li>
-<li>sepia(image)</li>
-<li>invert(image)</li>
-<li>delete(image)</li>
-<li>color(color_hex_or_html5_color_name)</li>
-<li>trigger(image)</li>
-<li>hitler(image)</li>
-<li>bed(image1, image2)</li>
-<li>wanted(image)</li>
-<li>circle(image)</li>
-<li>jail(image)</li>
-<li>dither(image)</li>
-<li>wasted(image)</li>
-<li>welcomer({ username, discrim, avatarURL })</li>
-<li>leaver({ username, discrim, avatarURL })</li>
-<li>rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL })</li>
-<li>pixelate(image, level)</li>
-<li>write(buffer, filename)</li>
-</ul>
-<h1>Example</h1>
-<pre class="prettyprint source lang-js"><code>
-const Canvacord = require(&quot;canvacord&quot;);
-const canva = new Canvacord();
+    
 
-async function create() {
-    let img = await canva.trigger(&quot;./image.png&quot;);
-    canva.write(img, &quot;triggered.gif&quot;);
+    
 
-    let color = await canva.color(&quot;#4E5D94&quot;);
-    canva.write(color, &quot;color.png&quot;);
-}
+    
 
-create();
+    
 
-</code></pre>
-<h1>Discord.js Example</h1>
-<pre class="prettyprint source lang-js"><code>const Discord = require(&quot;discord.js&quot;);
-const client = new Discord.Client();
-const Canvacord = require(&quot;canvacord&quot;);
-const canva = new Canvacord();
+    
 
-client.on(&quot;ready&quot;, () => {
-    console.log(&quot;I'm online!&quot;);
-});
+    
 
-client.on(&quot;message&quot;, async (message) => {
-    if (message.author.bot) return;
-    if (message.content === &quot;!trigger&quot;) {
-        let avatar = message.author.displayAvatarURL({ dynamic: false, format: 'png' });
-        let image = await canva.trigger(avatar);
-        let attachment = new Discord.MessageAttachment(image, &quot;triggered.gif&quot;);
-        return message.channel.send(attachment);
-    }
-    if (message.content === &quot;!delete&quot;) {
-        let avatar = message.author.displayAvatarURL({ dynamic: false, format: 'png' });
-        let image = await canva.delete(avatar);
-        let attachment = new Discord.MessageAttachment(image, &quot;deleted.png&quot;);
-        return message.channel.send(attachment);
-    }
-});
+    
 
-client.login(&quot;Your_Bot_Token_here&quot;);
+    
 
-</code></pre>
-<h1>Preview</h1>
-<p><img src="https://raw.githubusercontent.com/Snowflake107/canvacord/master/screenshot.png" alt="image"></p>
-<h1>Join Our Discord Server</h1>
-<p><strong><a href="https://discord.gg/uqB8kxh">discord.gg/uqB8kxh</a></strong></p></article>
-    </section>
+    
+
+    
+</dl>
 
 
+
+
+
+
+
+        
+    
+    </div>
+
+    
+
+    
+
+    
+
+     
+
+    
+
+    
+        <h3 class="subsection-title">Members</h3>
+
+        
+            <!--members.tmpl-->
+<div class="member-details">
+
+
+
+
+  <!--source-link.tmpl-->
+
+
+<div class="pull-right source-link-container">
+  <code class="source-link" data-tmpl="method-tmpl(1)">
+    <i class="fa fa-file-o"></i>
+    <a href="Canvas.js.html">Canvas.js</a>:<a href="Canvas.js.html#line15">15</a>
+  </code>
+</div>
+
+
+
+<h4 class="name" id="Canvas">
+  <span class="type-signature">(constant) </span>Canvas<span class="type-signature"></span>
+</h4>
+
+
+
+
+<div class="description">
+    <p>Initial Release - 7 March 2020</p>
+</div>
+
+
+<div>
+
+<!-- details.tmpl -->
+
+
+
+
+
+
+
+
+<dl class="dl-horizontal">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-author">Author:</dt>
+    <dd class="tag-author">
+        <ul>
+            <li>Snowflake107, Zyrouge</li>
+        </ul>
+    </dd>
+    
+
+    
+
+    
+    <dt class="tag-license">License:</dt>
+    <dd class="tag-license"><ul class="dummy"><li>Apache License 2.0
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+A permissive license whose main conditions
+require preservation of copyright and license
+notices. Contributors provide an express grant
+of patent rights. Licensed works, modifications,
+and larger works may be distributed under different
+terms and without source code.
+xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx</li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+</div>
+
+</div>
+
+        
+    
+
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 
