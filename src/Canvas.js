@@ -1,6 +1,6 @@
 /**
  * Initial Release - 7 March 2020
- * @author Snowflake107, Zyrouge
+ * @author Snowflake107
  * @license Apache License 2.0
  * xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
  * A permissive license whose main conditions
@@ -31,7 +31,7 @@ class Canvacord {
     /**
      * Creates new instance of Canvacord
      * @example const Canvacord = require("canvacord");
-     * const canva = new Canvacord.Canvas();
+     * const canva = new Canvacord();
      */
     constructor() {
         /**
@@ -60,12 +60,14 @@ class Canvacord {
             'hitler',
             'invert',
             'jail',
+            'jokeoverthehead',
             'kiss',
             'leave',
             'leaver',
             'pixelate',
             'rank',
             'rankCard',
+            'read',
             'rip',
             'sepia',
             'spank',
@@ -83,7 +85,7 @@ class Canvacord {
      * batslap
      * @param {Image1} image1 first image
      * @param {Image2} image2 second image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.batslap(img, img1);
      * canva.write(img, "img.png");
      */
@@ -105,7 +107,7 @@ class Canvacord {
     /**
      * beautiful
      * @param {Image} image image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.beautiful(img);
      * canva.write(img, "img.png");
      */
@@ -124,7 +126,7 @@ class Canvacord {
     /**
      * facepalm
      * @param {Image} image image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.facepalm(img);
      * canva.write(img, "img.png");
      */
@@ -144,7 +146,7 @@ class Canvacord {
     /**
      * gay
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.gay(img);
      * canva.write(img, "img.png");
      */
@@ -163,7 +165,7 @@ class Canvacord {
      * kiss
      * @param {image1} image1 first image
      * @param {image2} image2 second image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.kiss(img);
      * canva.write(img, "img.png");
      */
@@ -184,7 +186,7 @@ class Canvacord {
     /**
      * rip
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.rip(img);
      * canva.write(img, "img.png");
      */
@@ -203,7 +205,7 @@ class Canvacord {
      * spank
      * @param {image1} image1 first image
      * @param {image2} image2 second image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.spank(img, img1);
      * canva.write(img, "img.png");
      */
@@ -225,7 +227,7 @@ class Canvacord {
     /**
      * trash
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.trash(img);
      * canva.write(img, "img.png");
      */
@@ -244,7 +246,7 @@ class Canvacord {
      * blur
      * @param {Image} image Image
      * @param {Number} level blur level
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.blur(img);
      * canva.write(img, "img.png");
      */
@@ -259,7 +261,7 @@ class Canvacord {
     /**
      * greyscale
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.greyscale(img);
      * canva.write(img, "img.png");
      */
@@ -274,7 +276,7 @@ class Canvacord {
     /**
      * sepia
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.sepia(img);
      * canva.write(img, "img.png");
      */
@@ -289,7 +291,7 @@ class Canvacord {
     /**
      * invert
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.invert(img);
      * canva.write(img, "img.png");
      */
@@ -304,7 +306,7 @@ class Canvacord {
     /**
      * delete
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.delete(img);
      * canva.write(img, "img.png");
      */
@@ -321,7 +323,7 @@ class Canvacord {
     /**
      * color
      * @param {Color} color name/hex
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.color("#FF0000");
      * canva.write(img, "img.png");
      */
@@ -339,6 +341,8 @@ class Canvacord {
      * @returns {Color}
      * @example const color = canva._getHex([255,89,56])
      * console.log(color);
+     * @private
+     * @ignore
      */
     _getHex(color) {
         if (!color) return '#000000';
@@ -353,7 +357,7 @@ class Canvacord {
     /**
      * trigger
      * @param {Image} image image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.trigger(img);
      * canva.write(img, "img.gif");
      */
@@ -398,7 +402,7 @@ class Canvacord {
     /**
      * hitler
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.hitler(img);
      * canva.write(img, "img.png");
      */
@@ -416,7 +420,7 @@ class Canvacord {
      * bed
      * @param {image1} image1 first image
      * @param {image2} image2 second image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.bed(img, img1);
      * canva.write(img, "img.png");
      */
@@ -440,7 +444,7 @@ class Canvacord {
     /**
      * wanted
      * @param {image} Image image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.wanted(img);
      * canva.write(img, "img.png");
      */
@@ -457,13 +461,14 @@ class Canvacord {
     /**
      * circle
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.circle(img);
      * canva.write(img, "img.png");
      */
     async circle(image) {
         if (!image) throw new Error('image was not provided!');
         image = await jimp.read(image);
+        image.resize(1024, 1024);
         image.circle();
         let raw = await image.getBufferAsync('image/png');
         return raw;
@@ -472,7 +477,7 @@ class Canvacord {
     /**
      * jail
      * @param {image} Image image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.jail(img);
      * canva.write(img, "img.png");
      */
@@ -492,7 +497,7 @@ class Canvacord {
     /**
      * affect
      * @param {image} Image image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.affect(img);
      * canva.write(img, "img.png");
      */
@@ -509,7 +514,7 @@ class Canvacord {
     /**
      * dither
      * @param {Image} image Image
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.dither(img);
      * canva.write(img, "img.png");
      */
@@ -523,8 +528,8 @@ class Canvacord {
 
     /**
      * wasted
-     * @param {{Buffer}} Image Image to manipulate
-     * @returns {Buffer}
+     * @param {Buffer} Image Image to manipulate
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.wasted(img);
      * canva.write(img, "img.png");
      */
@@ -540,6 +545,17 @@ class Canvacord {
     }
 
     /**
+     * Reads the image
+     * @param {Buffer|String} image buffer or string to read image from.
+     * @returns {Promise<Buffer>}
+     */
+    async read(image) {
+        if (!image) throw new Error('No image provided!');
+        let i = await Canvas.loadImage(image);
+        return i;
+    }
+
+    /**
      * rank
      * @param {String} username Username
      * @param {String} discrim Discriminator
@@ -547,13 +563,14 @@ class Canvacord {
      * @param {String} rank User rank
      * @param {String} neededXP XP needed to reach next level
      * @param {String} currentXP Current XP of a user
-     * @param {{Buffer}} avatarURL Avatar URL or {Buffer} or Canvacord {Buffer} itself
+     * @param {Buffer|String} avatarURL Avatar URL or {Buffer} or Canvacord {Buffer} itself
      * @param {String} color Hex or HTML5 color name or rgb
-     * @returns {Buffer}
+     * @param {String|Buffer} background Rank card background image
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.rank({ username: "Snowflake", discrim: "0007", level: 4, rank: 12, neededXP: 500, currentXP: 407, avatarURL: "...", color: "#FFFFFF" });
      * canva.write(img, "img.png");
      */
-    async rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL, color }) {
+    async rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background }) {
         if (!username) throw new Error('No username was provided!');
         if (!level) throw new Error('No level was provided!');
         if (!rank) throw new Error('No rank was provided!');
@@ -572,24 +589,47 @@ class Canvacord {
             weight: 'bold',
             style: 'normal'
         });
-
+        const convert = (num) => {
+            if (!num) return NaN;
+            if (typeof num === 'string') num = parseInt(num);
+            let decPlaces = Math.pow(10, 1);
+            var abbrev = ['K', 'M', 'B', 'T'];
+            for (var i = abbrev.length - 1; i >= 0; i--) {
+                var size = Math.pow(10, (i + 1) * 3);
+                if (size <= num) {
+                    num = Math.round((num * decPlaces) / size) / decPlaces;
+                    if (num == 1000 && i < abbrev.length - 1) {
+                        num = 1;
+                        i++;
+                    }
+                    num += abbrev[i];
+                    break;
+                }
+            }
+            return num;
+        };
         const canvas = Canvas.createCanvas(934, 282);
         const ctx = canvas.getContext('2d');
-
-        const rankCard = await Canvas.loadImage(__dirname + '/assets/rankcard.png');
+        let bg;
+        let rankCard;
+        if (typeof background === 'string' || Buffer.isBuffer(background)) {
+            bg = await Canvas.loadImage(background);
+            ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+            rankCard = await Canvas.loadImage(__dirname + '/assets/rankcard2.png');
+        } else rankCard = await Canvas.loadImage(__dirname + '/assets/rankcard.png');
         ctx.drawImage(rankCard, 0, 0, canvas.width, canvas.height);
 
         const font = 'Manrope';
 
         ctx.font = `bold 36px ${font}`;
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = color;
         ctx.textAlign = 'start';
-        const name = username >= 7 ? username.substring(0, 7).trim() + '...' : username;
+        const name = username.length >= 10 ? username.substring(0, 70).trim() + '...' : username;
         ctx.fillText(`${name}`, 264, 164);
         ctx.font = `36px ${font}`;
         ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
         ctx.textAlign = 'center';
-        if (discrim) ctx.fillText(`#${discrim}`, ctx.measureText(name).width + 10 + 316, 164);
+        if (discrim) ctx.fillText(`#${discrim}`, ctx.measureText(name).width + 10 + 335, 164);
 
         ctx.font = `bold 36px ${font}`;
         ctx.fillStyle = color;
@@ -599,7 +639,7 @@ class Canvacord {
         ctx.fillText('LEVEL', 934 - 64 - ctx.measureText(level).width - 16, 82);
 
         ctx.font = `bold 36px ${font}`;
-        ctx.fillStyle = '#FFFFFF';
+        ctx.fillStyle = color;
         ctx.textAlign = 'end';
         ctx.fillText(rank, 934 - 64 - ctx.measureText(level).width - 16 - ctx.measureText(`LEVEL`).width - 16, 82);
         ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
@@ -619,9 +659,9 @@ class Canvacord {
         ctx.font = `bold 36px ${font}`;
         ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
         ctx.textAlign = 'start';
-        ctx.fillText('/ ' + neededXP, 624 + ctx.measureText(currentXP).width + 10, 164);
-        ctx.fillStyle = '#ffffff';
-        ctx.fillText(currentXP, 624, 164);
+        ctx.fillText('/ ' + convert(neededXP), 670 + ctx.measureText(convert(currentXP)).width + 15, 164);
+        ctx.fillStyle = color;
+        ctx.fillText(convert(currentXP), 670, 164);
 
         let widthXP = (currentXP * 615) / neededXP;
         if (widthXP > 615 - 18.5) widthXP = 615 - 18.5;
@@ -656,10 +696,11 @@ class Canvacord {
      * @param {String} rank User rank
      * @param {String} neededXP XP needed to reach next level
      * @param {String} currentXP Current XP of a user
-     * @param {{Buffer}} avatarURL Avatar URL or {Buffer} or Canvacord {Buffer} itself
+     * @param {Buffer|String} avatarURL Avatar URL or {Buffer} or Canvacord {Buffer} itself
      * @param {String} color Hex or HTML5 color name or rgb
-     * @returns {Buffer}
-     * @example let img = await canva.rankCard({ username: "Snowflake", discrim: "0007", level: 4, rank: 12, neededXP: 500, currentXP: 407, avatarURL: "...", color: "#FFFFFF" });
+     * @param {String|Buffer} background Rank card background image
+     * @returns {Promise<Buffer>}
+     * @example let img = await canva.rank({ username: "Snowflake", discrim: "0007", level: 4, rank: 12, neededXP: 500, currentXP: 407, avatarURL: "...", color: "#FFFFFF" });
      * canva.write(img, "img.png");
      */
     async rankCard(...options) {
@@ -672,7 +713,7 @@ class Canvacord {
      * @param {String} discrim Discriminator
      * @param {String} avatarURL Avatar URL or {Buffer} or Canvacord {Buffer} itself
      * @param {String} color Hex or HTML5 color name or rgb
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.welcome({ username: "Snowflake", discrim: "0007", avatarURL: "..." });
      * canva.write(img, "img.png");
      */
@@ -747,7 +788,7 @@ class Canvacord {
      * @param {String} discrim Discriminator
      * @param {String} avatarURL Avatar URL or {Buffer} or Canvacord {Buffer} itself
      * @param {String} color Hex or HTML5 color name or rgb
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.welcomer({ username: "Snowflake", discrim: "0007", avatarURL: "..." });
      * canva.write(img, "img.png");
      */
@@ -761,7 +802,7 @@ class Canvacord {
      * @param {String} discrim Discriminator
      * @param {String} avatarURL Avatar URL or {Buffer} or Canvacord {Buffer} itself
      * @param {String} color Hex or HTML5 color name or rgb
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.leaver({ username: "Snowflake", discrim: "0007", avatarURL: "..." });
      * canva.write(img, "img.png");
      */
@@ -836,7 +877,7 @@ class Canvacord {
      * @param {String} discrim Discriminator
      * @param {String} avatarURL Avatar URL or {Buffer} or Canvacord {Buffer} itself
      * @param {String} color Hex or HTML5 color name or rgb
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.leave({ username: "Snowflake", discrim: "0007", avatarURL: "..." });
      * canva.write(img, "img.png");
      */
@@ -848,7 +889,7 @@ class Canvacord {
      * pixelate
      * @param {Image} image Image
      * @param {Number} level pixelation level
-     * @returns {Buffer}
+     * @returns {Promise<Buffer>}
      * @example let img = await canva.pixelate({ username: "Snowflake", discrim: "0007", avatarURL: "..." });
      * canva.write(img, "img.png");
      */
@@ -871,6 +912,24 @@ class Canvacord {
         if (!buffer) throw new Error('No buffer provided!');
         if (!filename) throw new Error('No filename provided!');
         return fs.writeFileSync(filename, buffer);
+    }
+
+    /**
+     * JokeOverTheHead
+     * @param {String|Buffer} image Image to manipulate
+     * @returns {Promise<Buffer>}
+     */
+    async jokeoverhead(image) {
+        if (!image) throw new Error('no image provided!');
+        let canvas = Canvas.createCanvas(425, 404);
+        let ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'black';
+        ctx.fillRect(0, 0, 425, 404);
+        image = await Canvas.loadImage(await this.circle(image));
+        ctx.drawImage(image, 125, 130, 140, 135);
+        let layer = await Canvas.loadImage(__dirname + '/assets/jokeoverhead.png');
+        ctx.drawImage(layer, 0, 0, 425, 404);
+        return canvas.toBuffer();
     }
 }
 

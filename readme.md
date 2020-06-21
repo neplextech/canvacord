@@ -39,9 +39,11 @@ npm i --save canvacord
 - wasted(image)
 - welcomer({ username, discrim, avatarURL })
 - leaver({ username, discrim, avatarURL })
-- rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL })
+- rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background })
+- read(ImageOrBuffer)
 - pixelate(image, level)
 - write(buffer, filename)
+- jokeoverthehead(image)
 
 # Example
 
@@ -88,14 +90,36 @@ client.on("message", async (message) => {
         let attachment = new Discord.MessageAttachment(image, "deleted.png");
         return message.channel.send(attachment);
     }
+    if (message.content === "!rank") {
+        let rank = getRankSomehow();
+        let image = await canva.rank({ 
+            username, 
+            discrim, 
+            level, 
+            rank, 
+            neededXP, 
+            currentXP, 
+            avatarURL, 
+            color, 
+            background 
+        });
+        let attachment = new Discord.MessageAttachment(image, "rank.png");
+        return message.channel.send(attachment);
+    }
 });
 
 client.login("Your_Bot_Token_here");
 
 ```
 
+# Documentation
+**[https://canvacord.snowflakedev.cf](https://canvacord.snowflakedev.cf)**
+
 # Preview
 ![image](https://raw.githubusercontent.com/Snowflake107/canvacord/master/screenshot.png)
+
+# Rank Card
+![rankCard](https://media.discordapp.net/attachments/715806802670780436/723768235714936832/rank.png)
 
 # Join Our Discord Server
 **[discord.gg/uqB8kxh](https://discord.gg/uqB8kxh)**

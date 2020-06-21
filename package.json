@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "2.0.5",
+  "version": "2.0.6",
   "description": "Simple & easy to use image manipulation module.",
   "main": "index.js",
   "scripts": {
@@ -8,6 +8,7 @@
     "test": "cd test && node index.js",
     "format": "prettier --write \"src/**/*.js\""
   },
+  "homepage": "https://canvacord.snowflakedev.cf",
   "repository": {
     "type": "git",
     "url": "https://github.com/Snowflake107/Canvacord"
