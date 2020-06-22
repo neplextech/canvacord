@@ -90,8 +90,35 @@ client.login("Your_Bot_Token_here");
 # Preview
 ![image](https://raw.githubusercontent.com/Snowflake107/canvacord/master/screenshot.png)
 
-# Rank Card
-![rankCard](https://media.discordapp.net/attachments/715806802670780436/723768235714936832/rank.png)
+# Change My Mind
+![img](https://github.com/Snowflake107/canvacord/blob/master/test/changemymind.png)
+
+# Rank Cards
+## Default
+![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-default.png)
+
+## Custom Background & Color
+![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-bg-and-color.png)
+
+## Custom Background & No Overlay
+![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-bg-no-overlay.png)
+
+## Custom Background
+![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-bg.png)
+
+## Custom Background, Color & No Overlay
+![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-color-bg-no-overlay.png)
+
+## Custom Color
+![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-color.png)
+
+# Triggered
+![img](https://github.com/Snowflake107/canvacord/blob/master/test/triggered.gif)
+
+# Color
+![img](https://github.com/Snowflake107/canvacord/blob/master/test/color.png)
+
+### Read the docs for more endpoints.
 
 # Join Our Discord Server
 **[discord.gg/uqB8kxh](https://discord.gg/uqB8kxh)**
