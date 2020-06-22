@@ -1,7 +1,7 @@
 {
   "name": "canvacord",
-  "version": "2.0.6",
-  "description": "Simple & easy to use image manipulation module.",
+  "version": "3.0.0",
+  "description": "Simple & easy to use image manipulation module for discord bots with a lot of features like rank card, memes & more...",
   "main": "index.js",
   "scripts": {
     "docsgen": "jsdoc --configure .jsdoc.json --verbose",
@@ -22,7 +22,14 @@
     "rank",
     "rank-card",
     "welcomer",
-    "leaver"
+    "leaver",
+    "dank-memer",
+    "imagen",
+    "imgen",
+    "imagegen",
+    "canvas",
+    "jimp",
+    "api"
   ],
   "author": "Snowflake107",
   "license": "ISC",

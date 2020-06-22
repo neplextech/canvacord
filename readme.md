@@ -15,35 +15,7 @@ npm i --save canvacord
 - and more...
 
 # Functions
-- batslap(image1, image2)
-- beautiful(image)
-- facepalm(image)
-- gay(image)
-- kiss(image1, image2)
-- rip(image)
-- spank(image1, image2)
-- trash(image)
-- blur(image, level = 5)
-- greyscale(image)
-- sepia(image)
-- invert(image)
-- delete(image)
-- color(color_hex_or_html5_color_name)
-- trigger(image)
-- hitler(image)
-- bed(image1, image2)
-- wanted(image)
-- circle(image)
-- jail(image)
-- dither(image)
-- wasted(image)
-- welcomer({ username, discrim, avatarURL })
-- leaver({ username, discrim, avatarURL })
-- rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background })
-- read(ImageOrBuffer)
-- pixelate(image, level)
-- write(buffer, filename)
-- jokeoverthehead(image)
+**[Functions are listed here](https://canvacord.snowflakedev.cf/canvacord)**
 
 # Example
 
@@ -95,13 +67,13 @@ client.on("message", async (message) => {
         let image = await canva.rank({ 
             username, 
             discrim, 
-            level, 
-            rank, 
-            neededXP, 
-            currentXP, 
-            avatarURL, 
-            color, 
-            background 
+            level: rank.level, 
+            rank: rank.rank, 
+            neededXP: rank.neededXP, 
+            currentXP: rank.currentXP, 
+            avatarURL: message.author.displayAvatarURL({ format: "png" }), 
+            color: "white", 
+            background: "https://link-to/superDuperBackground"
         });
         let attachment = new Discord.MessageAttachment(image, "rank.png");
         return message.channel.send(attachment);
