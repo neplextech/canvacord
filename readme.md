@@ -91,32 +91,32 @@ client.login("Your_Bot_Token_here");
 ![image](https://raw.githubusercontent.com/Snowflake107/canvacord/master/screenshot.png)
 
 # Change My Mind
-![img](https://github.com/Snowflake107/canvacord/blob/master/test/changemymind.png)
+![img](https://raw.githubusercontent.com/Snowflake107/canvacord/master/test/changemymind.png)
 
 # Rank Cards
 ## Default
-![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-default.png)
+![img](https://raw.githubusercontent.com/Snowflake107/canvacord/master/test/rank-default.png)
 
 ## Custom Background & Color
-![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-bg-and-color.png)
+![img](https://raw.githubusercontent.com/Snowflake107/canvacord/master/test/rank-custom-bg-and-color.png)
 
 ## Custom Background & No Overlay
-![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-bg-no-overlay.png)
+![img](https://raw.githubusercontent.com/Snowflake107/canvacord/master/test/rank-custom-bg-no-overlay.png)
 
 ## Custom Background
-![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-bg.png)
+![img](https://raw.githubusercontent.com/Snowflake107/canvacord/master/test/rank-custom-bg.png)
 
 ## Custom Background, Color & No Overlay
-![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-color-bg-no-overlay.png)
+![img](https://raw.githubusercontent.com/Snowflake107/canvacord/master/test/rank-custom-color-bg-no-overlay.png)
 
 ## Custom Color
-![img](https://github.com/Snowflake107/canvacord/blob/master/test/rank-custom-color.png)
+![img](https://raw.githubusercontent.com/Snowflake107/canvacord/master/test/rank-custom-color.png)
 
 # Triggered
-![img](https://github.com/Snowflake107/canvacord/blob/master/test/triggered.gif)
+![img](https://raw.githubusercontent.com/Snowflake107/canvacord/master/test/triggered.gif)
 
 # Color
-![img](https://github.com/Snowflake107/canvacord/blob/master/test/color.png)
+![img](https://raw.githubusercontent.com/Snowflake107/canvacord/master/test/color.png)
 
 > ### Read the docs for more endpoints
 
