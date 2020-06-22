@@ -118,7 +118,7 @@ client.login("Your_Bot_Token_here");
 # Color
 ![img](https://github.com/Snowflake107/canvacord/blob/master/test/color.png)
 
-### Read the docs for more endpoints.
+> ### Read the docs for more endpoints
 
 # Join Our Discord Server
 **[discord.gg/uqB8kxh](https://discord.gg/uqB8kxh)**
