@@ -19,6 +19,12 @@ const circle = require('@jimp/plugin-circle');
 const configure = require('@jimp/custom');
 const fs = require('fs');
 const Util = require('./CanvasUtil');
+const statuses = {
+    dnd: __dirname + "/assets/images/dnd.png",
+    idle: __dirname + "/assets/images/idle.png",
+    online: __dirname + "/assets/images/online.png",
+    offline: __dirname + "/assets/images/offline.png"
+};
 
 // load custom plugins
 configure({ plugins: [circle] }, jimp);
@@ -352,7 +358,14 @@ class Canvacord {
      * @ignore
      */
     _getHex(color) {
-        Util.resolveColor(color);
+        if (!color) return '#000000';
+        if (color === 'RANDOM') return '#' + Math.floor(Math.random() * (0xffffff + 1)).toString(16);
+        if (["dnd", "online", "idle", "offline"].includes(color.toLowerCase())) return status[color.toLowerCase()];
+        if (Array.isArray(color)) return '#' + ((color[0] << 16) + (color[1] << 8) + color[2]).toString(16);
+        if (isNaN(color) && (color.startsWith('#') || color.startsWith('0x'))) return color.replace('0x', '#');
+        if (!isNaN(color) && String(color).startsWith('0x')) return String(color).replace('0x', '#');
+        if (!isNaN(color)) return `#${color.toString(16)}`;
+        return color;
     }
 
     /**
@@ -568,19 +581,22 @@ class Canvacord {
      * @param {String} color Hex or HTML5 color name or rgb
      * @param {String|Buffer} background Rank card background image
      * @param {Boolean} overlay Keep overlay or not
+     * @param {String} status The user status. Must be one of online, idle, offline or dnd
      * @returns {Promise<Buffer>}
      * @example let img = await canva.rank({ username: "Snowflake", discrim: "0007", level: 4, rank: 12, neededXP: 500, currentXP: 407, avatarURL: "...", color: "#FFFFFF" });
      * canva.write(img, "img.png");
      */
-    async rank({ username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background, overlay }) {
-        if (!username) throw new Error('No username was provided!');
-        if (!level) throw new Error('No level was provided!');
-        if (!rank) throw new Error('No rank was provided!');
-        if (!neededXP) throw new Error('No totalXP was provided!');
-        if (!currentXP) throw new Error('No currentXP was provided!');
-        if (!avatarURL) throw new Error('No avatarURL was provided!');
-        if (!color || typeof color !== 'string') color = '#FFFFFF';
-        if (overlay !== false) overlay = true;
+    async rank(options = { username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background, overlay, status: "online" }) {
+        if (!options.username) throw new Error('No username was provided!');
+        if (!options.level) throw new Error('No level was provided!');
+        if (!options.rank) throw new Error('No rank was provided!');
+        if (!options.neededXP) throw new Error('No totalXP was provided!');
+        if (!options.currentXP) throw new Error('No currentXP was provided!');
+        if (!options.avatarURL) throw new Error('No avatarURL was provided!');
+        if (!options.color || typeof options.color !== 'string') options.color = '#FFFFFF';
+        if (options.overlay !== false) options.overlay = true;
+        if (typeof status !== "string" || !["online", "offline", "idle", "dnd"].includes(status.toLowerCase())) throw new Error("Status must be one of online, idle, dnd or offline.")
+        let { username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background, overlay, status } = options;
 
         Canvas.registerFont(__dirname + '/assets/fonts/regular-font.ttf', {
             family: 'Manrope',
@@ -612,12 +628,12 @@ class Canvacord {
         ctx.font = `bold 36px ${font}`;
         ctx.fillStyle = color;
         ctx.textAlign = 'start';
-        const name = username.length >= 10 ? username.substring(0, 7).trim() + '...' : username;
-        ctx.fillText(`${name}`, 264, 164);
+        const name = username.length > 12 ? username.substring(0, 12).trim() + '...' : username;
+        ctx.fillText(`${name}`, 280, 164);
         ctx.font = `36px ${font}`;
         ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
         ctx.textAlign = 'center';
-        if (discrim) ctx.fillText(`#${discrim}`, ctx.measureText(name).width + 10 + 335, 164);
+        if (discrim) ctx.fillText(`#${discrim}`, ctx.measureText(name).width + 20 + 335, 164);
 
         ctx.font = `bold 36px ${font}`;
         ctx.fillStyle = color;
@@ -631,18 +647,7 @@ class Canvacord {
         ctx.textAlign = 'end';
         ctx.fillText(rank, 934 - 64 - ctx.measureText(level).width - 16 - ctx.measureText(`LEVEL`).width - 16, 82);
         ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-        ctx.fillText(
-            'RANK',
-            934 -
-                64 -
-                ctx.measureText(level).width -
-                16 -
-                ctx.measureText(`LEVEL`).width -
-                16 -
-                ctx.measureText(rank).width -
-                16,
-            82
-        );
+        ctx.fillText('RANK', 934 - 64 - ctx.measureText(level).width - 16 - ctx.measureText(`LEVEL`).width - 16 - ctx.measureText(rank).width - 16, 82);
 
         ctx.font = `bold 36px ${font}`;
         ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
@@ -669,33 +674,13 @@ class Canvacord {
         ctx.fillRect(257 + 18.5, 147.5 + 36.25, widthXP, 37.5);
         ctx.arc(257 + 18.5 + widthXP, 147.5 + 18.5 + 36.25, 18.75, 1.5 * Math.PI, 0.5 * Math.PI, false);
         ctx.fill();
-
+        
         const avatar = await Canvas.loadImage(await this.circle(avatarURL));
-        ctx.drawImage(avatar, 85, 66, 180, 180);
+        ctx.drawImage(avatar, 70, 50, 180, 180);
 
+        let i = await Canvas.loadImage(statuses[status.toLowerCase() || "online"]);
+        ctx.drawImage(i, 200,185, 40, 40);
         return canvas.toBuffer();
-    }
-
-    /**
-     * rank card
-     * @param {String} username Username
-     * @param {String} discrim Discriminator
-     * @param {String} level User level
-     * @param {String} rank User rank
-     * @param {String} neededXP XP needed to reach next level
-     * @param {String} currentXP Current XP of a user
-     * @param {Buffer|String} avatarURL Avatar URL or {Buffer} or Canvacord {Buffer} itself
-     * @param {String} color Hex or HTML5 color name or rgb
-     * @param {String|Buffer} background Rank card background image
-     * @param {Boolean} overlay Keep overlay or not
-     * @returns {Promise<Buffer>}
-     * @example let img = await canva.rank({ username: "Snowflake", discrim: "0007", level: 4, rank: 12, neededXP: 500, currentXP: 407, avatarURL: "...", color: "#FFFFFF" });
-     * canva.write(img, "img.png");
-     * @deprecated use Canvacord.rank() instead
-     */
-    async rankCard(...options) {
-        console.warn('[Depreciated] Use Canvacord.rank() instead');
-        return this.rank(...options);
     }
 
     /**
@@ -1020,19 +1005,19 @@ class Canvacord {
     async deepfry(image) {
         if (!image) throw new Error('No image provided!');
         image = await Canvas.loadImage(image);
-        const canvas = Canvas.createCanvas(image.width, image.height);
+        const canvas = Canvas.createCanvas(1024, 1024);
         const ctx = canvas.getContext('2d');
-        ctx.drawImage(image, 0, 0, image.width, image.height);
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
         ctx.globalAlpha = 0;
         ctx.fillStyle = '#FF591A';
-        ctx.fillRect(0, 0, image.width, image.height);
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.globalAlpha = 1.0;
         ctx.globalCompositeOperation = 'saturation';
         ctx.fillStyle = 'hsl(0, 100%, 50%)';
-        ctx.fillRect(0, 0, image.width, image.height);
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
         ctx.globalCompositeOperation = 'source-over';
 
-        let data = ctx.getImageData(0, 0, image.width, image.height);
+        let data = ctx.getImageData(0, 0, canvas.width, canvas.height);
         data = Util.brightnessContrastPhotoshop(data, 52, 60);
         ctx.putImageData(data, 0, 0);
         data = Util.brightnessContrastPhotoshop(data, 32, 40);
@@ -1052,7 +1037,9 @@ class Canvacord {
      * @example let img = await canva.createQRCode(text);
      * canva.write(img, "img.png");
      */
-    async createQRCode(text, options = { background: '#FFFFFF', color: '#000000' }) {
+    async createQRCode(text, options = { background, color }) {
+        if (!options.background) options.background = "#FFFFFF";
+        if (!options.color) options.color = "#000000";
         if (!text) throw new Error('No text specified!');
         let img = `https://api.qrserver.com/v1/create-qr-code/?size=1024x1024&data=${encodeURIComponent(
             text
@@ -1109,6 +1096,37 @@ class Canvacord {
         image.rotate(52, false);
         base.composite(image, 210, 700);
         return await base.getBufferAsync('image/png');
+    }
+
+    /**
+     * Distracted boyfriend
+     * @param {String|Buffer} image1 Face for the girl in red color
+     * @param {String|Buffer} image2 Face for the boy
+     * @param {String|Buffer} image3 Face for the other girl [optional]
+     * @returns {Promise<Buffer>}
+     * @example let img = await canvacord.distracted("firstImage.png", "secondImage.png", "thirdImage.png")
+     * canvacord.write(img, "distracted.png");
+     */
+    async distracted(image1, image2, image3 = null) {
+        if (!image1) throw new Error('No image1 provided!');
+        if (!image2) throw new Error('No image2 provided!');
+        let base = await jimp.read(__dirname + "/assets/images/distracted.jpg");
+
+        image1 = await jimp.read(await this.circle(image1));
+        image1.resize(150, 150);
+
+        image2 = await jimp.read(await this.circle(image2));
+        image2.resize(130, 130);
+
+        base.composite(image1, 180, 90);
+        base.composite(image2, 480, 35);
+        if (image3 && image3 !== null) {
+            image3 = await jimp.read(await this.circle(image3));
+            image3.resize(130, 130)
+            base.composite(image3, 730, 110);
+        }
+
+        return await base.getBufferAsync("image/png");
     }
 }
 
