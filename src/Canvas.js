@@ -586,7 +586,7 @@ class Canvacord {
      * @example let img = await canva.rank({ username: "Snowflake", discrim: "0007", level: 4, rank: 12, neededXP: 500, currentXP: 407, avatarURL: "...", color: "#FFFFFF" });
      * canva.write(img, "img.png");
      */
-    async rank(options = { username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background, overlay, status: "online" }) {
+    async rank(options = { username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background, overlay, status }) {
         if (!options.username) throw new Error('No username was provided!');
         if (!options.level) throw new Error('No level was provided!');
         if (!options.rank) throw new Error('No rank was provided!');
@@ -595,7 +595,8 @@ class Canvacord {
         if (!options.avatarURL) throw new Error('No avatarURL was provided!');
         if (!options.color || typeof options.color !== 'string') options.color = '#FFFFFF';
         if (options.overlay !== false) options.overlay = true;
-        if (typeof status !== "string" || !["online", "offline", "idle", "dnd"].includes(status.toLowerCase())) throw new Error("Status must be one of online, idle, dnd or offline.")
+        if (!options.status) options.status = "online";
+        if (typeof options.status !== "string" || !["online", "offline", "idle", "dnd"].includes(options.status.toLowerCase())) throw new Error("Status must be one of online, idle, dnd or offline.")
         let { username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background, overlay, status } = options;
 
         Canvas.registerFont(__dirname + '/assets/fonts/regular-font.ttf', {
