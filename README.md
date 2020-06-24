@@ -85,7 +85,7 @@ client.login("Your_Bot_Token_here");
 ```
 
 # Documentation
-**[https://canvacord.snowflakedev.cf](https://canvacord.snowflakedev.xyz)**
+**[https://canvacord.snowflakedev.xyz](https://canvacord.snowflakedev.xyz)**
 
 # Preview
 ![image](https://raw.githubusercontent.com/Snowflake107/canvacord/master/screenshot.png)
