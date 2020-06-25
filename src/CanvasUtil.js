@@ -1,4 +1,5 @@
 const Canvas = require('canvas');
+const { fillTextWithTwemoji } = require('node-canvas-with-twemoji');
 
 class CanvasUtil {
     constructor() {
@@ -114,6 +115,17 @@ class CanvasUtil {
             }
         }
         return num;
+    }
+
+    static async toEmojiMessage(ctx, text, x, y) {
+        return fillTextWithTwemoji(ctx, text, x, y);
+    }
+
+    static toDiscordTime() {
+        let date = new Date();
+        let hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
+        let minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
+        return `Today at ${hours}:${minutes}`;
     }
 }
 

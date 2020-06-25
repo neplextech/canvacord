@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "3.0.1",
+  "version": "3.0.4",
   "description": "Simple & easy to use image manipulation module for discord bots with a lot of features like rank card, memes & more...",
   "main": "index.js",
   "scripts": {
@@ -38,7 +38,8 @@
     "@jimp/plugin-circle": "^0.13.0",
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
-    "jimp": "^0.13.0"
+    "jimp": "^0.13.0",
+    "node-canvas-with-twemoji": "^0.1.1"
   },
   "devDependencies": {
     "jsdoc": "^3.6.4",

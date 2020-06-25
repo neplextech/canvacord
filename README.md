@@ -15,7 +15,7 @@ npm i --save canvacord
 - and more...
 
 # Functions
-**[Functions are listed here](https://canvacord.snowflakedev.xyz/canvacord)**
+**[All The Functions are listed here](https://canvacord.snowflakedev.xyz/canvacord)**
 
 # Example
 

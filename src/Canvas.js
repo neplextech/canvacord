@@ -20,10 +20,10 @@ const configure = require('@jimp/custom');
 const fs = require('fs');
 const Util = require('./CanvasUtil');
 const statuses = {
-    dnd: __dirname + "/assets/images/dnd.png",
-    idle: __dirname + "/assets/images/idle.png",
-    online: __dirname + "/assets/images/online.png",
-    offline: __dirname + "/assets/images/offline.png"
+    dnd: __dirname + '/assets/images/dnd.png',
+    idle: __dirname + '/assets/images/idle.png',
+    online: __dirname + '/assets/images/online.png',
+    offline: __dirname + '/assets/images/offline.png'
 };
 
 // load custom plugins
@@ -46,52 +46,6 @@ class Canvacord {
          * @type {String}
          */
         this.version = require('../package.json').version;
-
-        /**
-         * Canvacord Methods
-         * @type {Methods[]}
-         */
-        this.methods = [
-            'affect',
-            'batslap',
-            'beautiful',
-            'bed',
-            'blur',
-            'changemymind',
-            'circle',
-            'color',
-            'createQRCode',
-            'deepfry',
-            'delete',
-            'dither',
-            'facepalm',
-            'gay',
-            'greyscale',
-            'hitler',
-            'invert',
-            'jail',
-            'jokeoverhead',
-            'kiss',
-            'leave',
-            'leaver',
-            'pixelate',
-            'rank',
-            'rankCard',
-            'read',
-            'replaceColor',
-            'rip',
-            'sepia',
-            'shit',
-            'spank',
-            'trash',
-            'trigger',
-            'wanted',
-            'wasted',
-            'welcome',
-            'welcomer',
-            'write',
-            'youtube'
-        ];
     }
 
     /**
@@ -360,7 +314,7 @@ class Canvacord {
     _getHex(color) {
         if (!color) return '#000000';
         if (color === 'RANDOM') return '#' + Math.floor(Math.random() * (0xffffff + 1)).toString(16);
-        if (["dnd", "online", "idle", "offline"].includes(color.toLowerCase())) return status[color.toLowerCase()];
+        if (['dnd', 'online', 'idle', 'offline'].includes(color.toLowerCase())) return status[color.toLowerCase()];
         if (Array.isArray(color)) return '#' + ((color[0] << 16) + (color[1] << 8) + color[2]).toString(16);
         if (isNaN(color) && (color.startsWith('#') || color.startsWith('0x'))) return color.replace('0x', '#');
         if (!isNaN(color) && String(color).startsWith('0x')) return String(color).replace('0x', '#');
@@ -582,11 +536,27 @@ class Canvacord {
      * @param {String|Buffer} background Rank card background image
      * @param {Boolean} overlay Keep overlay or not
      * @param {String} status The user status. Must be one of online, idle, offline or dnd
+     * @param {Array} gradient Creates the gradient filled progress bar. Color will be ignored!
      * @returns {Promise<Buffer>}
      * @example let img = await canva.rank({ username: "Snowflake", discrim: "0007", level: 4, rank: 12, neededXP: 500, currentXP: 407, avatarURL: "...", color: "#FFFFFF" });
      * canva.write(img, "img.png");
      */
-    async rank(options = { username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background, overlay, status }) {
+    async rank(
+        options = {
+            username,
+            discrim,
+            level,
+            rank,
+            neededXP,
+            currentXP,
+            avatarURL,
+            color: '#FFFFFF',
+            background,
+            overlay: true,
+            status: 'online',
+            gradient: []
+        }
+    ) {
         if (!options.username) throw new Error('No username was provided!');
         if (!options.level) throw new Error('No level was provided!');
         if (!options.rank) throw new Error('No rank was provided!');
@@ -595,9 +565,26 @@ class Canvacord {
         if (!options.avatarURL) throw new Error('No avatarURL was provided!');
         if (!options.color || typeof options.color !== 'string') options.color = '#FFFFFF';
         if (options.overlay !== false) options.overlay = true;
-        if (!options.status) options.status = "online";
-        if (typeof options.status !== "string" || !["online", "offline", "idle", "dnd"].includes(options.status.toLowerCase())) throw new Error("Status must be one of online, idle, dnd or offline.")
-        let { username, discrim, level, rank, neededXP, currentXP, avatarURL, color, background, overlay, status } = options;
+        if (!options.status) options.status = 'online';
+        if (
+            typeof options.status !== 'string' ||
+            !['online', 'offline', 'idle', 'dnd'].includes(options.status.toLowerCase())
+        )
+            throw new Error('Status must be one of online, idle, dnd or offline.');
+        let {
+            username,
+            discrim,
+            level,
+            rank,
+            neededXP,
+            currentXP,
+            avatarURL,
+            color,
+            background,
+            overlay,
+            status,
+            gradient
+        } = options;
 
         Canvas.registerFont(__dirname + '/assets/fonts/regular-font.ttf', {
             family: 'Manrope',
@@ -624,37 +611,54 @@ class Canvacord {
         } else rankCard = await Canvas.loadImage(__dirname + '/assets/images/rankcard.png');
         ctx.drawImage(rankCard, 0, 0, canvas.width, canvas.height);
 
+        const avatar = await Canvas.loadImage(await this.circle(avatarURL));
+        ctx.drawImage(avatar, 70, 50, 180, 180);
+
+        let i = await Canvas.loadImage(await this.circle(statuses[status.toLowerCase() || 'online']));
+        ctx.drawImage(i, 200, 185, 40, 40);
+
         const font = 'Manrope';
 
         ctx.font = `bold 36px ${font}`;
-        ctx.fillStyle = color;
+        ctx.fillStyle = color || '#FFFFFF';
         ctx.textAlign = 'start';
         const name = username.length > 12 ? username.substring(0, 12).trim() + '...' : username;
         ctx.fillText(`${name}`, 280, 164);
         ctx.font = `36px ${font}`;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
+        ctx.fillStyle = color || 'rgba(255, 255, 255, 0.4)';
         ctx.textAlign = 'center';
         if (discrim) ctx.fillText(`#${discrim}`, ctx.measureText(name).width + 20 + 335, 164);
 
         ctx.font = `bold 36px ${font}`;
-        ctx.fillStyle = color;
+        ctx.fillStyle = color || '#FFFFFF';
         ctx.textAlign = 'end';
         ctx.fillText(level, 934 - 64, 82);
         ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
         ctx.fillText('LEVEL', 934 - 64 - ctx.measureText(level).width - 16, 82);
 
         ctx.font = `bold 36px ${font}`;
-        ctx.fillStyle = color;
+        ctx.fillStyle = color || '#FFFFFF';
         ctx.textAlign = 'end';
         ctx.fillText(rank, 934 - 64 - ctx.measureText(level).width - 16 - ctx.measureText(`LEVEL`).width - 16, 82);
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.4)';
-        ctx.fillText('RANK', 934 - 64 - ctx.measureText(level).width - 16 - ctx.measureText(`LEVEL`).width - 16 - ctx.measureText(rank).width - 16, 82);
+        ctx.fillStyle = color || 'rgba(255, 255, 255, 0.4)';
+        ctx.fillText(
+            'RANK',
+            934 -
+                64 -
+                ctx.measureText(level).width -
+                16 -
+                ctx.measureText(`LEVEL`).width -
+                16 -
+                ctx.measureText(rank).width -
+                16,
+            82
+        );
 
         ctx.font = `bold 36px ${font}`;
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+        ctx.fillStyle = color || 'rgba(255, 255, 255, 0.5)';
         ctx.textAlign = 'start';
         ctx.fillText('/ ' + Util.toAbbrev(neededXP), 670 + ctx.measureText(Util.toAbbrev(currentXP)).width + 15, 164);
-        ctx.fillStyle = color;
+        ctx.fillStyle = color || '#FFFFFF';
         ctx.fillText(Util.toAbbrev(currentXP), 670, 164);
 
         let widthXP = (currentXP * 615) / neededXP;
@@ -669,18 +673,22 @@ class Canvacord {
         ctx.fill();
 
         ctx.beginPath();
-        ctx.fillStyle = color;
+        if (Array.isArray(gradient) && gradient.length > 0) {
+            gradient.length = 2;
+            let gradientContext = ctx.createRadialGradient(widthXP, 0, 500, 0);
+            gradient.forEach((i) => {
+                gradientContext.addColorStop(gradient.indexOf(i), i);
+            });
+            ctx.fillStyle = gradientContext;
+        } else {
+            ctx.fillStyle = color;
+        }
         ctx.arc(257 + 18.5, 147.5 + 18.5 + 36.25, 18.5, 1.5 * Math.PI, 0.5 * Math.PI, true);
         ctx.fill();
         ctx.fillRect(257 + 18.5, 147.5 + 36.25, widthXP, 37.5);
         ctx.arc(257 + 18.5 + widthXP, 147.5 + 18.5 + 36.25, 18.75, 1.5 * Math.PI, 0.5 * Math.PI, false);
         ctx.fill();
-        
-        const avatar = await Canvas.loadImage(await this.circle(avatarURL));
-        ctx.drawImage(avatar, 70, 50, 180, 180);
 
-        let i = await Canvas.loadImage(statuses[status.toLowerCase() || "online"]);
-        ctx.drawImage(i, 200,185, 40, 40);
         return canvas.toBuffer();
     }
 
@@ -1039,8 +1047,8 @@ class Canvacord {
      * canva.write(img, "img.png");
      */
     async createQRCode(text, options = { background, color }) {
-        if (!options.background) options.background = "#FFFFFF";
-        if (!options.color) options.color = "#000000";
+        if (!options.background) options.background = '#FFFFFF';
+        if (!options.color) options.color = '#000000';
         if (!text) throw new Error('No text specified!');
         let img = `https://api.qrserver.com/v1/create-qr-code/?size=1024x1024&data=${encodeURIComponent(
             text
@@ -1111,7 +1119,7 @@ class Canvacord {
     async distracted(image1, image2, image3 = null) {
         if (!image1) throw new Error('No image1 provided!');
         if (!image2) throw new Error('No image2 provided!');
-        let base = await jimp.read(__dirname + "/assets/images/distracted.jpg");
+        let base = await jimp.read(__dirname + '/assets/images/distracted.jpg');
 
         image1 = await jimp.read(await this.circle(image1));
         image1.resize(150, 150);
@@ -1123,11 +1131,170 @@ class Canvacord {
         base.composite(image2, 480, 35);
         if (image3 && image3 !== null) {
             image3 = await jimp.read(await this.circle(image3));
-            image3.resize(130, 130)
+            image3.resize(130, 130);
             base.composite(image3, 730, 110);
         }
 
-        return await base.getBufferAsync("image/png");
+        return await base.getBufferAsync('image/png');
+    }
+
+    /**
+     * Clyde
+     * @param {String} message Message
+     * @returns {Promise<Buffer>}
+     * @example const image = await canvacord.clyde("You can't do that");
+     * canva.write(image, "clyde.png");
+     */
+    async clyde(message) {
+        if (!message) messgae = 'Please provide text!';
+        let avatar = await Canvas.loadImage(
+            await this.circle(
+                'https://images.discordapp.net/avatars/536953835361665024/ea7664a628a7a4b772dd06ed81637334.png?size=512'
+            )
+        );
+        let badge = await Canvas.loadImage('https://i.imgur.com/f3sGMSW.png');
+        Canvas.registerFont(__dirname + '/assets/fonts/Whitney-medium.otf', {
+            family: 'Whitney',
+            weight: 'regular',
+            style: 'normal'
+        });
+
+        Canvas.registerFont(__dirname + '/assets/fonts/regular-font.ttf', {
+            family: 'Manrope',
+            weight: 'regular',
+            style: 'normal'
+        });
+
+        const canvas = Canvas.createCanvas(1500, 300);
+
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#36393E';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(avatar, 75, 30, 130, 130);
+        ctx.drawImage(badge, 360, 45, 100, 40);
+
+        ctx.font = '40px Manrope';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.textAlign = 'start';
+        await Util.toEmojiMessage(ctx, message.substr(0, 66), 230, 150);
+
+        ctx.font = '50px Whitney';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.textAlign = 'start';
+        ctx.fillText('Clyde', 230, 80);
+
+        ctx.font = '40px Whitney';
+        ctx.fillStyle = '#7D7D7D';
+        ctx.textAlign = 'start';
+        ctx.fillText(Util.toDiscordTime(), 470, 80);
+
+        ctx.font = '20px Manrope';
+        ctx.fillStyle = '#7D7D7D';
+        ctx.textAlign = 'start';
+        ctx.fillText('Only you can see this  —', 240, 190);
+
+        ctx.font = '20px Manrope';
+        ctx.fillStyle = '#2785C7';
+        ctx.textAlign = 'start';
+        ctx.fillText('delete this message.', 240 + ctx.measureText('Only you can see this  —').width + 10, 190);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Clyde
+     * @param {Object} options Options
+     * @param {Buffer|String} [options.image] Image
+     * @param {String} [options.message] Message
+     * @param {String} [options.username] Username
+     * @param {String} [options.color] Color
+     * @returns {Promise<Buffer>}
+     * @example const image = await canvacord.quote({ image: "...", message: "You can't do that", username: "Canvacord", color: "pink" });
+     * canva.write(image, "quote.png");
+     */
+    async quote(options = { image, message, username, color }) {
+        if (!options.image)
+            options.image =
+                'https://images.discordapp.net/avatars/536953835361665024/ea7664a628a7a4b772dd06ed81637334.png?size=512';
+        if (!options.message) options.message = 'Please provide text!';
+        if (!options.username) options.username = 'Clyde';
+        if (!options.color) options.color = '#FFFFFF';
+
+        options.image = await Canvas.loadImage(await this.circle(options.image));
+
+        Canvas.registerFont(__dirname + '/assets/fonts/Whitney-medium.otf', {
+            family: 'Whitney',
+            weight: 'regular',
+            style: 'normal'
+        });
+
+        Canvas.registerFont(__dirname + '/assets/fonts/regular-font.ttf', {
+            family: 'Manrope',
+            weight: 'regular',
+            style: 'normal'
+        });
+
+        const canvas = Canvas.createCanvas(1500, 300);
+
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = '#36393E';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(options.image, 75, 30, 130, 130);
+
+        ctx.font = '40px Manrope';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.textAlign = 'start';
+        await Util.toEmojiMessage(ctx, options.message.substr(0, 66), 230, 150);
+
+        ctx.font = '50px Whitney';
+        ctx.fillStyle = typeof options.color == 'string' ? options.color : '#FFFFFF';
+        ctx.textAlign = 'start';
+        ctx.fillText(typeof options.username === 'string' ? options.username.substr(0, 17) : 'Clyde', 230, 80);
+
+        ctx.font = '40px Whitney';
+        ctx.fillStyle = '#7D7D7D';
+        ctx.textAlign = 'start';
+        ctx.fillText(Util.toDiscordTime(), 240 + ctx.measureText(options.username.substr(0, 17)).width + 110, 80);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * PornHub Comment
+     * @param {Object} options Options
+     * @param {String} [options.username] Username
+     * @param {String} [options.message] Comment
+     * @param {String|Buffer} [options.image] Image
+     * @returns {Promise<Buffer>}
+     * @example const image = await canvacord.phub({ username: "User", message: "Looks good 👏🏻", image: "..." });
+     */
+    async phub(options = { username, message, image }) {
+        if (!options.username) throw new Error('Username may not be empty!');
+        if (!options.message) throw new Error('Message may not be empty!');
+        if (!options.image) throw new Error('Image may not be empty!');
+
+        let image = await Canvas.loadImage(options.image);
+        let baseImage = await Canvas.loadImage(__dirname + '/assets/images/phub.png');
+
+        let canvas = Canvas.createCanvas(baseImage.width, baseImage.height);
+        let ctx = canvas.getContext('2d');
+
+        ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 30, 310, 70, 70);
+
+        ctx.font = '32px Arial';
+        ctx.fillStyle = '#F99600';
+        ctx.textAlign = 'start';
+        ctx.fillText(options.username.substr(0, 20), 115, 350);
+
+        ctx.font = '32px Arial';
+        ctx.fillStyle = '#FFFFFF';
+        ctx.textAlign = 'start';
+        await Util.toEmojiMessage(ctx, options.message.substr(0, 50), 30, 430);
+
+        return canvas.toBuffer();
     }
 }
 
