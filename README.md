@@ -1,5 +1,8 @@
 # Canvacord
-Simple & easy to use image manipulation module.
+Canvacord is a wrapper for canvas & jimp which can be used to create/manipulate images easily. 
+This package is meant for beginners who don't know how to use canvas & stuffs.
+
+> ⚠ This package is not recommended to you if you know how to use canvas/other image manipulation tools.
 
 # Installing
 
@@ -8,14 +11,20 @@ npm i --save canvacord
 ```
 
 # Features
-- Supports Buffer, image url or path
+- Beginner friendly
+- Supports Buffer or image url
 - Super fast image manipulation
 - Welcomer and leaver images
 - Rank card
 - and more...
 
-# Functions
-**[All The Functions are listed here](https://canvacord.snowflakedev.xyz/canvacord)**
+# Limitations
+- You can only create stuffs using the mentioned functions.
+- You cannot create super-fancy things
+- If you want to go deeper, you must learn canvas
+
+# Methods
+**[All The Methods are listed here](https://canvacord.snowflakedev.xyz/canvacord)**
 
 # Example
 
