@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "3.0.6",
+  "version": "3.0.7",
   "description": "Simple & easy to use image manipulation module for discord bots with a lot of features like rank card, memes & more...",
   "main": "index.js",
   "scripts": {
