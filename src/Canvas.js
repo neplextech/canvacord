@@ -1046,9 +1046,7 @@ class Canvacord {
      * @example let img = await canva.createQRCode(text);
      * canva.write(img, "img.png");
      */
-    async createQRCode(text, options = { background, color }) {
-        if (!options.background) options.background = '#FFFFFF';
-        if (!options.color) options.color = '#000000';
+    async createQRCode(text, options = { background: "#FFFFFF", color: "#000000" }) {
         if (!text) throw new Error('No text specified!');
         let img = `https://api.qrserver.com/v1/create-qr-code/?size=1024x1024&data=${encodeURIComponent(
             text
@@ -1297,5 +1295,7 @@ class Canvacord {
         return canvas.toBuffer();
     }
 }
+
+
 
 module.exports = Canvacord;
