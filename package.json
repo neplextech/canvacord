@@ -35,7 +35,7 @@
   "license": "ISC",
   "dependencies": {
     "@jimp/custom": "^0.13.0",
-    "@jimp/plugin-circle": "^0.13.0",
+    "@jimp/plugin-circle": "^0.14.0",
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
     "jimp": "^0.13.0",
