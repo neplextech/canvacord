@@ -38,7 +38,7 @@
     "@jimp/plugin-circle": "^0.14.0",
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
-    "jimp": "^0.14.0",
+    "jimp": "^0.16.0",
     "node-canvas-with-twemoji": "^0.1.1"
   },
   "devDependencies": {
