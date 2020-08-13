@@ -1,7 +1,7 @@
 {
   "name": "canvacord",
-  "version": "3.0.7",
-  "description": "Simple & easy to use image manipulation module for discord bots with a lot of features like rank card, memes & more...",
+  "version": "4.0.0",
+  "description": "Simple & easy to use image manipulation module for discord bots with a lot of features like rank card, memes & more.",
   "main": "index.js",
   "scripts": {
     "docsgen": "jsdoc --configure .jsdoc.json --verbose",
@@ -39,11 +39,13 @@
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
     "jimp": "^0.14.0",
-    "node-canvas-with-twemoji": "^0.1.1"
+    "moment": "^2.27.0",
+    "moment-duration-format": "^2.3.2",
+    "node-canvas-with-twemoji-and-discord-emoji": "^1.1.4"
   },
   "devDependencies": {
-    "jsdoc": "^3.6.4",
-    "loke-jsdoc-theme": "^2.1.0",
+    "jsdoc": "^3.6.5",
+    "jsdoc-skyceil": "^1.0.5",
     "prettier": "^2.0.5"
   }
 }

@@ -1,5 +1,7 @@
-const Canvas = require('canvas');
-const { fillTextWithTwemoji } = require('node-canvas-with-twemoji');
+const Canvas = require("canvas");
+const { fillTextWithTwemoji } = require("node-canvas-with-twemoji-and-discord-emoji");
+const moment = require("moment");
+require("moment-duration-format");
 
 class CanvasUtil {
     constructor() {
@@ -8,8 +10,8 @@ class CanvasUtil {
 
     static getLines({ text, ctx, maxWidth }) {
         if (!text) return [];
-        if (!ctx) throw new Error('Canvas context was not provided!');
-        if (!maxWidth) throw new Error('No max-width provided!');
+        if (!ctx) throw new Error("Canvas context was not provided!");
+        if (!maxWidth) throw new Error("No max-width provided!");
         const lines = [];
 
         while (text.length) {
@@ -17,7 +19,7 @@ class CanvasUtil {
             for (i = text.length; ctx.measureText(text.substr(0, i)).width > maxWidth; i -= 1);
             const result = text.substr(0, i);
             let j;
-            if (i !== text.length) for (j = 0; result.indexOf(' ', j) !== -1; j = result.indexOf(' ', j) + 1);
+            if (i !== text.length) for (j = 0; result.indexOf(" ", j) !== -1; j = result.indexOf(" ", j) + 1);
             lines.push(result.substr(0, j || result.length));
             text = text.substr(lines[lines.length - 1].length, text.length);
         }
@@ -26,16 +28,16 @@ class CanvasUtil {
     }
 
     static twitterTimeFormat(date = new Date()) {
-        if (typeof date === 'number') date = new Date(date);
+        if (typeof date === "number") date = new Date(date);
         if (!date instanceof Date) date = new Date();
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         const day = date.getDate();
         let month = date.getMonth();
         const year = date.getFullYear();
         month = months[month];
         let hours = date.getHours();
         let minutes = date.getMinutes();
-        const ampm = hours >= 12 ? 'PM' : 'AM';
+        const ampm = hours >= 12 ? "PM" : "AM";
         hours %= 12;
         hours = hours || 12;
         minutes = minutes < 10 ? `0${minutes}` : minutes;
@@ -98,10 +100,10 @@ class CanvasUtil {
     }
 
     static toAbbrev(num) {
-        if (!num) return 'NaN';
-        if (typeof num === 'string') num = parseInt(num);
+        if (!num) return "NaN";
+        if (typeof num === "string") num = parseInt(num);
         let decPlaces = Math.pow(10, 1);
-        var abbrev = ['K', 'M', 'B', 'T'];
+        var abbrev = ["K", "M", "B", "T"];
         for (var i = abbrev.length - 1; i >= 0; i--) {
             var size = Math.pow(10, (i + 1) * 3);
             if (size <= num) {
@@ -126,6 +128,21 @@ class CanvasUtil {
         let hours = date.getHours() < 10 ? `0${date.getHours()}` : date.getHours();
         let minutes = date.getMinutes() < 10 ? `0${date.getMinutes()}` : date.getMinutes();
         return `Today at ${hours}:${minutes}`;
+    }
+
+    static formatTime(time) {
+        if (!time) return "00:00";
+        const fmt = moment.duration(time).format("dd:hh:mm:ss");
+
+        const chunk = fmt.split(":");
+        if (chunk.length < 2) chunk.unshift("00");
+        return chunk.join(":");
+    }
+
+    static shorten(text, len) {
+        if (typeof text !== "string") return "";
+        if (text.length <= len) return text;
+        return text.substr(0, len).trim() + "...";
     }
 }
 
