@@ -1,2 +1,7 @@
 node_modules/
+docs/
+.prettierrc
+.jsdoc.json
+.gitignore
+screenshot.png
 test/
