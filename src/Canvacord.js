@@ -213,6 +213,27 @@ class Canvacord {
     }
 
     /**
+     * Fuse two images
+     * @param {string|Buffer} image1 First image
+     * @param {string|Buffer} image2 Second image
+     */
+    static async fuse(image1, image2) {
+        if (!image1) throw new Error("Missing parameter 'image1'!");
+        if (!image2) throw new Error("Missing parameter 'image2'!");
+
+        const img1 = await Canvas.loadImage(image1);
+        const img2 = await Canvas.loadImage(image2);
+
+        const canvas = Canvas.createCanvas(img1.width, img1.height);
+        const ctx = canvas.getContext("2d");
+        ctx.globalAlpha = 0.5;
+        ctx.drawImage(img1, 0, 0);
+        ctx.drawImage(img2, 0, 0, canvas.width, canvas.height);
+
+        return canvas.toBuffer();
+    }
+
+    /**
      * Something similar to discord.js attachment
      * @param {Buffer} buffer Attachment data
      * @param {string} name Attachment name
