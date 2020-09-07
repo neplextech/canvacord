@@ -1,0 +1,35 @@
+{
+  "name": "canvacord-v5",
+  "version": "5.0.0",
+  "description": "Powerful image manipulation package for beginners.",
+  "main": "index.js",
+  "scripts": {
+    "test": "cd test && node ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Snowflake107/Canvacord.git"
+  },
+  "keywords": [
+    "canvacord",
+    "canvas",
+    "image",
+    "manipulation",
+    "easy",
+    "simple",
+    "fast",
+    "api"
+  ],
+  "author": "Snowflake107",
+  "license": "GPL-3.0-or-later",
+  "bugs": {
+    "url": "https://github.com/Snowflake107/Canvacord/issues"
+  },
+  "homepage": "https://github.com/Snowflake107/Canvacord#readme",
+  "dependencies": {
+    "canvacord-assets": "^1.0.2",
+    "canvas": "^2.6.1",
+    "gifencoder": "^2.0.1",
+    "node-canvas-with-twemoji-and-discord-emoji": "^1.1.4"
+  }
+}
