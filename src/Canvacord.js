@@ -427,7 +427,26 @@ class Canvacord {
         const canvas = Canvas.createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext("2d");
         ctx.drawImage(bg, 0, 0);
-        ctx.drawImage(img, 309, 0, 309, 309)
+        ctx.drawImage(img, 309, 0, 309, 309);
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Worse than hitler
+     * @param {string|Buffer} image Source image
+     */
+    static async hitler(image) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(image);
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").HITLER);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0);
+        ctx.drawImage(img, 46, 43, 140, 140);
+
         return canvas.toBuffer();
     }
 
