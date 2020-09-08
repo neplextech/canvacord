@@ -193,9 +193,12 @@ class Canvacord {
         return canvas.toBuffer();
     }
 
+    /**
+     * Creates circular image
+     * @param {string|Buffer} image Image source
+     */
     static async circle(image) {
         if (!image) throw new Error("Image was not provided!");
-        
         const img = await Canvas.loadImage(image);
         const canvas = Canvas.createCanvas(img.width, img.height);
         const ctx = canvas.getContext("2d");
@@ -204,6 +207,17 @@ class Canvacord {
         return canvas.toBuffer();
     }
 
+    /**
+     * Creates a rectangle
+     * @param {number} x x-axis
+     * @param {number} y y-axis
+     * @param {number} width width
+     * @param {number} height height
+     * @param {string} color color
+     * @param {boolean} stroke If it should stroke
+     * @param {number} lineWidth line width
+     * @param {boolean} rounded If it should be rounded
+     */
     static rectangle(x, y, width, height, color, stroke, lineWidth, rounded = false) {
         const canvas = Canvas.createCanvas(width, height);
         const ctx = canvas.getContext("2d");
@@ -234,12 +248,196 @@ class Canvacord {
     }
 
     /**
+     * Resize an image
+     * @param {string|Buffer} image Image source
+     * @param {number} width width
+     * @param {number} height height
+     */
+    static async resize(image, width, height) {
+        if (!image) throw new Error("Image was not provided!");
+        const img = await Canvas.loadImage(image);
+        const w = width && !isNaN(width) ? width : img.width;
+        const h = height && !isNaN(height) ? width : img.height;
+        const canvas = await Canvas.createCanvas(w, h);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Kiss each other ( ͡° ͜ʖ ͡°)
+     * @param {string|Buffer} image1 First image
+     * @param {string|Buffer} image2 Second image
+     */
+    static async kiss(image1, image2) {
+        if (!image1) throw new Error("First image was not provided!");
+        if (!image2) throw new Error("Second image was not provided!");
+        await this.__wait();
+        const canvas = Canvas.createCanvas(768, 574);
+        const ctx = canvas.getContext("2d");
+        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").KISS);
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        const avatar = await Canvas.loadImage(image1);
+        const avatar1 = await Canvas.loadImage(image2);
+        ctx.drawImage(avatar1, 370, 25, 200, 200);
+        ctx.drawImage(avatar, 150, 25, 200, 200);
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Spank someone ( ͡° ͜ʖ ͡°)
+     * @param {string|Buffer} image1 First image
+     * @param {string|Buffer} image2 Second image
+     */
+    static async spank(image1, image2) {
+        if (!image1) throw new Error("First image was not provided!");
+        if (!image2) throw new Error("Second image was not provided!");
+        await this.__wait();
+        const canvas = Canvas.createCanvas(500, 500);
+        const ctx = canvas.getContext("2d");
+        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").SPANK);
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        const avatar = await Canvas.loadImage(image1);
+        const avatar1 = await Canvas.loadImage(image2);
+        ctx.drawImage(avatar1, 350, 220, 120, 120);
+        ctx.drawImage(avatar, 225, 5, 140, 140);
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Slap someone ( ͡° ͜ʖ ͡°)
+     * @param {string|Buffer} image1 First image
+     * @param {string|Buffer} image2 Second image
+     */
+    static async slap(image1, image2) {
+        if (!image1) throw new Error("First image was not provided!");
+        if (!image2) throw new Error("Second image was not provided!");
+        await this.__wait();
+        const canvas = Canvas.createCanvas(1000, 500);
+        const ctx = canvas.getContext("2d");
+        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").BATSLAP);
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        const avatar = await Canvas.loadImage(image1);
+        const avatar1 = await Canvas.loadImage(image2);
+        ctx.drawImage(avatar1, 580, 260, 200, 200);
+        ctx.drawImage(avatar, 350, 70, 220, 220);
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Slap someone ( ͡° ͜ʖ ͡°)
+     * @param {string|Buffer} image1 First image
+     * @param {string|Buffer} image2 Second image
+     * @deprecated
+     */
+    static async batslap(image1, image2) {
+        console.warn("Canvacord#batslap() is deprecated, use Canvacord#slap() instead!");
+        return await Canvacord.slap(image1, image2);
+    }
+
+    /**
+     * Oh this? This is beautiful!
+     * @param {string|Buffer} image Source image
+     */
+    static async beautiful(image) {
+        if (!image) throw new Error("Image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(image);
+        const base = await Canvas.loadImage(Canvacord.assets("IMAGE").BEAUTIFUL);
+        const canvas = Canvas.createCanvas(376, 400);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 258, 28, 84, 95);
+        ctx.drawImage(img, 258, 229, 84, 95);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * facepalm
+     * @param {string|Buffer} image image
+     */
+    static async facepalm(image) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        let layer = await Canvas.loadImage(Canvacord.assets("IMAGE").FACEPALM);
+        let canvas = Canvas.createCanvas(632, 357);
+        let ctx = canvas.getContext("2d");
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 632, 357);
+        let avatar = await Canvas.loadImage(image);
+        ctx.drawImage(avatar, 199, 112, 235, 235);
+        ctx.drawImage(layer, 0, 0, 632, 357);
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Rainbow ( ͡° ͜ʖ ͡°)
+     * @param {string|Buffer} image Image source
+     */
+    static async rainbow(image) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        let bg = await Canvas.loadImage(Canvacord.assets("IMAGE").GAY);
+        let img = await Canvas.loadImage(image);
+        const canvas = Canvas.createCanvas(400, 400);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(img, 0, 0, 400, 400);
+        ctx.drawImage(bg, 0, 0, 400, 400);
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Rainbow ( ͡° ͜ʖ ͡°)
+     * @param {string|Buffer} image Image source
+     * @deprecated
+     */
+    static async gay(image) {
+        console.warn("Canvacord#gay() is deprecated, use Canvacord#rainbow() instead!");
+        return await Canvacord.rainbow(image);
+    }
+
+    /**
+     * "F" in the chat
+     * @param {string|Buffer} image image source
+     */
+    static async rip(image) {
+        if (!image) throw new Error("Image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(image);
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").RIP);
+        const canvas = Canvas.createCanvas(244, 253);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 63, 110, 90, 90);
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Trash?
+     * @param {string|Buffer} image Image source
+     */
+    static async trash(image) {
+        if (!image) throw new Error("Image was not provided!");
+        await this.__wait();
+        const blur = await Canvacord.blur(image, 50);
+        const img = await Canvas.loadImage(blur);
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").TRASH);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(bg, 0, 0);
+        ctx.drawImage(img, 309, 0, 309, 309)
+        return canvas.toBuffer();
+    }
+
+    /**
      * Something similar to discord.js attachment
      * @param {Buffer} buffer Attachment data
      * @param {string} name Attachment name
      * @param {boolean} wrap If attachment should be wrapped as message object
      */
-    static toAttachment(buffer, name, wrap = false) {
+    static toAttachment(buffer, name, wrap = true) {
         const attachment = new Attachment(buffer, name ? name : "attachment.png");
         if (!wrap) return attachment;
         return { files: [attachment] };
