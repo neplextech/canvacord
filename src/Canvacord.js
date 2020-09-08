@@ -128,7 +128,7 @@ class Canvacord {
      * @param {boolean|number} rounded If the bar should be rounded
      */
     static createProgressBar(
-        track = { x, y, width, height, color, stroke, lineWidth }, 
+        track = { x, y, width, height, color, stroke, lineWidth },
         bar = { width, color }
     ) {
         if (!track) throw new Error("Invalid track args!");
@@ -136,7 +136,7 @@ class Canvacord {
 
         const canvas = Canvas.createCanvas(track.width, track.height);
         const ctx = canvas.getContext("2d");
-        
+
         if (bar.width > track.width) bar.width = track.width;
         if (bar.width < 0) bar.width = 0;
 
@@ -380,10 +380,10 @@ class Canvacord {
         await this.__wait();
         let bg = await Canvas.loadImage(Canvacord.assets("IMAGE").GAY);
         let img = await Canvas.loadImage(image);
-        const canvas = Canvas.createCanvas(400, 400);
+        const canvas = Canvas.createCanvas(img.width, img.height);
         const ctx = canvas.getContext("2d");
-        ctx.drawImage(img, 0, 0, 400, 400);
-        ctx.drawImage(bg, 0, 0, 400, 400);
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         return canvas.toBuffer();
     }
 
