@@ -24,6 +24,27 @@ class Canvacord {
     constructor() {
         throw new Error(`The class ${this.constructor.name} may not be instantiated!`);
     }
+    
+    /**
+     * colorify
+     * @param {Image} image to color
+     * @param {Hex} hex to color the image
+     * @returns {Promise<Buffer>}
+     * @example let img = await canva.colorify(img, hex);
+     * canva.write(img, "img.png");
+     */
+    static async colorify(image1, hex) {
+        if (!image1) throw new Error("first image was not provided!");
+        if(!hex) throw new Error("missing hex code to color!")
+        image1 = await Canvas.loadImage(image1)
+        const canvas = Canvas.createCanvas(1024, 1024);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(image1, 0, 0, canvas.width, canvas.height)
+        ctx.globalAlpha = 0.5
+        ctx.fillStyle = color
+        ctx.fillRect(0, 0, canvas.width, canvas.height)
+        return canvas.toBuffer()
+    }
 
     /**
      * batslap
