@@ -3,7 +3,6 @@ const Greyscale = require("../libs/Greyscale");
 const Invert = require("../libs/Invert");
 const Sepia = require("../libs/Sepia");
 const assets = require("./Assets");
-const Attachment = require("./Attachment");
 const fs = require("fs");
 const Brightness = require("../libs/Brightness");
 const Threshold = require("../libs/Threshold");
@@ -94,6 +93,7 @@ class Canvacord {
      * Image threshold
      * @param {string|Buffer} img Image
      * @param {number} amount Threshold amount
+     * @returns {Promise<Buffer>}
      */
     static async threshold(img, amount) {
         if (!img) throw new Error("Expected image, received nothing!");
@@ -106,6 +106,7 @@ class Canvacord {
      * @param {string|Buffer} img Image
      * @param {number[]} matrix Convolution matrix
      * @param {boolean} opaque If convolution should be opaque
+     * @returns {Promise<Buffer>}
      */
     static async convolute(img, matrix, opaque) {
         if (!img) throw new Error("Expected image, received nothing!");
@@ -127,6 +128,7 @@ class Canvacord {
      * @param {number} [bar.width] Progressbar width
      * @param {string} [bar.color] Progressbar color
      * @param {boolean|number} rounded If the bar should be rounded
+     * @returns {Buffer}
      */
     static createProgressBar(
         track = { x, y, width, height, color, stroke, lineWidth },
@@ -156,6 +158,7 @@ class Canvacord {
      * Blur an image
      * @param {string|Buffer} image Image to blur 
      * @param {number} lvl Blur intensity
+     * @returns {Promise<Buffer>}
      */
     static async blur(image, lvl = 1) {
         if (!image) throw new Error("Image was not provided!");
@@ -166,6 +169,7 @@ class Canvacord {
      * Sharpen an image
      * @param {string|Buffer} image Image to sharpen 
      * @param {number} lvl sharpness intensity
+     * @returns {Promise<Buffer>}
      */
     static async sharpen(image, lvl = 1) {
         if (!image) throw new Error("Image was not provided!");
@@ -176,6 +180,7 @@ class Canvacord {
      * Applies burn effect on an image
      * @param {string|Buffer} image Image source 
      * @param {number} lvl intensity
+     * @returns {Promise<Buffer>}
      */
     static async burn(image, lvl = 1) {
         if (!image) throw new Error("Image was not provided!");
@@ -185,6 +190,7 @@ class Canvacord {
     /**
      * HTML5 color to image
      * @param {string} color HTML5 color
+     * @returns {Buffer}
      */
     static color(color = "#FFFFFF", height = 1024, width = 1024) {
         const canvas = Canvas.createCanvas(width, height);
@@ -197,6 +203,7 @@ class Canvacord {
     /**
      * Creates circular image
      * @param {string|Buffer} image Image source
+     * @returns {Promise<Buffer>}
      */
     static async circle(image) {
         if (!image) throw new Error("Image was not provided!");
@@ -218,6 +225,7 @@ class Canvacord {
      * @param {boolean} stroke If it should stroke
      * @param {number} lineWidth line width
      * @param {boolean} rounded If it should be rounded
+     * @returns {Buffer}
      */
     static rectangle(x, y, width, height, color, stroke, lineWidth, rounded = false) {
         const canvas = Canvas.createCanvas(width, height);
@@ -231,6 +239,7 @@ class Canvacord {
      * Fuse two images
      * @param {string|Buffer} image1 First image
      * @param {string|Buffer} image2 Second image
+     * @returns {Promise<Buffer>}
      */
     static async fuse(image1, image2) {
         if (!image1) throw new Error("Missing parameter 'image1'!");
@@ -253,6 +262,7 @@ class Canvacord {
      * @param {string|Buffer} image Image source
      * @param {number} width width
      * @param {number} height height
+     * @returns {Promise<Buffer>}
      */
     static async resize(image, width, height) {
         if (!image) throw new Error("Image was not provided!");
@@ -269,6 +279,7 @@ class Canvacord {
      * Kiss each other ( ͡° ͜ʖ ͡°)
      * @param {string|Buffer} image1 First image
      * @param {string|Buffer} image2 Second image
+     * @returns {Promise<Buffer>}
      */
     static async kiss(image1, image2) {
         if (!image1) throw new Error("First image was not provided!");
@@ -289,6 +300,7 @@ class Canvacord {
      * Spank someone ( ͡° ͜ʖ ͡°)
      * @param {string|Buffer} image1 First image
      * @param {string|Buffer} image2 Second image
+     * @returns {Promise<Buffer>}
      */
     static async spank(image1, image2) {
         if (!image1) throw new Error("First image was not provided!");
@@ -309,6 +321,7 @@ class Canvacord {
      * Slap someone ( ͡° ͜ʖ ͡°)
      * @param {string|Buffer} image1 First image
      * @param {string|Buffer} image2 Second image
+     * @returns {Promise<Buffer>}
      */
     static async slap(image1, image2) {
         if (!image1) throw new Error("First image was not provided!");
@@ -329,6 +342,7 @@ class Canvacord {
      * Slap someone ( ͡° ͜ʖ ͡°)
      * @param {string|Buffer} image1 First image
      * @param {string|Buffer} image2 Second image
+     * @returns {Promise<Buffer>}
      * @deprecated
      */
     static async batslap(image1, image2) {
@@ -339,6 +353,7 @@ class Canvacord {
     /**
      * Oh this? This is beautiful!
      * @param {string|Buffer} image Source image
+     * @returns {Promise<Buffer>}
      */
     static async beautiful(image) {
         if (!image) throw new Error("Image was not provided!");
@@ -357,6 +372,7 @@ class Canvacord {
     /**
      * facepalm
      * @param {string|Buffer} image image
+     * @returns {Promise<Buffer>}
      */
     static async facepalm(image) {
         if (!image) throw new Error("image was not provided!");
@@ -375,6 +391,7 @@ class Canvacord {
     /**
      * Rainbow ( ͡° ͜ʖ ͡°)
      * @param {string|Buffer} image Image source
+     * @returns {Promise<Buffer>}
      */
     static async rainbow(image) {
         if (!image) throw new Error("image was not provided!");
@@ -391,6 +408,7 @@ class Canvacord {
     /**
      * Rainbow ( ͡° ͜ʖ ͡°)
      * @param {string|Buffer} image Image source
+     * @returns {Promise<Buffer>}
      * @deprecated
      */
     static async gay(image) {
@@ -401,6 +419,7 @@ class Canvacord {
     /**
      * "F" in the chat
      * @param {string|Buffer} image image source
+     * @returns {Promise<Buffer>}
      */
     static async rip(image) {
         if (!image) throw new Error("Image was not provided!");
@@ -417,6 +436,7 @@ class Canvacord {
     /**
      * Trash?
      * @param {string|Buffer} image Image source
+     * @returns {Promise<Buffer>}
      */
     static async trash(image) {
         if (!image) throw new Error("Image was not provided!");
@@ -435,6 +455,7 @@ class Canvacord {
     /**
      * Worse than hitler
      * @param {string|Buffer} image Source image
+     * @returns {Promise<Buffer>}
      */
     static async hitler(image) {
         if (!image) throw new Error("image was not provided!");
@@ -452,21 +473,10 @@ class Canvacord {
     }
 
     /**
-     * Something similar to discord.js attachment
-     * @param {Buffer} buffer Attachment data
-     * @param {string} name Attachment name
-     * @param {boolean} wrap If attachment should be wrapped as message object
-     */
-    static toAttachment(buffer, name, wrap = true) {
-        const attachment = new Attachment(buffer, name ? name : "attachment.png");
-        if (!wrap) return attachment;
-        return { files: [attachment] };
-    }
-
-    /**
      * Updates image color
      * @param {string|Buffer} image Image source
      * @param {string} color HTML5 color
+     * @returns {Promise<Buffer>}
      */
     static async colorfy(image, color) {
         if (!image) throw new Error("Image was not provided!");
@@ -485,6 +495,7 @@ class Canvacord {
     /**
      * whoosh
      * @param {string|Buffer} image Image source
+     * @returns {Promise<Buffer>}
      */
     static async jokeOverHead(image) {
         if (!image) throw new Error("Image wasn ot provided!");
@@ -509,6 +520,7 @@ class Canvacord {
       * @param {string|Buffer} [options.image] Image
       * @param {number} [options.start] Timestamp when song started
       * @param {number} [options.end] Timestamp when song ends
+      * @returns {Promise<Buffer>}
       */
     static async spotify(options = { title: null, image: null, artist: null, album: null, start: null, end: null }) {
         if (!options) throw new Error('Missing parameter "options".');
@@ -611,6 +623,7 @@ class Canvacord {
      * @param {string} [color.bar] TicTacToe bar color
      * @param {string} [color.x] Color of **X**
      * @param {string} [color.o] Color of **O**
+     * @returns {Buffer}
      */
     static tictactoe(fill = { a1: 0, b1: 0, c1: 0, a2: 0, b2: 0, c2: 0, a3: 0, b3: 0, c3: 0 }, color = { bg: 0, bar: 0, x: 0, o: 0 }) {
         color = {
@@ -726,6 +739,7 @@ class Canvacord {
      * Writes the data as file
      * @param {Buffer} data data to write
      * @param {string} name file name
+     * @returns {void}
      */
     static write(data, name) {
         return fs.writeFileSync(name, data);
@@ -733,13 +747,13 @@ class Canvacord {
 
     /**
      * Canvacord assets
+     * @ignore
      */
     static get assets() {
         return assets;
     }
 
     /**
-     * @private
      * @ignore
      */
     static __wait(dur) {
@@ -750,6 +764,7 @@ class Canvacord {
 
     /**
      * Matrix data for **Canvacord.convolute()**
+     * @ignore
      */
     static get CONVOLUTION_MATRIX() {
         return {
