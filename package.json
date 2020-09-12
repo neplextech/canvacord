@@ -1,0 +1,27 @@
+{
+  "name": "canvacord-assets",
+  "version": "1.0.3",
+  "description": "Canvacord assets",
+  "main": "index.js",
+  "keywords": [
+    "canvacord",
+    "assets"
+  ],
+  "author": "Snowflake107 <devsnowflake107@gmail.com>",
+  "license": "MIT",
+  "dependencies": {
+    "chalk": "^4.1.0"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Snowflake107/canvacord.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Snowflake107/canvacord/issues"
+  },
+  "homepage": "https://github.com/Snowflake107/canvacord#readme"
+}
