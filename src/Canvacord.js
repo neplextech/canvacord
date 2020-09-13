@@ -736,6 +736,32 @@ class Canvacord {
     }
 
     /**
+     * Opinion
+     * @param {string|Buffer} avatar Image
+     * @param {string} msg Message
+     */
+    static async opinion(avatar, msg) {
+        if (!avatar) throw new Error("Avatar was not provided!");
+        if (!msg) throw new Error("Message was not provided!");
+        await this.__wait();
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").OPINION);
+        const ava = await Canvas.loadImage(avatar);
+        
+        const canvas = Canvas.createCanvas(482, 481);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(ava, 62, 340, 85, 85);
+        ctx.drawImage(ava, 260, 180, 70, 70);
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+        ctx.font = "bold 15px arial";
+        ctx.fillStyle = "#000000";
+        ctx.fillText(Util.shorten(msg, 24), canvas.width / 10, canvas.height / 1.51);
+
+        return canvas.toBuffer();
+    }
+
+    /**
      * Writes the data as file
      * @param {Buffer} data data to write
      * @param {string} name file name
@@ -747,7 +773,7 @@ class Canvacord {
 
     /**
      * Canvacord assets
-     * @ignore
+     * @private
      */
     static get assets() {
         return assets;

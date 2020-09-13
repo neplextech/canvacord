@@ -27,7 +27,7 @@
   },
   "homepage": "https://github.com/Snowflake107/Canvacord#readme",
   "dependencies": {
-    "canvacord-assets": "^1.0.3",
+    "canvacord-assets": "^1.0.4",
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
     "moment": "^2.27.0",
