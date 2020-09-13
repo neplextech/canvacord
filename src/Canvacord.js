@@ -770,7 +770,7 @@ class Canvacord {
   static gradient(colorFrom, colorTo) {
     if (!colorFrom) throw new Error("ColorFrom was not provided!");
     if (!colorTo) throw new Error("ColorTo was not provided!");
-    const canvas = Canvas.createCanvas(482, 481);
+    const canvas = Canvas.createCanvas(400, 200);
     const ctx = canvas.getContext("2d");
     const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
     gradient.addColorStop(0, colorFrom);
