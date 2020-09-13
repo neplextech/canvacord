@@ -739,6 +739,7 @@ class Canvacord {
      * Opinion
      * @param {string|Buffer} avatar Image
      * @param {string} msg Message
+     * @returns {Promise<Buffer>}
      */
     static async opinion(avatar, msg) {
         if (!avatar) throw new Error("Avatar was not provided!");
@@ -761,24 +762,27 @@ class Canvacord {
         return canvas.toBuffer();
     }
     
-   /**
-   * Gradient
-   * @param {string} colorFrom
-   * @param {string} colorTo
-   * @returns {Buffer}
-   */
-  static gradient(colorFrom, colorTo) {
-    if (!colorFrom) throw new Error("ColorFrom was not provided!");
-    if (!colorTo) throw new Error("ColorTo was not provided!");
-    const canvas = Canvas.createCanvas(400, 200);
-    const ctx = canvas.getContext("2d");
-    const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-    gradient.addColorStop(0, colorFrom);
-    gradient.addColorStop(1, colorTo);
-    ctx.fillStyle = gradient;
-    ctx.fillRect(0, 0, canvas.width, canvas.height);
-    return canvas.toBuffer();
-  }
+    /**
+     * Creates Gradient
+     * @param {string} colorFrom Starting color
+     * @param {string} colorTo Ending color
+     * @returns {Buffer}
+     */
+    static gradient(colorFrom, colorTo) {
+        if (!colorFrom) throw new Error("ColorFrom was not provided!");
+        if (!colorTo) throw new Error("ColorTo was not provided!");
+        
+        const canvas = Canvas.createCanvas(400, 200);
+        const ctx = canvas.getContext("2d");
+        const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
+        
+        gradient.addColorStop(0, colorFrom);
+        gradient.addColorStop(1, colorTo);
+        ctx.fillStyle = gradient;
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        
+        return canvas.toBuffer();
+    }
 
     /**
      * Writes the data as file
