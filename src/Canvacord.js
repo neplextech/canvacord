@@ -76,7 +76,7 @@ class Canvacord {
         if (isNaN(amount)) throw new Error("Amount must be a number!");
         return await Brightness(image, amount);
     }
-
+    
     /**
      * Edit image darkness
      * @param {string|Buffer} image Img
@@ -294,6 +294,43 @@ class Canvacord {
         ctx.drawImage(avatar1, 370, 25, 200, 200);
         ctx.drawImage(avatar, 150, 25, 200, 200);
         return canvas.toBuffer();
+    }
+    
+    /**
+    * Displays an opinion comic strip image :V
+    * @param {string|Buffer} avatar avatar
+    * @param {string} string text
+    * @returns {Promise<Buffer>}
+    */
+    
+    static async opinion(avatar, msg) {
+    
+        const font = (canvas, text) => {
+	        const ctx = canvas.getContext('2d');
+	        let x = 29;
+	        while (ctx.measureText(text).width > canvas.width / 2.39) {
+		    ctx.font = `${x -= 1}px sans-serif`;
+	        }
+	        return ctx.font;
+        };
+
+      
+    const image = "https://i.imgur.com/EcGmZiB.png";
+    const canvas = Canvas.createCanvas(482, 481);
+    const ctx = canvas.getContext('2d');
+    
+    const bg = await Canvas.loadImage(image, {format: "jpg"});
+    const ava = await Canvas.loadImage(avatar);
+    
+    ctx.drawImage(ava, 62,340,85,85);  
+    ctx.drawImage(ava, 260,180,70,70);
+    ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);   
+    
+    ctx.font = font(canvas, msg);
+	  ctx.fillStyle = '#000000';
+	  ctx.fillText(msg, canvas.width / 10, canvas.height / 1.51);
+      
+        return canvas.toBuffer()   
     }
 
     /**
