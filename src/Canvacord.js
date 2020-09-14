@@ -783,6 +783,25 @@ class Canvacord {
         
         return canvas.toBuffer();
     }
+    
+    /**
+     * Oh no! That's Stupid.
+     * @param {string} message Message
+     * @returns {Promise<Buffer>}
+     */
+    static async ohno(message) {
+        if (!message) throw new Error("Message was not provided!");
+        if (message.length > 15) throw new Error("Uh-oh! The message is over the character limit!)
+        const canvas = createCanvas(1000, 1000);
+        const ohno = canvas.getContext("2d");
+        const bg = await loadImage(`https://cdn.discordapp.com/attachments/725331486630215700/755084129661485167/ohno.png`);
+        ohno.drawImage(bg, 0, 0, 1000,1000);
+        ohno.save();
+        ohno.fillStyle = "#000";
+        ohno.font = "40px Bold Arial";
+        ohno.fillText(`${message}`, 520, 185);
+        return canvas.toBuffer();
+    }
 
     /**
      * Writes the data as file
