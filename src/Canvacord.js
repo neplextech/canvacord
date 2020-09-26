@@ -13,6 +13,7 @@ const Darkness = require("../libs/Darkness");
 const circle = require("../plugins/circle");
 const round = require("../plugins/round");
 const Util = require("../plugins/Util");
+const Rank = require("./Rank");
 
 class Canvacord {
 
@@ -792,6 +793,13 @@ class Canvacord {
      */
     static write(data, name) {
         return fs.writeFileSync(name, data);
+    }
+
+    /**
+     * Rank card builder
+     */
+    static get Rank() {
+        return Rank;
     }
 
     /**
