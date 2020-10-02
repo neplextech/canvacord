@@ -1,5 +1,6 @@
 const moment = require("moment");
 const abbrev = require("./abbrev");
+const renderEmoji = require("./renderEmoji");
 require("moment-duration-format");
 
 class Util {
@@ -53,6 +54,71 @@ class Util {
      */
     static toAbbrev(num) {
         return abbrev(num);
+    }
+
+    /**
+     * Renders text with emoji
+     * @param {CanvasRenderingContext2D} ctx CanvasRenderingContext2D
+     * @param {string} msg Message
+     * @param {number} x X
+     * @param {number} y Y
+     */
+    static renderEmoji(ctx, msg, x, y) {
+        return renderEmoji(ctx, msg, x, y);
+    }
+
+    /**
+     * Returns formatted hex code
+     * @param {string} hex Hex code to format
+     */
+    static formatHex(hex, alt = "#000000") {
+        if (!hex || typeof hex !== "string") return "#000000";
+        hex = hex.replace("#", "");
+        if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        if (hex.length !== 6) return "#000000";
+
+        return `#${hex}`;
+    }
+
+    /**
+     * Inverts hex color
+     * @param {string} hex Hex color code to invert
+     */
+    static invertColor(hex) {
+        if (!hex || typeof hex !== "string") return "#FFFFFF";
+        hex = hex.replace("#", "");
+
+        // match hex color
+        if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
+        if (hex.length !== 6) return "#FFFFFF";
+
+        // invert colors
+        const r = (255 - parseInt(hex.slice(0, 2), 16)).toString(16);
+        const g = (255 - parseInt(hex.slice(2, 4), 16)).toString(16);
+        const b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
+
+        // return new hex
+        const pad = (txt, length) => {
+            length = length || 2;
+            let arr = [length].join("0");
+            return (arr + txt).slice(-length);
+        };
+
+        const finalHex = `#${pad(r)}${pad(g)}${pad(b)}`;
+        console.log(finalHex)
+        return finalHex;
+    }
+
+    /**
+     * Returns acronym
+     * @param {string} name Name to parse acronym
+     */
+    static getAcronym(name) {
+        if (!name || typeof name !== "string") return "";
+        return name
+            .replace(/'s /g, " ")
+            .replace(/\w+/g, e => e[0])
+            .replace(/\s/g, "");
     }
 
 }

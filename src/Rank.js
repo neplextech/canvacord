@@ -94,7 +94,8 @@ class Rank {
             username: {
                 name: null,
                 color: "#FFFFFF"
-            }
+            },
+            renderEmojis: false
         };
 
         // Load default fonts
@@ -127,6 +128,15 @@ class Rank {
             });
         }
 
+        return this;
+    }
+
+    /**
+     * If it should render username with emojis (if any)
+     * @param {boolean} [apply=false] Set it to `true` to render emojis. 
+     */
+    renderEmojis(apply = false) {
+        this.data.renderEmojis = !!apply;
         return this;
     }
 
@@ -377,7 +387,9 @@ class Rank {
         ctx.fillStyle = this.data.username.color;
         ctx.textAlign = "start";
         const name = Util.shorten(this.data.username.name, 12);
-        ctx.fillText(`${name}`, 257 + 18.5, 164);
+
+        // apply username
+        !this.data.renderEmojis ? ctx.fillText(`${name}`, 257 + 18.5, 164) : await Util.renderEmoji(ctx, name, 257 + 18.5, 164);
 
         // draw discriminator
         const discrim = this.data.discriminator.discrim;

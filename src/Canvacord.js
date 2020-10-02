@@ -158,12 +158,45 @@ class Canvacord {
     /**
      * Blur an image
      * @param {string|Buffer} image Image to blur 
-     * @param {number} lvl Blur intensity
      * @returns {Promise<Buffer>}
      */
-    static async blur(image, lvl = 1) {
+    static async blur(image) {
         if (!image) throw new Error("Image was not provided!");
-        return await Convolute(image, Canvacord.CONVOLUTION_MATRIX.BLUR, true, lvl);
+        const img = await Canvas.loadImage(image);
+        const canvas = Canvas.createCanvas(img.width, img.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "#ffffff";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 0, canvas.width / 4, canvas.height / 4);
+        ctx.imageSmoothingEnabled = true;
+        ctx.drawImage(canvas, 0, 0, canvas.width / 4, canvas.height / 4, 0, 0, canvas.width + 5, canvas.height + 5);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Pixelate
+     * @param {string|Buffer} image Image to pixelate 
+     * @param {number} pixels Pixels
+     * @returns {Promise<Buffer>}
+     */
+    static async pixelate(image, pixels = 5) {
+        if (!image) throw new Error("Image was not provided!");
+        if (!pixels || typeof pixels !== "number") pixels = 100;
+        if (pixels < 1) pixels = 100;
+        if (pixels > 100) pixels = 100;
+
+        const img = await Canvas.loadImage(image);
+        const canvas = Canvas.createCanvas(img.width, img.height);
+        const ctx = canvas.getContext("2d");
+        const pixel = pixels / 100;
+
+        ctx.drawImage(img, 0, 0, canvas.width * pixel, canvas.height * pixel);
+        ctx.imageSmoothingEnabled = false;
+        ctx.drawImage(canvas, 0, 0, canvas.width * pixel, canvas.height * pixel, 0, 0, canvas.width + 5, canvas.height + 5);
+
+        return canvas.toBuffer();
     }
 
     /**
@@ -191,13 +224,24 @@ class Canvacord {
     /**
      * HTML5 color to image
      * @param {string} color HTML5 color
+     * @param {boolean} displayHex If it should display hex
+     * @param {number} height Image height
+     * @param {number} width Image width
      * @returns {Buffer}
      */
-    static color(color = "#FFFFFF", height = 1024, width = 1024) {
+    static color(color = "#FFFFFF", displayHex = false, height = 1024, width = 1024) {
         const canvas = Canvas.createCanvas(width, height);
         const ctx = canvas.getContext("2d");
 
         rect(ctx, 0, 0, height, width, color);
+        
+        if (!!displayHex) {
+            const ic = Util.invertColor(color);
+            ctx.font = "bold 72px Manrope";
+            ctx.fillStyle = ic;
+            ctx.fillText(color.toUpperCase(), canvas.width / 3, canvas.height / 2);
+        }
+
         return canvas.toBuffer();
     }
 
@@ -316,6 +360,46 @@ class Canvacord {
         ctx.drawImage(avatar1, 350, 220, 120, 120);
         ctx.drawImage(avatar, 225, 5, 140, 140);
         return canvas.toBuffer();
+    }
+
+    /**
+     * Loads font
+     * @param {any[]} fontArray Font array
+     */
+    static async registerFonts(fontArray = []) {
+        if (!fontArray.length) {
+            await Canvacord.__wait();
+            // default fonts
+            Canvas.registerFont(assets("FONT").MANROPE_BOLD, {
+                family: "Manrope",
+                weight: "bold",
+                style: "normal"
+            });
+
+            Canvas.registerFont(assets("FONT").MANROPE_REGULAR, {
+                family: "Manrope",
+                weight: "regular",
+                style: "normal"
+            });
+
+            Canvas.registerFont(assets("FONT").WHITNEY_MEDIUM, {
+                family: "Whitney",
+                weight: "regular",
+                style: "normal"
+            });
+
+            Canvas.registerFont(assets("FONT").WHITNEY_BOOK, {
+                family: "Whitney",
+                weight: "bold",
+                style: "normal"
+            });
+        } else {
+            fontArray.forEach(font => {
+                Canvas.registerFont(font.path, font.face);
+            });
+        }
+
+        return;
     }
 
     /**
@@ -570,29 +654,29 @@ class Canvacord {
         // draw songname
         ctx.fillStyle = "#FFFFFF";
         ctx.font = "bold 20px Manrope";
-        ctx.fillText(Util.shorten(options.title, 30), 170, 40);
+        await Util.renderEmoji(ctx, Util.shorten(options.title, 30), 170, 40);
 
         // draw artist name
         ctx.fillStyle = "#F1F1F1";
         ctx.font = "14px Manrope";
-        ctx.fillText(`by ${Util.shorten(options.artist, 40)}`, 170, 70);
+        await Util.renderEmoji(ctx, `by ${Util.shorten(options.artist, 40)}`, 170, 70);
 
         // add album
         if (options.album && typeof options.album === "string") {
             ctx.fillStyle = "#F1F1F1";
             ctx.font = "14px Manrope";
-            ctx.fillText(`on ${Util.shorten(options.album, 40)}`, 170, 90);
+            await Util.renderEmoji(ctx, `on ${Util.shorten(options.album, 40)}`, 170, 90);
         }
 
         // ending point
         ctx.fillStyle = "#B3B3B3";
         ctx.font = "14px Manrope";
-        ctx.fillText(ending, 430, 130);
+        await Util.renderEmoji(ctx, ending, 430, 130);
 
         // progress
         ctx.fillStyle = "#B3B3B3";
         ctx.font = "14px Manrope";
-        ctx.fillText(progressF, 170, 130);
+        await Util.renderEmoji(ctx, progressF, 170, 130);
 
         // progressbar track
         ctx.rect(170, 170, 300, 4);
@@ -758,7 +842,7 @@ class Canvacord {
 
         ctx.font = "bold 15px arial";
         ctx.fillStyle = "#000000";
-        ctx.fillText(Util.shorten(msg, 24), canvas.width / 10, canvas.height / 1.51);
+        await Util.renderEmoji(ctx, Util.shorten(msg, 24), canvas.width / 10, canvas.height / 1.51);
 
         return canvas.toBuffer();
     }
@@ -801,7 +885,7 @@ class Canvacord {
 
         ctx.font = "bold 50px Times New Roman";
         ctx.fillStyle = "#000000";
-        ctx.fillText(Util.shorten(message, 20), 540, 195);
+        await Util.renderEmoji(ctx, Util.shorten(message, 20), 540, 195);
 
         return canvas.toBuffer();
     }
@@ -825,7 +909,7 @@ class Canvacord {
 
     /**
      * Returns `welcomer card` builder. (discord-canvas)
-     * @link https://www.discord-canvas.net/functions/welcome Documentation
+     * @see https://www.discord-canvas.net/functions/welcome Documentation
      */
     static get Welcomer() {
         try {
@@ -837,7 +921,7 @@ class Canvacord {
 
     /**
      * Returns `leaver card` builder. (discord-canvas)
-     * @link https://www.discord-canvas.net/functions/goodbye Documentation
+     * @see https://www.discord-canvas.net/functions/goodbye Documentation
      */
     static get Leaver() {
         try {
@@ -849,7 +933,7 @@ class Canvacord {
 
     /**
      * Returns `fortnite shop card` builder. (discord-canvas)
-     * @link https://www.discord-canvas.net/functions/fortniteshop Documentation
+     * @see https://www.discord-canvas.net/functions/fortniteshop Documentation
      */
     static get FortniteShop() {
         try {
@@ -861,7 +945,7 @@ class Canvacord {
 
     /**
      * Returns `fortnite stats card` builder. (discord-canvas)
-     * @link https://www.discord-canvas.net/functions/fortnitestats Documentation
+     * @see https://www.discord-canvas.net/functions/fortnitestats Documentation
      */
     static get FortniteStats() {
         try {
@@ -869,6 +953,30 @@ class Canvacord {
         } catch (e) {
             throw new Error("discord-canvas not found!");
         }
+    }
+
+    /**
+     * Returns default icon of a discord server
+     * @param {string} name Guild name
+     * @param {number} size Icon size. Valid: `16`, `32`, `64`, `128`, `256`, `512`, `1024`, `2048` & `4096`
+     * @returns {Promise<Buffer>}
+     */
+    static async guildIcon(name, size = 1024) {
+        const str = Util.getAcronym(name);
+        if (!str) throw new Error("Couldn't parse acronym!");
+        if (typeof size !== "number" || size < 0 || size > 4096 || size % 16 !== 0) throw new Error("Invalid icon size!");
+
+        const canvas = Canvas.createCanvas(size, size);
+        const ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "#7289DA";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.font = `bold ${size / 4}px Whitney`;
+        await Util.renderEmoji(ctx, str, canvas.width / 4, canvas.height / 1.7);
+
+        return canvas.toBuffer();
     }
 
     /**

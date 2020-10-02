@@ -31,7 +31,7 @@ rank.build()
 ```
 
 ## Preview
-![RankCard](test/RankCard.png)
+![RankCard](test/images/RankCard.png)
 
 # Docs
-**[https://canvacord.js.org/v5](https://canvacord.js.org/v5/index.html)**
+**[https://canvacord.js.org/v5](https://canvacord.js.org/v5)**
