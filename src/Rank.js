@@ -391,7 +391,7 @@ class Rank {
         // apply username
         !this.data.renderEmojis ? ctx.fillText(`${name}`, 257 + 18.5, 164) : await Util.renderEmoji(ctx, name, 257 + 18.5, 164);
 
-        // draw discriminator
+        // draw discriminator on image
         const discrim = this.data.discriminator.discrim;
         if (discrim) {
             ctx.font = `36px ${ops.fontY}`;
