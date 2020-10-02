@@ -909,7 +909,7 @@ class Canvacord {
 
     /**
      * Returns `welcomer card` builder. (discord-canvas)
-     * @see https://www.discord-canvas.net/functions/welcome Documentation
+     * @see https://www.discord-canvas.net/functions/welcome
      */
     static get Welcomer() {
         try {
@@ -921,7 +921,7 @@ class Canvacord {
 
     /**
      * Returns `leaver card` builder. (discord-canvas)
-     * @see https://www.discord-canvas.net/functions/goodbye Documentation
+     * @see https://www.discord-canvas.net/functions/goodbye
      */
     static get Leaver() {
         try {
@@ -933,7 +933,7 @@ class Canvacord {
 
     /**
      * Returns `fortnite shop card` builder. (discord-canvas)
-     * @see https://www.discord-canvas.net/functions/fortniteshop Documentation
+     * @see https://www.discord-canvas.net/functions/fortniteshop
      */
     static get FortniteShop() {
         try {
@@ -945,7 +945,7 @@ class Canvacord {
 
     /**
      * Returns `fortnite stats card` builder. (discord-canvas)
-     * @see https://www.discord-canvas.net/functions/fortnitestats Documentation
+     * @see https://www.discord-canvas.net/functions/fortnitestats
      */
     static get FortniteStats() {
         try {

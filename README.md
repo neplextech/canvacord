@@ -17,7 +17,7 @@ const img = "https://cdn.discordapp.com/embed/avatars/0.png";
 const rank = new canvacord.Rank()
     .registerFonts()
     .setAvatar(img)
-    .setCurrentXP(250)
+    .setCurrentXP(356)
     .setRequiredXP(500)
     .setStatus("dnd")
     .setProgressBar("#FFFFFF", "COLOR")
@@ -31,7 +31,7 @@ rank.build()
 ```
 
 ## Preview
-![RankCard](test/images/RankCard.png)
+![RankCard](https://raw.githubusercontent.com/Snowflake107/canvacord/v5-alpha/test/images/RankCard.png)
 
 # Docs
 **[https://canvacord.js.org/v5](https://canvacord.js.org/v5)**

@@ -41,5 +41,6 @@ module.exports = (ctx, canvas, matrix, opaque) => {
         }
     }
 
-    return ctx.putImageData(output, 0, 0);
+    ctx.putImageData(output, 0, 0);
+    return ctx;
 };
