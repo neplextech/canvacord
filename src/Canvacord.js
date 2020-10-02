@@ -801,7 +801,7 @@ class Canvacord {
 
         ctx.font = "bold 50px Times New Roman";
         ctx.fillStyle = "#000000";
-        ctx.fillText(Util.shorten(message, 20), 540, 190);
+        ctx.fillText(Util.shorten(message, 20), 540, 195);
 
         return canvas.toBuffer();
     }
