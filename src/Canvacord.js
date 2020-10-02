@@ -786,6 +786,27 @@ class Canvacord {
     }
 
     /**
+     * Oh no! It's Stupid.
+     * @param {string} message Message
+     * @returns {Promise<Buffer>}
+     */
+    static async ohno(message) {
+        if (!message) throw new Error("Message was not provided!");
+        await Canvacord.__wait();
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").OHNO);
+        const canvas = Canvas.createCanvas(1000, 1000);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+        ctx.font = "bold 50px Times New Roman";
+        ctx.fillStyle = "#000000";
+        ctx.fillText(Util.shorten(message, 20), 540, 200);
+
+        return canvas.toBuffer();
+    }
+
+    /**
      * Writes the data as file
      * @param {Buffer} data data to write
      * @param {string} name file name
