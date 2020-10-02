@@ -1,5 +1,5 @@
 module.exports = num => {
-    if (!num) return "NaN";
+    if (!num || isNaN(num)) return "0";
     if (typeof num === "string") num = parseInt(num);
     let decPlaces = Math.pow(10, 1);
     var abbrev = ["K", "M", "B", "T"];

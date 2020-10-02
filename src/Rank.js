@@ -6,6 +6,21 @@ class Rank {
 
     /**
      * Creates Rank card
+     * @example 
+     * const rank = new canvacord.Rank()
+            .registerFonts()
+            .setAvatar(img)
+            .setCurrentXP(203)
+            .setRequiredXP(500)
+            .setStatus("dnd")
+            .setProgressBar(["#FF0000", "#0000FF"], "GRADIENT")
+            .setUsername("Snowflake")
+            .setDiscriminator("0007");
+        
+        rank.build()
+            .then(data => {
+                canvacord.write(data, "RankCard.png");
+            })
      */
     constructor() {
 
@@ -46,8 +61,7 @@ class Rank {
                 width: 180
             },
             status: {
-                x: 200,
-                y: 185,
+                width: 5,
                 type: "online",
                 color: "#43B581"
             },
@@ -55,13 +69,15 @@ class Rank {
                 display: true,
                 data: 1,
                 textColor: "#FFFFFF",
-                color: "#F3F3F3"
+                color: "#F3F3F3",
+                displayText: "RANK"
             },
             level: {
                 display: true,
                 data: 1,
                 textColor: "#FFFFFF",
-                color: "#F3F3F3"
+                color: "#F3F3F3",
+                displayText: "LEVEL"
             },
             currentXP: {
                 data: 0,
@@ -81,26 +97,30 @@ class Rank {
             }
         };
 
+        // Load default fonts
+        this.registerFonts();
     }
 
     /**
      * Loads font
-     * @param {{ path: string; face: object }[]} fontArray Font array
+     * @param {any[]} fontArray Font array
      */
     registerFonts(fontArray = []) {
         if (!fontArray.length) {
-            // default fonts
-            Canvas.registerFont(assets("FONT").MANROPE_BOLD, {
-                family: "Manrope",
-                weight: "bold",
-                style: "normal"
-            });
+            setTimeout(() => {
+                // default fonts
+                Canvas.registerFont(assets("FONT").MANROPE_BOLD, {
+                    family: "Manrope",
+                    weight: "bold",
+                    style: "normal"
+                });
 
-            Canvas.registerFont(assets("FONT").MANROPE_REGULAR, {
-                family: "Manrope",
-                weight: "regular",
-                style: "normal"
-            });
+                Canvas.registerFont(assets("FONT").MANROPE_REGULAR, {
+                    family: "Manrope",
+                    weight: "regular",
+                    style: "normal"
+                });
+            }, 250);
         } else {
             fontArray.forEach(font => {
                 Canvas.registerFont(font.path, font.face);
@@ -214,12 +234,15 @@ class Rank {
     /**
      * Set Rank
      * @param {number} data Current Rank
+     * @param {string} text Display text
      * @param {boolean} [display=true] If it should display rank
      */
-    setRank(data, display = true) {
+    setRank(data, text = "RANK", display = true) {
         if (typeof data !== "number") throw new Error(`Level data must be a number, received ${typeof data}!`);
         this.data.rank.data = data;
         this.data.rank.display = !!display;
+        if (!text || typeof text !== "string") text = "RANK";
+        this.data.rank.displayText = text;
 
         return this;
     }
@@ -227,12 +250,15 @@ class Rank {
     /**
      * Set Level
      * @param {number} data Current Level
+     * @param {string} text Display text
      * @param {boolean} [display=true] If it should display level
      */
-    setLevel(data, display = true) {
+    setLevel(data, text = "LEVEL", display = true) {
         if (typeof data !== "number") throw new Error(`Level data must be a number, received ${typeof data}!`);
         this.data.level.data = data;
         this.data.level.display = !!display;
+        if (!text || typeof text !== "string") text = "LEVEL";
+        this.data.level.displayText = text;
 
         return this;
     }
@@ -240,8 +266,9 @@ class Rank {
     /**
      * Set status
      * @param {"online"|"idle"|"dnd"|"offline"|"streaming"} status User status
+     * @param {number|boolean} width Status width
      */
-    setStatus(status) {
+    setStatus(status, width = 5) {
         switch(status) {
             case "online":
                 this.data.status.type = "online";
@@ -266,6 +293,9 @@ class Rank {
             default:
                 throw new Error(`Invalid status "${status}"`);
         }
+
+        if (width !== false) this.data.status.width = typeof width === "number" ? width : 5;
+        else this.data.status.width = false;
 
         return this;
     }
@@ -362,7 +392,7 @@ class Rank {
         if (this.data.level.display && !isNaN(this.data.level.data)) {
             ctx.font = `bold 36px ${ops.fontX}`;
             ctx.fillStyle = this.data.level.textColor;
-            ctx.fillText("LEVEL", 800 - ctx.measureText(this.data.level.data).width, 82);
+            ctx.fillText(this.data.level.displayText, 800 - ctx.measureText(this.data.level.data).width, 82);
 
             ctx.font = `bold 32px ${ops.fontX}`;
             ctx.fillStyle = this.data.level.color;
@@ -374,12 +404,12 @@ class Rank {
         if (this.data.rank.display && !isNaN(this.data.rank.data)) {
             ctx.font = `bold 36px ${ops.fontX}`;
             ctx.fillStyle = this.data.rank.textColor;
-            ctx.fillText("RANK", 800 - ctx.measureText(this.data.level.data || "-").width - 7 - ctx.measureText("LEVEL").width - 7 - ctx.measureText(this.data.rank.data || "-").width, 82);
+            ctx.fillText(this.data.rank.displayText, 800 - ctx.measureText(this.data.level.data || "-").width - 7 - ctx.measureText(this.data.level.displayText).width - 7 - ctx.measureText(this.data.rank.data || "-").width, 82);
 
             ctx.font = `bold 32px ${ops.fontX}`;
             ctx.fillStyle = this.data.rank.color;
             ctx.textAlign = "end";
-            ctx.fillText(Util.toAbbrev(parseInt(this.data.rank.data)), 790 - ctx.measureText(this.data.level.data || "-").width - 7 - ctx.measureText("LEVEL").width, 82);
+            ctx.fillText(Util.toAbbrev(parseInt(this.data.rank.data)), 790 - ctx.measureText(this.data.level.data || "-").width - 7 - ctx.measureText(this.data.level.displayText).width, 82);
         }
 
         // show progress
@@ -446,11 +476,13 @@ class Rank {
         ctx.restore();
 
         // draw status
-        ctx.beginPath();
-        ctx.fillStyle = this.data.status.color;
-        ctx.arc(this.data.status.x + 10, this.data.status.y + 20, 20, 0, 2 * Math.PI);
-        ctx.fill();
-        ctx.closePath();
+        if (this.data.status.width !== false) {
+            ctx.beginPath();
+            ctx.arc(135, 145, 100, 0, Math.PI * 2, true);
+            ctx.strokeStyle = this.data.status.color;
+            ctx.lineWidth = this.data.status.width;
+            ctx.stroke();
+        }
 
         return canvas.toBuffer();
     }

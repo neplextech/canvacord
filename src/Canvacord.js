@@ -803,6 +803,54 @@ class Canvacord {
     }
 
     /**
+     * Returns `welcomer card` builder. (discord-canvas)
+     * @link https://www.discord-canvas.net/functions/welcome Documentation
+     */
+    static get Welcomer() {
+        try {
+            return require("discord-canvas").Welcome;
+        } catch (e) {
+            throw new Error("discord-canvas not found!");
+        }
+    }
+
+    /**
+     * Returns `leaver card` builder. (discord-canvas)
+     * @link https://www.discord-canvas.net/functions/goodbye Documentation
+     */
+    static get Leaver() {
+        try {
+            return require("discord-canvas").Goodbye;
+        } catch (e) {
+            throw new Error("discord-canvas not found!");
+        }
+    }
+
+    /**
+     * Returns `fortnite shop card` builder. (discord-canvas)
+     * @link https://www.discord-canvas.net/functions/fortniteshop Documentation
+     */
+    static get FortniteShop() {
+        try {
+            return require("discord-canvas").FortniteShop;
+        } catch (e) {
+            throw new Error("discord-canvas not found!");
+        }
+    }
+
+    /**
+     * Returns `fortnite stats card` builder. (discord-canvas)
+     * @link https://www.discord-canvas.net/functions/fortnitestats Documentation
+     */
+    static get FortniteStats() {
+        try {
+            return require("discord-canvas").FortniteStats;
+        } catch (e) {
+            throw new Error("discord-canvas not found!");
+        }
+    }
+
+    /**
      * Canvacord assets
      * @private
      */
@@ -830,6 +878,13 @@ class Canvacord {
             SHARPEN: [0, -1, 0, -1, 5, -1, 0, -1, 0],
             BURN: [1 / 11, 1 / 11, 1 / 11, 1 / 11, 1 / 11, 1 / 11, 1 / 11, 1 / 11, 1 / 11]
         };
+    }
+
+    /**
+     * Canvacord utils
+     */
+    static get Util() {
+        return Util;
     }
 
 }

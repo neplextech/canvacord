@@ -1,4 +1,17 @@
-const canvacord = require("../index");
+# Canvacord
+Powerful image manipulation tool to generate images at easily.
+
+# Installation
+
+```sh
+npm i Snowflake107/Canvacord#v5-alpha
+```
+
+# Examples
+## Rank Card
+
+```js
+const canvacord = require("canvacord-v5");
 const img = "https://cdn.discordapp.com/embed/avatars/0.png";
 
 const rank = new canvacord.Rank()
@@ -15,3 +28,10 @@ rank.build()
     .then(data => {
         canvacord.write(data, "RankCard.png");
     });
+```
+
+## Preview
+![RankCard](test/RankCard.png)
+
+# Docs
+**[https://canvacord.js.org/v5](https://canvacord.js.org/v5/index.html)**
