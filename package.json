@@ -30,6 +30,7 @@
   "dependencies": {
     "canvacord-assets": "^1.0.5",
     "canvas": "^2.6.1",
+    "captcha-canvas": "^2.2.1",
     "gifencoder": "^2.0.1",
     "moment": "^2.27.0",
     "moment-duration-format": "^2.3.2",
