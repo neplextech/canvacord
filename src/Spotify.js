@@ -69,6 +69,14 @@ class Spotify {
             data: "#2F3136"
         };
 
+        /**
+         * Progressbar details
+         */
+        this.progressBar = {
+            bgColor: "#E8E8E8",
+            color: "#1DB954"
+        };
+
         this.__registerFonts();
     }
 
@@ -91,6 +99,27 @@ class Spotify {
                 style: "normal"
             });
         }, 250);
+    }
+
+    /**
+     * Set progressbar details
+     * @param {"TRACK"|"BAR"} type Progressbar type
+     * @param {string} color Color to set
+     */
+    setProgressBar(type, color) {
+        switch(type) {
+
+            case "BAR":
+                this.progressBar.color = color && typeof color === "string" ? color : "#1DB954";
+                break;
+            case "TRACK":
+                this.progressBar.bgColor = color && typeof color === "string" ? color : "#E8E8E8";
+                break;
+            default:
+                throw new Error(`Invalid progressbar type "${type}"!`);
+        }
+
+        return this;
     }
 
     /**

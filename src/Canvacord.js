@@ -1143,11 +1143,7 @@ class Canvacord {
      * @see https://www.discord-canvas.net/functions/welcome
      */
     static get Welcomer() {
-        try {
-            return require("discord-canvas").Welcome;
-        } catch (e) {
-            throw new Error("discord-canvas not found!");
-        }
+        return require("./Welcomer");
     }
 
     /**
@@ -1155,11 +1151,7 @@ class Canvacord {
      * @see https://www.discord-canvas.net/functions/goodbye
      */
     static get Leaver() {
-        try {
-            return require("discord-canvas").Goodbye;
-        } catch (e) {
-            throw new Error("discord-canvas not found!");
-        }
+        return require("./Leaver");
     }
 
     /**
@@ -1190,7 +1182,7 @@ class Canvacord {
      * Returns `captcha` builder. (captcha-canvas)
      * @see https://captcha-canvas.js.org/CaptchaGenerator.html
      */
-    static get CaptchaGenerator() {
+    static get CaptchaGen() {
         try {
             return require("captcha-canvas").CaptchaGenerator;
         } catch (e) {
