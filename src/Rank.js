@@ -277,7 +277,7 @@ class Rank {
     /**
      * Set status
      * @param {"online"|"idle"|"dnd"|"offline"|"streaming"|"custom"} status User status
-     * @param {boolean} circle If status icon should be circular
+     * @param {boolean|string} circle If status icon should be circular. Provide color code here if your status is custom.
      * @param {number|boolean} width Status width
      */
     setStatus(status, circle = false, width = 5) {
@@ -304,14 +304,14 @@ class Rank {
                 break;
             case "custom":
                 this.data.status.type = "custom";
-                this.data.status.color = "#593595";
+                this.data.status.color = typeof circle === "string" ? circle : "";
             default:
                 throw new Error(`Invalid status "${status}"`);
         }
 
         if (width !== false) this.data.status.width = typeof width === "number" ? width : 5;
         else this.data.status.width = false;
-        this.data.status.circle = !!circle;
+        if ([true, false].includes(circle)) this.data.status.circle = circle;
 
         return this;
     }
