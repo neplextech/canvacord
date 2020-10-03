@@ -28,7 +28,7 @@
   },
   "homepage": "https://github.com/Snowflake107/Canvacord#readme",
   "dependencies": {
-    "canvacord-assets": "^1.0.5",
+    "canvacord-assets": "^1.0.6",
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
     "moment": "^2.27.0",
@@ -36,6 +36,7 @@
     "node-canvas-with-twemoji-and-discord-emoji": "^1.1.4"
   },
   "devDependencies": {
+    "captcha-canvas": "^2.2.1",
     "discord-canvas": "^1.3.2",
     "jsdoc": "^3.6.6",
     "jsdoc-skyceil": "^1.0.5"

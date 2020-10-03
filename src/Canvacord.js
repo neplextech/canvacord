@@ -14,6 +14,7 @@ const circle = require("../plugins/circle");
 const round = require("../plugins/round");
 const Util = require("../plugins/Util");
 const Rank = require("./Rank");
+const Spotify = require("./Spotify");
 
 class Canvacord {
 
@@ -128,7 +129,6 @@ class Canvacord {
      * @param {object} bar Progressbar options
      * @param {number} [bar.width] Progressbar width
      * @param {string} [bar.color] Progressbar color
-     * @param {boolean|number} rounded If the bar should be rounded
      * @returns {Buffer}
      */
     static createProgressBar(
@@ -596,99 +596,126 @@ class Canvacord {
         return canvas.toBuffer();
     }
 
-     /**
-      * Spotify card
-      * @param {object} options required params
-      * @param {string} [options.title] Song name
-      * @param {string} [options.artist] Song name
-      * @param {string} [options.album] Ablum
-      * @param {string|Buffer} [options.image] Image
-      * @param {number} [options.start] Timestamp when song started
-      * @param {number} [options.end] Timestamp when song ends
-      * @returns {Promise<Buffer>}
-      */
-    static async spotify(options = { title: null, image: null, artist: null, album: null, start: null, end: null }) {
-        if (!options) throw new Error('Missing parameter "options".');
-        if (!options.title) throw new Error('Missing "title" in options.');
-        if (!options.artist) throw new Error('Missing "artist" in options.');
-        if (!options.start) throw new Error('Missing "start" in options.');
-        if (!options.end) throw new Error('Missing "end" in options.');
-
-        const total = options.end - options.start;
-        const progress = Date.now() - options.start;
-        const progressF = Util.formatTime(progress > total ? total : progress);
-        const ending = Util.formatTime(total);
-
-        const getProgress = () => {
-            let prg = (progress / total) * 300;
-            if (isNaN(prg) || prg < 0) return 0;
-            if (prg > 300) return 300;
-            return prg;
-        };
+    /**
+     * Distracted boyfriend
+     * @param {string|Buffer} image1 Face for the girl in red color
+     * @param {string|Buffer} image2 Face for the boy
+     * @param {string|Buffer} image3 Face for the other girl [optional]
+     * @returns {Promise<Buffer>}
+     */
+    static async distracted(image1, image2, image3 = null) {
+        if (!image1) throw new Error("First image was not provided!");
+        if (!image2) throw new Error("Second image was not provided!");
         await this.__wait();
-        Canvas.registerFont(Canvacord.assets("FONT").MANROPE_REGULAR, {
-            family: "Manrope",
-            weight: "regular",
-            style: "normal"
-        });
+        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").DISTRACTED);
+        const avatar1 = await Canvas.loadImage(await Canvacord.circle(image1));
+        const avatar2 = await Canvas.loadImage(await Canvacord.circle(image2));
+        const avatar3 = image3 ? await Canvas.loadImage(await Canvacord.circle(image3)) : null;
 
-        Canvas.registerFont(Canvacord.assets("FONT").MANROPE_BOLD, {
-            family: "Manrope",
-            weight: "bold",
-            style: "normal"
-        });
-        
-        const canvas = Canvas.createCanvas(600, 150);
+        const canvas = Canvas.createCanvas(background.width, background.height);
         const ctx = canvas.getContext("2d");
 
-        // background
-        ctx.beginPath();
-        ctx.rect(0, 0, canvas.width, canvas.height);
-        ctx.fillStyle = "#2F3136";
-        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(avatar1, 180, 90, 150, 150);
+        ctx.drawImage(avatar2, 480, 35, 130, 130);
+        if (avatar3) ctx.drawImage(avatar3, 730, 110, 130, 130);
 
-        // draw image
-        const img = await Canvas.loadImage(options.image);
-        ctx.drawImage(img, 30, 15, 120, 120);
-
-        // draw songname
-        ctx.fillStyle = "#FFFFFF";
-        ctx.font = "bold 20px Manrope";
-        await Util.renderEmoji(ctx, Util.shorten(options.title, 30), 170, 40);
-
-        // draw artist name
-        ctx.fillStyle = "#F1F1F1";
-        ctx.font = "14px Manrope";
-        await Util.renderEmoji(ctx, `by ${Util.shorten(options.artist, 40)}`, 170, 70);
-
-        // add album
-        if (options.album && typeof options.album === "string") {
-            ctx.fillStyle = "#F1F1F1";
-            ctx.font = "14px Manrope";
-            await Util.renderEmoji(ctx, `on ${Util.shorten(options.album, 40)}`, 170, 90);
-        }
-
-        // ending point
-        ctx.fillStyle = "#B3B3B3";
-        ctx.font = "14px Manrope";
-        await Util.renderEmoji(ctx, ending, 430, 130);
-
-        // progress
-        ctx.fillStyle = "#B3B3B3";
-        ctx.font = "14px Manrope";
-        await Util.renderEmoji(ctx, progressF, 170, 130);
-
-        // progressbar track
-        ctx.rect(170, 170, 300, 4);
-        ctx.fillStyle = "#E8E8E8";
-        ctx.fillRect(170, 110, 300, 4);
-
-        // progressbar
-        ctx.fillStyle = "#1DB954";
-        ctx.fillRect(170, 110, getProgress(), 4);
-
-        // return
         return canvas.toBuffer();
+    }
+
+    /**
+     * No, it doesn't affect my baby.
+     * @param {string|Buffer} image Source image
+     * @returns {Promise<Buffer>}
+     */
+    static async affect(image) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(image);
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").AFFECT);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0);
+        ctx.drawImage(img, 180, 383, 200, 157);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Jail
+     * @param {string|Buffer} image Source image
+     * @param {boolean} greyscale If it should greyscale image
+     * @returns {Promise<Buffer>}
+     */
+    static async jail(image, greyscale = false) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(greyscale ? await Canvacord.greyscale(image) : image);
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").JAIL);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * bed
+     * @param {string|Buffer} image1 First image
+     * @param {string|Buffer} image2 Second image
+     * @returns {Promise<Buffer>}
+     */
+    static async bed(image1, image2) {
+        if (!image1) throw new Error("First image was not provided!");
+        if (!image2) throw new Error("Second image was not provided!");
+        await this.__wait();
+        const avatar = await Canvas.loadImage(image1);
+        const avatar1 = await Canvas.loadImage(image2);
+        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").BED);
+
+        const canvas = Canvas.createCanvas(background.width, background.height);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        
+        ctx.drawImage(avatar, 25, 100, 100, 100);
+        ctx.drawImage(avatar, 25, 300, 100, 100);
+        ctx.drawImage(avatar, 53, 450, 70, 70);
+        ctx.drawImage(avatar1, 53, 575, 100, 100);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Delete
+     * @param {string|Buffer} image Source image
+     * @param {boolean} dark If image should be in dark mode
+     * @returns {Promise<Buffer>}
+     */
+    static async delete(image, dark = false) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(image);
+        const bg = await Canvas.loadImage(dark ? await Canvacord.invert(Canvacord.assets("IMAGE").DELETE) : Canvacord.assets("IMAGE").DELETE);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 120, 135, 195, 195);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Spotify card builder
+     */
+    static get Spotify() {
+        return Spotify;
     }
 
     /**
@@ -891,6 +918,210 @@ class Canvacord {
     }
 
     /**
+     * Change my mind (taken from https://github.com/jgoralcz/image-microservice/blob/master/src/workers/canvas/ChangeMyMind.js)
+     * @param {String} text Text
+     * @returns {Promise<Buffer>}
+     */
+    static async changemymind(text) {
+        if (!text) throw new Error("missing text!");
+        await this.__wait();
+        const base = await Canvas.loadImage(Canvacord.assets("IMAGE").CHANGEMYMIND);
+        const canvas = Canvas.createCanvas(base.width, base.height);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
+        let x = text.length;
+        let fontSize = 70;
+        if (x <= 15) {
+            ctx.translate(310, 365);
+        } else if (x <= 30) {
+            fontSize = 50;
+            ctx.translate(315, 365);
+        } else if (x <= 70) {
+            fontSize = 40;
+            ctx.translate(315, 365);
+        } else if (x <= 85) {
+            fontSize = 32;
+            ctx.translate(315, 365);
+        } else if (x < 100) {
+            fontSize = 26;
+            ctx.translate(315, 365);
+        } else if (x < 120) {
+            fontSize = 21;
+            ctx.translate(315, 365);
+        } else if (x < 180) {
+            fontSize = 0.0032 * (x * x) - 0.878 * x + 80.545;
+            ctx.translate(315, 365);
+        } else if (x < 700) {
+            fontSize = 0.0000168 * (x * x) - 0.0319 * x + 23.62;
+            ctx.translate(310, 338);
+        } else {
+            fontSize = 7;
+            ctx.translate(310, 335);
+        }
+        ctx.font = `${fontSize}px 'Arial'`;
+        ctx.rotate(-0.39575);
+
+        const lines = Util.getLines({ text, ctx, maxWidth: 345 });
+        let i = 0;
+        while (i < lines.length) {
+            ctx.fillText(lines[i], 10, i * fontSize - 5);
+            i++;
+        }
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Clyde
+     * @param {string} message Message
+     * @returns {Promise<Buffer>}
+     */
+    static async clyde(message) {
+        if (!message) messgae = "Please provide text!";
+        await this.__wait()
+        let avatar = await Canvas.loadImage(await Canvacord.circle(Canvacord.assets("IMAGE").CLYDE));
+        let badge = await Canvas.loadImage(Canvacord.assets("IMAGE").BOTBADGE);
+        Canvas.registerFont(Canvacord.assets("FONT").WHITNEY_MEDIUM, {
+            family: "Whitney",
+            weight: "regular",
+            style: "normal"
+        });
+
+        Canvas.registerFont(Canvacord.assets("FONT").MANROPE_REGULAR, {
+            family: "Manrope",
+            weight: "regular",
+            style: "normal"
+        });
+
+        const canvas = Canvas.createCanvas(1500, 300);
+
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#36393E";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(avatar, 75, 30, 130, 130);
+        ctx.drawImage(badge, 360, 45, 100, 40);
+
+        ctx.font = "40px Manrope";
+        ctx.fillStyle = "#FFFFFF";
+        ctx.textAlign = "start";
+        await Util.renderEmoji(ctx, Util.shorten(message, 66), 230, 150);
+
+        ctx.font = "50px Whitney";
+        ctx.fillStyle = "#FFFFFF";
+        ctx.textAlign = "start";
+        ctx.fillText("Clyde", 230, 80);
+
+        ctx.font = "40px Whitney";
+        ctx.fillStyle = "#7D7D7D";
+        ctx.textAlign = "start";
+        ctx.fillText(Util.discordTime(), 470, 80);
+
+        ctx.font = "20px Manrope";
+        ctx.fillStyle = "#7D7D7D";
+        ctx.textAlign = "start";
+        ctx.fillText("Only you can see this  —", 240, 190);
+
+        ctx.font = "20px Manrope";
+        ctx.fillStyle = "#2785C7";
+        ctx.textAlign = "start";
+        ctx.fillText("delete this message.", 240 + ctx.measureText("Only you can see this  —").width + 10, 190);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Fake Quote
+     * @param {object} options Options
+     * @param {Buffer|string} [options.image] Image
+     * @param {string} [options.message] Message
+     * @param {string} [options.username] Username
+     * @param {string} [options.color] Color
+     * @returns {Promise<Buffer>}
+     */
+    static async quote(options = { image, message, username, color }) {
+        await this.__wait();
+        if (!options.image) options.image = Canvacord.assets("IMAGE").CLYDE;
+        if (!options.message) options.message = "Please provide text!";
+        if (!options.username) options.username = "Clyde";
+        if (!options.color) options.color = "#FFFFFF";
+
+        let image = await Canvas.loadImage(await Canvacord.circle(options.image));
+
+        Canvas.registerFont(Canvacord.assets("FONT").WHITNEY_MEDIUM, {
+            family: "Whitney",
+            weight: "regular",
+            style: "normal"
+        });
+
+        Canvas.registerFont(Canvacord.assets("FONT").MANROPE_REGULAR, {
+            family: "Manrope",
+            weight: "regular",
+            style: "normal"
+        });
+
+        const canvas = Canvas.createCanvas(1500, 300);
+
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "#36393E";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(image, 75, 30, 130, 130);
+
+        ctx.font = "40px Manrope";
+        ctx.fillStyle = "#FFFFFF";
+        ctx.textAlign = "start";
+        await Util.renderEmoji(ctx, Util.shorten(options.message, 66), 230, 150);
+
+        ctx.font = "50px Whitney";
+        ctx.fillStyle = typeof options.color == "string" ? options.color : "#FFFFFF";
+        ctx.textAlign = "start";
+        ctx.fillText(typeof options.username === "string" ? Util.shorten(options.username, 17) : "Clyde", 230, 80);
+
+        ctx.font = "40px Whitney";
+        ctx.fillStyle = "#7D7D7D";
+        ctx.textAlign = "start";
+        ctx.fillText(Util.discordTime(), 240 + ctx.measureText(Util.shorten(options.username, 17)).width + 110, 80);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * PornHub Comment
+     * @param {Object} options Options
+     * @param {String} [options.username] Username
+     * @param {String} [options.message] Comment
+     * @param {String|Buffer} [options.image] Image
+     * @returns {Promise<Buffer>}
+     */
+    static async phub(options = { username: null, message: null, image: null }) {
+        if (!options.username) throw new Error("Username may not be empty!");
+        if (!options.message) throw new Error("Message may not be empty!");
+        if (!options.image) throw new Error("Image may not be empty!");
+
+        await this.__wait();
+        let image = await Canvas.loadImage(options.image);
+        let baseImage = await Canvas.loadImage(Canvacord.assets("IMAGE").PHUB);
+
+        let canvas = Canvas.createCanvas(baseImage.width, baseImage.height);
+        let ctx = canvas.getContext("2d");
+
+        ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(image, 30, 310, 70, 70);
+
+        ctx.font = "32px Arial";
+        ctx.fillStyle = "#F99600";
+        ctx.textAlign = "start";
+        ctx.fillText(Util.shorten(options.username, 20), 115, 350);
+
+        ctx.font = "32px Arial";
+        ctx.fillStyle = "#CCCCCC";
+        ctx.textAlign = "start";
+        await Util.renderEmoji(ctx, Util.shorten(options.message, 50), 30, 430);
+
+        return canvas.toBuffer();
+    }
+
+    /**
      * Writes the data as file
      * @param {Buffer} data data to write
      * @param {string} name file name
@@ -956,6 +1187,18 @@ class Canvacord {
     }
 
     /**
+     * Returns `captcha` builder. (captcha-canvas)
+     * @see https://captcha-canvas.js.org/CaptchaGenerator.html
+     */
+    static get CaptchaGenerator() {
+        try {
+            return require("captcha-canvas").CaptchaGenerator;
+        } catch (e) {
+            throw new Error("captcha-canvas not found!");
+        }
+    }
+
+    /**
      * Returns default icon of a discord server
      * @param {string} name Guild name
      * @param {number} size Icon size. Valid: `16`, `32`, `64`, `128`, `256`, `512`, `1024`, `2048` & `4096`
@@ -992,7 +1235,7 @@ class Canvacord {
      */
     static __wait(dur) {
         return new Promise((res) => {
-            setTimeout(() => res(), dur || 500);
+            setTimeout(() => res(), dur || 250);
         });
     }
 

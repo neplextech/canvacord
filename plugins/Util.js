@@ -121,6 +121,32 @@ class Util {
             .replace(/\s/g, "");
     }
 
+    /**
+     * Returns array of lines
+     * @param {object} params Params
+     * @param {string} text Text
+     * @param {CanvasRenderingContext2D} ctx CanvasRenderingContext2D
+     * @param {number} maxWidth Max width 
+     */
+    static getLines({ text, ctx, maxWidth }) {
+        if (!text) return [];
+        if (!ctx) throw new Error("Canvas context was not provided!");
+        if (!maxWidth) throw new Error("No max-width provided!");
+        const lines = [];
+
+        while (text.length) {
+            let i;
+            for (i = text.length; ctx.measureText(text.substr(0, i)).width > maxWidth; i -= 1);
+            const result = text.substr(0, i);
+            let j;
+            if (i !== text.length) for (j = 0; result.indexOf(" ", j) !== -1; j = result.indexOf(" ", j) + 1);
+            lines.push(result.substr(0, j || result.length));
+            text = text.substr(lines[lines.length - 1].length, text.length);
+        }
+
+        return lines;
+    }
+
 }
 
 module.exports = Util;
