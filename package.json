@@ -43,6 +43,6 @@
     "captcha-canvas": "^2.2.1",
     "discord-canvas": "github:Snowflake107/discord-canvas",
     "jsdoc": "^3.6.6",
-    "jsdoc-skyceil": "^1.0.5"
+    "jsdoc-skyceil": "github:zyrouge/jsdoc-skyceil"
   }
 }
