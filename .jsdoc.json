@@ -13,6 +13,7 @@
         "include": [
             "src/Assets.js",
             "src/Canvacord.js",
+            "src/Spotify.js",
             "src/Plugins.js",
             "src/Rank.js",
             "plugins/Util.js",

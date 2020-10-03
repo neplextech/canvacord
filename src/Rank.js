@@ -63,7 +63,8 @@ class Rank {
             status: {
                 width: 5,
                 type: "online",
-                color: "#43B581"
+                color: "#43B581",
+                circle: false
             },
             rank: {
                 display: true,
@@ -275,10 +276,11 @@ class Rank {
 
     /**
      * Set status
-     * @param {"online"|"idle"|"dnd"|"offline"|"streaming"} status User status
+     * @param {"online"|"idle"|"dnd"|"offline"|"streaming"|"custom"} status User status
+     * @param {boolean} circle If status icon should be circular
      * @param {number|boolean} width Status width
      */
-    setStatus(status, width = 5) {
+    setStatus(status, circle = false, width = 5) {
         switch(status) {
             case "online":
                 this.data.status.type = "online";
@@ -300,12 +302,16 @@ class Rank {
                 this.data.status.type = "stream";
                 this.data.status.color = "#593595";
                 break;
+            case "custom":
+                this.data.status.type = "custom";
+                this.data.status.color = "#593595";
             default:
                 throw new Error(`Invalid status "${status}"`);
         }
 
         if (width !== false) this.data.status.width = typeof width === "number" ? width : 5;
         else this.data.status.width = false;
+        this.data.status.circle = !!circle;
 
         return this;
     }
@@ -488,12 +494,18 @@ class Rank {
         ctx.restore();
 
         // draw status
-        if (this.data.status.width !== false) {
+        if (this.data.status.width !== false && !this.data.status.circle) {
             ctx.beginPath();
             ctx.arc(135, 145, 100, 0, Math.PI * 2, true);
             ctx.strokeStyle = this.data.status.color;
             ctx.lineWidth = this.data.status.width;
             ctx.stroke();
+        } else if (!!this.data.status.circle) {
+            ctx.beginPath();
+            ctx.fillStyle = this.data.status.color;
+            ctx.arc(this.data.status.x + 10, this.data.status.y + 20, 20, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.closePath();
         }
 
         return canvas.toBuffer();
