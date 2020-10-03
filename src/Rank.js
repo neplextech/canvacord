@@ -276,8 +276,8 @@ class Rank {
 
     /**
      * Set status
-     * @param {"online"|"idle"|"dnd"|"offline"|"streaming"|"custom"} status User status
-     * @param {boolean|string} circle If status icon should be circular. Provide color code here if your status is custom.
+     * @param {"online"|"idle"|"dnd"|"offline"|"streaming"} status User status
+     * @param {boolean} circle If status icon should be circular.
      * @param {number|boolean} width Status width
      */
     setStatus(status, circle = false, width = 5) {
@@ -302,9 +302,6 @@ class Rank {
                 this.data.status.type = "stream";
                 this.data.status.color = "#593595";
                 break;
-            case "custom":
-                this.data.status.type = "custom";
-                this.data.status.color = typeof circle === "string" ? circle : "";
             default:
                 throw new Error(`Invalid status "${status}"`);
         }
@@ -494,18 +491,18 @@ class Rank {
         ctx.restore();
 
         // draw status
-        if (this.data.status.width !== false && !this.data.status.circle) {
+        if (!!this.data.status.circle) {
+            ctx.beginPath();
+            ctx.fillStyle = this.data.status.color;
+            ctx.arc(215, 205, 20, 0, 2 * Math.PI);
+            ctx.fill();
+            ctx.closePath();
+        } else if (!this.data.status.circle && this.data.status.width !== false) {
             ctx.beginPath();
             ctx.arc(135, 145, 100, 0, Math.PI * 2, true);
             ctx.strokeStyle = this.data.status.color;
             ctx.lineWidth = this.data.status.width;
             ctx.stroke();
-        } else if (!!this.data.status.circle) {
-            ctx.beginPath();
-            ctx.fillStyle = this.data.status.color;
-            ctx.arc(this.data.status.x + 10, this.data.status.y + 20, 20, 0, 2 * Math.PI);
-            ctx.fill();
-            ctx.closePath();
         }
 
         return canvas.toBuffer();
