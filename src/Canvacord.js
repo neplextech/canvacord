@@ -13,9 +13,17 @@ const Darkness = require("../libs/Darkness");
 const circle = require("../plugins/circle");
 const round = require("../plugins/round");
 const Util = require("../plugins/Util");
-const Rank = require("./Rank");
-const Spotify = require("./Spotify");
 
+
+/**
+ * Canvacord Memes Generator
+ * @example const Canvacord = require("canvacord");
+ * 
+ * Canvacord.Canvas.trigger("./image.png")
+ *  .then(triggered => {
+ *      Canvacord.write(triggered, "triggered.gif");
+ *  })
+ */
 class Canvacord {
 
     /**
@@ -132,8 +140,8 @@ class Canvacord {
      * @returns {Buffer}
      */
     static createProgressBar(
-        track = { x, y, width, height, color, stroke, lineWidth },
-        bar = { width, color }
+        track = { x: false, y: false, width: false, height: false, color: false, stroke: false, lineWidth: false },
+        bar = { width: false, color: false }
     ) {
         if (!track) throw new Error("Invalid track args!");
         if (!bar) throw new Error("Invalid progressbar args!");
@@ -234,7 +242,7 @@ class Canvacord {
         const ctx = canvas.getContext("2d");
 
         rect(ctx, 0, 0, height, width, color);
-        
+
         if (!!displayHex) {
             const ic = Util.invertColor(color);
             ctx.font = "bold 72px Manrope";
@@ -269,14 +277,13 @@ class Canvacord {
      * @param {string} color color
      * @param {boolean} stroke If it should stroke
      * @param {number} lineWidth line width
-     * @param {boolean} rounded If it should be rounded
      * @returns {Buffer}
      */
-    static rectangle(x, y, width, height, color, stroke, lineWidth, rounded = false) {
+    static rectangle(x, y, width, height, color, stroke, lineWidth) {
         const canvas = Canvas.createCanvas(width, height);
         const ctx = canvas.getContext("2d");
         rect(ctx, x, y, canvas.height, canvas.width, color, !!stroke, lineWidth);
-        round(ctx, x, y, canvas.width, canvas.height, rounded);
+        round(ctx, x, y, canvas.width, canvas.height);
         return canvas.toBuffer();
     }
 
@@ -393,6 +400,18 @@ class Canvacord {
                 weight: "bold",
                 style: "normal"
             });
+
+            Canvas.registerFont(assets("FONT").ROBOTO_LIGHT, {
+                family: "Roboto",
+                weight: "light",
+                style: "normal"
+            });
+
+            Canvas.registerFont(assets("FONT").ROBOTO_REGULAR, {
+                family: "Roboto",
+                weight: "regular",
+                style: "normal"
+            });
         } else {
             fontArray.forEach(font => {
                 Canvas.registerFont(font.path, font.face);
@@ -421,18 +440,6 @@ class Canvacord {
         ctx.drawImage(avatar1, 580, 260, 200, 200);
         ctx.drawImage(avatar, 350, 70, 220, 220);
         return canvas.toBuffer();
-    }
-
-    /**
-     * Slap someone ( ͡° ͜ʖ ͡°)
-     * @param {string|Buffer} image1 First image
-     * @param {string|Buffer} image2 Second image
-     * @returns {Promise<Buffer>}
-     * @deprecated
-     */
-    static async batslap(image1, image2) {
-        console.warn("Canvacord#batslap() is deprecated, use Canvacord#slap() instead!");
-        return await Canvacord.slap(image1, image2);
     }
 
     /**
@@ -491,17 +498,6 @@ class Canvacord {
     }
 
     /**
-     * Rainbow ( ͡° ͜ʖ ͡°)
-     * @param {string|Buffer} image Image source
-     * @returns {Promise<Buffer>}
-     * @deprecated
-     */
-    static async gay(image) {
-        console.warn("Canvacord#gay() is deprecated, use Canvacord#rainbow() instead!");
-        return await Canvacord.rainbow(image);
-    }
-
-    /**
      * "F" in the chat
      * @param {string|Buffer} image image source
      * @returns {Promise<Buffer>}
@@ -526,7 +522,7 @@ class Canvacord {
     static async trash(image) {
         if (!image) throw new Error("Image was not provided!");
         await this.__wait();
-        const blur = await Canvacord.blur(image, 50);
+        const blur = await Canvacord.blur(image);
         const img = await Canvas.loadImage(blur);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").TRASH);
 
@@ -655,7 +651,7 @@ class Canvacord {
         const img = await Canvas.loadImage(greyscale ? await Canvacord.greyscale(image) : image);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").JAIL);
 
-        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const canvas = Canvas.createCanvas(350, 350);
         const ctx = canvas.getContext("2d");
 
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -681,7 +677,7 @@ class Canvacord {
         const canvas = Canvas.createCanvas(background.width, background.height);
         const ctx = canvas.getContext("2d");
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
-        
+
         ctx.drawImage(avatar, 25, 100, 100, 100);
         ctx.drawImage(avatar, 25, 300, 100, 100);
         ctx.drawImage(avatar, 53, 450, 70, 70);
@@ -709,13 +705,6 @@ class Canvacord {
         ctx.drawImage(img, 120, 135, 195, 195);
 
         return canvas.toBuffer();
-    }
-
-    /**
-     * Spotify card builder
-     */
-    static get Spotify() {
-        return Spotify;
     }
 
     /**
@@ -859,7 +848,7 @@ class Canvacord {
         await this.__wait();
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").OPINION);
         const ava = await Canvas.loadImage(avatar);
-        
+
         const canvas = Canvas.createCanvas(482, 481);
         const ctx = canvas.getContext("2d");
 
@@ -873,7 +862,7 @@ class Canvacord {
 
         return canvas.toBuffer();
     }
-    
+
     /**
      * Creates Gradient
      * @param {string} colorFrom Starting color
@@ -883,16 +872,16 @@ class Canvacord {
     static gradient(colorFrom, colorTo) {
         if (!colorFrom) throw new Error("ColorFrom was not provided!");
         if (!colorTo) throw new Error("ColorTo was not provided!");
-        
+
         const canvas = Canvas.createCanvas(400, 200);
         const ctx = canvas.getContext("2d");
         const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
-        
+
         gradient.addColorStop(0, colorFrom);
         gradient.addColorStop(1, colorTo);
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
-        
+
         return canvas.toBuffer();
     }
 
@@ -918,8 +907,9 @@ class Canvacord {
     }
 
     /**
-     * Change my mind (taken from https://github.com/jgoralcz/image-microservice/blob/master/src/workers/canvas/ChangeMyMind.js)
+     * Change my mind (taken from jgoralcz/image-microservice)
      * @param {String} text Text
+     * @see https://github.com/jgoralcz/image-microservice/blob/master/src/workers/canvas/ChangeMyMind.js
      * @returns {Promise<Buffer>}
      */
     static async changemymind(text) {
@@ -1122,6 +1112,111 @@ class Canvacord {
     }
 
     /**
+     * Wanted
+     * @param {string|Buffer} image Source image
+     * @returns {Promise<Buffer>}
+     */
+    static async wanted(image) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(image);
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WANTED);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 145, 282, 447, 447);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Wasted
+     * @param {string|Buffer} image Source image
+     * @returns {Promise<Buffer>}
+     */
+    static async wasted(image) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(await Canvacord.greyscale(image));
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WASTED);
+
+        const canvas = Canvas.createCanvas(512, 512);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * YouTube comment
+     * @param {object} ops YouTube comment options
+     * @param {string} [ops.username] Comment author username
+     * @param {string} [ops.content] The comment
+     * @param {string|Buffer} [ops.avatar] Avatar source
+     * @param {boolean} [ops.dark=false] Dark mode?
+     */
+    static async youtube(ops = { username: null, content: null, avatar: null, dark: false }) {
+        if (!ops.username || typeof ops.username !== "string") throw new Error("Username may not be empty!");
+        if (!ops.content || typeof ops.content !== "string") throw new Error("Content may not be empty!");
+        if (!ops.avatar) throw new Error("Avatar source may not be empty!");
+        ops.dark = !!ops.dark;
+
+        await this.__wait();
+        const bg = await Canvas.loadImage(!ops.dark ? Canvacord.assets("IMAGE").YOUTUBE : await Canvacord.invert(Canvacord.assets("IMAGE").YOUTUBE));
+        const avatar = await Canvas.loadImage(await Canvacord.circle(ops.avatar));
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, -3, -3, canvas.width + 6, canvas.height + 6);
+        ctx.drawImage(avatar, 17, 33, 52, 52);
+
+        let time = Math.floor(Math.random() * (59 - 1)) + 1;
+        time = `${time + (time == 1 ? " minute" : " minutes")} ago`;
+
+        const username = Util.shorten(ops.username, 21);
+        const comment = Util.shorten(ops.content, 60);
+
+        ctx.font = "20px Roboto";
+        ctx.fillStyle = ops.dark ? "#FFFFFF" : "#000000";
+        ctx.fillText(username, 92, 50);
+        
+        ctx.font = "16px Roboto";
+        ctx.fillStyle = "#909090";
+        ctx.fillText(time, ctx.measureText(username).width + 140, 50);
+
+        ctx.font = "18px Roboto";
+        ctx.fillStyle = ops.dark ? "#FFFFFF" : "#000000";
+        await Util.renderEmoji(ctx, comment, 92, 80);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Oh Shit!
+     * @param {string|Buffer} image Source image
+     * @returns {Promise<Buffer>}
+     */
+    static async shit(image) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(await Canvacord.circle(image));
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").SHIT);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 210, 700, 170, 170);
+
+        return canvas.toBuffer();
+    }
+
+    /**
      * Writes the data as file
      * @param {Buffer} data data to write
      * @param {string} name file name
@@ -1129,29 +1224,6 @@ class Canvacord {
      */
     static write(data, name) {
         return fs.writeFileSync(name, data);
-    }
-
-    /**
-     * Rank card builder
-     */
-    static get Rank() {
-        return Rank;
-    }
-
-    /**
-     * Returns `welcomer card` builder. (discord-canvas)
-     * @see https://www.discord-canvas.net/functions/welcome
-     */
-    static get Welcomer() {
-        return require("./Welcomer");
-    }
-
-    /**
-     * Returns `leaver card` builder. (discord-canvas)
-     * @see https://www.discord-canvas.net/functions/goodbye
-     */
-    static get Leaver() {
-        return require("./Leaver");
     }
 
     /**

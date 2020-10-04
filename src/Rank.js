@@ -8,7 +8,6 @@ class Rank {
      * Creates Rank card
      * @example 
      * const rank = new canvacord.Rank()
-            .registerFonts()
             .setAvatar(img)
             .setCurrentXP(203)
             .setRequiredXP(500)
@@ -299,7 +298,7 @@ class Rank {
                 this.data.status.color = "#747F8E";
                 break;
             case "streaming":
-                this.data.status.type = "stream";
+                this.data.status.type = "streaming";
                 this.data.status.color = "#593595";
                 break;
             default:

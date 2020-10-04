@@ -34,7 +34,6 @@ const img = "https://cdn.discordapp.com/embed/avatars/0.png";
 const userData = getDataSomehow();
 
 const rank = new canvacord.Rank()
-    .registerFonts()
     .setAvatar(img)
     .setCurrentXP(userData.xp)
     .setRequiredXP(userData.requiredXP)
@@ -68,7 +67,7 @@ client.on("message", async (message) => {
     if (message.author.bot) return;
     if (message.content === "!triggered") {
         let avatar = message.author.displayAvatarURL({ dynamic: false, format: 'png' });
-        let image = await canvacord.trigger(avatar);
+        let image = await canvacord.Canvas.trigger(avatar);
         let attachment = new Discord.MessageAttachment(image, "triggered.gif");
         return message.channel.send(attachment);
     }

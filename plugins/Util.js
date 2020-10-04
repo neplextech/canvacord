@@ -14,7 +14,7 @@ class Util {
 
     /**
      * Converts regular timestamp to discord like time
-     * @param {Date} time Timestamp to convert
+     * @param {Date|number} time Timestamp to convert
      */
     static discordTime(time = new Date()) {
         let date = time && time  instanceof Date ? time : new Date();
@@ -70,12 +70,13 @@ class Util {
     /**
      * Returns formatted hex code
      * @param {string} hex Hex code to format
+     * @param {string} alt Alt color
      */
     static formatHex(hex, alt = "#000000") {
-        if (!hex || typeof hex !== "string") return "#000000";
+        if (!hex || typeof hex !== "string") return alt || "#000000";
         hex = hex.replace("#", "");
         if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
-        if (hex.length !== 6) return "#000000";
+        if (hex.length !== 6) return alt || "#000000";
 
         return `#${hex}`;
     }
@@ -105,7 +106,6 @@ class Util {
         };
 
         const finalHex = `#${pad(r)}${pad(g)}${pad(b)}`;
-        console.log(finalHex)
         return finalHex;
     }
 
