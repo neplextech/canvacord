@@ -9,13 +9,27 @@ try {
     });
 } catch(e) {}
 
+/**
+ * @param {stirng} moduleName module name
+ */
+function load(moduleName) {
+    try {
+        return require(moduleName);
+    } catch(e) {
+        return null;
+    }
+}
+
 module.exports = {
     Canvas: Canvacord,
     ConvolutionMatrix: Canvacord.CONVOLUTION_MATRIX,
     Rank: require("./src/Rank"),
     Spotify: require("./src/Spotify"),
-    Welcomer: require("./src/Welcomer"),
-    Leaver: require("./src/Leaver"),
+    Welcomer: load("./src/Welcomer"),
+    Leaver: load("./src/Leaver"),
+    CaptchaGen: load("captcha-canvas") ? load("captcha-canvas").CaptchaGenerator : null,
+    FortniteShop: load("discord-canvas") ? load("discord-canvas").FortniteShop : null,
+    FortniteStats: load("discord-canvas") ? load("discord-canvas").FortniteStats : null,
     Plugins: require("./src/Plugins"),
     Util: require("./plugins/Util"),
     Assets: require("canvacord-assets"),

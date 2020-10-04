@@ -1227,42 +1227,6 @@ class Canvacord {
     }
 
     /**
-     * Returns `fortnite shop card` builder. (discord-canvas)
-     * @see https://www.discord-canvas.net/functions/fortniteshop
-     */
-    static get FortniteShop() {
-        try {
-            return require("discord-canvas").FortniteShop;
-        } catch (e) {
-            throw new Error("discord-canvas not found!");
-        }
-    }
-
-    /**
-     * Returns `fortnite stats card` builder. (discord-canvas)
-     * @see https://www.discord-canvas.net/functions/fortnitestats
-     */
-    static get FortniteStats() {
-        try {
-            return require("discord-canvas").FortniteStats;
-        } catch (e) {
-            throw new Error("discord-canvas not found!");
-        }
-    }
-
-    /**
-     * Returns `captcha` builder. (captcha-canvas)
-     * @see https://captcha-canvas.js.org/CaptchaGenerator.html
-     */
-    static get CaptchaGen() {
-        try {
-            return require("captcha-canvas").CaptchaGenerator;
-        } catch (e) {
-            throw new Error("captcha-canvas not found!");
-        }
-    }
-
-    /**
      * Returns default icon of a discord server
      * @param {string} name Guild name
      * @param {number} size Icon size. Valid: `16`, `32`, `64`, `128`, `256`, `512`, `1024`, `2048` & `4096`

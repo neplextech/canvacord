@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "5.0.3",
+  "version": "5.0.4",
   "description": "Powerful image manipulation package for beginners.",
   "main": "index.js",
   "scripts": {
@@ -42,7 +42,7 @@
   "devDependencies": {
     "@types/node": "^14.11.2",
     "captcha-canvas": "^2.2.1",
-    "discord-canvas": "github:Snowflake107/discord-canvas",
+    "discord-canvas": "github:snowflake107/discord-canvas",
     "jsdoc": "^3.6.6",
     "jsdoc-skyceil": "github:zyrouge/jsdoc-skyceil"
   }
