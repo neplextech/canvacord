@@ -1,7 +1,8 @@
 const moment = require("moment");
 const abbrev = require("./abbrev");
 const renderEmoji = require("./renderEmoji");
-require("moment-duration-format");
+const momentDurationFormatSetup = require("moment-duration-format");
+momentDurationFormatSetup(moment);
 
 class Util {
 
