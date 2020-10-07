@@ -32,7 +32,7 @@ module.exports = {
     FortniteStats: load("discord-canvas") ? load("discord-canvas").FortniteStats : null,
     Plugins: require("./src/Plugins"),
     Util: require("./plugins/Util"),
-    Assets: require("canvacord-assets"),
+    Assets: require("@canvacord/assets"),
     MSX: {
         Brightness: require("./libs/Brightness"),
         Convolute: require("./libs/Convolute"),
