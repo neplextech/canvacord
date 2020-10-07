@@ -867,13 +867,15 @@ class Canvacord {
      * Creates Gradient
      * @param {string} colorFrom Starting color
      * @param {string} colorTo Ending color
+     * @param {number} width Image width
+     * @param {number} height Image height
      * @returns {Buffer}
      */
-    static gradient(colorFrom, colorTo) {
+    static gradient(colorFrom, colorTo, width, height) {
         if (!colorFrom) throw new Error("ColorFrom was not provided!");
         if (!colorTo) throw new Error("ColorTo was not provided!");
 
-        const canvas = Canvas.createCanvas(400, 200);
+        const canvas = Canvas.createCanvas(width || 400, height || 200);
         const ctx = canvas.getContext("2d");
         const gradient = ctx.createLinearGradient(0, 0, canvas.width, 0);
 

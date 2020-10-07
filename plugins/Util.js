@@ -14,6 +14,15 @@ class Util {
     }
 
     /**
+     * Validates hex
+     * @param {string} hex Hex code to validate
+     */
+    static validateHex(hex) {
+        if (!hex || typeof hex !== "string") return false;
+        return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(hex);
+    }
+
+    /**
      * Converts regular timestamp to discord like time
      * @param {Date|number} time Timestamp to convert
      */

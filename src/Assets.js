@@ -1,4 +1,4 @@
-const assets = require("canvacord-assets");
+const assets = require("@canvacord/assets");
 
 /**
  * Canvacord assets

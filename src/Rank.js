@@ -258,6 +258,32 @@ class Rank {
     }
 
     /**
+     * Set rank display color
+     * @param {string} text text color
+     * @param {string} number Number color
+     */
+    setRankColor(text = "#FFFFFF", number = "#FFFFFF") {
+        if (!text || typeof text !== "string") text = "#FFFFFF";
+        if (!number || typeof number !== "string") number = "#FFFFFF";
+        this.data.rank.textColor = text;
+        this.data.rank.color = number;
+        return this;
+    }
+
+    /**
+     * Set level color
+     * @param {string} text text color
+     * @param {string} number number color
+     */
+    setLevelColor(text = "#FFFFFF", number = "#FFFFFF") {
+        if (!text || typeof text !== "string") text = "#FFFFFF";
+        if (!number || typeof number !== "string") number = "#FFFFFF";
+        this.data.level.textColor = text;
+        this.data.level.color = number;
+        return this;
+    }
+
+    /**
      * Set Level
      * @param {number} data Current Level
      * @param {string} text Display text
@@ -270,6 +296,16 @@ class Rank {
         if (!text || typeof text !== "string") text = "LEVEL";
         this.data.level.displayText = text;
 
+        return this;
+    }
+
+    /**
+     * Set custom status color
+     * @param {string} color Color to set
+     */
+    setCustomStatusColor(color) {
+        if (!color || typeof color !== "string") throw new Error("Invalid color!");
+        this.data.status.color = color;
         return this;
     }
 
@@ -388,7 +424,7 @@ class Rank {
         ctx.font = `bold 36px ${ops.fontX}`;
         ctx.fillStyle = this.data.username.color;
         ctx.textAlign = "start";
-        const name = Util.shorten(this.data.username.name, 12);
+        const name = Util.shorten(this.data.username.name, 10);
 
         // apply username
         !this.data.renderEmojis ? ctx.fillText(`${name}`, 257 + 18.5, 164) : await Util.renderEmoji(ctx, name, 257 + 18.5, 164);

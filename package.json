@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "5.0.5",
+  "version": "5.0.6",
   "description": "Powerful image manipulation package for beginners.",
   "main": "index.js",
   "scripts": {
@@ -32,7 +32,7 @@
   },
   "homepage": "https://canvacord.js.org",
   "dependencies": {
-    "canvacord-assets": "^1.1.0",
+    "@canvacord/assets": "^1.0.0",
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
     "moment": "^2.29.0",
