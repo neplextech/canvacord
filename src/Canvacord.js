@@ -467,7 +467,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async facepalm(image) {
-        if (!image) throw new Error("image was not provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         let layer = await Canvas.loadImage(Canvacord.assets("IMAGE").FACEPALM);
         let canvas = Canvas.createCanvas(632, 357);
@@ -486,7 +486,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async rainbow(image) {
-        if (!image) throw new Error("image was not provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         let bg = await Canvas.loadImage(Canvacord.assets("IMAGE").GAY);
         let img = await Canvas.loadImage(image);
@@ -539,7 +539,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async hitler(image) {
-        if (!image) throw new Error("image was not provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").HITLER);
@@ -579,7 +579,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async jokeOverHead(image) {
-        if (!image) throw new Error("Image wasn ot provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const layer = await Canvas.loadImage(Canvacord.assets("IMAGE").JOKEOVERHEAD);
         const img = await Canvas.loadImage(image)
@@ -625,7 +625,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async affect(image) {
-        if (!image) throw new Error("image was not provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").AFFECT);
@@ -646,7 +646,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async jail(image, greyscale = false) {
-        if (!image) throw new Error("image was not provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(greyscale ? await Canvacord.greyscale(image) : image);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").JAIL);
@@ -693,7 +693,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async delete(image, dark = false) {
-        if (!image) throw new Error("image was not provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
         const bg = await Canvas.loadImage(dark ? await Canvacord.invert(Canvacord.assets("IMAGE").DELETE) : Canvacord.assets("IMAGE").DELETE);
@@ -915,7 +915,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async changemymind(text) {
-        if (!text) throw new Error("missing text!");
+        if (!text) throw new Error("Missing text!");
         await this.__wait();
         const base = await Canvas.loadImage(Canvacord.assets("IMAGE").CHANGEMYMIND);
         const canvas = Canvas.createCanvas(base.width, base.height);
@@ -968,7 +968,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async clyde(message) {
-        if (!message) messgae = "Please provide text!";
+        if (!message) message = "Please provide text!";
         await this.__wait()
         let avatar = await Canvas.loadImage(await Canvacord.circle(Canvacord.assets("IMAGE").CLYDE));
         let badge = await Canvas.loadImage(Canvacord.assets("IMAGE").BOTBADGE);
@@ -1119,7 +1119,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async wanted(image) {
-        if (!image) throw new Error("image was not provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WANTED);
@@ -1139,7 +1139,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async wasted(image) {
-        if (!image) throw new Error("image was not provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(await Canvacord.greyscale(image));
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WASTED);
@@ -1204,7 +1204,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async shit(image) {
-        if (!image) throw new Error("image was not provided!");
+        if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(await Canvacord.circle(image));
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").SHIT);
