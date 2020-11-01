@@ -1,5 +1,5 @@
 const { Base } = require("discord-canvas");
-const Util = require("../plugins/Util");
+const Util = require("./Util");
 
 class Welcomer extends Base {
 

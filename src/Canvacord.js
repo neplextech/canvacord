@@ -12,7 +12,7 @@ const Canvas = require("canvas");
 const Darkness = require("../libs/Darkness");
 const circle = require("../plugins/circle");
 const round = require("../plugins/round");
-const Util = require("../plugins/Util");
+const Util = require("./Util");
 
 
 /**

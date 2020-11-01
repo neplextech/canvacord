@@ -31,7 +31,7 @@ module.exports = {
     FortniteShop: load("discord-canvas") ? load("discord-canvas").FortniteShop : null,
     FortniteStats: load("discord-canvas") ? load("discord-canvas").FortniteStats : null,
     Plugins: require("./src/Plugins"),
-    Util: require("./plugins/Util"),
+    Util: require("./src/Util"),
     Assets: require("@canvacord/assets"),
     MSX: {
         Brightness: require("./libs/Brightness"),

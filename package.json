@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "5.0.7",
+  "version": "5.0.8",
   "description": "Powerful image manipulation package for beginners.",
   "main": "index.js",
   "scripts": {
@@ -10,7 +10,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/Snowflake107/Canvacord.git"
+    "url": "git+https://github.com/DevSnowflake/Canvacord.git"
   },
   "keywords": [
     "canvacord",
@@ -29,7 +29,7 @@
   },
   "license": "GPL-3.0",
   "bugs": {
-    "url": "https://github.com/Snowflake107/Canvacord/issues"
+    "url": "https://github.com/DevSnowflake/Canvacord/issues"
   },
   "homepage": "https://canvacord.js.org",
   "dependencies": {

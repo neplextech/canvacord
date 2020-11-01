@@ -1,5 +1,5 @@
 const Canvas = require("canvas");
-const Util = require("../plugins/Util");
+const Util = require("./Util");
 const assets = require("./Assets");
 
 /**
