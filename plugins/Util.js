@@ -16,6 +16,7 @@ class Util {
     /**
      * Validates hex
      * @param {string} hex Hex code to validate
+     * @returns {boolean}
      */
     static validateHex(hex) {
         if (!hex || typeof hex !== "string") return false;
@@ -25,6 +26,7 @@ class Util {
     /**
      * Converts regular timestamp to discord like time
      * @param {Date|number} time Timestamp to convert
+     * @returns {string}
      */
     static discordTime(time = new Date()) {
         let date = time && time  instanceof Date ? time : new Date();
@@ -36,6 +38,7 @@ class Util {
     /**
      * Formats time
      * @param {number} time Time to format
+     * @returns {string}
      */
     static formatTime(time) {
         if (!time) return "00:00";
@@ -50,6 +53,7 @@ class Util {
      * Shorten text.
      * @param {string} text Text to shorten 
      * @param {number} len Max Length
+     * @returns {string}
      */
     static shorten(text, len) {
         if (typeof text !== "string") return "";
@@ -61,6 +65,7 @@ class Util {
      * Converts numbers into units like `1K`, `1M`, `1B` etc.
      * @param {number|string} num
      * @returns {string} 
+     * @returns {string}
      */
     static toAbbrev(num) {
         return abbrev(num);
@@ -72,6 +77,7 @@ class Util {
      * @param {string} msg Message
      * @param {number} x X
      * @param {number} y Y
+     * @returns {Promise<void>}
      */
     static renderEmoji(ctx, msg, x, y) {
         return renderEmoji(ctx, msg, x, y);
@@ -81,6 +87,7 @@ class Util {
      * Returns formatted hex code
      * @param {string} hex Hex code to format
      * @param {string} alt Alt color
+     * @returns {string}
      */
     static formatHex(hex, alt = "#000000") {
         if (!hex || typeof hex !== "string") return alt || "#000000";
@@ -94,6 +101,7 @@ class Util {
     /**
      * Inverts hex color
      * @param {string} hex Hex color code to invert
+     * @returns {string}
      */
     static invertColor(hex) {
         if (!hex || typeof hex !== "string") return "#FFFFFF";
@@ -122,6 +130,7 @@ class Util {
     /**
      * Returns acronym
      * @param {string} name Name to parse acronym
+     * @returns {string}
      */
     static getAcronym(name) {
         if (!name || typeof name !== "string") return "";
@@ -136,7 +145,8 @@ class Util {
      * @param {object} params Params
      * @param {string} text Text
      * @param {CanvasRenderingContext2D} ctx CanvasRenderingContext2D
-     * @param {number} maxWidth Max width 
+     * @param {number} maxWidth Max width
+     * @returns {string[]}
      */
     static getLines({ text, ctx, maxWidth }) {
         if (!text) return [];

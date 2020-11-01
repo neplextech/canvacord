@@ -4,7 +4,8 @@
   "description": "Powerful image manipulation package for beginners.",
   "main": "index.js",
   "scripts": {
-    "docsgen": "jsdoc --configure .jsdoc.json --verbose",
+    "docs": "docgen --source src --custom docs/index.yml --output docs/docs.json",
+    "docs:test": "docgen --source src --custom docs/index.yml",
     "test": "cd test && node ."
   },
   "repository": {
@@ -43,7 +44,6 @@
     "@types/node": "^14.11.2",
     "captcha-canvas": "^2.2.1",
     "discord-canvas": "github:snowflake107/discord-canvas",
-    "jsdoc": "^3.6.6",
-    "jsdoc-skyceil": "github:zyrouge/jsdoc-skyceil"
+    "discord.js-docgen": "github:discordjs/docgen"
   }
 }

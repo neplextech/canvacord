@@ -372,6 +372,7 @@ class Canvacord {
     /**
      * Loads font
      * @param {any[]} fontArray Font array
+     * @returns {Promise<void>}
      */
     static async registerFonts(fontArray = []) {
         if (!fontArray.length) {
@@ -467,7 +468,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async facepalm(image) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         await this.__wait();
         let layer = await Canvas.loadImage(Canvacord.assets("IMAGE").FACEPALM);
         let canvas = Canvas.createCanvas(632, 357);
@@ -486,7 +487,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async rainbow(image) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         await this.__wait();
         let bg = await Canvas.loadImage(Canvacord.assets("IMAGE").GAY);
         let img = await Canvas.loadImage(image);
@@ -539,7 +540,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async hitler(image) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").HITLER);
@@ -579,7 +580,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async jokeOverHead(image) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("Image wasn ot provided!");
         await this.__wait();
         const layer = await Canvas.loadImage(Canvacord.assets("IMAGE").JOKEOVERHEAD);
         const img = await Canvas.loadImage(image)
@@ -625,7 +626,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async affect(image) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").AFFECT);
@@ -646,7 +647,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async jail(image, greyscale = false) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(greyscale ? await Canvacord.greyscale(image) : image);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").JAIL);
@@ -693,7 +694,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async delete(image, dark = false) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
         const bg = await Canvas.loadImage(dark ? await Canvacord.invert(Canvacord.assets("IMAGE").DELETE) : Canvacord.assets("IMAGE").DELETE);
@@ -915,7 +916,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async changemymind(text) {
-        if (!text) throw new Error("Missing text!");
+        if (!text) throw new Error("missing text!");
         await this.__wait();
         const base = await Canvas.loadImage(Canvacord.assets("IMAGE").CHANGEMYMIND);
         const canvas = Canvas.createCanvas(base.width, base.height);
@@ -968,7 +969,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async clyde(message) {
-        if (!message) message = "Please provide text!";
+        if (!message) messgae = "Please provide text!";
         await this.__wait()
         let avatar = await Canvas.loadImage(await Canvacord.circle(Canvacord.assets("IMAGE").CLYDE));
         let badge = await Canvas.loadImage(Canvacord.assets("IMAGE").BOTBADGE);
@@ -1119,7 +1120,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async wanted(image) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WANTED);
@@ -1139,7 +1140,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async wasted(image) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(await Canvacord.greyscale(image));
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WASTED);
@@ -1160,6 +1161,7 @@ class Canvacord {
      * @param {string} [ops.content] The comment
      * @param {string|Buffer} [ops.avatar] Avatar source
      * @param {boolean} [ops.dark=false] Dark mode?
+     * @returns {Promise<Buffer>}
      */
     static async youtube(ops = { username: null, content: null, avatar: null, dark: false }) {
         if (!ops.username || typeof ops.username !== "string") throw new Error("Username may not be empty!");
@@ -1204,7 +1206,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async shit(image) {
-        if (!image) throw new Error("Image was not provided!");
+        if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(await Canvacord.circle(image));
         const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").SHIT);
@@ -1254,6 +1256,7 @@ class Canvacord {
 
     /**
      * Canvacord assets
+     * @type {CanvacordAssets}
      * @private
      */
     static get assets() {
@@ -1270,8 +1273,17 @@ class Canvacord {
     }
 
     /**
+     * Canvacord convolution matrix
+     * @typedef {object} ConvolutionMatrix
+     * @property {number[]} EDGES Edges Matrix
+     * @property {number[]} BLUR Blur Matrix
+     * @property {number[]} SHARPEN Sharpen Matrix
+     * @property {number[]} BURN Burn Matrix
+     */
+
+    /**
      * Matrix data for **Canvacord.convolute()**
-     * @ignore
+     * @type {ConvolutionMatrix}
      */
     static get CONVOLUTION_MATRIX() {
         return {
@@ -1284,6 +1296,7 @@ class Canvacord {
 
     /**
      * Canvacord utils
+     * @type {Util}
      */
     static get Util() {
         return Util;

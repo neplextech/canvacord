@@ -20,8 +20,22 @@ class Leaver extends Base {
     constructor() {
         super();
 
+        /**
+         * Title created with Canvacord
+         * @type {string}
+         */
         this.textTitle = "GOODBYE";
+
+        /**
+         * Text message created with Canvacord
+         * @type {string}
+         */
         this.textMessage = "We will miss you!";
+
+        /**
+         * Title color created with canvacord
+         * @type {string}
+         */
         this.colorTitle = "#03A9F4";
 
         // update default data
@@ -30,6 +44,7 @@ class Leaver extends Base {
 
     /**
      * Updates default state
+     * @returns {void}
      * @private
      * @ignore
      */
@@ -51,6 +66,7 @@ class Leaver extends Base {
      * Set color
      * @param {"title"|"title-border"|"avatar"|"username"|"username-box"|"hashtag"|"discriminator"|"discriminator-box"|"message"|"message-box"|"member-count"|"background"|"border"} id
      * @param {string} color HTML5 color code
+     * @returns {Leaver}
      */
     setColor(id, color) {
         super.setColor(id, color);
@@ -60,6 +76,7 @@ class Leaver extends Base {
     /**
      * Ser member count
      * @param {number|string} memberCount Guild member count
+     * @returns {Leaver}
      */
     setMemberCount(memberCount = 100) {
         super.setMemberCount(Util.toAbbrev(memberCount));

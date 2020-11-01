@@ -1,5 +1,5 @@
 /**
- * @typedef Plugins
+ * @typedef {object} Plugins
  * @property {Function} circle Circle plugin
  * @property {Function} convolute Convolute plugin
  * @property {Function} rectangle Rectangle plugin

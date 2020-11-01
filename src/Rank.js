@@ -2,6 +2,66 @@ const Canvas = require("canvas");
 const Util = require("../plugins/Util");
 const assets = require("./Assets");
 
+/**
+ * @typedef {object} CanvacordRankData
+ * @property {number} width Rank card width
+ * @property {number} height Rank card height
+ * @property {object} background Rank card background data
+ * @property {"image"|"color"} [background.type="color"] Background type
+ * @property {string|Buffer} [background.image="#23272A"] Background image (or color)
+ * @property {object} progressBar Progressbar data
+ * @property {boolean} [progressBar.rounded=true] If the progressbar should be rounded
+ * @property {number} [progressBar.x=275.5] Progressbar X
+ * @property {number} [progressBar.y=183.75] Progressbar Y
+ * @property {number} [progressBar.height=37.5] Progressbar height
+ * @property {number} [progressBar.width=596.5] Progressbar width
+ * @property {object} [progressBar.track] Progressbar track
+ * @property {string} [progressBar.track.color="#484b4E"] Progressbar track color
+ * @property {object} [progressBar.bar] Progressbar bar data
+ * @property {"color"|"gradient"} [progressBar.bar.type="color"] Progressbar bar type
+ * @property {string|string[]} [progressBar.bar.color="#FFFFFF"] Progressbar bar color
+ * @property {object} overlay Progressbar overlay
+ * @property {boolean} [overlay.display=true] If it should display overlay
+ * @property {number} [overlay.level=0.5] Overlay opacity level
+ * @property {string} [overlay.color="#333640"] Overlay bg color
+ * @property {object} avatar Rank card avatar data
+ * @property {string|Buffer} [avatar.source=null] Avatar source
+ * @property {number} [avatar.x=70] X
+ * @property {number} [avatar.y=50] Y
+ * @property {number} [avatar.height=180] height
+ * @property {number} [avatar.width=180] width
+ * @property {object} status Rank card status
+ * @property {number} [status.width=5] Status width
+ * @property {"online"|"dnd"|"idle"|"offline"|"streaming"} [status.type] Status type
+ * @property {string} [status.color="#43B581"] Status color
+ * @property {boolean} [status.circle=false] Circualr status?
+ * @property {object} rank Rank card rank data
+ * @property {boolean} [rank.display=true] If it should display rank
+ * @property {number} [rank.data=1] The Rank
+ * @property {string} [rank.textColor="#FFFFFF"] Rank text color
+ * @property {string} [rank.color="#F3F3F3"] Rank color
+ * @property {string} [rank.displayText="RANK"] Rank display text
+ * @property {object} level Rank card level data
+ * @property {boolean} [level.display=true] If it should display level
+ * @property {number} [level.data=1] The level
+ * @property {string} [level.textColor="#FFFFFF"] level text color
+ * @property {string} [level.color="#F3F3F3"] level color
+ * @property {string} [level.displayText="LEVEL"] level display text
+ * @property {object} currentXP Rank card current xp
+ * @property {number} [currentXP.data=0] Current xp
+ * @property {string} [currentXP.color="#FFFFFF"] Rank card current xp color
+ * @property {object} requiredXP Rank card required xp
+ * @property {number} [requiredXP.data=0] required xp
+ * @property {string} [requiredXP.color="#FFFFFF"] Rank card required xp color
+ * @property {object} discriminator Rank card discriminator
+ * @property {number|string} [discriminator.discrim=null] The discriminator
+ * @property {string} [discriminator.color="rgba(255, 255, 255, 0.4)"] Rank card discriminator color
+ * @property {object} username Username Data
+ * @property {string} [username.name=null] Rank card username
+ * @property {string} [username.color="#FFFFFF"] Rank card username color
+ * @property {boolean} [renderEmojis=false] If it should render emojis
+ */
+
 class Rank {
 
     /**
@@ -25,6 +85,7 @@ class Rank {
 
         /**
          * Rank card data
+         * @type {CanvacordRankData}
          */
         this.data = {
             width: 934,
@@ -105,6 +166,7 @@ class Rank {
     /**
      * Loads font
      * @param {any[]} fontArray Font array
+     * @returns {Rank}
      */
     registerFonts(fontArray = []) {
         if (!fontArray.length) {
@@ -134,6 +196,7 @@ class Rank {
     /**
      * If it should render username with emojis (if any)
      * @param {boolean} [apply=false] Set it to `true` to render emojis. 
+     * @returns {Rank}
      */
     renderEmojis(apply = false) {
         this.data.renderEmojis = !!apply;
@@ -144,6 +207,7 @@ class Rank {
      * Set username
      * @param {string} name Username
      * @param {string} color Username color
+     * @returns {Rank}
      */
     setUsername(name, color = "#FFFFFF") {
         if (typeof name !== "string") throw new Error(`Expected username to be a string, received ${typeof name}!`);
@@ -156,6 +220,7 @@ class Rank {
      * Set discriminator
      * @param {string|number} discriminator User discriminator
      * @param {string} color Discriminator color
+     * @returns {Rank}
      */
     setDiscriminator(discriminator, color = "rgba(255, 255, 255, 0.4)") {
         this.data.discriminator.discrim = !isNaN(discriminator) && `${discriminator}`.length === 4 ? discriminator : null;
@@ -168,6 +233,7 @@ class Rank {
      * @param {string|string[]} color Progressbar Color
      * @param {"COLOR"|"GRADIENT"} [fillType] Progressbar type
      * @param {boolean} [rounded=true] If progressbar should have rounded edges
+     * @returns {Rank}
      */
     setProgressBar(color, fillType = "COLOR", rounded = true) {
 
@@ -195,6 +261,7 @@ class Rank {
     /**
      * Set progressbar track
      * @param {string} color Track color
+     * @returns {Rank}
      */
     setProgressBarTrack(color) {
         if (typeof color !== "string") throw new Error(`Color type must be a string, received "${typeof color}"!`);
@@ -208,6 +275,7 @@ class Rank {
      * @param {string} color Overlay color
      * @param {number} [level=0.5] Opacity level
      * @param {boolean} [display=true] IF it should display overlay
+     * @returns {Rank}
      */
     setOverlay(color, level = 0.5, display = true) {
         if (typeof color !== "string") throw new Error(`Color type must be a string, received "${typeof color}"!`);
@@ -221,6 +289,7 @@ class Rank {
      * Set required xp
      * @param {number} data Required xp
      * @param {string} color Color
+     * @returns {Rank}
      */
     setRequiredXP(data, color = "#FFFFFF") {
         if (typeof data !== "number") throw new Error(`Required xp data type must be a number, received ${typeof data}!`);
@@ -233,6 +302,7 @@ class Rank {
      * Set current xp
      * @param {number} data Current xp
      * @param {string} color Color
+     * @returns {Rank}
      */
     setCurrentXP(data, color = "#FFFFFF") {
         if (typeof data !== "number") throw new Error(`Current xp data type must be a number, received ${typeof data}!`);
@@ -246,6 +316,7 @@ class Rank {
      * @param {number} data Current Rank
      * @param {string} text Display text
      * @param {boolean} [display=true] If it should display rank
+     * @returns {Rank}
      */
     setRank(data, text = "RANK", display = true) {
         if (typeof data !== "number") throw new Error(`Level data must be a number, received ${typeof data}!`);
@@ -261,6 +332,7 @@ class Rank {
      * Set rank display color
      * @param {string} text text color
      * @param {string} number Number color
+     * @returns {Rank}
      */
     setRankColor(text = "#FFFFFF", number = "#FFFFFF") {
         if (!text || typeof text !== "string") text = "#FFFFFF";
@@ -274,6 +346,7 @@ class Rank {
      * Set level color
      * @param {string} text text color
      * @param {string} number number color
+     * @returns {Rank}
      */
     setLevelColor(text = "#FFFFFF", number = "#FFFFFF") {
         if (!text || typeof text !== "string") text = "#FFFFFF";
@@ -288,6 +361,7 @@ class Rank {
      * @param {number} data Current Level
      * @param {string} text Display text
      * @param {boolean} [display=true] If it should display level
+     * @returns {Rank}
      */
     setLevel(data, text = "LEVEL", display = true) {
         if (typeof data !== "number") throw new Error(`Level data must be a number, received ${typeof data}!`);
@@ -302,6 +376,7 @@ class Rank {
     /**
      * Set custom status color
      * @param {string} color Color to set
+     * @returns {Rank}
      */
     setCustomStatusColor(color) {
         if (!color || typeof color !== "string") throw new Error("Invalid color!");
@@ -314,6 +389,7 @@ class Rank {
      * @param {"online"|"idle"|"dnd"|"offline"|"streaming"} status User status
      * @param {boolean} circle If status icon should be circular.
      * @param {number|boolean} width Status width
+     * @returns {Rank}
      */
     setStatus(status, circle = false, width = 5) {
         switch(status) {
@@ -352,6 +428,7 @@ class Rank {
      * Set background image/color
      * @param {"COLOR"|"IMAGE"} type Background type
      * @param {string|Buffer} [data] Background color or image
+     * @returns {Rank}
      */
     setBackground(type, data) {
         if (!data) throw new Error("Missing field : data");
@@ -374,6 +451,7 @@ class Rank {
     /**
      * User avatar
      * @param {string|Buffer} data Avatar data
+     * @returns {Rank}
      */
     setAvatar(data) {
         if (!data) throw new Error(`Invalid avatar type "${typeof data}"!`);
@@ -430,36 +508,37 @@ class Rank {
         !this.data.renderEmojis ? ctx.fillText(`${name}`, 257 + 18.5, 164) : await Util.renderEmoji(ctx, name, 257 + 18.5, 164);
 
         // draw discriminator
-        const discrim = this.data.discriminator.discrim;
+        if (!this.data.discriminator.discrim) throw new Error("Missing discriminator!");
+        const discrim = `${this.data.discriminator.discrim}`;
         if (discrim) {
             ctx.font = `36px ${ops.fontY}`;
             ctx.fillStyle = this.data.discriminator.color;
             ctx.textAlign = "center";
-            ctx.fillText(`#${discrim}`, ctx.measureText(name).width + 20 + 335, 164);
+            ctx.fillText(`#${discrim.substr(0, 4)}`, ctx.measureText(name).width + 20 + 335, 164);
         }
 
         // fill level
         if (this.data.level.display && !isNaN(this.data.level.data)) {
             ctx.font = `bold 36px ${ops.fontX}`;
             ctx.fillStyle = this.data.level.textColor;
-            ctx.fillText(this.data.level.displayText, 800 - ctx.measureText(this.data.level.data).width, 82);
+            ctx.fillText(this.data.level.displayText, 800 - ctx.measureText(Util.toAbbrev(parseInt(this.data.level.data))).width, 82);
 
             ctx.font = `bold 32px ${ops.fontX}`;
             ctx.fillStyle = this.data.level.color;
             ctx.textAlign = "end";
-            ctx.fillText(this.data.level.data, 860, 82);
+            ctx.fillText(Util.toAbbrev(parseInt(this.data.level.data)), 860, 82);
         }
 
         // fill rank
         if (this.data.rank.display && !isNaN(this.data.rank.data)) {
             ctx.font = `bold 36px ${ops.fontX}`;
             ctx.fillStyle = this.data.rank.textColor;
-            ctx.fillText(this.data.rank.displayText, 800 - ctx.measureText(this.data.level.data || "-").width - 7 - ctx.measureText(this.data.level.displayText).width - 7 - ctx.measureText(this.data.rank.data || "-").width, 82);
+            ctx.fillText(this.data.rank.displayText, 800 - ctx.measureText(Util.toAbbrev(parseInt(this.data.level.data)) || "-").width - 7 - ctx.measureText(this.data.level.displayText).width - 7 - ctx.measureText(Util.toAbbrev(parseInt(this.data.rank.data)) || "-").width, 82);
 
             ctx.font = `bold 32px ${ops.fontX}`;
             ctx.fillStyle = this.data.rank.color;
             ctx.textAlign = "end";
-            ctx.fillText(Util.toAbbrev(parseInt(this.data.rank.data)), 790 - ctx.measureText(this.data.level.data || "-").width - 7 - ctx.measureText(this.data.level.displayText).width, 82);
+            ctx.fillText(Util.toAbbrev(parseInt(this.data.rank.data)), 790 - ctx.measureText(Util.toAbbrev(parseInt(this.data.level.data)) || "-").width - 7 - ctx.measureText(this.data.level.displayText).width, 82);
         }
 
         // show progress
@@ -545,6 +624,7 @@ class Rank {
 
     /**
      * Calculates progress
+     * @type {number}
      * @private
      * @ignore
      */

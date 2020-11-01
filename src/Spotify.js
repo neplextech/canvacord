@@ -62,7 +62,14 @@ class Spotify {
         this.end = null;
 
         /**
+         * @typedef {object} SpotifyDataBG
+         * @property {number} type Background type
+         * @property {string|Buffer} data Background data
+         */
+
+        /**
          * Background
+         * @type {SpotifyDataBG}
          */
         this.background = {
             type: 0,
@@ -70,7 +77,14 @@ class Spotify {
         };
 
         /**
+         * @typedef {object} SpotifyProgressBarData
+         * @property {string} bgColor Progressbar bg color
+         * @property {string} color Progressbar bg color
+         */
+
+        /**
          * Progressbar details
+         * @type {SpotifyProgressBarData}
          */
         this.progressBar = {
             bgColor: "#E8E8E8",
@@ -82,6 +96,7 @@ class Spotify {
 
     /**
      * Register fonts
+     * @returns {void}
      * @ignore
      * @private
      */
@@ -105,6 +120,7 @@ class Spotify {
      * Set progressbar details
      * @param {"TRACK"|"BAR"} type Progressbar type
      * @param {string} color Color to set
+     * @returns {Spotify}
      */
     setProgressBar(type, color) {
         switch(type) {
@@ -125,6 +141,7 @@ class Spotify {
     /**
      * Set title
      * @param {string} title Title to set
+     * @returns {Spotify}
      */
     setTitle(title) {
         if (!title || typeof title !== "string") throw new Error(`Expected title, received ${typeof title}!`);
@@ -135,6 +152,7 @@ class Spotify {
     /**
      * Set image
      * @param {string|Buffer|Canvas.Image} source Image source
+     * @returns {Spotify}
      */
     setImage(source) {
         if (!source) throw new Error(`Expected image source, received ${typeof title}!`);
@@ -145,6 +163,7 @@ class Spotify {
     /**
      * Set artist name
      * @param {string} name Artist name
+     * @returns {Spotify}
      */
     setAuthor(name) {
         if (!name || typeof name !== "string") throw new Error(`Expected artist name, received ${typeof name}!`);
@@ -155,6 +174,7 @@ class Spotify {
     /**
      * Set album name
      * @param {string} name Album name
+     * @returns {Spotify}
      */
     setAlbum(name) {
         if (!name || typeof name !== "string") throw new Error(`Expected album name, received ${typeof name}!`);
@@ -165,6 +185,7 @@ class Spotify {
     /**
      * Set start timestamp
      * @param {Date|number} time Timestamp
+     * @returns {Spotify}
      */
     setStartTimestamp(time) {
         if (!time) throw new Error(`Expected timestamp, received ${typeof time}!`);
@@ -176,6 +197,7 @@ class Spotify {
     /**
      * Set end timestamp
      * @param {Date|number} time Timestamp
+     * @returns {Spotify}
      */
     setEndTimestamp(time) {
         if (!time) throw new Error(`Expected timestamp, received ${typeof time}!`);
@@ -188,6 +210,7 @@ class Spotify {
      * Set background
      * @param {"COLOR"|"IMAGE"} type Background type
      * @param {string|Buffer|Canvas.Image} data Background data
+     * @returns {Spotify}
      */
     setBackground(type = "COLOR", data = "#2F3136") {
         switch(type) {
@@ -282,6 +305,7 @@ class Spotify {
 
     /**
      * Returns progress
+     * @type {number}
      * @private
      * @ignore
      */

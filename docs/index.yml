@@ -1,0 +1,10 @@
+- name: Examples
+  files:
+    - name: Rank Card
+      path: rank.md
+    - name: Spotify Card
+      path: spotify.md
+- name: General
+  files:
+    - name: Welcome
+      path: welcome.md
