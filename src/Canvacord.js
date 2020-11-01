@@ -1264,7 +1264,9 @@ class Canvacord {
     }
 
     /**
-     * @ignore
+     * Canvacord method used to `wait`.
+     * @param {number} dur Number of milliseconds to wait
+     * @returns {Promise<void>}
      */
     static __wait(dur) {
         return new Promise((res) => {
