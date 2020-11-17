@@ -14,21 +14,18 @@ const circle = require("../plugins/circle");
 const round = require("../plugins/round");
 const Util = require("./Util");
 
-
-/**
- * Canvacord Memes Generator
- * @example const Canvacord = require("canvacord");
- * 
- * Canvacord.Canvas.trigger("./image.png")
- *  .then(triggered => {
- *      Canvacord.write(triggered, "triggered.gif");
- *  })
- */
 class Canvacord {
 
     /**
      * **⚠ You may not instantiate Canvacord class! ⚠**
-     * @hideconstructor
+     * You can access this class with `require("canvacord").Canvas`.
+     * <warn>Note: This is a fully static class. Try not to instantiate this!</warn>
+     * @example const Canvacord = require("canvacord");
+     * 
+     * Canvacord.Canvas.trigger("./image.png")
+     *  .then(triggered => {
+     *      Canvacord.write(triggered, "triggered.gif");
+     *  })
      */
     constructor() {
         throw new Error(`The ${this.constructor.name} class may not be instantiated!`);
