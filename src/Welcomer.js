@@ -63,7 +63,7 @@ class Welcomer extends Base {
 
     /**
      * Set color
-     * @param {"title"|"title-border"|"avatar"|"username"|"username-box"|"hashtag"|"discriminator"|"discriminator-box"|"message"|"message-box"|"member-count"|"background"|"border"} id
+     * @param {("title"|"title-border"|"avatar"|"username"|"username-box"|"hashtag"|"discriminator"|"discriminator-box"|"message"|"message-box"|"member-count"|"background"|"border")} id
      * @param {string} color HTML5 color code
      * @returns {Welcomer}
      */
