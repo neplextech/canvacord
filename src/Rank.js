@@ -7,7 +7,7 @@ const assets = require("./Assets");
  * @property {number} width Rank card width
  * @property {number} height Rank card height
  * @property {object} background Rank card background data
- * @property {"image"|"color"} [background.type="color"] Background type
+ * @property {("image"|"color")} [background.type="color"] Background type
  * @property {string|Buffer} [background.image="#23272A"] Background image (or color)
  * @property {object} progressBar Progressbar data
  * @property {boolean} [progressBar.rounded=true] If the progressbar should be rounded
@@ -18,7 +18,7 @@ const assets = require("./Assets");
  * @property {object} [progressBar.track] Progressbar track
  * @property {string} [progressBar.track.color="#484b4E"] Progressbar track color
  * @property {object} [progressBar.bar] Progressbar bar data
- * @property {"color"|"gradient"} [progressBar.bar.type="color"] Progressbar bar type
+ * @property {("color"|"gradient")} [progressBar.bar.type="color"] Progressbar bar type
  * @property {string|string[]} [progressBar.bar.color="#FFFFFF"] Progressbar bar color
  * @property {object} overlay Progressbar overlay
  * @property {boolean} [overlay.display=true] If it should display overlay
@@ -32,7 +32,7 @@ const assets = require("./Assets");
  * @property {number} [avatar.width=180] width
  * @property {object} status Rank card status
  * @property {number} [status.width=5] Status width
- * @property {"online"|"dnd"|"idle"|"offline"|"streaming"} [status.type] Status type
+ * @property {("online"|"dnd"|"idle"|"offline"|"streaming")} [status.type] Status type
  * @property {string} [status.color="#43B581"] Status color
  * @property {boolean} [status.circle=false] Circualr status?
  * @property {object} rank Rank card rank data
@@ -231,7 +231,7 @@ class Rank {
     /**
      * Set progressbar style
      * @param {string|string[]} color Progressbar Color
-     * @param {"COLOR"|"GRADIENT"} [fillType] Progressbar type
+     * @param {("COLOR"|"GRADIENT")} [fillType] Progressbar type
      * @param {boolean} [rounded=true] If progressbar should have rounded edges
      * @returns {Rank}
      */
@@ -386,7 +386,7 @@ class Rank {
 
     /**
      * Set status
-     * @param {"online"|"idle"|"dnd"|"offline"|"streaming"} status User status
+     * @param {("online"|"idle"|"dnd"|"offline"|"streaming")} status User status
      * @param {boolean} circle If status icon should be circular.
      * @param {number|boolean} width Status width
      * @returns {Rank}
@@ -426,7 +426,7 @@ class Rank {
 
     /**
      * Set background image/color
-     * @param {"COLOR"|"IMAGE"} type Background type
+     * @param {("COLOR"|"IMAGE")} type Background type
      * @param {string|Buffer} [data] Background color or image
      * @returns {Rank}
      */
