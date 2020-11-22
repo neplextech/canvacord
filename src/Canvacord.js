@@ -711,15 +711,15 @@ class Canvacord {
     /**
      * TicTacToe
      * @param {object} fill TicTacToe params
-     * @param {"X"|"O"} [fill.a1] a1 value
-     * @param {"X"|"O"} [fill.b1] b1 value
-     * @param {"X"|"O"} [fill.c1] c1 value
-     * @param {"X"|"O"} [fill.a2] a2 value
-     * @param {"X"|"O"} [fill.b2] b2 value
-     * @param {"X"|"O"} [fill.c2] c2 value
-     * @param {"X"|"O"} [fill.a3] a3 value
-     * @param {"X"|"O"} [fill.b3] b3 value
-     * @param {"X"|"O"} [fill.c3] c3 value
+     * @param {("X"|"O")} [fill.a1] a1 value
+     * @param {("X"|"O")} [fill.b1] b1 value
+     * @param {("X"|"O")} [fill.c1] c1 value
+     * @param {("X"|"O")} [fill.a2] a2 value
+     * @param {("X"|"O")} [fill.b2] b2 value
+     * @param {("X"|"O")} [fill.c2] c2 value
+     * @param {("X"|"O")} [fill.a3] a3 value
+     * @param {("X"|"O")} [fill.b3] b3 value
+     * @param {("X"|"O")} [fill.c3] c3 value
      * @param {object} color Color params
      * @param {string} [color.bg] Background clolor
      * @param {string} [color.bar] TicTacToe bar color
