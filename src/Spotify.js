@@ -118,7 +118,7 @@ class Spotify {
 
     /**
      * Set progressbar details
-     * @param {"TRACK"|"BAR"} type Progressbar type
+     * @param {("TRACK"|"BAR")} type Progressbar type
      * @param {string} color Color to set
      * @returns {Spotify}
      */
@@ -208,7 +208,7 @@ class Spotify {
 
     /**
      * Set background
-     * @param {"COLOR"|"IMAGE"} type Background type
+     * @param {("COLOR"|"IMAGE")} type Background type
      * @param {string|Buffer|Canvas.Image} data Background data
      * @returns {Spotify}
      */
