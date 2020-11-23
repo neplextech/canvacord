@@ -1114,6 +1114,125 @@ class Canvacord {
         return canvas.toBuffer();
     }
 
+        /**
+     * Fake Reply
+     * @param {Object} options Options
+     * @param {String} [options.firstMember] firstMember
+     * @param {String} [options.secondMember] secondMember
+     * @param {String} [options.mainText] mainText
+     * @param {String} [options.replyText] replyText
+     * @returns {Promise<Buffer>}
+     */
+    static async fakeReply(options = { firstMember, secondMember, mainText, replyText }) {
+        if(!options.firstMember) throw new Error("firstMmber Param May not be empty!")
+        if(!options.secondMember) throw new Error("secondMmber Param May not be empty!")
+        if(!options.mainText) throw new Error("mainText Param May not be empty!")
+        if(!options.replyText) throw new Error("replyText Param May not be empty!")
+
+        let firstMember = options.firstMember
+        let secondMember = options.secondMember
+        let mainText = options.mainText
+        let replyText = options.replyText
+
+        Canvas.registerFont(__dirname + "/assets/fonts/Whitney-medium.otf", {
+            family: "Whitney",
+            weight: "regular",
+            style: "normal"
+        });
+
+        Canvas.registerFont(__dirname + "/assets/fonts/regular-font.ttf", {
+            family: "Manrope",
+            weight: "regular",
+            style: "normal"
+        });
+
+        const canvas = Canvas.createCanvas(1300, 250);
+        const ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "#36393E";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "left";
+
+        ctx.font = "38px Manrope";
+
+        ctx.fillText(mainText, 166 + 20, 220 - 20);
+
+        ctx.font = "38px Whitney";
+        ctx.fillStyle = firstMember.displayHexColor === "#000000" ? "#ffffff" : firstMember.displayHexColor;
+        ctx.fillText(firstMember.user.username, 165 + 20, 167 - 20);
+
+        const usernameWidth = ctx.measureText(firstMember.user.username).width;
+        ctx.fillStyle = "#d1d1d1";
+        ctx.font = "38px Manrope";
+
+        ctx.fillText(" replied to ", 165 + usernameWidth + 20, 167 - 20);
+
+        const repliedWidth = ctx.measureText(" replied to ").width;
+
+        ctx.fillStyle = secondMember.displayHexColor === "#000000" ? "#ffffff" : secondMember.displayHexColor;
+        ctx.font = "38px Whitney";
+        ctx.fillText(secondMember.user.username, 165 + usernameWidth + repliedWidth + 20, 167 - 20);
+
+        const secondMemberUserWidth = ctx.measureText(secondMember.user.username).width;
+
+        ctx.font = "26px Whitney";
+        ctx.fillStyle = "#7a7c80";
+        const Times = ['12:10', '01:30', '11:40', "05:30"]
+        const time = Times[Math.floor(Math.random() * Times.length)];
+
+        ctx.fillText(` Today at ${time}`, 165 + usernameWidth + repliedWidth + secondMemberUserWidth + 3 + 20, 167 - 20)
+
+        ctx.font = "29px Whitney";
+        ctx.globalAlpha = 0.7;
+        ctx.fillStyle = "#d1d1d1";
+        ctx.fillText(replyText, 195 + 20 + 20, 100 + 5 - 20);
+
+        ctx.strokeStyle = "#a3a2a2";
+        ctx.lineWidth = 4;
+        ctx.globalAlpha = 0.4;
+        ctx.moveTo(34 + (105 / 2) + 70 + 20, 92 + 5 - 20);
+        ctx.lineTo(34 + (105 / 2) + 20, 92 + 5 - 20);
+
+        ctx.moveTo(34 + (105 / 2) + 20, 92 + 5 - 20);
+        ctx.quadraticCurveTo(34 + (105 / 2) + 4, 92 + 5 - 20, 34 + (105 / 2), 103 + 5 - 20);
+
+        ctx.moveTo(34 + (105 / 2), 125 - 20);
+        ctx.lineTo(34 + (105 / 2), 103 + 5 - 20);
+        ctx.stroke();
+
+
+        ctx.globalAlpha = 1;
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.arc(90, 182 - 20, 50, 0, Math.PI * 2, true);
+        ctx.strokeStyle = "#36393E";
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.clip();
+        const avatar = await Canvas.loadImage(firstMember.user.displayAvatarURL({ format: "png", size: 2048 }));
+        ctx.drawImage(avatar, 38, 130 - 20, 105, 105);
+        ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.arc(165 + 20 + 20, 90 + 5 - 20, 20, 0, Math.PI * 2);
+        ctx.strokeStyle = "#36393E";
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.clip();
+        const avatar2 = await Canvas.loadImage(secondMember.user.displayAvatarURL({ format: "png", size: 2048 }));
+        ctx.drawImage(avatar2, 165 + 20, 70 + 5 - 20, 40, 40);
+        ctx.restore();
+
+        return canvas.toBuffer();
+    }
+
     /**
      * Wanted
      * @param {string|Buffer} image Source image
