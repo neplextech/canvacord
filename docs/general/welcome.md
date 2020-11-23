@@ -50,7 +50,7 @@ rank.build()
 ```
 
 ### Preview
-![RankCard](https://raw.githubusercontent.com/Snowflake107/canvacord/v5-alpha/test/images/RankCard.png)
+![RankCard](https://raw.githubusercontent.com/Snowflake107/canvacord/v5/test/images/RankCard.png)
 
 ## Other Examples
 
