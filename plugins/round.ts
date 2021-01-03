@@ -1,4 +1,4 @@
-module.exports = (ctx, x, y, width, height, radius) => {
+export default (ctx, x, y, width, height, radius: boolean | number = 5) => {
     if (radius === true) radius = 5;
     if (!radius || typeof radius !== "number") radius = 0;
 

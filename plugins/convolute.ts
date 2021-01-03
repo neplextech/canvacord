@@ -1,4 +1,4 @@
-module.exports = (ctx, canvas, matrix, opaque) => {
+export default (ctx, canvas, matrix, opaque) => {
     const side = Math.round(Math.sqrt(matrix.length));
     const halfSide = Math.floor(side / 2);
     const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);

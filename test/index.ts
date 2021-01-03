@@ -1,4 +1,5 @@
-const canvacord = require("../index");
+import canvacord from "../index";
+
 const img = "https://cdn.discordapp.com/embed/avatars/0.png";
 
 console.log(canvacord)

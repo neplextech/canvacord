@@ -1,7 +1,16 @@
-const { Base } = require("discord-canvas");
-const Util = require("./Util");
+import { Base } from "discord-canvas";
+
+import Util from "./Util";
 
 class Leaver extends Base {
+	public textTitle: any;
+	public textMessage: any;
+	public colorTitle: any;
+	public setUsername: any;
+	public setDiscriminator: any;
+	public setGuildName: any;
+	public setAvatar: any;
+	public toAttachment: any;
 
     /**
      * Leaver image builder
@@ -93,4 +102,4 @@ class Leaver extends Base {
 
 }
 
-module.exports = Leaver;
+export default Leaver;

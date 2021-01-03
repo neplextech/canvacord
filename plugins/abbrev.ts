@@ -1,4 +1,4 @@
-module.exports = num => {
+export default num => {
     if (!num || isNaN(num)) return "0";
     if (typeof num === "string") num = parseInt(num);
     let decPlaces = Math.pow(10, 1);

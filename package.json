@@ -2,16 +2,21 @@
   "name": "canvacord",
   "version": "5.0.8",
   "description": "Powerful image manipulation package for beginners.",
-  "main": "index.js",
+  "main": "./dist/index.js",
   "scripts": {
     "docs": "docgen --source src --custom docs/index.yml --output docs/docs.json",
     "docs:test": "docgen --source src --custom docs/index.yml",
+    "build": "npx tsup --format esm,cjs --legacy-output --dts ./index.ts",
     "test": "cd test && node ."
   },
+  "types": "./dist/index.d.ts",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/DevSnowflake/Canvacord.git"
   },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "canvacord",
     "canvas",
@@ -33,17 +38,19 @@
   },
   "homepage": "https://canvacord.js.org",
   "dependencies": {
-    "@canvacord/assets": "^1.0.0",
+    "@canvacord/assets": "^1.0.1",
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
-    "moment": "^2.29.0",
+    "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
-    "node-canvas-with-twemoji-and-discord-emoji": "^1.1.4"
+    "node-canvas-with-twemoji-and-discord-emoji": "^1.1.8"
   },
   "devDependencies": {
-    "@types/node": "^14.11.2",
-    "captcha-canvas": "^2.2.1",
+    "@types/node": "^14.14.19",
+    "captcha-canvas": "^2.2.2",
     "discord-canvas": "github:snowflake107/discord-canvas",
-    "discord.js-docgen": "github:discordjs/docgen"
+    "discord.js-docgen": "github:discordjs/docgen",
+    "tsup": "^3.11.0",
+    "typescript": "^4.1.3"
   }
 }
