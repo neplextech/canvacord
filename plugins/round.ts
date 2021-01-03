@@ -1,4 +1,6 @@
-export default (ctx, x, y, width, height, radius: boolean | number = 5) => {
+import { CanvasRenderingContext2D } from "canvas";
+
+export default (ctx: CanvasRenderingContext2D, x: number, y: number, width: number, height: number, radius: boolean | number = 5): CanvasRenderingContext2D => {
     if (radius === true) radius = 5;
     if (!radius || typeof radius !== "number") radius = 0;
 

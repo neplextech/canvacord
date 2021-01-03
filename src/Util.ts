@@ -59,7 +59,7 @@ class Util {
      * @param {number} len Max Length
      * @returns {string}
      */
-    static shorten(text, len) {
+    static shorten(text: string, len: number) {
         if (typeof text !== "string") return "";
         if (text.length <= len) return text;
         return text.substr(0, len).trim() + "...";
@@ -107,7 +107,7 @@ class Util {
      * @param {string} hex Hex color code to invert
      * @returns {string}
      */
-    static invertColor(hex) {
+    static invertColor(hex: string): string {
         if (!hex || typeof hex !== "string") return "#FFFFFF";
         hex = hex.replace("#", "");
 
@@ -121,9 +121,8 @@ class Util {
         const b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
 
         // return new hex
-        const pad = (txt: string, length = 2) => {
-            let arr = [length].join("0");
-            return (arr + txt).slice(-length);
+        const pad = (txt: string) => {
+            return ('2' + txt).slice(-2);
         };
 
         const finalHex = `#${pad(r)}${pad(g)}${pad(b)}`;
@@ -135,7 +134,7 @@ class Util {
      * @param {string} name Name to parse acronym
      * @returns {string}
      */
-    static getAcronym(name) {
+    static getAcronym(name: string) {
         if (!name || typeof name !== "string") return "";
         return name
             .replace(/'s /g, " ")
@@ -151,7 +150,7 @@ class Util {
      * @param {number} maxWidth Max width
      * @returns {string[]}
      */
-    static getLines({ text, ctx, maxWidth }) {
+    static getLines({ text, ctx, maxWidth }: { text: string, ctx: CanvasRenderingContext2D, maxWidth: number }) {
         if (!text) return [];
         if (!ctx) throw new Error("Canvas context was not provided!");
         if (!maxWidth) throw new Error("No max-width provided!");

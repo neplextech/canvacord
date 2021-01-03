@@ -1,6 +1,8 @@
 import { Base } from "discord-canvas";
 import Util from "./Util";
 
+type ID = 'title' | 'title-border' | 'avatar' | 'username' | 'username-box' | 'hashtag' | 'discriminator' | 'discriminator-box' | 'message' | 'message-box' | 'member-count' | 'background' | 'border';
+
 class Welcomer extends Base {
 	public textTitle: any;
 	public textMessage: any;
@@ -75,7 +77,7 @@ class Welcomer extends Base {
      * @param {string} color HTML5 color code
      * @returns {Welcomer}
      */
-    setColor(id, color) {
+    setColor(id: ID, color: string): Welcomer {
         super.setColor(id, color);
         return this;
     }
@@ -85,7 +87,7 @@ class Welcomer extends Base {
      * @param {number|string} memberCount Guild member count
      * @returns {Welcomer}
      */
-    setMemberCount(memberCount = 100) {
+    setMemberCount(memberCount = 100): Welcomer {
         super.setMemberCount(Util.toAbbrev(memberCount));
         return this;
     }
@@ -94,7 +96,7 @@ class Welcomer extends Base {
      * Builds welcome image
      * @returns {Promise<Buffer>}
      */
-    async build() {
+    async build(): Promise<Buffer> {
         return (await this.toAttachment()).toBuffer();
     }
 

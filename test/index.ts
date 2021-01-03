@@ -14,6 +14,6 @@ const rank = new canvacord.Rank()
     .setDiscriminator("0007");
 
 rank.build()
-    .then(data => {
+    .then(() => {
         // canvacord.write(data, "RankCard.png");
     });

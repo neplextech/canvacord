@@ -18,7 +18,7 @@ class Util {
      * @param {string} hex Hex code to validate
      * @returns {boolean}
      */
-    static validateHex(hex) {
+    static validateHex(hex: string): boolean {
         if (!hex || typeof hex !== "string") return false;
         return /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/.test(hex);
     }
@@ -40,7 +40,7 @@ class Util {
      * @param {number} time Time to format
      * @returns {string}
      */
-    static formatTime(time) {
+    static formatTime(time: number): string {
         if (!time) return "00:00";
         const fmt = moment.duration(time).format("dd:hh:mm:ss");
 
@@ -55,7 +55,7 @@ class Util {
      * @param {number} len Max Length
      * @returns {string}
      */
-    static shorten(text, len) {
+    static shorten(text: string, len: number) {
         if (typeof text !== "string") return "";
         if (text.length <= len) return text;
         return text.substr(0, len).trim() + "...";
@@ -65,9 +65,8 @@ class Util {
      * Converts numbers into units like `1K`, `1M`, `1B` etc.
      * @param {number|string} num
      * @returns {string} 
-     * @returns {string}
      */
-    static toAbbrev(num) {
+    static toAbbrev(num: number|string): string {
         return abbrev(num);
     }
 
@@ -79,7 +78,7 @@ class Util {
      * @param {number} y Y
      * @returns {Promise<void>}
      */
-    static renderEmoji(ctx, msg, x, y) {
+    static renderEmoji(ctx: CanvasRenderingContext2D, msg: string, x: number, y: number): Promise<void> {
         return renderEmoji(ctx, msg, x, y);
     }
 
@@ -89,7 +88,7 @@ class Util {
      * @param {string} alt Alt color
      * @returns {string}
      */
-    static formatHex(hex, alt = "#000000") {
+    static formatHex(hex: string, alt = "#000000"): string {
         if (!hex || typeof hex !== "string") return alt || "#000000";
         hex = hex.replace("#", "");
         if (hex.length === 3) hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2];
@@ -103,7 +102,7 @@ class Util {
      * @param {string} hex Hex color code to invert
      * @returns {string}
      */
-    static invertColor(hex) {
+    static invertColor(hex: string): string {
         if (!hex || typeof hex !== "string") return "#FFFFFF";
         hex = hex.replace("#", "");
 
@@ -117,10 +116,8 @@ class Util {
         const b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
 
         // return new hex
-        const pad = (txt, length) => {
-            length = length || 2;
-            let arr = [length].join("0");
-            return (arr + txt).slice(-length);
+        const pad = (txt: string) => {
+            return ('2' + txt).slice(-2);
         };
 
         const finalHex = `#${pad(r)}${pad(g)}${pad(b)}`;
@@ -132,7 +129,7 @@ class Util {
      * @param {string} name Name to parse acronym
      * @returns {string}
      */
-    static getAcronym(name) {
+    static getAcronym(name: string): string {
         if (!name || typeof name !== "string") return "";
         return name
             .replace(/'s /g, " ")
@@ -148,11 +145,11 @@ class Util {
      * @param {number} maxWidth Max width
      * @returns {string[]}
      */
-    static getLines({ text, ctx, maxWidth }) {
+    static getLines({ text, ctx, maxWidth }: { text: string, ctx: CanvasRenderingContext2D, maxWidth: number }): string[] {
         if (!text) return [];
         if (!ctx) throw new Error("Canvas context was not provided!");
         if (!maxWidth) throw new Error("No max-width provided!");
-        const lines = [];
+        const lines: string[] = [];
 
         while (text.length) {
             let i;
