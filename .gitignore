@@ -1,4 +1,21 @@
+# OS junk
+.DS_Store
+
+# Npm
 node_modules/
-assets/
 package-lock.json
+
+# Extras
+assets/
 docs/
+
+# Ultra runner cache
+.ultra.cache.json
+
+# VS Code
+.vscode
+
+# Built files
+dist
+*.tgz
+package

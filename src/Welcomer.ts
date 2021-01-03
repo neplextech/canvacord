@@ -1,7 +1,15 @@
-const { Base } = require("discord-canvas");
-const Util = require("./Util");
+import { Base } from "discord-canvas";
+import Util from "./Util";
 
 class Welcomer extends Base {
+	public textTitle: any;
+	public textMessage: any;
+	public colorTitle: any;
+	public setUsername: any;
+	public setDiscriminator: any;
+	public setGuildName: any;
+	public setAvatar: any;
+	public toAttachment: any;
 
     /**
      * Welcome image builder
@@ -92,4 +100,4 @@ class Welcomer extends Base {
 
 }
 
-module.exports = Welcomer;
+export default Welcomer;

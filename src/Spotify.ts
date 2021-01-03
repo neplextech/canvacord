@@ -1,11 +1,19 @@
-const Canvas = require("canvas");
-const Util = require("./Util");
-const assets = require("./Assets");
+import Canvas from "canvas";
+import Util from "./Util";
+import assets from "./Assets";
 
 /**
  * Spotify presence card builder
  */
 class Spotify {
+	public title: any;
+	public image: any;
+	public artist: any;
+	public album: any;
+	public start: any;
+	public end: any;
+	public background: any;
+	public progressBar: any;
 
     /**
      * Creates spotify presence card
@@ -155,7 +163,7 @@ class Spotify {
      * @returns {Spotify}
      */
     setImage(source) {
-        if (!source) throw new Error(`Expected image source, received ${typeof title}!`);
+        if (!source) throw new Error(`Expected image source, received ${typeof this.title}!`);
         this.image = source;
         return this;
     }
@@ -318,4 +326,4 @@ class Spotify {
 
 }
 
-module.exports = Spotify;
+export default Spotify;

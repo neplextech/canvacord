@@ -16,4 +16,4 @@ const data = {
     renderEmoji: require("../plugins/renderEmoji")
 };
 
-module.exports = data;
+export default data;

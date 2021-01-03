@@ -1,7 +1,7 @@
-const Canvas = require("canvas");
-const GIFEncoder = require("gifencoder");
+import Canvas from "canvas";
+import GIFEncoder from "gifencoder";
 
-module.exports = async (image, TRIGGERED) => {
+export default async (image, TRIGGERED) => {
     const base = await Canvas.loadImage(TRIGGERED);
     const img = await Canvas.loadImage(image);
     const GIF = new GIFEncoder(256, 310);

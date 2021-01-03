@@ -1,6 +1,6 @@
-const Canvas = require("canvas");
-const Util = require("./Util");
-const assets = require("./Assets");
+import Canvas from "canvas";
+import Util from "./Util";
+import assets from "./Assets";
 
 /**
  * @typedef {object} CanvacordRankData
@@ -63,6 +63,7 @@ const assets = require("./Assets");
  */
 
 class Rank {
+	public data: any;
 
     /**
      * Creates Rank card
@@ -168,7 +169,7 @@ class Rank {
      * @param {any[]} fontArray Font array
      * @returns {Rank}
      */
-    registerFonts(fontArray = []) {
+    registerFonts(fontArray: any[] = []) {
         if (!fontArray.length) {
             setTimeout(() => {
                 // default fonts
@@ -236,7 +237,6 @@ class Rank {
      * @returns {Rank}
      */
     setProgressBar(color, fillType = "COLOR", rounded = true) {
-
         switch (fillType) {
             case "COLOR":
                 if (typeof color !== "string") throw new Error(`Color type must be a string, received ${typeof color}!`);
@@ -251,11 +251,10 @@ class Rank {
                 this.data.progressBar.rounded = !!rounded;
                 break;
             default:
-                throw new Error(`Unsupported progressbar type "${type}"!`);
+                throw new Error(`Unsupported progressbar type "${fillType}"!`);
         }
 
         return this;
-
     }
 
     /**
@@ -391,7 +390,7 @@ class Rank {
      * @param {number|boolean} width Status width
      * @returns {Rank}
      */
-    setStatus(status, circle = false, width = 5) {
+    setStatus(status, circle = false, width: boolean | number = 5) {
         switch(status) {
             case "online":
                 this.data.status.type = "online";
@@ -472,16 +471,15 @@ class Rank {
         if (!this.data.avatar.source) throw new Error("Avatar source not found!");
         if (!this.data.username.name) throw new Error("Missing username");
 
-        let bg = null;
-        if (this.data.background.type === "image") bg = await Canvas.loadImage(this.data.background.image);
-        let avatar = await Canvas.loadImage(this.data.avatar.source);
+        const bg = this.data.background.type === "image" ? await Canvas.loadImage(this.data.background.image) : null;
+        const avatar = await Canvas.loadImage(this.data.avatar.source);
 
         // create canvas instance
         const canvas = Canvas.createCanvas(this.data.width, this.data.height);
         const ctx = canvas.getContext("2d");
 
         // create background
-        if (!!bg) {
+        if (!bg) {
             ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         } else {
             ctx.fillStyle = this.data.background.image;
@@ -564,6 +562,8 @@ class Rank {
             ctx.beginPath();
             // apply color
             if (this.data.progressBar.bar.type === "gradient") {
+                // @todo: Fix this
+                // @ts-ignore
                 let gradientContext = ctx.createRadialGradient(this._calculateProgress, 0, 500, 0);
                 this.data.progressBar.bar.color.forEach((color, index) => {
                     gradientContext.addColorStop(index, color);
@@ -642,4 +642,4 @@ class Rank {
 
 }
 
-module.exports = Rank;
+export default Rank;

@@ -1,7 +1,7 @@
-const Canvas = require("canvas");
-const convolute = require("../plugins/convolute");
+import Canvas from "canvas";
+import convolute from "../plugins/convolute";
 
-module.exports = async (img, matrix, opaque, lvl) => {
+export default async (img, matrix, opaque, lvl = 1) => {
     if (isNaN(lvl)) lvl = 1;
     const image = await Canvas.loadImage(img);
     const canvas = Canvas.createCanvas(image.width, image.height);

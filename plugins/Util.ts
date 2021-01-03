@@ -1,6 +1,6 @@
 const moment = require("moment");
-const abbrev = require("../plugins/abbrev");
-const renderEmoji = require("../plugins/renderEmoji");
+const abbrev = require("./abbrev");
+const renderEmoji = require("./renderEmoji");
 const momentDurationFormatSetup = require("moment-duration-format");
 momentDurationFormatSetup(moment);
 
@@ -8,7 +8,6 @@ class Util {
 
     /**
      * Canvacord Util
-     * @hideconstructor
      */
     constructor() {
         throw new Error(`The ${this.constructor.name} class may not be instantiated!`);
@@ -170,4 +169,4 @@ class Util {
 
 }
 
-module.exports = Util;
+export default Util;

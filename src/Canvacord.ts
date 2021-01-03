@@ -1,37 +1,57 @@
-const Trigger = require("../libs/Trigger");
-const Greyscale = require("../libs/Greyscale");
-const Invert = require("../libs/Invert");
-const Sepia = require("../libs/Sepia");
-const assets = require("./Assets");
-const fs = require("fs");
-const Brightness = require("../libs/Brightness");
-const Threshold = require("../libs/Threshold");
-const Convolute = require("../libs/Convolute");
-const rect = require("../plugins/rect");
-const Canvas = require("canvas");
-const Darkness = require("../libs/Darkness");
-const circle = require("../plugins/circle");
-const round = require("../plugins/round");
-const Util = require("./Util");
+import Canvas from "canvas";
+import fs from "fs";
 
-/**
- * **⚠ You may not instantiate Canvacord class! ⚠**
- * You can access this class with `require("canvacord").Canvas`.
- * <warn>Note: This is a fully static class. Try not to instantiate this!</warn>
- * @example const Canvacord = require("canvacord");
- *
- * Canvacord.Canvas.trigger("./image.png")
- *  .then(triggered => {
- *      Canvacord.write(triggered, "triggered.gif");
- *  })
- */
+import Brightness from "../libs/Brightness";
+import Convolute from "../libs/Convolute";
+import Darkness from "../libs/Darkness";
+import Greyscale from "../libs/Greyscale";
+import Invert from "../libs/Invert";
+import Sepia from "../libs/Sepia";
+import Threshold from "../libs/Threshold";
+import Trigger from "../libs/Trigger";
+import circle from "../plugins/circle";
+import rect from "../plugins/rect";
+import round from "../plugins/round";
+import assets from "./Assets";
+import Util from "./Util";
+
+interface ReplyOptions {
+    /** Avatar of the person who replied */
+    avatar1?: string | Buffer;
+    /** Avatar of the other person */
+    avatar2?: string | Buffer;
+    /** Username of the person who replied */
+    user1?: string;
+    /** Username of the other person */
+    user2?: string;
+    /** Hex color of the person who replied */
+    hex1?: string;
+    /** Hex color of the other person */
+    hex2?: string;
+    /** The message */
+    mainText?: string;
+    /** The reply message */
+    replyText?: string;
+}
+
 class Canvacord {
-    
-    /*
-    * <warn>Static class</warn>
-    */
+    static instance: Canvacord;
+
+	public avatar1: any;
+	public avatar2: any;
+	public user1: any;
+	public user2: any;
+	public hex1: any;
+	public hex2: any;
+	public mainText: any;
+    public replyText: any;
+
     constructor() {
-        throw new Error(`The ${this.constructor.name} class may not be instantiated!`);
+        if (!Canvacord.instance) {
+            Canvacord.instance = this;
+        }
+
+        return Canvacord.instance;
     }
 
     /**
@@ -60,7 +80,7 @@ class Canvacord {
      * @param {string|Buffer} image Img
      * @returns {Promise<Buffer>}
      */
-    static async sepia(image) {
+    static async sepia(image: string | Buffer) {
         if (!image) throw new Error("Expected image, received nothing!");
         return await Sepia(image);
     }
@@ -81,7 +101,7 @@ class Canvacord {
      * @param {number} amount Brightness amount
      * @returns {Promise<Buffer>}
      */
-    static async brightness(image, amount) {
+    static async brightness(image: string | Buffer, amount: number) {
         if (!image) throw new Error("Expected image, received nothing!");
         if (isNaN(amount)) throw new Error("Amount must be a number!");
         return await Brightness(image, amount);
@@ -93,7 +113,7 @@ class Canvacord {
      * @param {number} amount Darkness amount
      * @returns {Promise<Buffer>}
      */
-    static async darkness(image, amount) {
+    static async darkness(image: string | Buffer, amount: number) {
         if (!image) throw new Error("Expected image, received nothing!");
         if (isNaN(amount)) throw new Error("Amount must be a number!");
         return await Darkness(image, amount);
@@ -140,8 +160,8 @@ class Canvacord {
      * @returns {Buffer}
      */
     static createProgressBar(
-        track = { x: false, y: false, width: false, height: false, color: false, stroke: false, lineWidth: false },
-        bar = { width: false, color: false }
+        track = { x: false, y: false, width: 0, height: 0, color: false, stroke: false, lineWidth: 0 },
+        bar = { width: 0, color: false }
     ) {
         if (!track) throw new Error("Invalid track args!");
         if (!bar) throw new Error("Invalid progressbar args!");
@@ -354,7 +374,7 @@ class Canvacord {
      * @param {string|Buffer} image2 Second image
      * @returns {Promise<Buffer>}
      */
-    static async spank(image1, image2) {
+    static async spank(image1: string | Buffer, image2: string | Buffer) {
         if (!image1) throw new Error("First image was not provided!");
         if (!image2) throw new Error("Second image was not provided!");
         await this.__wait();
@@ -374,8 +394,8 @@ class Canvacord {
      * @param {any[]} fontArray Font array
      * @returns {Promise<void>}
      */
-    static async registerFonts(fontArray = []) {
-        if (!fontArray.length) {
+    static async registerFonts(fontArray: any[] = []) {
+        if (fontArray.length === 0) {
             await Canvacord.__wait();
             // default fonts
             Canvas.registerFont(assets("FONT").MANROPE_BOLD, {
@@ -727,7 +747,7 @@ class Canvacord {
      * @param {string} [color.o] Color of **O**
      * @returns {Buffer}
      */
-    static tictactoe(fill = { a1: 0, b1: 0, c1: 0, a2: 0, b2: 0, c2: 0, a3: 0, b3: 0, c3: 0 }, color = { bg: 0, bar: 0, x: 0, o: 0 }) {
+    static tictactoe(fill = { a1: 0, b1: 0, c1: 0, a2: 0, b2: 0, c2: 0, a3: 0, b3: 0, c3: 0 }, color = { bg: '0', bar: '0', x: '0', o: '0' }) {
         color = {
             bg: color.bg || "white",
             bar: color.bar || "black",
@@ -747,14 +767,14 @@ class Canvacord {
             let endAngle = 2 * Math.PI;
 
             ctx.lineWidth = 40;
-            ctx.strokeStyle = color.o;
+            ctx.strokeStyle = `${color.o}`;
             ctx.beginPath();
             ctx.arc(centerX, centerY, radius, startAngle, endAngle);
             ctx.stroke();
         };
 
         const drawX = (x, y) => {
-            ctx.strokeStyle = color.x;
+            ctx.strokeStyle = `${color.x}`;
             ctx.lineWidth = 40;
             ctx.beginPath();
             let offset = 50;
@@ -805,13 +825,13 @@ class Canvacord {
         };
 
         // background
-        ctx.fillStyle = color.bg;
+        ctx.fillStyle = `${color.bg}`;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         // Lines
         ctx.lineWidth = 30;
         ctx.lineCap = "round";
-        ctx.strokeStyle = color.bar;
+        ctx.strokeStyle = `${color.bar}`;
         ctx.beginPath();
 
         //Horizontal lines 
@@ -969,7 +989,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async clyde(message) {
-        if (!message) messgae = "Please provide text!";
+        if (!message) message = "Please provide text!";
         await this.__wait()
         let avatar = await Canvas.loadImage(await Canvacord.circle(Canvacord.assets("IMAGE").CLYDE));
         let badge = await Canvas.loadImage(Canvacord.assets("IMAGE").BOTBADGE);
@@ -1031,7 +1051,7 @@ class Canvacord {
      * @param {string} [options.color] Color
      * @returns {Promise<Buffer>}
      */
-    static async quote(options = { image, message, username, color }) {
+    static async quote(options) {
         await this.__wait();
         if (!options.image) options.image = Canvacord.assets("IMAGE").CLYDE;
         if (!options.message) options.message = "Please provide text!";
@@ -1086,7 +1106,7 @@ class Canvacord {
      * @param {String|Buffer} [options.image] Image
      * @returns {Promise<Buffer>}
      */
-    static async phub(options = { username: null, message: null, image: null }) {
+    static async phub(options) {
         if (!options.username) throw new Error("Username may not be empty!");
         if (!options.message) throw new Error("Message may not be empty!");
         if (!options.image) throw new Error("Image may not be empty!");
@@ -1179,8 +1199,8 @@ class Canvacord {
         ctx.drawImage(bg, -3, -3, canvas.width + 6, canvas.height + 6);
         ctx.drawImage(avatar, 17, 33, 52, 52);
 
-        let time = Math.floor(Math.random() * (59 - 1)) + 1;
-        time = `${time + (time == 1 ? " minute" : " minutes")} ago`;
+        const timeNumber = Math.floor(Math.random() * (59 - 1)) + 1;
+        const timeString = `${timeNumber + (timeNumber == 1 ? " minute" : " minutes")} ago`;
 
         const username = Util.shorten(ops.username, 21);
         const comment = Util.shorten(ops.content, 60);
@@ -1191,7 +1211,7 @@ class Canvacord {
         
         ctx.font = "16px Roboto";
         ctx.fillStyle = "#909090";
-        ctx.fillText(time, ctx.measureText(username).width + 140, 50);
+        ctx.fillText(timeString, ctx.measureText(username).width + 140, 50);
 
         ctx.font = "18px Roboto";
         ctx.fillStyle = ops.dark ? "#FFFFFF" : "#000000";
@@ -1280,8 +1300,10 @@ class Canvacord {
      * })
      * .then(img => canvacord.write(img, "reply.png"));
      */
-    static async reply(options = { avatar1: null, avatar2: null, user1: null, user2: null, hex1: null, hex2: null, mainText: null, replyText: null }) {
-        const { avatar1, avatar2, user1, user2, hex1, hex2, mainText, replyText } = options;
+    static async reply(options: ReplyOptions) {
+        const { avatar1, avatar2, user1, user2, mainText, replyText } = options;
+        let hex1 = options.hex1;
+        let hex2 = options.hex2;
 
         if (!avatar1) throw new Error("First avatar was not provided!");
         if (!avatar2) throw new Error("Second avatar was not provided!");
@@ -1406,8 +1428,8 @@ class Canvacord {
      * @param {number} dur Number of milliseconds to wait
      * @returns {Promise<void>}
      */
-    static __wait(dur) {
-        return new Promise((res) => {
+    static __wait(dur?) {
+        return new Promise<void>((res) => {
             setTimeout(() => res(), dur || 250);
         });
     }
@@ -1444,4 +1466,4 @@ class Canvacord {
 
 }
 
-module.exports = Canvacord;
+export default Canvacord;

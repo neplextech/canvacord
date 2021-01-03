@@ -1,6 +1,6 @@
-const Canvas = require("canvas");
+import Canvas from "canvas";
 
-module.exports = async (img, amount) => {
+export default async (img, amount) => {
     const image = await Canvas.loadImage(img);
     const canvas = await Canvas.createCanvas(image.width, image.height);
     const ctx = canvas.getContext("2d");
