@@ -15,6 +15,7 @@ import Rank from './src/Rank';
 import Spotify from './src/Spotify';
 import Util from './src/Util';
 import Welcomer from './src/Welcomer';
+import Assets from '@canvacord/assets';
 import { version } from './package.json';
 
 // load default fonts
@@ -49,7 +50,7 @@ export default {
     FortniteStats: load("discord-canvas", 'FortniteStats'),
     Plugins,
     Util,
-    Assets: require("@canvacord/assets"),
+    Assets,
     MSX: {
         Brightness,
         Convolute,

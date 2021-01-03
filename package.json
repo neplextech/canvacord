@@ -3,10 +3,11 @@
   "version": "5.0.8",
   "description": "Powerful image manipulation package for beginners.",
   "main": "./dist/index.js",
+  "module": "./dist/esm/index.js",
   "scripts": {
     "docs": "docgen --source src --custom docs/index.yml --output docs/docs.json",
     "docs:test": "docgen --source src --custom docs/index.yml",
-    "build": "npx tsup --format esm,cjs --legacy-output --dts ./index.ts",
+    "build": "npx tsup --external discord-canvas --format esm,cjs --legacy-output --dts ./index.ts",
     "test": "cd test && node ."
   },
   "types": "./dist/index.d.ts",
