@@ -1,11 +1,11 @@
-const moment = require("moment");
-const abbrev = require("./abbrev");
-const renderEmoji = require("./renderEmoji");
-const momentDurationFormatSetup = require("moment-duration-format");
+import moment from "moment";
+import abbrev from "./abbrev";
+import renderEmoji from "./renderEmoji";
+import momentDurationFormatSetup from "moment-duration-format";
+
 momentDurationFormatSetup(moment);
 
 class Util {
-
     /**
      * Canvacord Util
      */
@@ -42,6 +42,8 @@ class Util {
      */
     static formatTime(time) {
         if (!time) return "00:00";
+        // @todo: Add module augment
+        // @ts-expect-error
         const fmt = moment.duration(time).format("dd:hh:mm:ss");
 
         const chunk = fmt.split(":");
@@ -117,8 +119,7 @@ class Util {
         const b = (255 - parseInt(hex.slice(4, 6), 16)).toString(16);
 
         // return new hex
-        const pad = (txt, length) => {
-            length = length || 2;
+        const pad = (txt, length = 2) => {
             let arr = [length].join("0");
             return (arr + txt).slice(-length);
         };
@@ -152,7 +153,7 @@ class Util {
         if (!text) return [];
         if (!ctx) throw new Error("Canvas context was not provided!");
         if (!maxWidth) throw new Error("No max-width provided!");
-        const lines = [];
+        const lines: string[] = [];
 
         while (text.length) {
             let i;
