@@ -479,7 +479,7 @@ class Rank {
         const ctx = canvas.getContext("2d");
 
         // create background
-        if (!bg) {
+        if (bg !== null) {
             ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         } else {
             ctx.fillStyle = this.data.background.image;

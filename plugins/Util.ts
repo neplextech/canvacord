@@ -1,11 +1,11 @@
-const moment = require("moment");
-const abbrev = require("./abbrev");
-const renderEmoji = require("./renderEmoji");
-const momentDurationFormatSetup = require("moment-duration-format");
+import moment from "moment";
+import abbrev from "./abbrev";
+import renderEmoji from "./renderEmoji";
+import momentDurationFormatSetup from "moment-duration-format";
+
 momentDurationFormatSetup(moment);
 
 class Util {
-
     /**
      * Canvacord Util
      */
@@ -42,6 +42,8 @@ class Util {
      */
     static formatTime(time: number): string {
         if (!time) return "00:00";
+        // @todo: Add module augment
+        // @ts-expect-error
         const fmt = moment.duration(time).format("dd:hh:mm:ss");
 
         const chunk = fmt.split(":");
