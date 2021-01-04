@@ -48,6 +48,7 @@
     "node-canvas-with-twemoji-and-discord-emoji": "^1.1.8"
   },
   "devDependencies": {
+    "@types/gifencoder": "^2.0.0",
     "@types/node": "^14.14.19",
     "captcha-canvas": "^2.2.2",
     "discord-canvas": "github:snowflake107/discord-canvas",

@@ -1,5 +1,6 @@
 import Canvas from "canvas";
 import fs from "fs";
+import GIFEncoder from "gifencoder";
 
 import Brightness from "../libs/Brightness";
 import Convolute from "../libs/Convolute";
@@ -33,6 +34,8 @@ interface ReplyOptions {
     /** The reply message */
     replyText?: string;
 }
+
+type CardValues = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
 
 class Canvacord {
     static instance: Canvacord;
@@ -1238,6 +1241,158 @@ class Canvacord {
         ctx.drawImage(img, 210, 700, 170, 170);
 
         return canvas.toBuffer();
+    }
+
+    /**
+     * Who was the imposter?
+     * @param {string} username User's username
+     * @param {string|Buffer} [image] User Avatar
+     * @returns {Promise<Buffer>}
+     */
+    static async imposter(username: string, image: string | Buffer) {
+        if (!username) throw new Error("username was not provided!");
+        await this.__wait();
+        const bg = await Canvas.loadImage(image ? Canvacord.assets("IMAGE").IMPOSTER : Canvacord.assets("IMAGE").IMPOSTERWITH);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        if (image) {
+            const img = await Canvas.loadImage(image);
+            ctx.save();
+            ctx.translate(709, 236);
+            ctx.rotate(Math.PI / 4);
+            ctx.translate(-709, -236);
+            ctx.drawImage(img, 680, 207, 50, 50);
+            ctx.restore();
+        }
+
+        ctx.font = "bold 16px Arial";
+        ctx.fillStyle = "#DEDEDE";
+        ctx.textAlign = "center";
+        ctx.fillText(`${username} was The Imposter`, canvas.width / 2, canvas.height / 2);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Rummy Card
+     * @param {"A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K"} value Card value
+     * @param {"spade" | "club" | "clubs" | "diamond" | "heart"} suit Card suit
+     * @param {"red" | "black"} color Card color
+     */
+    static async card(value: CardValues, suit: "spade" | "club" | "clubs" | "diamond" | "heart", color: "red" | "black") {
+        const validCards: CardValues[] = ["A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"];
+        if (!validCards.includes(value)) throw new Error("Invalid value was provided");
+        let fillCol: string, symb: string;
+
+        switch (color.toLowerCase()) {
+            case "red":
+                fillCol = "#FF0000";
+                break;
+
+            case "black":
+                fillCol = "#000000";
+                break;
+
+            default:
+                throw new Error("Invalid color was provided");
+        }
+
+        switch (suit.toLowerCase()) {
+            case "spade":
+                symb = "♠";
+                break;
+
+            case "clubs":
+            case "club":
+                symb = "♣";
+                break;
+
+            case "diamond":
+                symb = "♦";
+                break;
+
+            case "heart":
+                symb = "♥";
+                break;
+
+            default:
+                throw new Error("Invalid suit was provided");
+        }
+
+        const canvas = Canvas.createCanvas(300, 500);
+        const ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "#FFFFFF";
+        ctx.fillRect(0, 0, 300, 500);
+
+        ctx.strokeStyle = fillCol;
+        ctx.lineWidth = 5;
+        ctx.strokeRect(0, 0, 300, 500);
+
+        ctx.fillStyle = fillCol;
+        ctx.font = "180px Arial";
+        ctx.fillText(symb, canvas.width / 2.8, canvas.height / 1.7);
+
+        ctx.fillStyle = fillCol;
+        ctx.font = "bold 48px Arial";
+        ctx.fillText(`${value} ${symb}`, 20, 70);
+
+        ctx.save();
+        ctx.translate(200, 450);
+        ctx.rotate(-Math.PI);
+        ctx.font = "bold 48px Arial";
+        ctx.fillStyle = fillCol;
+        ctx.fillText(`${value} ${symb}`, -75, 24);
+        ctx.restore();
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Red sus? Alright bro ejected
+     * @param {string} username User's username
+     * @param {string|Buffer} image User Avatar
+     * @returns {Promise<Buffer>}
+     */
+    static async eject(username: string, image: string | Buffer) {
+        if (!username) throw new Error("username was not provided!");
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").IMPOSTER);
+        const img = await Canvas.loadImage(image);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.font = "bold 16px Arial";
+        ctx.fillStyle = "#DEDEDE";
+        ctx.shadowColor = "#000";
+        ctx.shadowBlur = 5;
+        ctx.textAlign = "center";
+
+        const encoder = new GIFEncoder(canvas.width, canvas.height);
+        encoder.start();
+        encoder.setDelay(100);
+        encoder.setRepeat(0);
+        var ang = 0;
+        for (let i = 0; i < 15; i++) {
+            ctx.save();
+            ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+            ctx.translate(i * 70, canvas.height / 2.3);
+            ctx.rotate(Math.PI / 180 * (ang += 10));
+            ctx.translate(-(i * 70), -(canvas.height / 2.3));
+            ctx.drawImage(img, i * 70, canvas.height / 2.3, 50, 50);
+            ctx.restore();
+            ctx.fillText(`${username} was The Imposter`, canvas.width / 2, canvas.height / 2);
+            encoder.addFrame(ctx);
+        }
+
+        encoder.finish();
+        // @ts-ignore
+        return encoder.out.getData() as Buffer;
     }
 
     /**
