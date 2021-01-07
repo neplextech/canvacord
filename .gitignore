@@ -4,6 +4,7 @@
 # Npm
 node_modules/
 package-lock.json
+yarn.lock
 
 # Extras
 assets/

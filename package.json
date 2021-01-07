@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "5.0.8",
+  "version": "6.0.0-dev",
   "description": "Powerful image manipulation package for beginners.",
   "main": "./dist/index.js",
   "module": "./dist/esm/index.js",
@@ -41,11 +41,11 @@
   "homepage": "https://canvacord.js.org",
   "dependencies": {
     "@canvacord/assets": "^1.0.1",
+    "@canvacord/emoji-parser": "^1.0.1",
     "canvas": "^2.6.1",
     "gifencoder": "^2.0.1",
     "moment": "^2.29.1",
-    "moment-duration-format": "^2.3.2",
-    "node-canvas-with-twemoji-and-discord-emoji": "^1.1.8"
+    "moment-duration-format": "^2.3.2"
   },
   "devDependencies": {
     "@types/gifencoder": "^2.0.0",
