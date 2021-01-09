@@ -299,9 +299,9 @@ class Rank {
 
     /**
      * Set font size
-     * @param {number} size
+     * @param {number | string} size
      */
-    setFontSize(size: number) {
+    setFontSize(size: number | string) {
         this.data.fontSize = size;
         return this;
     }
