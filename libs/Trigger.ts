@@ -35,5 +35,7 @@ export default async (image, TRIGGERED) => {
         i++;
     }
     GIF.finish();
+
+    // @ts-ignore
     return GIF.out.getData();
 };
