@@ -6,14 +6,20 @@ import assets from "./Assets";
  * Spotify presence card builder
  */
 class Spotify {
-	public title: any;
-	public image: any;
-	public artist: any;
-	public album: any;
-	public start: any;
-	public end: any;
-	public background: any;
-	public progressBar: any;
+	public title: string | null;
+	public image: string | Buffer | Canvas.Image | null;
+	public artist: string | null;
+	public album: string | null;
+	public start: number | null;
+	public end: number | null;
+	public background: {
+        type: 0 | 1;
+        data: string | Buffer | Canvas.Image;
+    };
+	public progressBar: {
+        bgColor: string;
+        color: string;
+    };
 
     /**
      * Creates spotify presence card
@@ -108,7 +114,7 @@ class Spotify {
      * @ignore
      * @private
      */
-    __registerFonts() {
+    __registerFonts(): void {
         setTimeout(() => {
             Canvas.registerFont(assets("FONT").MANROPE_REGULAR, {
                 family: "Manrope",
@@ -130,7 +136,7 @@ class Spotify {
      * @param {string} color Color to set
      * @returns {Spotify}
      */
-    setProgressBar(type, color) {
+    setProgressBar(type: "TRACK" | "BAR", color: string): Spotify {
         switch(type) {
 
             case "BAR":
@@ -151,7 +157,7 @@ class Spotify {
      * @param {string} title Title to set
      * @returns {Spotify}
      */
-    setTitle(title) {
+    setTitle(title: string): Spotify {
         if (!title || typeof title !== "string") throw new Error(`Expected title, received ${typeof title}!`);
         this.title = title;
         return this;
@@ -162,7 +168,7 @@ class Spotify {
      * @param {string|Buffer|Canvas.Image} source Image source
      * @returns {Spotify}
      */
-    setImage(source) {
+    setImage(source: string | Buffer | Canvas.Image): Spotify {
         if (!source) throw new Error(`Expected image source, received ${typeof this.title}!`);
         this.image = source;
         return this;
@@ -173,7 +179,7 @@ class Spotify {
      * @param {string} name Artist name
      * @returns {Spotify}
      */
-    setAuthor(name) {
+    setAuthor(name: string): Spotify {
         if (!name || typeof name !== "string") throw new Error(`Expected artist name, received ${typeof name}!`);
         this.artist = name;
         return this;
@@ -184,7 +190,7 @@ class Spotify {
      * @param {string} name Album name
      * @returns {Spotify}
      */
-    setAlbum(name) {
+    setAlbum(name: string): Spotify {
         if (!name || typeof name !== "string") throw new Error(`Expected album name, received ${typeof name}!`);
         this.album = name;
         return this;
@@ -195,7 +201,7 @@ class Spotify {
      * @param {Date|number} time Timestamp
      * @returns {Spotify}
      */
-    setStartTimestamp(time) {
+    setStartTimestamp(time: Date | number): Spotify {
         if (!time) throw new Error(`Expected timestamp, received ${typeof time}!`);
         if (time instanceof Date) time = time.getTime();
         this.start = time;
@@ -207,7 +213,7 @@ class Spotify {
      * @param {Date|number} time Timestamp
      * @returns {Spotify}
      */
-    setEndTimestamp(time) {
+    setEndTimestamp(time: Date | number): Spotify {
         if (!time) throw new Error(`Expected timestamp, received ${typeof time}!`);
         if (time instanceof Date) time = time.getTime();
         this.end = time;
@@ -220,7 +226,10 @@ class Spotify {
      * @param {string|Buffer|Canvas.Image} data Background data
      * @returns {Spotify}
      */
-    setBackground(type = "COLOR", data = "#2F3136") {
+    setBackground(type?: "COLOR" | "IMAGE", data?: string): Spotify {
+        if (!type) type = "COLOR";
+        if (!data) data = "#2F3136"
+
         switch(type) {
             case "COLOR":
                 this.background.type = 0;
@@ -242,7 +251,7 @@ class Spotify {
      * This function converts raw data into spotify presence card.
      * @returns {Promise<Buffer>}
      */
-    async build() {
+    async build(): Promise<Buffer> {
         if (!this.title) throw new Error('Missing "title" in options.');
         if (!this.artist) throw new Error('Missing "artist" in options.');
         if (!this.start) throw new Error('Missing "start" in options.');
@@ -260,14 +269,17 @@ class Spotify {
         ctx.beginPath();
         if (this.background.type === 0) {
             ctx.rect(0, 0, canvas.width, canvas.height);
+
+            // @ts-ignore
             ctx.fillStyle = this.background.data || "#2F3136";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         } else {
-            let img = await Canvas.loadImage(this.background.data);
+            let img = this.background.data instanceof Canvas.Image ? this.background.data : await Canvas.loadImage(this.background.data);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         }
 
         // draw image
+        // @ts-ignore
         const img = await Canvas.loadImage(this.image);
         ctx.drawImage(img, 30, 15, 120, 120);
 
@@ -317,7 +329,7 @@ class Spotify {
      * @private
      * @ignore
      */
-    __calculateProgress(progress, total) {
+    __calculateProgress(progress: number, total: number): number {
         let prg = (progress / total) * 300;
         if (isNaN(prg) || prg < 0) return 0;
         if (prg > 300) return 300;

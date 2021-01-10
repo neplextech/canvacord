@@ -1,3 +1,7 @@
 import assets from "@canvacord/assets";
 
-export default assets;
+interface Assets {
+    (type: "IMAGE" | "FONT"): any;
+}
+
+export default assets as Assets;

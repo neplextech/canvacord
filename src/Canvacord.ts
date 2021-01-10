@@ -16,7 +16,7 @@ import round from "../plugins/round";
 import assets from "./Assets";
 import Util from "./Util";
 
-interface ReplyOptions {
+export interface ReplyOptions {
     /** Avatar of the person who replied */
     avatar1?: string | Buffer;
     /** Avatar of the other person */
@@ -35,19 +35,17 @@ interface ReplyOptions {
     replyText?: string;
 }
 
-type CardValues = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
+export interface YouTubeCommentInterface {
+    username: string;
+    content: string;
+    avatar: string;
+    dark: boolean;
+}
+
+export type CardValues = "A" | "2" | "3" | "4" | "5" | "6" | "7" | "8" | "9" | "10" | "J" | "Q" | "K";
 
 class Canvacord {
     static instance: Canvacord;
-
-	public avatar1: any;
-	public avatar2: any;
-	public user1: any;
-	public user2: any;
-	public hex1: any;
-	public hex2: any;
-	public mainText: any;
-    public replyText: any;
 
     constructor() {
         if (!Canvacord.instance) {
@@ -62,7 +60,7 @@ class Canvacord {
      * @param {string|Buffer} image Image to trigger
      * @returns {Promise<Buffer>}
      */
-    static async trigger(image) {
+    static async trigger(image: string | Buffer): Promise<Buffer> {
         if (!image) throw new Error("Expected image, received nothing!");
         await Canvacord.__wait();
         return await Trigger(image, assets("IMAGE").TRIGGERED);
@@ -73,7 +71,7 @@ class Canvacord {
      * @param {string|Buffer} image Img to invert
      * @returns {Promise<Buffer>}
      */
-    static async invert(image) {
+    static async invert(image: string | Buffer): Promise<Buffer> {
         if (!image) throw new Error("Expected image, received nothing!");
         return await Invert(image);
     }
@@ -83,7 +81,7 @@ class Canvacord {
      * @param {string|Buffer} image Img
      * @returns {Promise<Buffer>}
      */
-    static async sepia(image: string | Buffer) {
+    static async sepia(image: string | Buffer): Promise<Buffer> {
         if (!image) throw new Error("Expected image, received nothing!");
         return await Sepia(image);
     }
@@ -93,7 +91,7 @@ class Canvacord {
      * @param {string|Buffer} image Img
      * @returns {Promise<Buffer>}
      */
-    static async greyscale(image) {
+    static async greyscale(image: string | Buffer): Promise<Buffer> {
         if (!image) throw new Error("Expected image, received nothing!");
         return await Greyscale(image);
     }
@@ -104,7 +102,7 @@ class Canvacord {
      * @param {number} amount Brightness amount
      * @returns {Promise<Buffer>}
      */
-    static async brightness(image: string | Buffer, amount: number) {
+    static async brightness(image: string | Buffer, amount: number): Promise<Buffer> {
         if (!image) throw new Error("Expected image, received nothing!");
         if (isNaN(amount)) throw new Error("Amount must be a number!");
         return await Brightness(image, amount);
@@ -116,7 +114,7 @@ class Canvacord {
      * @param {number} amount Darkness amount
      * @returns {Promise<Buffer>}
      */
-    static async darkness(image: string | Buffer, amount: number) {
+    static async darkness(image: string | Buffer, amount: number): Promise<Buffer> {
         if (!image) throw new Error("Expected image, received nothing!");
         if (isNaN(amount)) throw new Error("Amount must be a number!");
         return await Darkness(image, amount);
@@ -128,7 +126,7 @@ class Canvacord {
      * @param {number} amount Threshold amount
      * @returns {Promise<Buffer>}
      */
-    static async threshold(img, amount) {
+    static async threshold(img: string | Buffer, amount: number): Promise<Buffer> {
         if (!img) throw new Error("Expected image, received nothing!");
         if (isNaN(amount)) throw new Error("Amount must be a number!");
         return await Threshold(img, amount);
@@ -141,7 +139,7 @@ class Canvacord {
      * @param {boolean} opaque If convolution should be opaque
      * @returns {Promise<Buffer>}
      */
-    static async convolute(img, matrix, opaque) {
+    static async convolute(img: string | Buffer, matrix: number[], opaque?: boolean): Promise<Buffer> {
         if (!img) throw new Error("Expected image, received nothing!");
         if (!Array.isArray(matrix)) throw new Error("Convolution matrix must be Array.");
         return await Convolute(img, matrix, opaque);
@@ -191,7 +189,7 @@ class Canvacord {
      * @param {string|Buffer} image Image to blur 
      * @returns {Promise<Buffer>}
      */
-    static async blur(image) {
+    static async blur(image: string | Buffer): Promise<Buffer> {
         if (!image) throw new Error("Image was not provided!");
         const img = await Canvas.loadImage(image);
         const canvas = Canvas.createCanvas(img.width, img.height);
@@ -212,7 +210,7 @@ class Canvacord {
      * @param {number} pixels Pixels
      * @returns {Promise<Buffer>}
      */
-    static async pixelate(image, pixels = 5) {
+    static async pixelate(image: string | Buffer, pixels = 5) {
         if (!image) throw new Error("Image was not provided!");
         if (!pixels || typeof pixels !== "number") pixels = 100;
         if (pixels < 1) pixels = 100;
@@ -1186,7 +1184,7 @@ class Canvacord {
      * @param {boolean} [ops.dark=false] Dark mode?
      * @returns {Promise<Buffer>}
      */
-    static async youtube(ops = { username: null, content: null, avatar: null, dark: false }) {
+    static async youtube(ops: YouTubeCommentInterface) {
         if (!ops.username || typeof ops.username !== "string") throw new Error("Username may not be empty!");
         if (!ops.content || typeof ops.content !== "string") throw new Error("Content may not be empty!");
         if (!ops.avatar) throw new Error("Avatar source may not be empty!");
