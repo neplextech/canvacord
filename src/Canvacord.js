@@ -969,7 +969,7 @@ class Canvacord {
      * @returns {Promise<Buffer>}
      */
     static async clyde(message) {
-        if (!message) messgae = "Please provide text!";
+        if (!message) message = "Please provide text!";
         await this.__wait()
         let avatar = await Canvas.loadImage(await Canvacord.circle(Canvacord.assets("IMAGE").CLYDE));
         let badge = await Canvas.loadImage(Canvacord.assets("IMAGE").BOTBADGE);
