@@ -1255,6 +1255,144 @@ class Canvacord {
     }
 
     /**
+     * Discord Reply Clone
+     * @param {object} options Options
+     * @param {string|Buffer} [options.avatar1] Avatar of the person who replied
+     * @param {string|Buffer} [options.avatar2] Avatar of the other person
+     * @param {string} [options.user1] Username of the person who replied
+     * @param {string} [options.user2] Username of the other person
+     * @param {string} [options.hex1] Hex color of the person who replied
+     * @param {string} [options.hex2] Hex color of the other person
+     * @param {string} [options.mainText] The message
+     * @param {string} [options.replyText] The reply message
+     * @returns {Promise<Buffer>}
+     * @example const img = "https://cdn.discordapp.com/embed/avatars/0.png";
+     * const img2 = "https://cdn.discordapp.com/embed/avatars/4.png";
+     * canvacord.Canvas.reply({
+     *      avatar1: img,
+     *      avatar2: img2,
+     *      user1: "Maximus",
+     *      user2: "Snowflake",
+     *      hex1: "#FF3300",
+     *      hex2: "#7289da",
+     *      mainText: "kok",
+     *      replyText: "Pog"
+     * })
+     * .then(img => canvacord.write(img, "reply.png"));
+     */
+    static async reply(options = { avatar1: null, avatar2: null, user1: null, user2: null, hex1: null, hex2: null, mainText: null, replyText: null }) {
+        const { avatar1, avatar2, user1, user2, hex1, hex2, mainText, replyText } = options;
+
+        if (!avatar1) throw new Error("First avatar was not provided!");
+        if (!avatar2) throw new Error("Second avatar was not provided!");
+        if (!user1) throw new Error("First username was not provided!");
+        if (!user2) throw new Error("Second username was not provided!");
+        if (!mainText || typeof mainText !== "string") throw new Error("Main text was not provided!");
+        if (!replyText || typeof replyText !== "string") throw new Error("Reply text was not provided!");
+        if (!hex1 || typeof hex1 !== "string") hex1 = "#FFFFFF";
+        if (!hex2 || typeof hex2 !== "string") hex2 = "#FFFFFF";
+
+        const img1 = await Canvas.loadImage(avatar1);
+        const img2 = await Canvas.loadImage(avatar2);
+
+        Canvas.registerFont(Canvacord.assets("FONT").WHITNEY_MEDIUM, {
+            family: "Whitney",
+            weight: "regular",
+            style: "normal"
+        });
+
+        Canvas.registerFont(Canvacord.assets("FONT").MANROPE_REGULAR, {
+            family: "Manrope",
+            weight: "regular",
+            style: "normal"
+        });
+
+        const canvas = Canvas.createCanvas(1300, 250);
+        const ctx = canvas.getContext("2d");
+
+        ctx.fillStyle = "#36393E";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        ctx.fillStyle = "#ffffff";
+        ctx.textAlign = "left";
+
+        ctx.font = "38px Manrope";
+
+        await Util.renderEmoji(ctx, Util.shorten(replyText, 32), 186, 200);
+
+        ctx.font = "38px Whitney";
+        ctx.fillStyle = Util.formatHex(hex1, "#FFFFFF");
+        ctx.fillText(user1, 185, 147);
+
+        const usernameWidth = ctx.measureText(user1).width;
+        ctx.fillStyle = "#d1d1d1";
+        ctx.font = "38px Manrope";
+
+        ctx.fillText(" replied to ", 165 + usernameWidth + 20, 147);
+
+        const repliedWidth = ctx.measureText(" replied to ").width;
+
+        ctx.fillStyle = Util.formatHex(hex2, "#FFFFFF");
+        ctx.font = "38px Whitney";
+        ctx.fillText(user2, 165 + usernameWidth + repliedWidth + 20, 167 - 20);
+
+        const secondMemberUserWidth = ctx.measureText(user2).width;
+
+        ctx.font = "26px Whitney";
+        ctx.fillStyle = "#7a7c80";
+        const time = Util.discordTime();
+
+        ctx.fillText(` ${time}`, 165 + usernameWidth + repliedWidth + secondMemberUserWidth + 3 + 20, 167 - 20)
+
+        ctx.font = "29px Whitney";
+        ctx.globalAlpha = 0.7;
+        ctx.fillStyle = "#d1d1d1";
+        ctx.fillText(Util.shorten(mainText, 64), 195 + 20 + 20, 100 + 5 - 20);
+
+        ctx.strokeStyle = "#a3a2a2";
+        ctx.lineWidth = 4;
+        ctx.globalAlpha = 0.4;
+        ctx.moveTo(34 + (105 / 2) + 70 + 20, 92 + 5 - 20);
+        ctx.lineTo(34 + (105 / 2) + 20, 92 + 5 - 20);
+
+        ctx.moveTo(34 + (105 / 2) + 20, 92 + 5 - 20);
+        ctx.quadraticCurveTo(34 + (105 / 2) + 4, 92 + 5 - 20, 34 + (105 / 2), 103 + 5 - 20);
+
+        ctx.moveTo(34 + (105 / 2), 125 - 20);
+        ctx.lineTo(34 + (105 / 2), 103 + 5 - 20);
+        ctx.stroke();
+
+
+        ctx.globalAlpha = 1;
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.arc(90, 182 - 20, 50, 0, Math.PI * 2, true);
+        ctx.strokeStyle = "#36393E";
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.clip();
+        ctx.drawImage(img1, 38, 130 - 20, 105, 105);
+        ctx.restore();
+
+        ctx.save();
+        ctx.beginPath();
+        ctx.lineWidth = 1;
+        ctx.arc(165 + 20 + 20, 90 + 5 - 20, 20, 0, Math.PI * 2);
+        ctx.strokeStyle = "#36393E";
+        ctx.stroke();
+        ctx.closePath();
+
+        ctx.clip();
+        
+        ctx.drawImage(img2, 165 + 20, 70 + 5 - 20, 40, 40);
+        ctx.restore();
+
+        return canvas.toBuffer();
+    }
+
+    /**
      * Canvacord assets
      * @type {CanvacordAssets}
      * @private
