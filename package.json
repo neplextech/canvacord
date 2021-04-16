@@ -1,17 +1,22 @@
 {
   "name": "canvacord",
-  "version": "4.0.0",
-  "description": "Simple & easy to use image manipulation module for discord bots with a lot of features like rank card, memes & more.",
-  "main": "index.js",
+  "version": "6.0.0",
+  "description": "Simple & easy to use image manipulation module for beginners.",
+  "main": "lib/src/index.js",
+  "types": "lib/src/index.d.ts",
+  "files": [
+    "lib/"
+  ],
   "scripts": {
-    "docsgen": "jsdoc --configure .jsdoc.json --verbose",
+    "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
+    "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
     "test": "cd test && node index.js",
-    "format": "prettier --write \"src/**/*.js\""
+    "format": "prettier --write \"src/**/*.ts\""
   },
-  "homepage": "https://canvacord.snowflakedev.xyz",
+  "homepage": "https://canvacord.js.org",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Snowflake107/Canvacord"
+    "url": "git+https://github.com/DevSnowflake/Canvacord.git"
   },
   "keywords": [
     "Canvacord",
@@ -32,20 +37,28 @@
     "api"
   ],
   "author": "Snowflake107",
-  "license": "ISC",
+  "funding": {
+    "type": "individual",
+    "url": "https://paypal.me/devsnowflake"
+  },
+  "license": "GPL-3.0",
   "dependencies": {
-    "@jimp/custom": "^0.14.0",
-    "@jimp/plugin-circle": "^0.14.0",
-    "canvas": "^2.6.1",
-    "gifencoder": "^2.0.1",
-    "jimp": "^0.14.0",
-    "moment": "^2.27.0",
-    "moment-duration-format": "^2.3.2",
-    "node-canvas-with-twemoji-and-discord-emoji": "^1.1.4"
+    "@canvacord/assets": "^1.0.2",
+    "@canvacord/emoji-parser": "^1.0.1",
+    "canvas": "^2.7.0",
+    "gifencoder": "^2.0.1"
   },
   "devDependencies": {
-    "jsdoc": "^3.6.5",
-    "jsdoc-skyceil": "^1.0.5",
-    "prettier": "^2.0.5"
+    "@types/gifencoder": "^2.0.0",
+    "@types/node": "^14.14.41",
+    "discord.js-docgen": "github:discordjs/docgen#ts-patch",
+    "prettier": "^2.2.1",
+    "typescript": "^4.2.4"
+  },
+  "bugs": {
+    "url": "https://github.com/DevSnowflake/Canvacord/issues"
+  },
+  "directories": {
+    "doc": "docs"
   }
 }
