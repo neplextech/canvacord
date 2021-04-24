@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "5.1.0",
+  "version": "5.2.0",
   "description": "Powerful image manipulation package for beginners.",
   "main": "index.js",
   "scripts": {
@@ -42,7 +42,7 @@
   "dependencies": {
     "@canvacord/assets": "^1.0.2",
     "@canvacord/emoji-parser": "^1.0.1",
-    "canvas": "^2.6.1",
+    "canvas": "^2.7.0",
     "gifencoder": "^2.0.1",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2"
