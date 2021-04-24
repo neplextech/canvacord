@@ -1,14 +1,12 @@
 import { fillTextWithTwemoji } from "@canvacord/emoji-parser";
 import { CanvasRenderingContext2D } from "canvas";
 
-export class Util {
-    /**
-     * Canvacord Utils
-     */
-    constructor() {
-        throw new Error(`The ${this.constructor.name} class may not be instantiated!`);
-    }
+const assets = require("@canvacord/assets");
 
+/**
+ * Canvacord Utils
+ */
+export const Util = {
     /**
      * Renders emoji in canvas
      * @param ctx Canvas rendering context
@@ -16,15 +14,15 @@ export class Util {
      * @param x x co-ordinate
      * @param y y co-ordinate
      */
-    static async renderEmoji(ctx: CanvasRenderingContext2D, message: string, x: number, y: number): Promise<void> {
-        return await fillTextWithTwemoji(ctx, message, x, y);
-    }
+    renderEmoji(ctx: CanvasRenderingContext2D, message: string, x: number, y: number) {
+        return fillTextWithTwemoji(ctx, message, x, y);
+    },
 
     /**
      * Abbreviate the given number
      * @param num The number to abbreviate
      */
-    static toAbbrev(num: number): string {
+    toAbbrev(num: number) {
         if (!num || isNaN(num)) return "0";
         if (typeof num === "string") num = parseInt(num);
         const decPlaces = Math.pow(10, 1);
