@@ -44,7 +44,7 @@
   },
   "license": "GPL-3.0",
   "dependencies": {
-    "@canvacord/assets": "^2.0.0",
+    "@canvacord/assets": "^2.0.1",
     "@canvacord/emoji-parser": "^1.0.1",
     "canvas": "^2.7.0",
     "gifencoder": "^2.0.1"

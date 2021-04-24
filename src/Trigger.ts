@@ -1,9 +1,9 @@
 import { createCanvas, loadImage } from "canvas";
 import GIFEncoder from "gifencoder";
-import Assets from "@canvacord/assets";
+import { Util } from "./Util";
 
 export const Trigger = async (img: string | Buffer) => {
-    const base = await loadImage(Assets.image.get("TRIGGERED"));
+    const base = await loadImage(await Util.assets.image("TRIGGERED"));
     const image = await loadImage(img);
     const GIF = new GIFEncoder(256, 310);
 

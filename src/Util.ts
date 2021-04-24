@@ -1,7 +1,6 @@
 import { fillTextWithTwemoji } from "@canvacord/emoji-parser";
+import Assets, { image } from "@canvacord/assets";
 import { CanvasRenderingContext2D } from "canvas";
-
-const assets = require("@canvacord/assets");
 
 /**
  * Canvacord Utils
@@ -43,5 +42,16 @@ export const Util = {
             }
         }
         return dat;
+    },
+
+    assets: {
+        async font(name: string) {
+            if (!Assets.font.loaded) await Assets.font.load();
+            return Assets.font.get(name);
+        },
+        async image(name: string) {
+            if (!Assets.image.loaded) await Assets.image.load();
+            return Assets.image.get(name);
+        }
     }
 }
