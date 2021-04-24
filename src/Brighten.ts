@@ -1,8 +1,6 @@
 import { createCanvas, loadImage } from "canvas";
 
-export type Image = string | Buffer;
-
-export const Brighten = async (img: Image, amount: number = 0.5) => {
+export const Brighten = async (img: string | Buffer, amount: number) => {
     const image = await loadImage(img);
     const canvas = createCanvas(image.width, image.height);
     const ctx = canvas.getContext("2d");
