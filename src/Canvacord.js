@@ -1135,6 +1135,26 @@ class Canvacord {
     }
 
     /**
+     * Whodidthis
+     * @param {string|Buffer} image Source image
+     * @returns {Promise<Buffer>}
+     */
+     static async whodidthis(image) {
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(image);
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WHODIDTHIS);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 157, 717, 407);
+
+        return canvas.toBuffer();
+    }
+
+    /**
      * Wasted
      * @param {string|Buffer} image Source image
      * @returns {Promise<Buffer>}

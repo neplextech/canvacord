@@ -40,7 +40,7 @@
   },
   "homepage": "https://canvacord.js.org",
   "dependencies": {
-    "@canvacord/assets": "^1.0.2",
+    "@canvacord/assets": "github:Flowko/canvacord-assets#main",
     "@canvacord/emoji-parser": "^1.0.1",
     "canvas": "^2.7.0",
     "gifencoder": "^2.0.1",
