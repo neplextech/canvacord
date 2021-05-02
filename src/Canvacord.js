@@ -1115,6 +1115,70 @@ class Canvacord {
     }
 
     /**
+     * Whodidthis
+     * @param {string|Buffer} image Source image
+     * @returns {Promise<Buffer>}
+     */
+    static async whodidthis(image) {        
+        if (!image) throw new Error("image was not provided!");
+        await this.__wait();
+        const img = await Canvas.loadImage(image);
+        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WHODIDTHIS);
+
+        const canvas = Canvas.createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 0, 157, 717, 407);
+
+        return canvas.toBuffer();
+    }
+
+    /**
+     * Armor
+     * @param {string|Buffer} image Source image
+     * @returns {Promise<Buffer>}
+     */
+    static async armor(text) {        
+        if (!text) throw new Error("Message may not be empty!");
+
+        await this.__wait();
+        let baseImage = await Canvas.loadImage(Canvacord.assets("IMAGE").ARMOR);
+
+        let canvas = Canvas.createCanvas(baseImage.width, baseImage.height);
+        let ctx = canvas.getContext("2d");
+
+        ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
+
+        let x = text.length;
+
+        let fontSize = 50;
+        if (x <= 15) {
+            ctx.translate(30, 390);
+        } else if (x < 100) {
+            fontSize = 0.0000168 * (x * x) - 0.0319 * x + 28.62;
+            ctx.translate(30, 390);
+        } else if (x < 600) {
+            fontSize = 0.0000168 * (x * x) - 0.0319 * x + 20.62;
+            ctx.translate(30, 390);
+        } else {
+            ctx.translate(30, 390);
+        }
+
+        ctx.font = `${fontSize}px 'Arial'`;
+        ctx.fillStyle = "#000000";
+
+        var lines = canvacord.Util.getLines({text,ctx,maxWidth: 213});
+        let i = 0;
+        while(i<lines.length){
+            ctx.fillText(lines[i], 10, i * fontSize - 5);
+            i++;
+        }
+
+        return canvas.toBuffer();
+    }
+
+    /**
      * Wanted
      * @param {string|Buffer} image Source image
      * @returns {Promise<Buffer>}
