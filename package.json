@@ -8,6 +8,7 @@
     "lib/"
   ],
   "scripts": {
+    "build": "node scripts/prebuild && tsc && node scripts/postbuild",
     "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
     "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
     "test": "cd test && node index.js",
@@ -43,7 +44,7 @@
   },
   "license": "GPL-3.0",
   "dependencies": {
-    "@canvacord/assets": "^1.0.2",
+    "@canvacord/assets": "^2.0.1",
     "@canvacord/emoji-parser": "^1.0.1",
     "canvas": "^2.7.0",
     "gifencoder": "^2.0.1"
