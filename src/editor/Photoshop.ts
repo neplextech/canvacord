@@ -122,10 +122,10 @@ export class Photoshop {
 
         const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
         for (let i = 0; i < imgData.data.length; i += 4) {
-            var r = imgData.data[i];
-            var g = imgData.data[i + 1];
-            var b = imgData.data[i + 2];
-            var v = 0.2126 * r + 0.7152 * g + 0.0722 * b >= amount ? 255 : 0;
+            const r = imgData.data[i];
+            const g = imgData.data[i + 1];
+            const b = imgData.data[i + 2];
+            const v = 0.2126 * r + 0.7152 * g + 0.0722 * b >= amount ? 255 : 0;
             imgData.data[i] = imgData.data[i + 1] = imgData.data[i + 2] = v;
         }
 
