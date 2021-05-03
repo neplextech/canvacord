@@ -8,7 +8,6 @@ import { Photoshop } from "../editor/Photoshop";
  * Housing for memes
  */
 export class CanvacordImgen {
-
     constructor() {
         throw new Error("Cannot instantiate static class");
     }
@@ -181,5 +180,4 @@ export class CanvacordImgen {
 
         return await canvas.png();
     }
-
 }

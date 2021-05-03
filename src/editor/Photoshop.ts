@@ -6,7 +6,6 @@ import { Util } from "../Utils/Util";
  * Basic photo editing
  */
 export class Photoshop {
-
     constructor() {
         throw new Error("Cannot instantiate static class");
     }
