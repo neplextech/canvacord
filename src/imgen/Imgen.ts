@@ -318,14 +318,18 @@ export class CanvacordImgen {
         return await canvas.png();
     }
 
-    static async convolute(image: ImageSource, matrix: number[], opaque?: boolean): Promise<Buffer> {
+    static async convolute(image: ImageSource, matrix: number[], opaque?: boolean, times?: number): Promise<Buffer> {
         if (!image) throw new Error("image was not provided!");
+        if (typeof times !== "number" || times <= 0 || times >= Infinity) times = 1;
+
         const img = await Util.loadImage(image);
         const canvas = createCanvas(img.width, img.height);
         const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        await Photoshop.convolute(ctx, canvas, matrix, Boolean(opaque));
+        for (let i = 0; i < times; i++) {
+            await Photoshop.convolute(ctx, canvas, matrix, Boolean(opaque));
+        }
 
         return await canvas.png();
     }
