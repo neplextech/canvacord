@@ -1,67 +1,67 @@
 {
-  "name": "canvacord",
-  "version": "6.0.0",
-  "description": "Simple & easy to use image manipulation module for beginners.",
-  "main": "lib/src/index.js",
-  "types": "lib/src/index.d.ts",
-  "files": [
-    "lib/"
-  ],
-  "scripts": {
-    "build": "tsc",
-    "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
-    "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
-    "test": "tsc && cd test && node index.js",
-    "format": "prettier --write \"src/**/*.ts\""
-  },
-  "homepage": "https://canvacord.js.org",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DevSnowflake/Canvacord.git"
-  },
-  "keywords": [
-    "Canvacord",
-    "discord-canvas",
-    "discord.js-canvas",
-    "discord.js-image",
-    "memes",
-    "rank",
-    "rank-card",
-    "welcomer",
-    "leaver",
-    "dank-memer",
-    "imagen",
-    "imgen",
-    "imagegen",
-    "canvas",
-    "jimp",
-    "api"
-  ],
-  "author": "Snowflake107",
-  "funding": {
-    "type": "individual",
-    "url": "https://paypal.me/devsnowflake"
-  },
-  "license": "GPL-3.0",
-  "dependencies": {
-    "@canvacord/assets": "^2.0.4",
-    "@canvacord/emoji-parser": "^1.0.1",
-    "@napi-rs/canvas": "^0.0.4",
-    "@types/node-fetch": "^2.5.10",
-    "gifencoder": "^2.0.1",
-    "node-fetch": "^2.6.1"
-  },
-  "devDependencies": {
-    "@types/gifencoder": "^2.0.1",
-    "@types/node": "^14.14.41",
-    "discord.js-docgen": "github:discordjs/docgen#ts-patch",
-    "prettier": "^2.2.1",
-    "typescript": "^4.2.4"
-  },
-  "bugs": {
-    "url": "https://github.com/DevSnowflake/Canvacord/issues"
-  },
-  "directories": {
-    "doc": "docs"
-  }
+    "name": "canvacord",
+    "version": "6.0.0",
+    "description": "Simple & easy to use image manipulation module for beginners.",
+    "main": "lib/src/index.js",
+    "types": "lib/src/index.d.ts",
+    "files": [
+        "lib/"
+    ],
+    "scripts": {
+        "build": "tsc",
+        "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
+        "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
+        "test": "tsc && cd test && node index.js",
+        "format": "prettier --write **/*.{ts,js,json,yaml,yml}"
+    },
+    "homepage": "https://canvacord.js.org",
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/DevSnowflake/Canvacord.git"
+    },
+    "keywords": [
+        "Canvacord",
+        "discord-canvas",
+        "discord.js-canvas",
+        "discord.js-image",
+        "memes",
+        "rank",
+        "rank-card",
+        "welcomer",
+        "leaver",
+        "dank-memer",
+        "imagen",
+        "imgen",
+        "imagegen",
+        "canvas",
+        "jimp",
+        "api"
+    ],
+    "author": "Snowflake107",
+    "funding": {
+        "type": "individual",
+        "url": "https://paypal.me/devsnowflake"
+    },
+    "license": "GPL-3.0",
+    "dependencies": {
+        "@canvacord/assets": "^2.0.4",
+        "@canvacord/emoji-parser": "^1.0.1",
+        "@napi-rs/canvas": "^0.0.4",
+        "@types/node-fetch": "^2.5.10",
+        "gifencoder": "^2.0.1",
+        "node-fetch": "^2.6.1"
+    },
+    "devDependencies": {
+        "@types/gifencoder": "^2.0.1",
+        "@types/node": "^14.14.41",
+        "discord.js-docgen": "github:discordjs/docgen#ts-patch",
+        "prettier": "^2.2.1",
+        "typescript": "^4.2.4"
+    },
+    "bugs": {
+        "url": "https://github.com/DevSnowflake/Canvacord/issues"
+    },
+    "directories": {
+        "doc": "docs"
+    }
 }
