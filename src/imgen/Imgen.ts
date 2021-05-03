@@ -184,7 +184,7 @@ export class CanvacordImgen {
     static async jokeOverHead(image: ImageSource): Promise<Buffer> {
         if (!image) throw new Error("Image wasn ot provided!");
         const layer = await Util.loadImage(await Util.assets.image("JOKEOVERHEAD"));
-        const img = await Util.loadImage(image)
+        const img = await Util.loadImage(image);
         const canvas = createCanvas(425, 404);
         const ctx = canvas.getContext("2d");
         ctx.fillStyle = "black";
@@ -263,7 +263,9 @@ export class CanvacordImgen {
     static async delete(image: ImageSource, dark = false): Promise<Buffer> {
         if (!image) throw new Error("image was not provided!");
         const img = await Util.loadImage(image);
-        const bg = await Util.loadImage(dark ? await Photoshop.invert(await Util.assets.image("DELETE")) : await Util.assets.image("DELETE"));
+        const bg = await Util.loadImage(
+            dark ? await Photoshop.invert(await Util.assets.image("DELETE")) : await Util.assets.image("DELETE")
+        );
 
         const canvas = createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext("2d");

@@ -2,3 +2,4 @@ lib/
 docs/
 node_modules/
 .github/
+src/editor/Matrix.ts
