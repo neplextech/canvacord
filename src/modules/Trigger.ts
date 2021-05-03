@@ -27,8 +27,10 @@ export const Trigger = async (img: string | Buffer) => {
             256 + BR,
             310 - 54 + BR
         );
+        ctx.save();
         ctx.fillStyle = "#FF000033";
         ctx.fillRect(0, 0, 256, 310);
+        ctx.restore();
         ctx.drawImage(
             base,
             Math.floor(Math.random() * LR) - LR,
@@ -44,6 +46,5 @@ export const Trigger = async (img: string | Buffer) => {
 
     GIF.finish();
 
-    // @ts-ignore
     return GIF.out.getData();
 };
