@@ -17,6 +17,7 @@ export const Util = {
      * @param y y co-ordinate
      */
     renderEmoji(ctx: CanvasRenderingContext2D, message: string, x: number, y: number) {
+        // @todo: fix this
         // @ts-ignore
         return fillTextWithTwemoji(ctx, message, x, y);
     },
