@@ -14,6 +14,7 @@ export async function loadImage(source: string | Buffer): Promise<SkImage> {
         const data = await res.buffer();
         return createImage(data);
     } else {
+        console.log(source)
         throw new TypeError("Invalid image source");
     }
 }
