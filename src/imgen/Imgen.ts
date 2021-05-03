@@ -301,4 +301,18 @@ export class CanvacordImgen {
 
         return await canvas.png();
     }
+
+    static async shit(image: ImageSource): Promise<Buffer> {
+        if (!image) throw new Error("image was not provided!");
+        const img = await Util.loadImage(await Photoshop.circle(image));
+        const bg = await Util.loadImage(await Util.assets.image("SHIT"));
+
+        const canvas = createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 210, 700, 170, 170);
+
+        return await canvas.png();
+    }
 }
