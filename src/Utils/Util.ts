@@ -1,11 +1,14 @@
 import { fillTextWithTwemoji } from "@canvacord/emoji-parser";
-import Assets, { image } from "@canvacord/assets";
-import { CanvasRenderingContext2D } from "canvas";
+import Assets from "@canvacord/assets";
+import { loadImage, createImage } from "./loadImage"
+import { SKRSContext2D as CanvasRenderingContext2D } from "@napi-rs/canvas";
 
 /**
  * Canvacord Utils
  */
 export const Util = {
+    loadImage,
+    createImage,
     /**
      * Renders emoji in canvas
      * @param ctx Canvas rendering context
@@ -14,6 +17,7 @@ export const Util = {
      * @param y y co-ordinate
      */
     renderEmoji(ctx: CanvasRenderingContext2D, message: string, x: number, y: number) {
+        // @ts-ignore
         return fillTextWithTwemoji(ctx, message, x, y);
     },
 

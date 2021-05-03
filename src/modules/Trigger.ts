@@ -1,10 +1,10 @@
-import { createCanvas, loadImage } from "canvas";
+import { createCanvas } from "@napi-rs/canvas";
 import GIFEncoder from "gifencoder";
-import { Util } from "./Util";
+import { Util } from "../Utils/Util";
 
 export const Trigger = async (img: string | Buffer) => {
-    const base = await loadImage(await Util.assets.image("TRIGGERED"));
-    const image = await loadImage(img);
+    const base = await Util.loadImage(await Util.assets.image("TRIGGERED"));
+    const image = await Util.loadImage(img);
     const GIF = new GIFEncoder(256, 310);
 
     GIF.start();
@@ -36,10 +36,14 @@ export const Trigger = async (img: string | Buffer) => {
             256 + LR,
             54 + LR
         );
+
+        // @ts-ignore
         GIF.addFrame(ctx);
         i++;
     }
 
     GIF.finish();
+
+    // @ts-ignore
     return GIF.out.getData();
 }

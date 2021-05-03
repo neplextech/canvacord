@@ -1,4 +1,5 @@
-import { createCanvas, loadImage } from "canvas";
+import { createCanvas } from "@napi-rs/canvas";
+import { loadImage } from "../Utils/loadImage";
 
 export const Threshold = async (img: string | Buffer, amount: number) => {
     const image = await loadImage(img);
@@ -18,5 +19,5 @@ export const Threshold = async (img: string | Buffer, amount: number) => {
 
     ctx.putImageData(imgData, 0, 0);
 
-    return canvas.toBuffer();
+    return await canvas.png();
 }

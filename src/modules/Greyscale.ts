@@ -1,4 +1,5 @@
-import { createCanvas, loadImage } from "canvas";
+import { createCanvas } from "@napi-rs/canvas";
+import { loadImage } from "../Utils/loadImage";
 
 export const Greyscale = async (img: string | Buffer) => {
     const image = await loadImage(img);
@@ -17,5 +18,5 @@ export const Greyscale = async (img: string | Buffer) => {
 
     ctx.putImageData(imgData, 0, 0);
 
-    return canvas.toBuffer();
+    return await canvas.png();
 }
