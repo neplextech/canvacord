@@ -2,6 +2,10 @@ import { Image as SkImage } from "@napi-rs/canvas";
 import { promises as fs, existsSync } from "fs";
 import fetch from "node-fetch";
 
+/**
+ * Utility function to load images
+ * @param source Image source
+ */
 export async function loadImage(source: string | Buffer): Promise<SkImage> {
     if (Buffer.isBuffer(source)) {
         return createImage(source);
