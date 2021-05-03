@@ -7,9 +7,7 @@ import fetch from "node-fetch";
  * @param source Image source
  */
 export async function loadImage(source: string | Buffer): Promise<SkImage> {
-    if (Buffer.isBuffer(source)) {
-        return createImage(source);
-    } else if (typeof source === "string" && existsSync(source)) {
+    if (typeof source === "string" && existsSync(source)) {
         const data = await fs.readFile(source);
         return createImage(data);
     } else if (typeof source === "string") {
@@ -18,7 +16,7 @@ export async function loadImage(source: string | Buffer): Promise<SkImage> {
         const data = await res.buffer();
         return createImage(data);
     } else {
-        throw new TypeError("Invalid image source");
+        return createImage(source);
     }
 }
 
