@@ -180,4 +180,125 @@ export class CanvacordImgen {
 
         return await canvas.png();
     }
+
+    static async jokeOverHead(image: ImageSource): Promise<Buffer> {
+        if (!image) throw new Error("Image wasn ot provided!");
+        const layer = await Util.loadImage(await Util.assets.image("JOKEOVERHEAD"));
+        const img = await Util.loadImage(image)
+        const canvas = createCanvas(425, 404);
+        const ctx = canvas.getContext("2d");
+        ctx.fillStyle = "black";
+        ctx.fillRect(0, 0, 425, 404);
+        ctx.drawImage(img, 125, 130, 140, 135);
+        ctx.drawImage(layer, 0, 0, 425, 404);
+        return await canvas.png();
+    }
+
+    static async distracted(image1: ImageSource, image2: ImageSource, image3: ImageSource = null): Promise<Buffer> {
+        if (!image1) throw new Error("First image was not provided!");
+        if (!image2) throw new Error("Second image was not provided!");
+        const background = await Util.loadImage(await Util.assets.image("DISTRACTED"));
+        const avatar1 = await Util.loadImage(await Photoshop.circle(image1));
+        const avatar2 = await Util.loadImage(await Photoshop.circle(image2));
+        const avatar3 = image3 ? await Util.loadImage(await Photoshop.circle(image3)) : null;
+
+        const canvas = createCanvas(background.width, background.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(avatar1, 180, 90, 150, 150);
+        ctx.drawImage(avatar2, 480, 35, 130, 130);
+        if (avatar3) ctx.drawImage(avatar3, 730, 110, 130, 130);
+
+        return await canvas.png();
+    }
+
+    static async affect(image: ImageSource): Promise<Buffer> {
+        if (!image) throw new Error("image was not provided!");
+        const img = await Util.loadImage(image);
+        const bg = await Util.loadImage(await Util.assets.image("AFFECT"));
+
+        const canvas = createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0);
+        ctx.drawImage(img, 180, 383, 200, 157);
+
+        return await canvas.png();
+    }
+
+    static async jail(image: ImageSource, greyscale = false): Promise<Buffer> {
+        if (!image) throw new Error("image was not provided!");
+        const img = await Util.loadImage(greyscale ? await Photoshop.greyscale(image) : image);
+        const bg = await Util.loadImage(await Util.assets.image("JAIL"));
+
+        const canvas = createCanvas(350, 350);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+        return await canvas.png();
+    }
+
+    static async bed(image1: ImageSource, image2: ImageSource): Promise<Buffer> {
+        if (!image1) throw new Error("First image was not provided!");
+        if (!image2) throw new Error("Second image was not provided!");
+        const avatar = await Util.loadImage(image1);
+        const avatar1 = await Util.loadImage(image2);
+        const background = await Util.loadImage(await Util.assets.image("BED"));
+
+        const canvas = createCanvas(background.width, background.height);
+        const ctx = canvas.getContext("2d");
+        ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
+
+        ctx.drawImage(avatar, 25, 100, 100, 100);
+        ctx.drawImage(avatar, 25, 300, 100, 100);
+        ctx.drawImage(avatar, 53, 450, 70, 70);
+        ctx.drawImage(avatar1, 53, 575, 100, 100);
+
+        return await canvas.png();
+    }
+
+    static async delete(image: ImageSource, dark = false): Promise<Buffer> {
+        if (!image) throw new Error("image was not provided!");
+        const img = await Util.loadImage(image);
+        const bg = await Util.loadImage(dark ? await Photoshop.invert(await Util.assets.image("DELETE")) : await Util.assets.image("DELETE"));
+
+        const canvas = createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 120, 135, 195, 195);
+
+        return await canvas.png();
+    }
+
+    static async wanted(image: ImageSource): Promise<Buffer> {
+        if (!image) throw new Error("image was not provided!");
+        const img = await Util.loadImage(image);
+        const bg = await Util.loadImage(await Util.assets.image("WANTED"));
+
+        const canvas = createCanvas(bg.width, bg.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(img, 145, 282, 447, 447);
+
+        return await canvas.png();
+    }
+
+    static async wasted(image: ImageSource): Promise<Buffer> {
+        if (!image) throw new Error("image was not provided!");
+        const img = await Util.loadImage(await Photoshop.greyscale(image));
+        const bg = await Util.loadImage(await Util.assets.image("WASTED"));
+
+        const canvas = createCanvas(512, 512);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+        ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
+
+        return await canvas.png();
+    }
 }

@@ -26,7 +26,7 @@ export class Photoshop {
         return await canvas.png();
     }
 
-    static async brighten(img: ImageSource, amount?: number) {
+    static async brighten(img: ImageSource, amount?: number): Promise<Buffer> {
         amount ??= 50;
         const image = await Util.loadImage(img);
         const canvas = createCanvas(image.width, image.height);
@@ -46,11 +46,11 @@ export class Photoshop {
         return await canvas.png();
     }
 
-    static async darken(img: ImageSource, amount?: number) {
+    static async darken(img: ImageSource, amount?: number): Promise<Buffer> {
         return await Photoshop.brighten(img, -amount);
     }
 
-    static async greyscale(img: ImageSource) {
+    static async greyscale(img: ImageSource): Promise<Buffer> {
         const image = await Util.loadImage(img);
         const canvas = createCanvas(image.width, image.height);
         const ctx = canvas.getContext("2d");
@@ -70,7 +70,7 @@ export class Photoshop {
         return await canvas.png();
     }
 
-    static async grayscale(img: ImageSource) {
+    static async grayscale(img: ImageSource): Promise<Buffer> {
         return await Photoshop.greyscale(img);
     }
 
@@ -94,7 +94,7 @@ export class Photoshop {
         return await canvas.png();
     }
 
-    static async sepia(img: ImageSource) {
+    static async sepia(img: ImageSource): Promise<Buffer> {
         const image = await Util.loadImage(img);
         const canvas = createCanvas(image.width, image.height);
         const ctx = canvas.getContext("2d");
@@ -113,7 +113,7 @@ export class Photoshop {
         return await canvas.png();
     }
 
-    static async threshold(img: ImageSource, amount: number) {
+    static async threshold(img: ImageSource, amount: number): Promise<Buffer> {
         const image = await Util.loadImage(img);
         const canvas = createCanvas(image.width, image.height);
         const ctx = canvas.getContext("2d");
@@ -130,6 +130,22 @@ export class Photoshop {
         }
 
         ctx.putImageData(imgData, 0, 0);
+
+        return await canvas.png();
+    }
+
+    static async circle(image: ImageSource): Promise<Buffer> {
+        if (!image) throw new Error("Image was not provided!");
+        const img = await Util.loadImage(image);
+        const canvas = createCanvas(img.width, img.height);
+        const ctx = canvas.getContext("2d");
+
+        ctx.drawImage(img, 0, 0);
+        ctx.globalCompositeOperation = "destination-in";
+        ctx.beginPath();
+        ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, 0, Math.PI * 2);
+        ctx.closePath();
+        ctx.fill();
 
         return await canvas.png();
     }
