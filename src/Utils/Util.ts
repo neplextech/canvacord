@@ -1,6 +1,6 @@
 import { fillTextWithTwemoji } from "@canvacord/emoji-parser";
 import Assets from "@canvacord/assets";
-import { loadImage, createImage } from "./loadImage"
+import { loadImage, createImage } from "./loadImage";
 import { SKRSContext2D as CanvasRenderingContext2D } from "@napi-rs/canvas";
 
 /**
@@ -58,4 +58,4 @@ export const Util = {
             return Assets.image.get(name);
         }
     }
-}
+};

@@ -46,4 +46,4 @@ export const Trigger = async (img: string | Buffer) => {
 
     // @ts-ignore
     return GIF.out.getData();
-}
+};

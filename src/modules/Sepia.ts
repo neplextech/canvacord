@@ -18,4 +18,4 @@ export const Sepia = async (img: string | Buffer, amount?: number) => {
     ctx.putImageData(imgData, 0, 0);
 
     return await canvas.png();
-}
+};

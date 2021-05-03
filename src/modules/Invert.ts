@@ -19,4 +19,4 @@ export const Invert = async (img: string | Buffer) => {
     ctx.putImageData(imgData, 0, 0);
 
     return await canvas.png();
-}
+};

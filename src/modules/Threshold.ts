@@ -13,11 +13,11 @@ export const Threshold = async (img: string | Buffer, amount: number) => {
         var r = imgData.data[i];
         var g = imgData.data[i + 1];
         var b = imgData.data[i + 2];
-        var v = (0.2126 * r + 0.7152 * g + 0.0722 * b >= amount) ? 255 : 0;
-        imgData.data[i] = imgData.data[i + 1] = imgData.data[i + 2] = v
+        var v = 0.2126 * r + 0.7152 * g + 0.0722 * b >= amount ? 255 : 0;
+        imgData.data[i] = imgData.data[i + 1] = imgData.data[i + 2] = v;
     }
 
     ctx.putImageData(imgData, 0, 0);
 
     return await canvas.png();
-}
+};
