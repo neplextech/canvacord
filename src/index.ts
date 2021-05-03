@@ -1,7 +1,2 @@
-import * as CanvacordModules from "./modules/canvacord.mod";
-import { Util } from "./Utils/Util";
-
-export {
-    CanvacordModules,
-    Util
-}
+export * as CanvacordModules from "./modules/canvacord.mod";
+export { Util } from "./Utils/Util";
