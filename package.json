@@ -11,7 +11,7 @@
     "build": "node scripts/prebuild && tsc && node scripts/postbuild",
     "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
     "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
-    "test": "cd test && node index.js",
+    "test": "tsc && cd test && node index.js",
     "format": "prettier --write \"src/**/*.ts\""
   },
   "homepage": "https://canvacord.js.org",
@@ -44,13 +44,15 @@
   },
   "license": "GPL-3.0",
   "dependencies": {
-    "@canvacord/assets": "^2.0.1",
+    "@canvacord/assets": "^2.0.4",
     "@canvacord/emoji-parser": "^1.0.1",
-    "canvas": "^2.7.0",
-    "gifencoder": "^2.0.1"
+    "@napi-rs/canvas": "^0.0.4",
+    "@types/node-fetch": "^2.5.10",
+    "gifencoder": "^2.0.1",
+    "node-fetch": "^2.6.1"
   },
   "devDependencies": {
-    "@types/gifencoder": "^2.0.0",
+    "@types/gifencoder": "^2.0.1",
     "@types/node": "^14.14.41",
     "discord.js-docgen": "github:discordjs/docgen#ts-patch",
     "prettier": "^2.2.1",
