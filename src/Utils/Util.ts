@@ -2,6 +2,7 @@ import { fillTextWithTwemoji } from "@canvacord/emoji-parser";
 import Assets from "@canvacord/assets";
 import { loadImage, createImage } from "./loadImage";
 import { SKRSContext2D as CanvasRenderingContext2D } from "@napi-rs/canvas";
+import { weirdToNormalChars } from "weird-to-normal-chars";
 
 /**
  * Canvacord Utils
@@ -58,5 +59,7 @@ export const Util = {
             if (!Assets.image.loaded) await Assets.image.load();
             return Assets.image.get(name);
         }
-    }
+    },
+
+    cleanText: weirdToNormalChars
 };
