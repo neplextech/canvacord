@@ -51,7 +51,6 @@ export const Util = {
     assets: {
         async font(name: string) {
             if (!Assets.font.loaded) await Assets.font.load();
-            console.log(Assets.font.data)
             return Assets.font.get(name);
         },
         async image(name: string) {
