@@ -220,7 +220,7 @@ export class Photoshop {
         return await this.colorfy(image, colour);
     }
 
-    static async color(color: string, width: number, height: number) {
+    static async color(color: string, width: number, height: number): Promise<Buffer> {
         const canvas = createCanvas(width ?? 1024, height ?? 1024);
         const ctx = canvas.getContext("2d");
 
@@ -231,7 +231,7 @@ export class Photoshop {
         return await canvas.png();
     }
 
-    static async colour(colour: string, width: number, height: number) {
+    static async colour(colour: string, width: number, height: number): Promise<Buffer> {
         return this.color(colour, width, height);
     }
 }
