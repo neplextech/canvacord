@@ -2,8 +2,8 @@
     "name": "canvacord",
     "version": "6.0.0-dev",
     "description": "Simple & easy to use image manipulation module for beginners.",
-    "main": "lib/src/index.js",
-    "types": "lib/src/index.d.ts",
+    "main": "lib/index.js",
+    "types": "lib/index.d.ts",
     "files": [
         "lib/"
     ],
