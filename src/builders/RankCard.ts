@@ -1,1 +1,1 @@
-export {};
+export class RankCardBuilder {}
