@@ -46,7 +46,7 @@
     "dependencies": {
         "@canvacord/assets": "^2.0.5",
         "@canvacord/emoji-parser": "^1.0.1",
-        "@napi-rs/canvas": "^0.0.4",
+        "@napi-rs/canvas": "^0.0.5",
         "@types/node-fetch": "^2.5.10",
         "gifencoder": "^2.0.1",
         "node-fetch": "^2.6.1",
