@@ -1,8 +1,8 @@
-import { fillTextWithTwemoji } from "@canvacord/emoji-parser";
-import Assets from "@canvacord/assets";
-import { loadImage, createImage } from "./loadImage";
-import { SKRSContext2D as CanvasRenderingContext2D } from "@napi-rs/canvas";
-import { weirdToNormalChars } from "weird-to-normal-chars";
+import { fillTextWithTwemoji } from '@canvacord/emoji-parser';
+import Assets from '@canvacord/assets';
+import { loadImage, createImage } from './loadImage';
+import { SKRSContext2D as CanvasRenderingContext2D } from '@napi-rs/canvas';
+import { weirdToNormalChars } from 'weird-to-normal-chars';
 
 /**
  * Canvacord Utils
@@ -28,12 +28,12 @@ export const Util = {
      * @param num The number to abbreviate
      */
     toAbbrev(num: number) {
-        if (!num || isNaN(num)) return "0";
-        if (typeof num === "string") num = parseInt(num);
+        if (!num || isNaN(num)) return '0';
+        if (typeof num === 'string') num = parseInt(num);
         const decPlaces = Math.pow(10, 1);
-        const abbrev = ["K", "M", "B", "T"];
+        const abbrev = ['K', 'M', 'B', 'T'];
 
-        let dat = "";
+        let dat = '';
 
         for (let i = abbrev.length - 1; i >= 0; i--) {
             const size = Math.pow(10, (i + 1) * 3);
