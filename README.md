@@ -1,5 +1,5 @@
 # Canvacord
-Simple & easy to use image manipulation module for beginners.
+Simple & easy to use image manipulation module.
 
 # v6 WIP
 
