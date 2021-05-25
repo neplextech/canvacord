@@ -7,9 +7,19 @@ import { weirdToNormalChars } from 'weird-to-normal-chars';
 /**
  * Canvacord Utils
  */
-export const Util = {
-    loadImage,
-    createImage,
+export class Util {
+    constructor() {
+        throw new Error("Cannot instantiate util");
+    }
+
+    loadImage(source: string | Buffer) {
+        return loadImage(source);
+    }
+
+    createImage(src: Buffer) {
+        createImage(src);
+    }
+
     /**
      * Renders emoji in canvas
      * @param ctx Canvas rendering context
@@ -21,7 +31,7 @@ export const Util = {
         // @todo: fix this
         // @ts-ignore
         return fillTextWithTwemoji(ctx, message, x, y);
-    },
+    }
 
     /**
      * Abbreviate the given number
@@ -48,23 +58,27 @@ export const Util = {
             }
         }
         return dat;
-    },
+    }
 
-    assets: {
-        async font(name: string) {
-            if (!Assets.font.loaded) await Assets.font.load();
-            return Assets.font.get(name);
-        },
-        async image(name: string) {
-            if (!Assets.image.loaded) await Assets.image.load();
-            return Assets.image.get(name);
+    get assets() {
+        return {
+            async font(name: string) {
+                if (!Assets.font.loaded) await Assets.font.load();
+                return Assets.font.get(name);
+            },
+            async image(name: string) {
+                if (!Assets.image.loaded) await Assets.image.load();
+                return Assets.image.get(name);
+            }
         }
-    },
+    }
 
-    cleanText: weirdToNormalChars,
+    cleanText(text: string) {
+        return weirdToNormalChars(text);
+    }
 
-    is: (prop: any, propType: string) => {
+    is(prop: any, propType: string) {
         if (propType === "array") return Array.isArray(prop);
         return typeof prop === propType;
     }
-};
+}
