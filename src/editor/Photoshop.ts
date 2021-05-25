@@ -150,12 +150,7 @@ export class Photoshop {
         return await canvas.png();
     }
 
-    static async convolute(
-        ctx: SKRSContext2D,
-        canvas: SkCanvas,
-        matrix: number[],
-        opaque?: boolean
-    ): Promise<SKRSContext2D> {
+    static async convolute(ctx: SKRSContext2D, canvas: SkCanvas, matrix: number[], opaque?: boolean): Promise<SKRSContext2D> {
         const side = Math.round(Math.sqrt(matrix.length));
         const halfSide = Math.floor(side / 2);
         const pixels = ctx.getImageData(0, 0, canvas.width, canvas.height);

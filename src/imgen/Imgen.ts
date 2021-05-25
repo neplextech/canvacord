@@ -30,24 +30,12 @@ export class CanvacordImgen {
         let i = 0;
         while (i < 9) {
             ctx.clearRect(0, 0, 256, 310);
-            ctx.drawImage(
-                image,
-                Math.floor(Math.random() * BR) - BR,
-                Math.floor(Math.random() * BR) - BR,
-                256 + BR,
-                310 - 54 + BR
-            );
+            ctx.drawImage(image, Math.floor(Math.random() * BR) - BR, Math.floor(Math.random() * BR) - BR, 256 + BR, 310 - 54 + BR);
             ctx.save();
             ctx.fillStyle = '#FF000033';
             ctx.fillRect(0, 0, 256, 310);
             ctx.restore();
-            ctx.drawImage(
-                base,
-                Math.floor(Math.random() * LR) - LR,
-                310 - 54 + Math.floor(Math.random() * LR) - LR,
-                256 + LR,
-                54 + LR
-            );
+            ctx.drawImage(base, Math.floor(Math.random() * LR) - LR, 310 - 54 + Math.floor(Math.random() * LR) - LR, 256 + LR, 54 + LR);
 
             // @ts-ignore
             GIF.addFrame(ctx);
@@ -263,9 +251,7 @@ export class CanvacordImgen {
     static async delete(image: ImageSource, dark = false): Promise<Buffer> {
         if (!image) throw new Error('image was not provided!');
         const img = await Util.loadImage(image);
-        const bg = await Util.loadImage(
-            dark ? await Photoshop.invert(await Util.assets.image('DELETE')) : await Util.assets.image('DELETE')
-        );
+        const bg = await Util.loadImage(dark ? await Photoshop.invert(await Util.assets.image('DELETE')) : await Util.assets.image('DELETE'));
 
         const canvas = createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext('2d');

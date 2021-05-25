@@ -8,10 +8,8 @@ class CanvacordImageBuilder {
     internal?: BuilderInternalData;
 
     constructor(width: number, height: number) {
-        if (!Util.is(width, 'number') || width < 1)
-            throw new TypeError(`Expected "width" to be a positive number, received ${width}!`);
-        if (!Util.is(height, 'number') || height < 1)
-            throw new TypeError(`Expected "height" to be a positive number, received ${height}!`);
+        if (!Util.is(width, 'number') || width < 1) throw new TypeError(`Expected "width" to be a positive number, received ${width}!`);
+        if (!Util.is(height, 'number') || height < 1) throw new TypeError(`Expected "height" to be a positive number, received ${height}!`);
 
         Object.defineProperty(this, 'internal', { enumerable: false, writable: true, configurable: true });
 
