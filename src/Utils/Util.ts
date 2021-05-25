@@ -9,7 +9,7 @@ import { weirdToNormalChars } from 'weird-to-normal-chars';
  */
 export class Util {
     constructor() {
-        throw new Error("Cannot instantiate util");
+        throw new Error('Cannot instantiate util');
     }
 
     public static loadImage(source: string | Buffer) {
@@ -70,7 +70,7 @@ export class Util {
                 if (!Assets.image.loaded) await Assets.image.load();
                 return Assets.image.get(name);
             }
-        }
+        };
     }
 
     public static cleanText(text: string) {
@@ -78,7 +78,7 @@ export class Util {
     }
 
     public static is(prop: any, propType: string) {
-        if (propType === "array") return Array.isArray(prop);
+        if (propType === 'array') return Array.isArray(prop);
         return typeof prop === propType;
     }
 }

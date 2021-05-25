@@ -1,4 +1,4 @@
-import { Canvas, SKRSContext2D as CanvasRenderingContext2D } from "@napi-rs/canvas";
+import { Canvas, SKRSContext2D as CanvasRenderingContext2D } from '@napi-rs/canvas';
 
 export interface BuilderInternalData {
     canvas: Canvas;
