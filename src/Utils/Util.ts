@@ -61,5 +61,10 @@ export const Util = {
         }
     },
 
-    cleanText: weirdToNormalChars
+    cleanText: weirdToNormalChars,
+
+    is: (prop: any, propType: string) => {
+        if (propType === "array") return Array.isArray(prop);
+        return typeof prop === propType;
+    }
 };
