@@ -11,7 +11,8 @@
         "build": "rimraf lib && tsc",
         "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
         "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
-        "test": "tsc && cd test && node index.js",
+        "test": "jest",
+        "dev": "cd test && node index.js",
         "format": "prettier --write **/*.{ts,js,json,yaml,yml}"
     },
     "homepage": "https://canvacord.js.org",
@@ -52,12 +53,18 @@
         "weird-to-normal-chars": "^1.5.0"
     },
     "devDependencies": {
+        "@babel/preset-env": "^7.14.2",
+        "@babel/preset-typescript": "^7.13.0",
         "@types/gifencoder": "^2.0.1",
+        "@types/jest": "^26.0.23",
         "@types/node": "^14.14.41",
         "@types/node-fetch": "^2.5.10",
         "discord.js-docgen": "github:discordjs/docgen#ts-patch",
+        "file-type": "^16.4.0",
+        "jest": "^27.0.0",
         "prettier": "^2.2.1",
         "rimraf": "^3.0.2",
+        "ts-node": "^10.0.0",
         "typescript": "^4.2.4"
     },
     "bugs": {
