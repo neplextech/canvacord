@@ -12,11 +12,11 @@ export class Util {
         throw new Error("Cannot instantiate util");
     }
 
-    loadImage(source: string | Buffer) {
+    public static loadImage(source: string | Buffer) {
         return loadImage(source);
     }
 
-    createImage(src: Buffer) {
+    public static createImage(src: Buffer) {
         createImage(src);
     }
 
@@ -27,7 +27,7 @@ export class Util {
      * @param x x co-ordinate
      * @param y y co-ordinate
      */
-    renderEmoji(ctx: CanvasRenderingContext2D, message: string, x: number, y: number) {
+    public static renderEmoji(ctx: CanvasRenderingContext2D, message: string, x: number, y: number) {
         // @todo: fix this
         // @ts-ignore
         return fillTextWithTwemoji(ctx, message, x, y);
@@ -37,7 +37,7 @@ export class Util {
      * Abbreviate the given number
      * @param num The number to abbreviate
      */
-    toAbbrev(num: number) {
+    public static toAbbrev(num: number) {
         if (!num || isNaN(num)) return '0';
         if (typeof num === 'string') num = parseInt(num);
         const decPlaces = Math.pow(10, 1);
@@ -60,7 +60,7 @@ export class Util {
         return dat;
     }
 
-    get assets() {
+    public static get assets() {
         return {
             async font(name: string) {
                 if (!Assets.font.loaded) await Assets.font.load();
@@ -73,11 +73,11 @@ export class Util {
         }
     }
 
-    cleanText(text: string) {
+    public static cleanText(text: string) {
         return weirdToNormalChars(text);
     }
 
-    is(prop: any, propType: string) {
+    public static is(prop: any, propType: string) {
         if (propType === "array") return Array.isArray(prop);
         return typeof prop === propType;
     }
