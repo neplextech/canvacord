@@ -1,6 +1,8 @@
-import { ImageSource } from '../types/globalTypes';
+import { ImageSource, SketchConstructorOptions } from '../types/globalTypes';
 import { createCanvas, SKRSContext2D, Canvas as SkCanvas } from '@napi-rs/canvas';
 import { Util } from '../Utils/Util';
+import { Sketcher } from '../include/Sketch';
+import { loadImage } from '../Utils/loadImage';
 
 /**
  * Basic photo editing
@@ -228,5 +230,47 @@ export class Photoshop {
 
     static async colour(colour: string, width: number, height: number): Promise<Buffer> {
         return this.color(colour, width, height);
+    }
+
+    static async sketch(image: ImageSource, options: SketchConstructorOptions = {}): Promise<Buffer> {
+        return new Promise(async (resolve, reject) => {
+            if (!image) return reject(new Error('Source image was not provided'));
+            const img = await loadImage(image);
+            const canvas = createCanvas(img.width, img.height);
+            const ctx = canvas.getContext('2d');
+
+            ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
+
+            Object.assign<SketchConstructorOptions, SketchConstructorOptions, SketchConstructorOptions>(
+                {},
+                {
+                    levelSteps: 6,
+                    lineAlpha: 0.1,
+                    lineThickness: 2,
+                    lineDensity: 0.5,
+                    lightness: 4,
+                    edgeBlurAmount: 2,
+                    edgeAmount: 0.5
+                },
+                options
+            );
+
+            const greyscale = Boolean(options.greyscale);
+            delete options['greyscale'];
+
+            Object.keys(options)
+                .filter((x) => x !== 'greyscale')
+                .forEach((fn: string) => {
+                    if (!Util.is(options[fn as keyof SketchConstructorOptions], 'number') || options[fn as keyof SketchConstructorOptions] === Infinity) return reject(new TypeError(`options.${fn} must be a finite number, received ${fn}!`));
+                });
+
+            const sketcher = new (Sketcher as any)(canvas.width, canvas.height);
+
+            for (const prop of Object.keys(options)) {
+                sketcher[prop] = options[prop as keyof SketchConstructorOptions];
+            }
+
+            sketcher.transformCanvas(canvas, greyscale).whenReady(async () => resolve(await canvas.png()));
+        });
     }
 }
