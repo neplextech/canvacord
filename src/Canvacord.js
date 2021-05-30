@@ -1281,7 +1281,7 @@ class Canvacord {
      * .then(img => canvacord.write(img, "reply.png"));
      */
     static async reply(options = { avatar1: null, avatar2: null, user1: null, user2: null, hex1: null, hex2: null, mainText: null, replyText: null }) {
-        const { avatar1, avatar2, user1, user2, hex1, hex2, mainText, replyText } = options;
+        let { avatar1, avatar2, user1, user2, hex1, hex2, mainText, replyText } = options;
 
         if (!avatar1) throw new Error("First avatar was not provided!");
         if (!avatar2) throw new Error("Second avatar was not provided!");
