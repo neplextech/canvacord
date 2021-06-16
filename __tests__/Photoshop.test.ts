@@ -17,7 +17,7 @@ describe('Canvacord Photoshop', () => {
         });
     });
 
-    test('Photoshop.parseFrames() test gif should have 256x310 res and 52 frames', () => {
+    test('Photoshop.parseFrames() test gif should have 333x498 res and 52 frames', () => {
         return Photoshop.parseGIF(GIF_IMAGE_PATH).then((res) => {
             expect({ width: res.width, height: res.height, frames: res.frameCount }).toStrictEqual({ width: 333, height: 498, frames: 52 });
         });
