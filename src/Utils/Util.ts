@@ -3,6 +3,7 @@ import Assets from '@canvacord/assets';
 import { loadImage, createImage } from './loadImage';
 import { SKRSContext2D as CanvasRenderingContext2D } from '@napi-rs/canvas';
 import { weirdToNormalChars } from 'weird-to-normal-chars';
+import { Readable } from 'stream';
 
 /**
  * Canvacord Utils
@@ -80,5 +81,15 @@ export class Util {
     public static is(prop: any, propType: string) {
         if (propType === 'array') return Array.isArray(prop);
         return typeof prop === propType;
+    }
+
+    public static streamToBuffer(stream: Readable): Promise<Buffer> {
+        return new Promise((resolve, reject) => {
+            const d: Buffer[] = [];
+
+            stream.on('data', (chunk) => d.push(chunk));
+            stream.on('error', reject);
+            stream.on('end', () => resolve(Buffer.concat(d)));
+        });
     }
 }

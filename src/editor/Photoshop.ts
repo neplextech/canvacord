@@ -1,8 +1,10 @@
-import { ImageSource, SketchConstructorOptions } from '../types/globalTypes';
+import { GIFData, ImageSource, SketchConstructorOptions } from '../types/globalTypes';
 import { createCanvas, SKRSContext2D, Canvas as SkCanvas } from '@napi-rs/canvas';
 import { Util } from '../Utils/Util';
 import { Sketcher } from '../include/Sketch';
 import { loadImage } from '../Utils/loadImage';
+import { Decoder } from '@canvacord/gif';
+import { Readable } from 'stream';
 
 /**
  * Basic photo editing
@@ -272,5 +274,22 @@ export class Photoshop {
 
             sketcher.transformCanvas(canvas, greyscale).whenReady(async () => resolve(await canvas.png()));
         });
+    }
+
+    static async parseGIF(gif: string | Buffer) {
+        const binary = await loadImage(gif, false);
+        const decoder = new Decoder(binary);
+        const rawFrames = decoder.decode();
+
+        return {
+            height: decoder.height,
+            width: decoder.width,
+            frameCount: rawFrames.length,
+
+            async frames(buffer?: boolean): Promise<Buffer[] | Readable[]> {
+                const frameStream = decoder.toPNG(rawFrames);
+                return buffer ? await Promise.all(frameStream.map((m) => Util.streamToBuffer(m))) : frameStream;
+            }
+        } as GIFData;
     }
 }
