@@ -3,7 +3,7 @@ This document is for people who want to contribute to this project!
 
 # Code Style
 ## Linters
-We currently do not use **[linter](https://en.wikipedia.org/wiki/Lint_(software))** in this project but we are planning to use it.
+We are using ESLint to lint the code. You should run `npm run lint` and fix the errors (if any) before pushing.
 
 ## Formatting
 We are using **[Prettier](https://prettier.io)** to format the code. You can run `npm run format` to do so.
