@@ -235,8 +235,8 @@ export class Photoshop {
     }
 
     static async sketch(image: ImageSource, options: SketchConstructorOptions = {}): Promise<Buffer> {
+        // eslint-disable-next-line no-async-promise-executor
         return new Promise(async (resolve, reject) => {
-            // eslint-disable-line no-async-promise-executor
             if (!image) return reject(new Error("Source image was not provided"));
             const img = await loadImage(image);
             const canvas = createCanvas(img.width, img.height);
