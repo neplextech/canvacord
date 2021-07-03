@@ -63,7 +63,7 @@ export class CanvacordImgen {
         ctx.drawImage(avatar1, 370, 25, 200, 200);
         ctx.drawImage(avatar, 150, 25, 200, 200);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async spank(image1: ImageSource, image2: ImageSource): Promise<Buffer> {
@@ -77,7 +77,7 @@ export class CanvacordImgen {
         const avatar1 = await Util.loadImage(image2);
         ctx.drawImage(avatar1, 350, 220, 120, 120);
         ctx.drawImage(avatar, 225, 5, 140, 140);
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async slap(image1: ImageSource, image2: ImageSource): Promise<Buffer> {
@@ -91,7 +91,7 @@ export class CanvacordImgen {
         const avatar1 = await Util.loadImage(image2);
         ctx.drawImage(avatar1, 580, 260, 200, 200);
         ctx.drawImage(avatar, 350, 70, 220, 220);
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async beautiful(image: ImageSource): Promise<Buffer> {
@@ -104,7 +104,7 @@ export class CanvacordImgen {
         ctx.drawImage(img, 258, 28, 84, 95);
         ctx.drawImage(img, 258, 229, 84, 95);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async facepalm(image: ImageSource): Promise<Buffer> {
@@ -117,7 +117,7 @@ export class CanvacordImgen {
         let avatar = await Util.loadImage(image);
         ctx.drawImage(avatar, 199, 112, 235, 235);
         ctx.drawImage(layer, 0, 0, 632, 357);
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async rainbow(image: ImageSource): Promise<Buffer> {
@@ -128,7 +128,7 @@ export class CanvacordImgen {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async rip(image: ImageSource): Promise<Buffer> {
@@ -139,7 +139,7 @@ export class CanvacordImgen {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 63, 110, 90, 90);
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async trash(image: ImageSource): Promise<Buffer> {
@@ -152,7 +152,7 @@ export class CanvacordImgen {
         const ctx = canvas.getContext('2d');
         ctx.drawImage(bg, 0, 0);
         ctx.drawImage(img, 309, 0, 309, 309);
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async hitler(image: ImageSource): Promise<Buffer> {
@@ -166,7 +166,7 @@ export class CanvacordImgen {
         ctx.drawImage(bg, 0, 0);
         ctx.drawImage(img, 46, 43, 140, 140);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async jokeOverHead(image: ImageSource): Promise<Buffer> {
@@ -179,7 +179,7 @@ export class CanvacordImgen {
         ctx.fillRect(0, 0, 425, 404);
         ctx.drawImage(img, 125, 130, 140, 135);
         ctx.drawImage(layer, 0, 0, 425, 404);
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async distracted(image1: ImageSource, image2: ImageSource, image3: ImageSource = null): Promise<Buffer> {
@@ -198,7 +198,7 @@ export class CanvacordImgen {
         ctx.drawImage(avatar2, 480, 35, 130, 130);
         if (avatar3) ctx.drawImage(avatar3, 730, 110, 130, 130);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async affect(image: ImageSource): Promise<Buffer> {
@@ -212,7 +212,7 @@ export class CanvacordImgen {
         ctx.drawImage(bg, 0, 0);
         ctx.drawImage(img, 180, 383, 200, 157);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async jail(image: ImageSource, greyscale = false): Promise<Buffer> {
@@ -226,7 +226,7 @@ export class CanvacordImgen {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async bed(image1: ImageSource, image2: ImageSource): Promise<Buffer> {
@@ -245,7 +245,7 @@ export class CanvacordImgen {
         ctx.drawImage(avatar, 53, 450, 70, 70);
         ctx.drawImage(avatar1, 53, 575, 100, 100);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async delete(image: ImageSource, dark = false): Promise<Buffer> {
@@ -259,7 +259,7 @@ export class CanvacordImgen {
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 120, 135, 195, 195);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async wanted(image: ImageSource): Promise<Buffer> {
@@ -273,7 +273,7 @@ export class CanvacordImgen {
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 145, 282, 447, 447);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async wasted(image: ImageSource): Promise<Buffer> {
@@ -287,7 +287,7 @@ export class CanvacordImgen {
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async shit(image: ImageSource): Promise<Buffer> {
@@ -301,7 +301,7 @@ export class CanvacordImgen {
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
         ctx.drawImage(img, 210, 700, 170, 170);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async convolute(image: ImageSource, matrix: number[], opaque?: boolean, times?: number): Promise<Buffer> {
@@ -317,6 +317,6 @@ export class CanvacordImgen {
             await Photoshop.convolute(ctx, canvas, matrix, Boolean(opaque));
         }
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 }

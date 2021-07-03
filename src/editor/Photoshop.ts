@@ -27,7 +27,7 @@ export class Photoshop {
         ctx.filter = `blur(${pixels ?? 0}px)`;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async brighten(img: ImageSource, amount?: number): Promise<Buffer> {
@@ -47,7 +47,7 @@ export class Photoshop {
 
         ctx.putImageData(imgData, 0, 0);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async darken(img: ImageSource, amount?: number): Promise<Buffer> {
@@ -71,7 +71,7 @@ export class Photoshop {
 
         ctx.putImageData(imgData, 0, 0);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async grayscale(img: ImageSource): Promise<Buffer> {
@@ -95,7 +95,7 @@ export class Photoshop {
 
         ctx.putImageData(imgData, 0, 0);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async sepia(img: ImageSource): Promise<Buffer> {
@@ -114,7 +114,7 @@ export class Photoshop {
 
         ctx.putImageData(imgData, 0, 0);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async threshold(img: ImageSource, amount: number): Promise<Buffer> {
@@ -135,7 +135,7 @@ export class Photoshop {
 
         ctx.putImageData(imgData, 0, 0);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async circle(image: ImageSource): Promise<Buffer> {
@@ -151,7 +151,7 @@ export class Photoshop {
         ctx.closePath();
         ctx.fill();
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async convolute(ctx: SKRSContext2D, canvas: SkCanvas, matrix: number[], opaque?: boolean): Promise<SKRSContext2D> {
@@ -212,7 +212,7 @@ export class Photoshop {
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async colourfy(image: ImageSource, colour: string): Promise<Buffer> {
@@ -227,7 +227,7 @@ export class Photoshop {
         ctx.fillStyle = color ?? '#FFFFFF';
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        return await canvas.png();
+        return await canvas.encode("png");
     }
 
     static async colour(colour: string, width: number, height: number): Promise<Buffer> {
@@ -272,7 +272,7 @@ export class Photoshop {
                 sketcher[prop] = options[prop as keyof SketchConstructorOptions];
             }
 
-            sketcher.transformCanvas(canvas, greyscale).whenReady(async () => resolve(await canvas.png()));
+            sketcher.transformCanvas(canvas, greyscale).whenReady(async () => resolve(await canvas.encode("png")));
         });
     }
 
