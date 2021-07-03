@@ -48,25 +48,25 @@
         "@canvacord/assets": "^2.0.5",
         "@canvacord/emoji-parser": "^1.0.1",
         "@canvacord/gif": "^1.0.2",
-        "@napi-rs/canvas": "^0.0.6",
+        "@napi-rs/canvas": "^0.0.8",
         "gifencoder": "^2.0.1",
         "node-fetch": "^2.6.1",
-        "weird-to-normal-chars": "^1.5.0"
+        "weird-to-normal-chars": "^1.5.1"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.14.2",
-        "@babel/preset-typescript": "^7.13.0",
+        "@babel/preset-env": "^7.14.7",
+        "@babel/preset-typescript": "^7.14.5",
+        "@devsnowflake/docgen": "DevSnowflake/docgen#ts-patch",
         "@types/gifencoder": "^2.0.1",
         "@types/jest": "^26.0.23",
-        "@types/node": "^14.14.41",
+        "@types/node": "^16.0.0",
         "@types/node-fetch": "^2.5.10",
-        "discord.js-docgen": "github:discordjs/docgen#ts-patch",
-        "file-type": "^16.4.0",
-        "jest": "^27.0.0",
-        "prettier": "^2.2.1",
+        "file-type": "^16.5.0",
+        "jest": "^27.0.6",
+        "prettier": "^2.3.2",
         "rimraf": "^3.0.2",
         "ts-node": "^10.0.0",
-        "typescript": "^4.2.4"
+        "typescript": "^4.3.5"
     },
     "bugs": {
         "url": "https://github.com/DevSnowflake/Canvacord/issues"
