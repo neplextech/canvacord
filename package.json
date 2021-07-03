@@ -9,6 +9,7 @@
     ],
     "scripts": {
         "build": "rimraf lib && tsc",
+        "build:check": "tsc --noEmit --incremental false",
         "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
         "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
         "test": "jest",
