@@ -13,7 +13,9 @@
         "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
         "test": "jest",
         "dev": "cd test && node index.js",
-        "format": "prettier --write **/*.{ts,js,json,yaml,yml}"
+        "format": "prettier --write **/*.{ts,js,json,yaml,yml}",
+        "lint": "eslint src --ext .ts",
+        "lint:fix": "eslint src --ext .ts --fix"
     },
     "homepage": "https://canvacord.js.org",
     "repository": {
@@ -61,6 +63,9 @@
         "@types/jest": "^26.0.23",
         "@types/node": "^16.0.0",
         "@types/node-fetch": "^2.5.10",
+        "@typescript-eslint/eslint-plugin": "^4.28.1",
+        "@typescript-eslint/parser": "^4.28.1",
+        "eslint": "^7.30.0",
         "file-type": "^16.5.0",
         "jest": "^27.0.6",
         "prettier": "^2.3.2",

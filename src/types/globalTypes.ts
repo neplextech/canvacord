@@ -1,4 +1,4 @@
-import { Readable } from 'stream';
+import { Readable } from "stream";
 
 export type ImageSource = string | Buffer;
 export interface SketchConstructorOptions {

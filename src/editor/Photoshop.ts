@@ -1,25 +1,25 @@
-import { GIFData, ImageSource, SketchConstructorOptions } from '../types/globalTypes';
-import { createCanvas, SKRSContext2D, Canvas as SkCanvas } from '@napi-rs/canvas';
-import { Util } from '../Utils/Util';
-import { Sketcher } from '../include/Sketch';
-import { loadImage } from '../Utils/loadImage';
-import { Decoder } from '@canvacord/gif';
-import { Readable } from 'stream';
+import { GIFData, ImageSource, SketchConstructorOptions } from "../types/globalTypes";
+import { createCanvas, SKRSContext2D, Canvas as SkCanvas } from "@napi-rs/canvas";
+import { Util } from "../Utils/Util";
+import { Sketcher } from "../include/Sketch";
+import { loadImage } from "../Utils/loadImage";
+import { Decoder } from "@canvacord/gif";
+import { Readable } from "stream";
 
 /**
  * Basic photo editing
  */
 export class Photoshop {
     constructor() {
-        throw new Error('Cannot instantiate static class');
+        throw new Error("Cannot instantiate static class");
     }
 
     static async blur(image: ImageSource, pixels?: number): Promise<Buffer> {
-        if (!image) throw new Error('Image was not provided!');
+        if (!image) throw new Error("Image was not provided!");
         const img = await Util.loadImage(image);
         const canvas = createCanvas(img.width, img.height);
 
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
 
         // experiment
         // https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter
@@ -34,7 +34,7 @@ export class Photoshop {
         amount ??= 50;
         const image = await Util.loadImage(img);
         const canvas = createCanvas(image.width, image.height);
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
 
         ctx.drawImage(image, 0, 0);
 
@@ -57,7 +57,7 @@ export class Photoshop {
     static async greyscale(img: ImageSource): Promise<Buffer> {
         const image = await Util.loadImage(img);
         const canvas = createCanvas(image.width, image.height);
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
 
         ctx.drawImage(image, 0, 0);
 
@@ -81,7 +81,7 @@ export class Photoshop {
     static async invert(img: ImageSource) {
         const image = await Util.loadImage(img);
         const canvas = createCanvas(image.width, image.height);
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
 
         ctx.drawImage(image, 0, 0);
 
@@ -101,7 +101,7 @@ export class Photoshop {
     static async sepia(img: ImageSource): Promise<Buffer> {
         const image = await Util.loadImage(img);
         const canvas = createCanvas(image.width, image.height);
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
 
         ctx.drawImage(image, 0, 0);
 
@@ -120,7 +120,7 @@ export class Photoshop {
     static async threshold(img: ImageSource, amount: number): Promise<Buffer> {
         const image = await Util.loadImage(img);
         const canvas = createCanvas(image.width, image.height);
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
 
         ctx.drawImage(image, 0, 0);
 
@@ -139,13 +139,13 @@ export class Photoshop {
     }
 
     static async circle(image: ImageSource): Promise<Buffer> {
-        if (!image) throw new Error('Image was not provided!');
+        if (!image) throw new Error("Image was not provided!");
         const img = await Util.loadImage(image);
         const canvas = createCanvas(img.width, img.height);
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
 
         ctx.drawImage(img, 0, 0);
-        ctx.globalCompositeOperation = 'destination-in';
+        ctx.globalCompositeOperation = "destination-in";
         ctx.beginPath();
         ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, 0, Math.PI * 2);
         ctx.closePath();
@@ -202,13 +202,13 @@ export class Photoshop {
     }
 
     static async colorfy(image: ImageSource, color: string): Promise<Buffer> {
-        if (!image) throw new Error('Image was not provided!');
+        if (!image) throw new Error("Image was not provided!");
         const img = await Util.loadImage(image);
         const canvas = createCanvas(img.width, img.height);
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
         if (color) {
-            ctx.globalCompositeOperation = 'color';
+            ctx.globalCompositeOperation = "color";
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
         }
@@ -221,10 +221,10 @@ export class Photoshop {
 
     static async color(color: string, width: number, height: number): Promise<Buffer> {
         const canvas = createCanvas(width ?? 1024, height ?? 1024);
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext("2d");
 
         ctx.beginPath();
-        ctx.fillStyle = color ?? '#FFFFFF';
+        ctx.fillStyle = color ?? "#FFFFFF";
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         return await canvas.encode("png");
@@ -236,10 +236,11 @@ export class Photoshop {
 
     static async sketch(image: ImageSource, options: SketchConstructorOptions = {}): Promise<Buffer> {
         return new Promise(async (resolve, reject) => {
-            if (!image) return reject(new Error('Source image was not provided'));
+            // eslint-disable-line no-async-promise-executor
+            if (!image) return reject(new Error("Source image was not provided"));
             const img = await loadImage(image);
             const canvas = createCanvas(img.width, img.height);
-            const ctx = canvas.getContext('2d');
+            const ctx = canvas.getContext("2d");
 
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
@@ -258,14 +259,15 @@ export class Photoshop {
             );
 
             const greyscale = Boolean(options.greyscale);
-            delete options['greyscale'];
+            delete options["greyscale"];
 
             Object.keys(options)
-                .filter((x) => x !== 'greyscale')
+                .filter((x) => x !== "greyscale")
                 .forEach((fn: string) => {
-                    if (!Util.is(options[fn as keyof SketchConstructorOptions], 'number') || options[fn as keyof SketchConstructorOptions] === Infinity) return reject(new TypeError(`options.${fn} must be a finite number, received ${fn}!`));
+                    if (!Util.is(options[fn as keyof SketchConstructorOptions], "number") || options[fn as keyof SketchConstructorOptions] === Infinity) return reject(new TypeError(`options.${fn} must be a finite number, received ${fn}!`));
                 });
 
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const sketcher = new (Sketcher as any)(canvas.width, canvas.height);
 
             for (const prop of Object.keys(options)) {

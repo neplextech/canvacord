@@ -1,16 +1,16 @@
-import { fillTextWithTwemoji } from '@canvacord/emoji-parser';
-import Assets from '@canvacord/assets';
-import { loadImage, createImage } from './loadImage';
-import { SKRSContext2D as CanvasRenderingContext2D } from '@napi-rs/canvas';
-import { weirdToNormalChars } from 'weird-to-normal-chars';
-import { Readable } from 'stream';
+import { fillTextWithTwemoji } from "@canvacord/emoji-parser";
+import Assets from "@canvacord/assets";
+import { loadImage, createImage } from "./loadImage";
+import { SKRSContext2D as CanvasRenderingContext2D } from "@napi-rs/canvas";
+import { weirdToNormalChars } from "weird-to-normal-chars";
+import { Readable } from "stream";
 
 /**
  * Canvacord Utils
  */
 export class Util {
     constructor() {
-        throw new Error('Cannot instantiate util');
+        throw new Error("Cannot instantiate util");
     }
 
     public static loadImage(source: string | Buffer) {
@@ -30,6 +30,7 @@ export class Util {
      */
     public static renderEmoji(ctx: CanvasRenderingContext2D, message: string, x: number, y: number) {
         // @todo: fix this
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
         return fillTextWithTwemoji(ctx, message, x, y);
     }
@@ -39,12 +40,12 @@ export class Util {
      * @param num The number to abbreviate
      */
     public static toAbbrev(num: number) {
-        if (!num || isNaN(num)) return '0';
-        if (typeof num === 'string') num = parseInt(num);
+        if (!num || isNaN(num)) return "0";
+        if (typeof num === "string") num = parseInt(num);
         const decPlaces = Math.pow(10, 1);
-        const abbrev = ['K', 'M', 'B', 'T'];
+        const abbrev = ["K", "M", "B", "T"];
 
-        let dat = '';
+        let dat = "";
 
         for (let i = abbrev.length - 1; i >= 0; i--) {
             const size = Math.pow(10, (i + 1) * 3);
@@ -78,8 +79,9 @@ export class Util {
         return weirdToNormalChars(text);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     public static is(prop: any, propType: string) {
-        if (propType === 'array') return Array.isArray(prop);
+        if (propType === "array") return Array.isArray(prop);
         return typeof prop === propType;
     }
 
@@ -87,9 +89,9 @@ export class Util {
         return new Promise((resolve, reject) => {
             const d: Buffer[] = [];
 
-            stream.on('data', (chunk) => d.push(chunk));
-            stream.on('error', reject);
-            stream.on('end', () => resolve(Buffer.concat(d)));
+            stream.on("data", (chunk) => d.push(chunk));
+            stream.on("error", reject);
+            stream.on("end", () => resolve(Buffer.concat(d)));
         });
     }
 }
