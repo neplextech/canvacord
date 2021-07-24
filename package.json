@@ -16,6 +16,7 @@
         "build": "rimraf lib && tsc && npm run build:esm",
         "build:check": "tsc --noEmit --incremental false",
         "build:esm": "gen-esm-wrapper ./dist/index.js ./dist/index.mjs",
+        "build:bundle": "npm run build && rollup-type-bundler -e stream",
         "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
         "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
         "test": "jest",
@@ -24,7 +25,7 @@
         "lint": "eslint src --ext .ts",
         "lint:fix": "eslint src --ext .ts --fix",
         "deps:update": "npx npm-check-updates -u && yarn install",
-        "prepublishOnly": "npm run build && rollup-type-bundler -e stream"
+        "prepublishOnly": "npm run build:bundle"
     },
     "homepage": "https://canvacord.js.org",
     "repository": {

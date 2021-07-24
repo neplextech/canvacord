@@ -1,35 +1,13 @@
 "use strict";
-var __awaiter =
-    (this && this.__awaiter) ||
-    function (thisArg, _arguments, P, generator) {
-        function adopt(value) {
-            return value instanceof P
-                ? value
-                : new P(function (resolve) {
-                      resolve(value);
-                  });
-        }
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) {
-                try {
-                    step(generator.next(value));
-                } catch (e) {
-                    reject(e);
-                }
-            }
-            function rejected(value) {
-                try {
-                    step(generator["throw"](value));
-                } catch (e) {
-                    reject(e);
-                }
-            }
-            function step(result) {
-                result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-            }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UtilityCanvas = void 0;
 const BaseCanvas_1 = require("./BaseCanvas");
@@ -39,7 +17,8 @@ class UtilityCanvas extends BaseCanvas_1.BaseCanvas {
     }
     blur(image, pixels) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("Image was not provided!");
+            if (!image)
+                throw new Error("Image was not provided!");
             const img = yield this.loadImage(image);
             const { canvas, ctx } = this.makeCanvas(img.width, img.height);
             ctx.filter = `blur(${pixels !== null && pixels !== void 0 ? pixels : 0}px)`;
@@ -139,7 +118,8 @@ class UtilityCanvas extends BaseCanvas_1.BaseCanvas {
     }
     circle(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("Image was not provided!");
+            if (!image)
+                throw new Error("Image was not provided!");
             const img = yield this.loadImage(image);
             const { canvas, ctx } = this.makeCanvas(img.width, img.height);
             ctx.drawImage(img, 0, 0);
@@ -199,7 +179,8 @@ class UtilityCanvas extends BaseCanvas_1.BaseCanvas {
     }
     colorfy(image, color) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("Image was not provided!");
+            if (!image)
+                throw new Error("Image was not provided!");
             const img = yield this.loadImage(image);
             const { canvas, ctx } = this.makeCanvas(img.width, img.height);
             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);

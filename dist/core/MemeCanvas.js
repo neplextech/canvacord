@@ -1,40 +1,16 @@
 "use strict";
-var __awaiter =
-    (this && this.__awaiter) ||
-    function (thisArg, _arguments, P, generator) {
-        function adopt(value) {
-            return value instanceof P
-                ? value
-                : new P(function (resolve) {
-                      resolve(value);
-                  });
-        }
-        return new (P || (P = Promise))(function (resolve, reject) {
-            function fulfilled(value) {
-                try {
-                    step(generator.next(value));
-                } catch (e) {
-                    reject(e);
-                }
-            }
-            function rejected(value) {
-                try {
-                    step(generator["throw"](value));
-                } catch (e) {
-                    reject(e);
-                }
-            }
-            function step(result) {
-                result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected);
-            }
-            step((generator = generator.apply(thisArg, _arguments || [])).next());
-        });
-    };
-var __importDefault =
-    (this && this.__importDefault) ||
-    function (mod) {
-        return mod && mod.__esModule ? mod : { default: mod };
-    };
+var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+};
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MemeCanvas = void 0;
 const BaseCanvas_1 = require("./BaseCanvas");
@@ -48,7 +24,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     trigger(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("no image was provided");
+            if (!image)
+                throw new Error("no image was provided");
             const img = yield this.loadImage(image);
             const base = yield this.loadImage(yield Util_1.Util.assets.image("TRIGGERED"));
             const GIF = new gifencoder_1.default(256, 310);
@@ -81,8 +58,10 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     kiss(image1, image2) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image1) throw new Error("First image was not provided!");
-            if (!image2) throw new Error("Second image was not provided!");
+            if (!image1)
+                throw new Error("First image was not provided!");
+            if (!image2)
+                throw new Error("Second image was not provided!");
             const { canvas, ctx } = this.makeCanvas(768, 574);
             const background = yield this.loadImage(yield Util_1.Util.assets.image("KISS"));
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
@@ -95,8 +74,10 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     spank(image1, image2) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image1) throw new Error("First image was not provided!");
-            if (!image2) throw new Error("Second image was not provided!");
+            if (!image1)
+                throw new Error("First image was not provided!");
+            if (!image2)
+                throw new Error("Second image was not provided!");
             const { canvas, ctx } = this.makeCanvas(500, 500);
             const background = yield this.loadImage(yield Util_1.Util.assets.image("SPANK"));
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
@@ -109,8 +90,10 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     slap(image1, image2) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image1) throw new Error("First image was not provided!");
-            if (!image2) throw new Error("Second image was not provided!");
+            if (!image1)
+                throw new Error("First image was not provided!");
+            if (!image2)
+                throw new Error("Second image was not provided!");
             const { canvas, ctx } = this.makeCanvas(1000, 500);
             const background = yield this.loadImage(yield Util_1.Util.assets.image("BATSLAP"));
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
@@ -123,7 +106,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     beautiful(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("Image was not provided!");
+            if (!image)
+                throw new Error("Image was not provided!");
             const img = yield this.loadImage(image);
             const base = yield this.loadImage(yield Util_1.Util.assets.image("BEAUTIFUL"));
             const { canvas, ctx } = this.makeCanvas(376, 400);
@@ -135,7 +119,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     facepalm(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("image was not provided!");
+            if (!image)
+                throw new Error("image was not provided!");
             const layer = yield this.loadImage(yield Util_1.Util.assets.image("FACEPALM"));
             const { canvas, ctx } = this.makeCanvas(632, 357);
             ctx.fillStyle = "black";
@@ -148,7 +133,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     rainbow(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("image was not provided!");
+            if (!image)
+                throw new Error("image was not provided!");
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("GAY"));
             const img = yield this.loadImage(image);
             const { canvas, ctx } = this.makeCanvas(img.width, img.height);
@@ -159,7 +145,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     rip(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("Image was not provided!");
+            if (!image)
+                throw new Error("Image was not provided!");
             const img = yield this.loadImage(image);
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("RIP"));
             const { canvas, ctx } = this.makeCanvas(244, 253);
@@ -170,7 +157,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     trash(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("Image was not provided!");
+            if (!image)
+                throw new Error("Image was not provided!");
             const blur = yield canvasUtils.blur(image, 3);
             const img = yield this.loadImage(blur);
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("TRASH"));
@@ -182,7 +170,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     hitler(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("image was not provided!");
+            if (!image)
+                throw new Error("image was not provided!");
             const img = yield this.loadImage(image);
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("HITLER"));
             const { canvas, ctx } = this.makeCanvas(bg.width, bg.height);
@@ -193,7 +182,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     jokeOverHead(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("Image wasn ot provided!");
+            if (!image)
+                throw new Error("Image wasn ot provided!");
             const layer = yield this.loadImage(yield Util_1.Util.assets.image("JOKEOVERHEAD"));
             const img = yield this.loadImage(image);
             const { canvas, ctx } = this.makeCanvas(425, 404);
@@ -206,8 +196,10 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     distracted(image1, image2, image3 = null) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image1) throw new Error("First image was not provided!");
-            if (!image2) throw new Error("Second image was not provided!");
+            if (!image1)
+                throw new Error("First image was not provided!");
+            if (!image2)
+                throw new Error("Second image was not provided!");
             const background = yield this.loadImage(yield Util_1.Util.assets.image("DISTRACTED"));
             const avatar1 = yield this.loadImage(yield canvasUtils.circle(image1));
             const avatar2 = yield this.loadImage(yield canvasUtils.circle(image2));
@@ -216,13 +208,15 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
             ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
             ctx.drawImage(avatar1, 180, 90, 150, 150);
             ctx.drawImage(avatar2, 480, 35, 130, 130);
-            if (avatar3) ctx.drawImage(avatar3, 730, 110, 130, 130);
+            if (avatar3)
+                ctx.drawImage(avatar3, 730, 110, 130, 130);
             return yield this.buildImage(canvas);
         });
     }
     affect(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("image was not provided!");
+            if (!image)
+                throw new Error("image was not provided!");
             const img = yield this.loadImage(image);
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("AFFECT"));
             const { canvas, ctx } = this.makeCanvas(bg.width, bg.height);
@@ -233,7 +227,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     jail(image, greyscale = false) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("image was not provided!");
+            if (!image)
+                throw new Error("image was not provided!");
             const img = yield this.loadImage(greyscale ? yield canvasUtils.greyscale(image) : image);
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("JAIL"));
             const { canvas, ctx } = this.makeCanvas(350, 350);
@@ -244,8 +239,10 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     bed(image1, image2) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image1) throw new Error("First image was not provided!");
-            if (!image2) throw new Error("Second image was not provided!");
+            if (!image1)
+                throw new Error("First image was not provided!");
+            if (!image2)
+                throw new Error("Second image was not provided!");
             const avatar = yield this.loadImage(image1);
             const avatar1 = yield this.loadImage(image2);
             const background = yield this.loadImage(yield Util_1.Util.assets.image("BED"));
@@ -260,7 +257,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     delete(image, dark = false) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("image was not provided!");
+            if (!image)
+                throw new Error("image was not provided!");
             const img = yield this.loadImage(image);
             const bg = yield this.loadImage(dark ? yield canvasUtils.invert(yield Util_1.Util.assets.image("DELETE")) : yield Util_1.Util.assets.image("DELETE"));
             const { canvas, ctx } = this.makeCanvas(bg.width, bg.height);
@@ -271,7 +269,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     wanted(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("image was not provided!");
+            if (!image)
+                throw new Error("image was not provided!");
             const img = yield this.loadImage(image);
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("WANTED"));
             const { canvas, ctx } = this.makeCanvas(bg.width, bg.height);
@@ -282,7 +281,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     wasted(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("image was not provided!");
+            if (!image)
+                throw new Error("image was not provided!");
             const img = yield this.loadImage(yield canvasUtils.greyscale(image));
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("WASTED"));
             const { canvas, ctx } = this.makeCanvas(512, 512);
@@ -293,7 +293,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
     }
     shit(image) {
         return __awaiter(this, void 0, void 0, function* () {
-            if (!image) throw new Error("image was not provided!");
+            if (!image)
+                throw new Error("image was not provided!");
             const img = yield this.loadImage(yield canvasUtils.circle(image));
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("SHIT"));
             const { canvas, ctx } = this.makeCanvas(bg.width, bg.height);

@@ -1,7 +1,7 @@
 /// <reference types="node" />
-import * as _napi_rs_canvas from "@napi-rs/canvas";
-import { Image, Canvas, SKRSContext2D } from "@napi-rs/canvas";
-import { Readable } from "stream";
+import * as _napi_rs_canvas from '@napi-rs/canvas';
+import { Image, Canvas, SKRSContext2D } from '@napi-rs/canvas';
+import { Readable } from 'stream';
 
 declare type CanvacordOutputFormat = "png" | "jpeg" | "webp";
 declare type ImageSourceType = string | Buffer | Image;
@@ -18,10 +18,7 @@ declare class BaseCanvas {
     loadImage: typeof loadImage;
     get mimeType(): CanvacordOutputFormat;
     set mimeType(value: CanvacordOutputFormat);
-    makeCanvas(
-        width: number,
-        height: number
-    ): {
+    makeCanvas(width: number, height: number): {
         canvas: Canvas;
         ctx: _napi_rs_canvas.SKRSContext2D;
     };
