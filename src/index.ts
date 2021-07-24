@@ -1,6 +1,4 @@
-export * as Canvas from "./Canvas/module";
-export { CanvacordImgen as ImageMaker } from "./imgen/Imgen";
-export { Matrices as ConvolutionMatrix } from "./editor/Matrix";
-export { Photoshop } from "./editor/Photoshop";
+export { BaseCanvas } from "./core/BaseCanvas";
+export { MemeCanvas } from "./core/MemeCanvas";
+export { UtilityCanvas } from "./core/UtilityCanvas";
 export { Util } from "./Utils/Util";
-export * from "./types/globalTypes";

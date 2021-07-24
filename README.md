@@ -9,11 +9,12 @@ Simple & easy to use image manipulation module.
 # Example
 ## Triggered
 ```js
-import { ImageMaker } from "canvacord";
+import { MemeCanvas } from "canvacord";
 import { promises as fs } from "fs";
 
+const memegen = new MemeCanvas();
 const image = getImageSomehow();
-const triggered = await ImageMaker.trigger(image);
+const triggered = await memegen.trigger(image);
 await fs.writeFile("./triggered.gif", triggered);
 ```
 

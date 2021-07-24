@@ -3,18 +3,16 @@ import Assets from "@canvacord/assets";
 import { loadImage, createImage } from "./loadImage";
 import { SKRSContext2D as CanvasRenderingContext2D } from "@napi-rs/canvas";
 import { weirdToNormalChars } from "weird-to-normal-chars";
-import { Readable } from "stream";
+import type { Readable } from "stream";
 
 /**
  * Canvacord Utils
  */
 export class Util {
+    public static loadImage = loadImage;
+
     constructor() {
         throw new Error("Cannot instantiate util");
-    }
-
-    public static loadImage(source: string | Buffer) {
-        return loadImage(source);
     }
 
     public static createImage(src: Buffer) {
@@ -94,4 +92,6 @@ export class Util {
             stream.on("end", () => resolve(Buffer.concat(d)));
         });
     }
+
+    public static noop() {} // eslint-disable-line @typescript-eslint/no-empty-function
 }

@@ -1,22 +1,30 @@
 {
     "name": "canvacord",
-    "version": "6.0.0-dev",
+    "version": "6.0.0-dev.0",
     "description": "Simple & easy to use image manipulation module for beginners.",
-    "main": "lib/index.js",
-    "types": "lib/index.d.ts",
+    "main": "dist/index.js",
+    "module": "dist/index.mjs",
+    "types": "dist/index.d.ts",
     "files": [
-        "lib/"
+        "dist/"
     ],
+    "exports": {
+        "require": "./dist/index.js",
+        "import": "./dist/index.mjs"
+    },
     "scripts": {
-        "build": "rimraf lib && tsc",
+        "build": "rimraf lib && tsc && npm run build:esm",
         "build:check": "tsc --noEmit --incremental false",
+        "build:esm": "gen-esm-wrapper ./dist/index.js ./dist/index.mjs",
         "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
         "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
         "test": "jest",
         "dev": "cd test && node index.js",
         "format": "prettier --write **/*.{ts,js,json,yaml,yml}",
         "lint": "eslint src --ext .ts",
-        "lint:fix": "eslint src --ext .ts --fix"
+        "lint:fix": "eslint src --ext .ts --fix",
+        "deps:update": "npx npm-check-updates -u && yarn install",
+        "prepublishOnly": "npm run build && rollup-type-bundler -e stream"
     },
     "homepage": "https://canvacord.js.org",
     "repository": {
@@ -41,7 +49,7 @@
         "jimp",
         "api"
     ],
-    "author": "Snowflake107",
+    "author": "DevAndromeda <devandromeda@snowflakedev.org>",
     "funding": {
         "type": "individual",
         "url": "https://paypal.me/devsnowflake"
@@ -51,27 +59,30 @@
         "@canvacord/assets": "^2.0.5",
         "@canvacord/emoji-parser": "^1.0.1",
         "@canvacord/gif": "^1.0.2",
-        "@napi-rs/canvas": "^0.0.8",
+        "@napi-rs/canvas": "^0.0.12",
         "gifencoder": "^2.0.1",
         "node-fetch": "^2.6.1",
         "weird-to-normal-chars": "^1.5.1"
     },
     "devDependencies": {
-        "@babel/preset-env": "^7.14.7",
+        "@babel/preset-env": "^7.14.8",
         "@babel/preset-typescript": "^7.14.5",
         "@devsnowflake/docgen": "DevSnowflake/docgen#ts-patch",
+        "@favware/rollup-type-bundler": "^1.0.3",
         "@types/gifencoder": "^2.0.1",
-        "@types/jest": "^26.0.23",
-        "@types/node": "^16.0.0",
-        "@types/node-fetch": "^2.5.10",
-        "@typescript-eslint/eslint-plugin": "^4.28.1",
-        "@typescript-eslint/parser": "^4.28.1",
-        "eslint": "^7.30.0",
-        "file-type": "^16.5.0",
+        "@types/jest": "^26.0.24",
+        "@types/node": "^16.4.1",
+        "@types/node-fetch": "^2.5.12",
+        "@typescript-eslint/eslint-plugin": "^4.28.4",
+        "@typescript-eslint/parser": "^4.28.4",
+        "eslint": "^7.31.0",
+        "file-type": "^16.5.2",
+        "gen-esm-wrapper": "^1.1.2",
+        "husky": "^7.0.1",
         "jest": "^27.0.6",
         "prettier": "^2.3.2",
         "rimraf": "^3.0.2",
-        "ts-node": "^10.0.0",
+        "ts-node": "^10.1.0",
         "typescript": "^4.3.5"
     },
     "bugs": {
