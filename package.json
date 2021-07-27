@@ -1,6 +1,6 @@
 {
     "name": "canvacord",
-    "version": "6.0.0-dev.0",
+    "version": "6.0.0-dev",
     "description": "Simple & easy to use image manipulation module for beginners.",
     "main": "dist/index.js",
     "module": "dist/index.mjs",
@@ -13,7 +13,7 @@
         "import": "./dist/index.mjs"
     },
     "scripts": {
-        "build": "rimraf lib && tsc && npm run build:esm",
+        "build": "rimraf dist && tsc && npm run build:esm",
         "build:check": "tsc --noEmit --incremental false",
         "build:esm": "gen-esm-wrapper ./dist/index.js ./dist/index.mjs",
         "build:bundle": "npm run build && rollup-type-bundler -e stream",
