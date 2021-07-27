@@ -3,15 +3,15 @@ import { loadImage } from "../Utils/loadImage";
 import { CanvacordOutputFormat, ImageSourceType } from "../typings/types";
 
 export class BaseCanvas {
-    #mimeType: CanvacordOutputFormat = "png";
+    private _mimeType: CanvacordOutputFormat = "png";
     public loadImage = loadImage;
 
     public get mimeType(): CanvacordOutputFormat {
-        return this.#mimeType ?? "png";
+        return this._mimeType ?? "png";
     }
 
     public set mimeType(value: CanvacordOutputFormat) {
-        this.#mimeType = value ?? "png";
+        this._mimeType = value ?? "png";
     }
 
     public makeCanvas(width: number, height: number) {

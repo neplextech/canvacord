@@ -8,37 +8,74 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __generator = (this && this.__generator) || function (thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+};
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.createImage = exports.loadImage = void 0;
-const canvas_1 = require("@napi-rs/canvas");
-const fs_1 = require("fs");
-const node_fetch_1 = __importDefault(require("node-fetch"));
-function loadImage(source, createSkImage = true) {
-    return __awaiter(this, void 0, void 0, function* () {
-        if (source instanceof canvas_1.Image)
-            return createSkImage ? source : source.src;
-        if (typeof source === "string" && fs_1.existsSync(source)) {
-            const data = yield fs_1.promises.readFile(source);
-            return createSkImage ? createImage(data) : data;
-        }
-        else if (typeof source === "string") {
-            const res = yield node_fetch_1.default(source);
-            if (!res.ok)
-                throw new Error(`Server responded with status ${res.status}`);
-            const data = yield res.buffer();
-            return createSkImage ? createImage(data) : data;
-        }
-        else {
-            return createSkImage ? createImage(source) : source;
-        }
+var canvas_1 = require("@napi-rs/canvas");
+var fs_1 = require("fs");
+var node_fetch_1 = __importDefault(require("node-fetch"));
+function loadImage(source, createSkImage) {
+    if (createSkImage === void 0) { createSkImage = true; }
+    return __awaiter(this, void 0, void 0, function () {
+        var data, res, data;
+        return __generator(this, function (_a) {
+            switch (_a.label) {
+                case 0:
+                    if (source instanceof canvas_1.Image)
+                        return [2 /*return*/, createSkImage ? source : source.src];
+                    if (!(typeof source === "string" && fs_1.existsSync(source))) return [3 /*break*/, 2];
+                    return [4 /*yield*/, fs_1.promises.readFile(source)];
+                case 1:
+                    data = _a.sent();
+                    return [2 /*return*/, createSkImage ? createImage(data) : data];
+                case 2:
+                    if (!(typeof source === "string")) return [3 /*break*/, 5];
+                    return [4 /*yield*/, node_fetch_1.default(source)];
+                case 3:
+                    res = _a.sent();
+                    if (!res.ok)
+                        throw new Error("Server responded with status " + res.status);
+                    return [4 /*yield*/, res.buffer()];
+                case 4:
+                    data = _a.sent();
+                    return [2 /*return*/, createSkImage ? createImage(data) : data];
+                case 5: return [2 /*return*/, createSkImage ? createImage(source) : source];
+            }
+        });
     });
 }
 exports.loadImage = loadImage;
 function createImage(src) {
-    const imageConstructor = new canvas_1.Image();
+    var imageConstructor = new canvas_1.Image();
     imageConstructor.src = src;
     return imageConstructor;
 }
