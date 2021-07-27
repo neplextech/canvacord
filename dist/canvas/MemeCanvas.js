@@ -35,7 +35,8 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
             const LR = 20;
             let i = 0;
             while (i < 9) {
-                canvas.clearRect(0, 0, 256, 310)
+                canvas
+                    .clearRect(0, 0, 256, 310)
                     .drawImage(img, Math.floor(Math.random() * BR) - BR, Math.floor(Math.random() * BR) - BR, 256 + BR, 310 - 54 + BR)
                     .save()
                     .setColorFill("#FF000033")
@@ -121,11 +122,7 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
                 throw new Error("image was not provided!");
             const layer = yield this.loadImage(yield Util_1.Util.assets.image("FACEPALM"));
             const avatar = yield this.loadImage(image);
-            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(632, 357)
-                .setColorFill("black")
-                .drawRect(0, 0, 632, 357)
-                .drawImage(avatar, 199, 112, 235, 235)
-                .drawImage(layer, 0, 0, 632, 357);
+            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(632, 357).setColorFill("black").drawRect(0, 0, 632, 357).drawImage(avatar, 199, 112, 235, 235).drawImage(layer, 0, 0, 632, 357);
             return canvas.toBufferAsync(this.mimeType);
         });
     }
@@ -160,9 +157,7 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
             const blur = yield canvasUtils.blur(image, 3);
             const img = yield this.loadImage(blur);
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("TRASH"));
-            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(bg.width, bg.height)
-                .drawImage(bg, 0, 0)
-                .drawImage(img, 309, 0, 309, 309);
+            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(bg.width, bg.height).drawImage(bg, 0, 0).drawImage(img, 309, 0, 309, 309);
             return canvas.toBufferAsync(this.mimeType);
         });
     }
@@ -172,9 +167,7 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
                 throw new Error("image was not provided!");
             const img = yield this.loadImage(image);
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("HITLER"));
-            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(bg.width, bg.height)
-                .drawImage(bg, 0, 0)
-                .drawImage(img, 46, 43, 140, 140);
+            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(bg.width, bg.height).drawImage(bg, 0, 0).drawImage(img, 46, 43, 140, 140);
             return canvas.toBufferAsync(this.mimeType);
         });
     }
@@ -184,11 +177,7 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
                 throw new Error("Image wasn ot provided!");
             const layer = yield this.loadImage(yield Util_1.Util.assets.image("JOKEOVERHEAD"));
             const img = yield this.loadImage(image);
-            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(425, 404)
-                .setColorFill("black")
-                .drawRect(0, 0, 425, 404)
-                .drawImage(img, 125, 130, 140, 135)
-                .drawImage(layer, 0, 0, 425, 404);
+            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(425, 404).setColorFill("black").drawRect(0, 0, 425, 404).drawImage(img, 125, 130, 140, 135).drawImage(layer, 0, 0, 425, 404);
             return canvas.toBufferAsync(this.mimeType);
         });
     }
@@ -217,9 +206,7 @@ class MemeCanvas extends BaseCanvas_1.BaseCanvas {
                 throw new Error("image was not provided!");
             const img = yield this.loadImage(image);
             const bg = yield this.loadImage(yield Util_1.Util.assets.image("AFFECT"));
-            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(bg.width, bg.height)
-                .drawImage(bg, 0, 0)
-                .drawImage(img, 180, 383, 200, 157);
+            const canvas = new CanvasBuilder2D_1.CanvasBuilder2D(bg.width, bg.height).drawImage(bg, 0, 0).drawImage(img, 180, 383, 200, 157);
             return canvas.toBufferAsync(this.mimeType);
         });
     }
