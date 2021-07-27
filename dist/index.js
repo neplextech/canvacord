@@ -1,11 +1,17 @@
 "use strict";
+var __createBinding = (this && this.__createBinding) || (Object.create ? (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    Object.defineProperty(o, k2, { enumerable: true, get: function() { return m[k]; } });
+}) : (function(o, m, k, k2) {
+    if (k2 === undefined) k2 = k;
+    o[k2] = m[k];
+}));
+var __exportStar = (this && this.__exportStar) || function(m, exports) {
+    for (var p in m) if (p !== "default" && !Object.prototype.hasOwnProperty.call(exports, p)) __createBinding(exports, m, p);
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.Util = exports.UtilityCanvas = exports.MemeCanvas = exports.BaseCanvas = void 0;
-var BaseCanvas_1 = require("./core/BaseCanvas");
-Object.defineProperty(exports, "BaseCanvas", { enumerable: true, get: function () { return BaseCanvas_1.BaseCanvas; } });
-var MemeCanvas_1 = require("./core/MemeCanvas");
-Object.defineProperty(exports, "MemeCanvas", { enumerable: true, get: function () { return MemeCanvas_1.MemeCanvas; } });
-var UtilityCanvas_1 = require("./core/UtilityCanvas");
-Object.defineProperty(exports, "UtilityCanvas", { enumerable: true, get: function () { return UtilityCanvas_1.UtilityCanvas; } });
-var Util_1 = require("./Utils/Util");
-Object.defineProperty(exports, "Util", { enumerable: true, get: function () { return Util_1.Util; } });
+__exportStar(require("./canvas/BaseCanvas"), exports);
+__exportStar(require("./canvas/CanvasBuilder2D"), exports);
+__exportStar(require("./canvas/MemeCanvas"), exports);
+__exportStar(require("./canvas/UtilityCanvas"), exports);
+__exportStar(require("./Utils/Util"), exports);

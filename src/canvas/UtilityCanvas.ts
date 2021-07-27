@@ -3,10 +3,6 @@ import { BaseCanvas } from "./BaseCanvas";
 import { SKRSContext2D, Canvas as SkCanvas } from "@napi-rs/canvas";
 
 export class UtilityCanvas extends BaseCanvas {
-    constructor() {
-        super();
-    }
-
     public async blur(image: ImageSourceType, pixels?: number): Promise<Buffer> {
         if (!image) throw new Error("Image was not provided!");
         const img = await this.loadImage(image);
