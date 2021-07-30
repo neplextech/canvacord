@@ -42,7 +42,7 @@ class Canvacord {
     static async trigger(image) {
         if (!image) throw new Error("Expected image, received nothing!");
         await Canvacord.__wait();
-        return await Trigger(image, assets("IMAGE").TRIGGERED);
+        return await Trigger(image, Canvacord.assets.image.get("TRIGGERED"));
     }
 
     /**
@@ -339,7 +339,7 @@ class Canvacord {
         await this.__wait();
         const canvas = Canvas.createCanvas(768, 574);
         const ctx = canvas.getContext("2d");
-        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").KISS);
+        const background = await Canvas.loadImage(Canvacord.assets.image.get("KISS"));
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         const avatar = await Canvas.loadImage(image1);
         const avatar1 = await Canvas.loadImage(image2);
@@ -360,7 +360,7 @@ class Canvacord {
         await this.__wait();
         const canvas = Canvas.createCanvas(500, 500);
         const ctx = canvas.getContext("2d");
-        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").SPANK);
+        const background = await Canvas.loadImage(Canvacord.assets.image.get("SPANK"));
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         const avatar = await Canvas.loadImage(image1);
         const avatar1 = await Canvas.loadImage(image2);
@@ -375,40 +375,43 @@ class Canvacord {
      * @returns {Promise<void>}
      */
     static async registerFonts(fontArray = []) {
+        if (!Canvacord.assets.font.loaded) await Canvacord.assets.font.load();
+        if (!Canvacord.assets.image.loaded) await Canvacord.assets.image.load();
+
         if (!fontArray.length) {
             await Canvacord.__wait();
             // default fonts
-            Canvas.registerFont(assets("FONT").MANROPE_BOLD, {
+            Canvas.registerFont(Canvacord.assets.font.get("MANROPE_BOLD"), {
                 family: "Manrope",
                 weight: "bold",
                 style: "normal"
             });
 
-            Canvas.registerFont(assets("FONT").MANROPE_REGULAR, {
+            Canvas.registerFont(Canvacord.assets.font.get("MANROPE_REGULAR"), {
                 family: "Manrope",
                 weight: "regular",
                 style: "normal"
             });
 
-            Canvas.registerFont(assets("FONT").WHITNEY_MEDIUM, {
+            Canvas.registerFont(Canvacord.assets.font.get("WHITNEY_MEDIUM"), {
                 family: "Whitney",
                 weight: "regular",
                 style: "normal"
             });
 
-            Canvas.registerFont(assets("FONT").WHITNEY_BOOK, {
+            Canvas.registerFont(Canvacord.assets.font.get("WHITNEY_BOOK"), {
                 family: "Whitney",
                 weight: "bold",
                 style: "normal"
             });
 
-            Canvas.registerFont(assets("FONT").ROBOTO_LIGHT, {
+            Canvas.registerFont(Canvacord.assets.font.get("ROBOTO_LIGHT"), {
                 family: "Roboto",
                 weight: "light",
                 style: "normal"
             });
 
-            Canvas.registerFont(assets("FONT").ROBOTO_REGULAR, {
+            Canvas.registerFont(Canvacord.assets.font.get("ROBOTO_REGULAR"), {
                 family: "Roboto",
                 weight: "regular",
                 style: "normal"
@@ -434,7 +437,7 @@ class Canvacord {
         await this.__wait();
         const canvas = Canvas.createCanvas(1000, 500);
         const ctx = canvas.getContext("2d");
-        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").BATSLAP);
+        const background = await Canvas.loadImage(Canvacord.assets.image.get("BATSLAP"));
         ctx.drawImage(background, 0, 0, canvas.width, canvas.height);
         const avatar = await Canvas.loadImage(image1);
         const avatar1 = await Canvas.loadImage(image2);
@@ -452,7 +455,7 @@ class Canvacord {
         if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
-        const base = await Canvas.loadImage(Canvacord.assets("IMAGE").BEAUTIFUL);
+        const base = await Canvas.loadImage(Canvacord.assets.image.get("BEAUTIFUL"));
         const canvas = Canvas.createCanvas(376, 400);
         const ctx = canvas.getContext("2d");
         ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
@@ -470,7 +473,7 @@ class Canvacord {
     static async facepalm(image) {
         if (!image) throw new Error("image was not provided!");
         await this.__wait();
-        let layer = await Canvas.loadImage(Canvacord.assets("IMAGE").FACEPALM);
+        let layer = await Canvas.loadImage(Canvacord.assets.image.get("FACEPALM"));
         let canvas = Canvas.createCanvas(632, 357);
         let ctx = canvas.getContext("2d");
         ctx.fillStyle = "black";
@@ -489,7 +492,7 @@ class Canvacord {
     static async rainbow(image) {
         if (!image) throw new Error("image was not provided!");
         await this.__wait();
-        let bg = await Canvas.loadImage(Canvacord.assets("IMAGE").GAY);
+        let bg = await Canvas.loadImage(Canvacord.assets.image.get("GAY"));
         let img = await Canvas.loadImage(image);
         const canvas = Canvas.createCanvas(img.width, img.height);
         const ctx = canvas.getContext("2d");
@@ -507,7 +510,7 @@ class Canvacord {
         if (!image) throw new Error("Image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").RIP);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("RIP"));
         const canvas = Canvas.createCanvas(244, 253);
         const ctx = canvas.getContext("2d");
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
@@ -525,7 +528,7 @@ class Canvacord {
         await this.__wait();
         const blur = await Canvacord.blur(image);
         const img = await Canvas.loadImage(blur);
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").TRASH);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("TRASH"));
 
         const canvas = Canvas.createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext("2d");
@@ -543,7 +546,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").HITLER);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("HITLER"));
 
         const canvas = Canvas.createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext("2d");
@@ -582,7 +585,7 @@ class Canvacord {
     static async jokeOverHead(image) {
         if (!image) throw new Error("Image wasn ot provided!");
         await this.__wait();
-        const layer = await Canvas.loadImage(Canvacord.assets("IMAGE").JOKEOVERHEAD);
+        const layer = await Canvas.loadImage(Canvacord.assets.image.get("JOKEOVERHEAD"));
         const img = await Canvas.loadImage(image)
         const canvas = Canvas.createCanvas(425, 404);
         const ctx = canvas.getContext("2d");
@@ -604,7 +607,7 @@ class Canvacord {
         if (!image1) throw new Error("First image was not provided!");
         if (!image2) throw new Error("Second image was not provided!");
         await this.__wait();
-        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").DISTRACTED);
+        const background = await Canvas.loadImage(Canvacord.assets.image.get("DISTRACTED"));
         const avatar1 = await Canvas.loadImage(await Canvacord.circle(image1));
         const avatar2 = await Canvas.loadImage(await Canvacord.circle(image2));
         const avatar3 = image3 ? await Canvas.loadImage(await Canvacord.circle(image3)) : null;
@@ -629,7 +632,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").AFFECT);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("AFFECT"));
 
         const canvas = Canvas.createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext("2d");
@@ -650,7 +653,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(greyscale ? await Canvacord.greyscale(image) : image);
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").JAIL);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("JAIL"));
 
         const canvas = Canvas.createCanvas(350, 350);
         const ctx = canvas.getContext("2d");
@@ -673,7 +676,7 @@ class Canvacord {
         await this.__wait();
         const avatar = await Canvas.loadImage(image1);
         const avatar1 = await Canvas.loadImage(image2);
-        const background = await Canvas.loadImage(Canvacord.assets("IMAGE").BED);
+        const background = await Canvas.loadImage(Canvacord.assets.image.get("BED"));
 
         const canvas = Canvas.createCanvas(background.width, background.height);
         const ctx = canvas.getContext("2d");
@@ -697,7 +700,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
-        const bg = await Canvas.loadImage(dark ? await Canvacord.invert(Canvacord.assets("IMAGE").DELETE) : Canvacord.assets("IMAGE").DELETE);
+        const bg = await Canvas.loadImage(dark ? await Canvacord.invert(Canvacord.assets.image.get("DELETE")) : Canvacord.assets.image.get("DELETE"));
 
         const canvas = Canvas.createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext("2d");
@@ -847,7 +850,7 @@ class Canvacord {
         if (!avatar) throw new Error("Avatar was not provided!");
         if (!msg) throw new Error("Message was not provided!");
         await this.__wait();
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").OPINION);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("OPINION"));
         const ava = await Canvas.loadImage(avatar);
 
         const canvas = Canvas.createCanvas(482, 481);
@@ -896,7 +899,7 @@ class Canvacord {
     static async ohno(message) {
         if (!message) throw new Error("Message was not provided!");
         await Canvacord.__wait();
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").OHNO);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("OHNO"));
         const canvas = Canvas.createCanvas(1000, 1000);
         const ctx = canvas.getContext("2d");
 
@@ -918,7 +921,7 @@ class Canvacord {
     static async changemymind(text) {
         if (!text) throw new Error("missing text!");
         await this.__wait();
-        const base = await Canvas.loadImage(Canvacord.assets("IMAGE").CHANGEMYMIND);
+        const base = await Canvas.loadImage(Canvacord.assets.image.get("CHANGEMYMIND"));
         const canvas = Canvas.createCanvas(base.width, base.height);
         const ctx = canvas.getContext("2d");
         ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
@@ -971,15 +974,15 @@ class Canvacord {
     static async clyde(message) {
         if (!message) messgae = "Please provide text!";
         await this.__wait()
-        let avatar = await Canvas.loadImage(await Canvacord.circle(Canvacord.assets("IMAGE").CLYDE));
-        let badge = await Canvas.loadImage(Canvacord.assets("IMAGE").BOTBADGE);
-        Canvas.registerFont(Canvacord.assets("FONT").WHITNEY_MEDIUM, {
+        let avatar = await Canvas.loadImage(await Canvacord.circle(Canvacord.assets.image.get("CLYDE")));
+        let badge = await Canvas.loadImage(Canvacord.assets.image.get("BOTBADGE"));
+        Canvas.registerFont(Canvacord.assets.font.get("WHITNEY_MEDIUM"), {
             family: "Whitney",
             weight: "regular",
             style: "normal"
         });
 
-        Canvas.registerFont(Canvacord.assets("FONT").MANROPE_REGULAR, {
+        Canvas.registerFont(Canvacord.assets.font.get("MANROPE_REGULAR"), {
             family: "Manrope",
             weight: "regular",
             style: "normal"
@@ -1033,20 +1036,20 @@ class Canvacord {
      */
     static async quote(options = { image, message, username, color }) {
         await this.__wait();
-        if (!options.image) options.image = Canvacord.assets("IMAGE").CLYDE;
+        if (!options.image) options.image = Canvacord.assets.image.get("CLYDE");
         if (!options.message) options.message = "Please provide text!";
         if (!options.username) options.username = "Clyde";
         if (!options.color) options.color = "#FFFFFF";
 
         let image = await Canvas.loadImage(await Canvacord.circle(options.image));
 
-        Canvas.registerFont(Canvacord.assets("FONT").WHITNEY_MEDIUM, {
+        Canvas.registerFont(Canvacord.assets.font.get("WHITNEY_MEDIUM"), {
             family: "Whitney",
             weight: "regular",
             style: "normal"
         });
 
-        Canvas.registerFont(Canvacord.assets("FONT").MANROPE_REGULAR, {
+        Canvas.registerFont(Canvacord.assets.font.get("MANROPE_REGULAR"), {
             family: "Manrope",
             weight: "regular",
             style: "normal"
@@ -1093,7 +1096,7 @@ class Canvacord {
 
         await this.__wait();
         let image = await Canvas.loadImage(options.image);
-        let baseImage = await Canvas.loadImage(Canvacord.assets("IMAGE").PHUB);
+        let baseImage = await Canvas.loadImage(Canvacord.assets.image.get("PHUB"));
 
         let canvas = Canvas.createCanvas(baseImage.width, baseImage.height);
         let ctx = canvas.getContext("2d");
@@ -1123,7 +1126,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(image);
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WANTED);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("WANTED"));
 
         const canvas = Canvas.createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext("2d");
@@ -1143,7 +1146,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(await Canvacord.greyscale(image));
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").WASTED);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("WASTED"));
 
         const canvas = Canvas.createCanvas(512, 512);
         const ctx = canvas.getContext("2d");
@@ -1170,7 +1173,7 @@ class Canvacord {
         ops.dark = !!ops.dark;
 
         await this.__wait();
-        const bg = await Canvas.loadImage(!ops.dark ? Canvacord.assets("IMAGE").YOUTUBE : await Canvacord.invert(Canvacord.assets("IMAGE").YOUTUBE));
+        const bg = await Canvas.loadImage(!ops.dark ? Canvacord.assets.image.get("YOUTUBE") : await Canvacord.invert(Canvacord.assets.image.get("YOUTUBE")));
         const avatar = await Canvas.loadImage(await Canvacord.circle(ops.avatar));
 
         const canvas = Canvas.createCanvas(bg.width, bg.height);
@@ -1209,7 +1212,7 @@ class Canvacord {
         if (!image) throw new Error("image was not provided!");
         await this.__wait();
         const img = await Canvas.loadImage(await Canvacord.circle(image));
-        const bg = await Canvas.loadImage(Canvacord.assets("IMAGE").SHIT);
+        const bg = await Canvas.loadImage(Canvacord.assets.image.get("SHIT"));
 
         const canvas = Canvas.createCanvas(bg.width, bg.height);
         const ctx = canvas.getContext("2d");
@@ -1295,13 +1298,13 @@ class Canvacord {
         const img1 = await Canvas.loadImage(avatar1);
         const img2 = await Canvas.loadImage(avatar2);
 
-        Canvas.registerFont(Canvacord.assets("FONT").WHITNEY_MEDIUM, {
+        Canvas.registerFont(Canvacord.assets.font.get("WHITNEY_MEDIUM"), {
             family: "Whitney",
             weight: "regular",
             style: "normal"
         });
 
-        Canvas.registerFont(Canvacord.assets("FONT").MANROPE_REGULAR, {
+        Canvas.registerFont(Canvacord.assets.font.get("MANROPE_REGULAR"), {
             family: "Manrope",
             weight: "regular",
             style: "normal"

@@ -172,13 +172,13 @@ class Rank {
         if (!fontArray.length) {
             setTimeout(() => {
                 // default fonts
-                Canvas.registerFont(assets("FONT").MANROPE_BOLD, {
+                Canvas.registerFont(assets.font.get("MANROPE_BOLD"), {
                     family: "Manrope",
                     weight: "bold",
                     style: "normal"
                 });
 
-                Canvas.registerFont(assets("FONT").MANROPE_REGULAR, {
+                Canvas.registerFont(assets.font.get("MANROPE_REGULAR"), {
                     family: "Manrope",
                     weight: "regular",
                     style: "normal"

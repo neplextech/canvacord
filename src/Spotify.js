@@ -102,13 +102,13 @@ class Spotify {
      */
     __registerFonts() {
         setTimeout(() => {
-            Canvas.registerFont(assets("FONT").MANROPE_REGULAR, {
+            Canvas.registerFont(assets.font.get("MANROPE_REGULAR"), {
                 family: "Manrope",
                 weight: "regular",
                 style: "normal"
             });
 
-            Canvas.registerFont(assets("FONT").MANROPE_BOLD, {
+            Canvas.registerFont(assets.font.get("MANROPE_BOLD"), {
                 family: "Manrope",
                 weight: "bold",
                 style: "normal"
