@@ -22,6 +22,7 @@ function load(moduleName) {
 
 module.exports = {
     Canvas: Canvacord,
+    Canvacord,
     ConvolutionMatrix: Canvacord.CONVOLUTION_MATRIX,
     Rank: require("./src/Rank"),
     Spotify: require("./src/Spotify"),
