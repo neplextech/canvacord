@@ -7,3 +7,5 @@ yarn.lock
 
 test/
 coverage/
+
+dist/
