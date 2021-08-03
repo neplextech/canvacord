@@ -119,15 +119,15 @@ export class UtilityCanvas extends BaseCanvas {
 
     public async circle(image: ImageSourceType): Promise<Buffer> {
         if (!image) throw new Error("Image was not provided!");
+
         const img = await this.loadImage(image);
         const { canvas, ctx } = this.makeCanvas(img.width, img.height);
 
-        ctx.drawImage(img, 0, 0);
-        ctx.globalCompositeOperation = "destination-in";
         ctx.beginPath();
         ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, 0, Math.PI * 2);
         ctx.closePath();
-        ctx.fill();
+        ctx.clip();
+        ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
         return await this.buildImage(canvas);
     }
