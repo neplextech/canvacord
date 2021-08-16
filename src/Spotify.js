@@ -290,13 +290,13 @@ class Spotify {
         ctx.font = "14px Manrope";
         await Util.renderEmoji(ctx, progressF, 170, 130);
 
-        // progressbar track
+          // progressbar track
         ctx.rect(170, 170, 300, 4);
-        ctx.fillStyle = "#E8E8E8";
+        ctx.fillStyle = this.progressBar.bgColor ||  "#E8E8E8";
         ctx.fillRect(170, 110, 300, 4);
 
         // progressbar
-        ctx.fillStyle = "#1DB954";
+        ctx.fillStyle = this.progressBar.color || "#1DB954";
         ctx.fillRect(170, 110, this.__calculateProgress(progress, total), 4);
 
         // return
