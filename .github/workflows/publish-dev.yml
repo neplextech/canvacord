@@ -23,13 +23,13 @@ jobs:
         run: npm install
 
       - name: Deprecate old releases
-        run: npm deprecate canvacord@"~6.0.0-dev" "outdated version" || true
+        run: npm deprecate canvacord@"~$(jq --raw-output '.version' package.json)-dev" "outdated version" || true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
 
       - name: Publish
         run: |
-          npm version --git-tag-version=false $(jq --raw-output '.version' package.json).$(git rev-parse --short HEAD).$(date +%s)
-          npm publish --tag dev || true
+          npm version --git-tag-version=false $(jq --raw-output '.version' package.json)-dev.$(git rev-parse --short HEAD).$(date +%s)
+          npm publish --tag next || true
         env:
           NODE_AUTH_TOKEN: ${{ secrets.npm_token }}

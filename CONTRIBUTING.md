@@ -33,3 +33,4 @@ Now something runs smoothly and provides best performance
 ```
 
 - Run tests, formatting, etc. before making Pull Requests
+- Always use **[Conventional Commit Messages](https://ccm.snowflakedev.org)**
