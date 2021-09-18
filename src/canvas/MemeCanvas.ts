@@ -4,9 +4,11 @@ import { ImageSourceType } from "../typings/types";
 import { Util } from "../Utils/Util";
 import { UtilityCanvas } from "./UtilityCanvas";
 import { CanvasBuilder2D } from "./CanvasBuilder2D";
+import Singleton from "../decorators/Singleton";
 
 const canvasUtils = new UtilityCanvas();
 
+@Singleton
 export class MemeCanvas extends BaseCanvas {
     public async trigger(image: ImageSourceType): Promise<Buffer> {
         if (!image) throw new Error("no image was provided");

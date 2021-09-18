@@ -3,8 +3,8 @@ import { BaseCanvas } from "./BaseCanvas";
 import { CanvacordOutputFormat } from "../typings/types";
 
 export enum BuilderReadyState {
-    NOT_READY = 0,
-    READY = 1
+    NOT_READY,
+    READY
 }
 
 export class CanvasBuilder2D extends BaseCanvas {

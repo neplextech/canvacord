@@ -1,7 +1,9 @@
 import { ImageSourceType } from "../typings/types";
 import { BaseCanvas } from "./BaseCanvas";
 import { SKRSContext2D, Canvas as SkCanvas } from "@napi-rs/canvas";
+import Singleton from "../decorators/Singleton";
 
+@Singleton
 export class UtilityCanvas extends BaseCanvas {
     public async blur(image: ImageSourceType, pixels?: number): Promise<Buffer> {
         if (!image) throw new Error("Image was not provided!");

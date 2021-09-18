@@ -8,7 +8,8 @@
         "strictNullChecks": false,
         "resolveJsonModule": false,
         "esModuleInterop": true,
-        "skipLibCheck": true
+        "skipLibCheck": true,
+        "experimentalDecorators": true
     },
     "include": ["src/**/*"]
 }
