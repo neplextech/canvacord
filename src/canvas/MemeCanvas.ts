@@ -8,7 +8,7 @@ import Singleton from "../decorators/Singleton";
 
 const canvasUtils = new UtilityCanvas();
 
-@Singleton
+@Singleton()
 export class MemeCanvas extends BaseCanvas {
     public async trigger(image: ImageSourceType): Promise<Buffer> {
         if (!image) throw new Error("no image was provided");
