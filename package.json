@@ -20,7 +20,7 @@
         "docs": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml --output docs/docs.json",
         "docs:test": "docgen --source src/*.ts src/**/*.ts --custom docs/index.yml",
         "test": "jest",
-        "dev": "cd test && node index.js",
+        "dev": "yarn build && cd test && node index.js",
         "format": "prettier --write **/*.{ts,js,json,yaml,yml}",
         "lint": "eslint src --ext .ts",
         "lint:fix": "eslint src --ext .ts --fix",

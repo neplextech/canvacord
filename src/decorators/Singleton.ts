@@ -6,7 +6,7 @@ type SingletonClass<T extends new (...args: any[]) => any> = T & {
     [InstanceK]: T extends new (...args: any[]) => infer I ? I : never;
 };
 
-export default function Singleton() {
+export default function singleton() {
     return <T extends new (...args: any[] | undefined) => any>(targetClass: T) => {
         return new Proxy(targetClass, {
             construct: (target: SingletonClass<T>, argumentsList, newTarget) => {
@@ -17,3 +17,5 @@ export default function Singleton() {
         });
     };
 }
+
+export { singleton };
