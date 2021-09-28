@@ -4,7 +4,7 @@ import { BackgroundType } from "../enums/Builders";
 import { ActivityType } from "../enums/Activities";
 
 export class XPCard extends BaseCanvas {
-    private renderingData: XPCardRenderData;
+    public renderingData: XPCardRenderData;
     constructor() {
         super();
 
