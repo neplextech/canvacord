@@ -1,5 +1,5 @@
 import { BaseCanvas } from "./BaseCanvas";
-import { XPCardRenderData } from "../typings/types";
+import { XPCardRenderData, ImageSourceType } from "../typings/types";
 import { BackgroundType } from "../enums/Builders";
 import { ActivityType } from "../enums/Activities";
 
@@ -133,5 +133,14 @@ export class XPCard extends BaseCanvas {
                 }
             }
         };
+    }
+
+    isAvatarColor() {
+        const source = this.renderingData.avatar.source;
+        return typeof source === "string" && source.startsWith("#");
+    }
+
+    setAvatar(source: ImageSourceType) {
+        this.renderingData.avatar.source = source;
     }
 }
