@@ -62,7 +62,7 @@
         "@canvacord/gif": "^1.0.2",
         "@napi-rs/canvas": "^0.1.10",
         "gifencoder": "^2.0.1",
-        "node-fetch": "^3.0.0",
+        "node-fetch": "^2.6.5",
         "weird-to-normal-chars": "^1.6.0"
     },
     "devDependencies": {
@@ -73,6 +73,7 @@
         "@types/gifencoder": "^2.0.1",
         "@types/jest": "^27.0.2",
         "@types/node": "^16.10.1",
+        "@types/node-fetch": "^2.5.12",
         "@typescript-eslint/eslint-plugin": "^4.32.0",
         "@typescript-eslint/parser": "^4.32.0",
         "eslint": "^7.32.0",

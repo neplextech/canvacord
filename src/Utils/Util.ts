@@ -94,4 +94,22 @@ export class Util {
     }
 
     public static noop() {} // eslint-disable-line @typescript-eslint/no-empty-function
+
+    public static hexToRGBA(hex: string, alpha: number, stringify: true): string;
+    public static hexToRGBA(hex: string, alpha: number, stringify: false | undefined): { r: number; g: number; b: number; a: number };
+    public static hexToRGBA(hex: string, alpha?: number, stringify = false): string | { r: number; g: number; b: number; a: number } {
+        const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+
+        const final = result
+            ? {
+                  r: parseInt(result[1], 16),
+                  g: parseInt(result[2], 16),
+                  b: parseInt(result[3], 16),
+                  a: alpha ?? 1
+              }
+            : null;
+
+        if (!stringify) return final;
+        return `rgba(${final.r}, ${final.g}, ${final.b}, ${final.a})`;
+    }
 }

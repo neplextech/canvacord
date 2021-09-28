@@ -1,10 +1,7 @@
 import { Image as SkImage } from "@napi-rs/canvas";
 import { promises as fs, existsSync } from "fs";
 import { ImageSourceType } from "../typings/types";
-import type { RequestInfo, RequestInit } from "node-fetch";
-
-// node-fetch does not support commonjs
-const fetch = (reqInfo: RequestInfo, reqInit?: RequestInit) => import("node-fetch").then((r) => r.default(reqInfo, reqInit));
+import fetch from "node-fetch";
 
 /**
  * Utility function to load images

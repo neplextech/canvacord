@@ -34,11 +34,11 @@ export class BaseCanvas {
         return { canvas, ctx };
     }
 
-    public async buildImage(canvas: SkCanvas): Promise<Buffer> {
+    public async buildImage(canvas: SkCanvas = this.canvas): Promise<Buffer> {
         return await canvas.encode(this.mimeType as "png");
     }
 
-    public buildImageSync(canvas: SkCanvas): Buffer {
+    public buildImageSync(canvas: SkCanvas = this.canvas): Buffer {
         return canvas.encodeSync(this.mimeType as "png");
     }
 

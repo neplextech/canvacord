@@ -2,9 +2,13 @@ import { BaseCanvas } from "./BaseCanvas";
 import { XPCardRenderData, ImageSourceType, CanvacordOutputFormat } from "../typings/types";
 import { BackgroundType } from "../enums/Builders";
 import { ActivityType } from "../enums/Activities";
+import { UtilityCanvas } from "./UtilityCanvas";
+import { Image } from "@napi-rs/canvas";
+import { Util } from "../Utils/Util";
 
 export class XPCard extends BaseCanvas {
     public renderingData: XPCardRenderData;
+    public utils = new UtilityCanvas();
     constructor() {
         super();
 
@@ -31,7 +35,7 @@ export class XPCard extends BaseCanvas {
                 circular: true,
                 x: 70,
                 y: 50,
-                source: "#FFFFFF",
+                source: null,
                 height: 180,
                 width: 180
             },
@@ -135,24 +139,71 @@ export class XPCard extends BaseCanvas {
         };
     }
 
-    isAvatarColor() {
-        const source = this.renderingData.avatar.source;
-        return typeof source === "string" && source.startsWith("#");
+    setAvatar(source: ImageSourceType, circular = true) {
+        this.renderingData.avatar.source = source;
+        this.renderingData.avatar.circular = !!circular;
+        return this;
     }
 
-    setAvatar(source: ImageSourceType) {
-        this.renderingData.avatar.source = source;
+    setAvatarVisibility(visible = true) {
+        this.renderingData.avatar.visible = !!visible;
+        return this;
+    }
+
+    setAvatarPosition(x: number, y: number) {
+        this.renderingData.avatar.x = x;
+        this.renderingData.avatar.y = y;
+        return this;
+    }
+
+    setAvatarSize(width: number, height: number) {
+        this.renderingData.avatar.width = width;
+        this.renderingData.avatar.height = height;
+        return this;
     }
 
     async render(mimeType?: CanvacordOutputFormat): Promise<Buffer> {
         if (typeof mimeType === "string") this.mimeType = mimeType;
 
-        const { canvas } = this.makeCanvas(this.renderingData.width, this.renderingData.height);
+        void this.makeCanvas(this.renderingData.width, this.renderingData.height);
 
         // draw background
         await this.drawBackground();
+        await this.drawOverlay();
+        await this.drawAvatar();
 
-        return this.buildImage(canvas);
+        return this.buildImage();
+    }
+
+    private async drawOverlay() {
+        const data = this.renderingData.overlay;
+        if (!data.visible) return;
+
+        this.ctx.save();
+        if (data.type === BackgroundType.IMAGE) {
+            const loadedImage = await this.loadImage(data.source);
+            this.ctx.drawImage(loadedImage, data.x, data.y, data.width, data.height);
+        } else {
+            this.ctx.fillStyle = Util.hexToRGBA(data.source as string, data.opacity, true);
+            this.ctx.fillRect(data.x, data.y, data.width, data.height);
+        }
+        this.ctx.restore();
+    }
+
+    private async drawAvatar() {
+        const rdata = this.renderingData.avatar;
+        if (!rdata.visible) return;
+        if (!rdata.source) throw new Error("No avatar source found");
+        const source = await this.loadImage(rdata.source);
+        let img: Image;
+
+        if (rdata.circular) {
+            img = await this.loadImage(await this.utils.circle(source));
+        } else {
+            img = await this.loadImage(source);
+        }
+
+        this.ctx.drawImage(img, rdata.x, rdata.y, rdata.width, rdata.height);
     }
 
     private async drawBackground() {
