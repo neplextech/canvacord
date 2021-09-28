@@ -2,7 +2,6 @@ import { BaseCanvas } from "./BaseCanvas";
 import { XPCardRenderData, ImageSourceType, CanvacordOutputFormat } from "../typings/types";
 import { BackgroundType } from "../enums/Builders";
 import { ActivityType } from "../enums/Activities";
-import { SKRSContext2D } from "@napi-rs/canvas";
 
 export class XPCard extends BaseCanvas {
     public renderingData: XPCardRenderData;
@@ -148,25 +147,25 @@ export class XPCard extends BaseCanvas {
     async render(mimeType?: CanvacordOutputFormat): Promise<Buffer> {
         if (typeof mimeType === "string") this.mimeType = mimeType;
 
-        const { canvas, ctx } = this.makeCanvas(this.renderingData.width, this.renderingData.height);
+        const { canvas } = this.makeCanvas(this.renderingData.width, this.renderingData.height);
 
         // draw background
-        await this.drawBackground(ctx);
+        await this.drawBackground();
 
         return this.buildImage(canvas);
     }
 
-    private async drawBackground(ctx: SKRSContext2D) {
-        ctx.globalAlpha = this.renderingData.background.opacity;
+    private async drawBackground() {
+        this.ctx.globalAlpha = this.renderingData.background.opacity;
 
         if (this.renderingData.background.type === BackgroundType.IMAGE) {
             const loadedImage = await this.loadImage(this.renderingData.background.source);
-            ctx.drawImage(loadedImage, 0, 0);
+            this.ctx.drawImage(loadedImage, 0, 0);
         } else {
-            ctx.fillStyle = this.renderingData.background.source as string;
-            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+            this.ctx.fillStyle = this.renderingData.background.source as string;
+            this.ctx.fillRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
         }
 
-        ctx.globalAlpha = 1;
+        this.ctx.globalAlpha = 1;
     }
 }
