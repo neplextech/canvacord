@@ -6,9 +6,10 @@ import singleton from "../decorators/Singleton";
 @singleton()
 export class UtilityCanvas extends BaseCanvas {
     public async blur(image: ImageSourceType, pixels?: number): Promise<Buffer> {
-        if (!image) throw new Error("Image was not provided!");
         const img = await this.loadImage(image);
         const { canvas, ctx } = this.makeCanvas(img.width, img.height);
+
+        pixels ??= 5;
 
         ctx.filter = `blur(${pixels ?? 0}px)`;
         ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
@@ -16,85 +17,50 @@ export class UtilityCanvas extends BaseCanvas {
         return await this.buildImage(canvas);
     }
 
-    public async brighten(img: ImageSourceType, amount?: number): Promise<Buffer> {
-        amount ??= 50;
+    public async brightness(img: ImageSourceType, percentage?: number): Promise<Buffer> {
+        percentage ??= 100;
         const image = await this.loadImage(img);
         const { canvas, ctx } = this.makeCanvas(image.width, image.height);
 
-        ctx.drawImage(image, 0, 0);
-
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < imgData.data.length; i += 4) {
-            imgData.data[i] += amount;
-            imgData.data[i + 1] += amount;
-            imgData.data[i + 2] += amount;
-        }
-
-        ctx.putImageData(imgData, 0, 0);
+        ctx.filter = `brightness(${percentage ?? 0}%)`;
+        ctx.drawImage(image, 0, 0, canvas.width, canvas.height);
 
         return await this.buildImage(canvas);
     }
 
-    public async darken(img: ImageSourceType, amount?: number): Promise<Buffer> {
-        return await this.brighten(img, -amount);
-    }
-
-    public async greyscale(img: ImageSourceType): Promise<Buffer> {
+    public async greyscale(img: ImageSourceType, percentage?: number): Promise<Buffer> {
+        percentage ??= 70;
         const image = await this.loadImage(img);
         const { canvas, ctx } = this.makeCanvas(image.width, image.height);
 
+        ctx.filter = `grayscale(${percentage ?? 0}%)`;
         ctx.drawImage(image, 0, 0);
-
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < imgData.data.length; i += 4) {
-            const brightness = 0.34 * imgData.data[i] + 0.5 * imgData.data[i + 1] + 0.16 * imgData.data[i + 2];
-            imgData.data[i] = brightness;
-            imgData.data[i + 1] = brightness;
-            imgData.data[i + 2] = brightness;
-        }
-
-        ctx.putImageData(imgData, 0, 0);
 
         return await this.buildImage(canvas);
     }
 
-    public async grayscale(img: ImageSourceType): Promise<Buffer> {
-        return await this.greyscale(img);
+    public async grayscale(img: ImageSourceType, percentage?: number): Promise<Buffer> {
+        return await this.greyscale(img, percentage);
     }
 
-    public async invert(img: ImageSourceType) {
+    public async invert(img: ImageSourceType, percentage?: number) {
+        percentage ??= 70;
         const image = await this.loadImage(img);
         const { canvas, ctx } = this.makeCanvas(image.width, image.height);
 
+        ctx.filter = `invert(${percentage ?? 0}%)`;
         ctx.drawImage(image, 0, 0);
-
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < imgData.data.length; i += 4) {
-            imgData.data[i] = 255 - imgData.data[i];
-            imgData.data[i + 1] = 255 - imgData.data[i + 1];
-            imgData.data[i + 2] = 255 - imgData.data[i + 2];
-            imgData.data[i + 3] = 255;
-        }
-
-        ctx.putImageData(imgData, 0, 0);
 
         return await this.buildImage(canvas);
     }
 
-    public async sepia(img: ImageSourceType): Promise<Buffer> {
+    public async sepia(img: ImageSourceType, percentage?: number) {
+        percentage ??= 70;
         const image = await this.loadImage(img);
         const { canvas, ctx } = this.makeCanvas(image.width, image.height);
 
+        ctx.filter = `sepia(${percentage ?? 0}%)`;
         ctx.drawImage(image, 0, 0);
-
-        const imgData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-        for (let i = 0; i < imgData.data.length; i += 4) {
-            imgData.data[i] = imgData.data[i] * 0.393 + imgData.data[i + 1] * 0.769 + imgData.data[i + 2] * 0.189;
-            imgData.data[i + 1] = imgData.data[i] * 0.349 + imgData.data[i + 1] * 0.686 + imgData.data[i + 2] * 0.168;
-            imgData.data[i + 2] = imgData.data[i] * 0.272 + imgData.data[i + 1] * 0.534 + imgData.data[i + 2] * 0.131;
-        }
-
-        ctx.putImageData(imgData, 0, 0);
 
         return await this.buildImage(canvas);
     }
@@ -120,8 +86,6 @@ export class UtilityCanvas extends BaseCanvas {
     }
 
     public async circle(image: ImageSourceType): Promise<Buffer> {
-        if (!image) throw new Error("Image was not provided!");
-
         const img = await this.loadImage(image);
         const { canvas, ctx } = this.makeCanvas(img.width, img.height);
 
@@ -182,7 +146,6 @@ export class UtilityCanvas extends BaseCanvas {
     }
 
     public async colorfy(image: ImageSourceType, color: string): Promise<Buffer> {
-        if (!image) throw new Error("Image was not provided!");
         const img = await this.loadImage(image);
         const { canvas, ctx } = this.makeCanvas(img.width, img.height);
 
@@ -211,5 +174,51 @@ export class UtilityCanvas extends BaseCanvas {
 
     public async colour(colour: string, width: number, height: number): Promise<Buffer> {
         return this.color(colour, width, height);
+    }
+
+    public async saturate(img: ImageSourceType, percentage?: number) {
+        percentage ??= 70;
+        const image = await this.loadImage(img);
+        const { canvas, ctx } = this.makeCanvas(image.width, image.height);
+
+        ctx.filter = `saturate(${percentage ?? 0}%)`;
+        ctx.drawImage(image, 0, 0);
+
+        return await this.buildImage(canvas);
+    }
+
+    public async contrast(img: ImageSourceType, percentage?: number) {
+        percentage ??= 70;
+        const image = await this.loadImage(img);
+        const { canvas, ctx } = this.makeCanvas(image.width, image.height);
+
+        ctx.filter = `contrast(${percentage ?? 0}%)`;
+        ctx.drawImage(image, 0, 0);
+
+        return await this.buildImage(canvas);
+    }
+
+    public async hueRotate(img: ImageSourceType, angle?: number) {
+        angle ??= 70;
+        const image = await this.loadImage(img);
+        const { canvas, ctx } = this.makeCanvas(image.width, image.height);
+
+        ctx.filter = `hue-rotate(${angle ?? 0}deg)`;
+        ctx.drawImage(image, 0, 0);
+
+        return await this.buildImage(canvas);
+    }
+
+    public async dropShadow(img: ImageSourceType, x: number, y: number, borderRadius: number, color: string) {
+        if (typeof x !== "number" || typeof y !== "number" || typeof borderRadius !== "number" || typeof color !== "string") {
+            throw new TypeError("Invalid arguments type");
+        }
+        const image = await this.loadImage(img);
+        const { canvas, ctx } = this.makeCanvas(image.width, image.height);
+
+        ctx.filter = `drop-shadow(${x}px ${y}px ${borderRadius}px ${color})`;
+        ctx.drawImage(image, 0, 0);
+
+        return await this.buildImage(canvas);
     }
 }
