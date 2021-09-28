@@ -1,7 +1,8 @@
 import { BaseCanvas } from "./BaseCanvas";
-import { XPCardRenderData, ImageSourceType } from "../typings/types";
+import { XPCardRenderData, ImageSourceType, CanvacordOutputFormat } from "../typings/types";
 import { BackgroundType } from "../enums/Builders";
 import { ActivityType } from "../enums/Activities";
+import { SKRSContext2D } from "@napi-rs/canvas";
 
 export class XPCard extends BaseCanvas {
     public renderingData: XPCardRenderData;
@@ -9,8 +10,8 @@ export class XPCard extends BaseCanvas {
         super();
 
         this.renderingData = {
-            height: 934,
-            width: 282,
+            width: 934,
+            height: 282,
             background: {
                 type: BackgroundType.COLOR,
                 source: "#23272A",
@@ -21,8 +22,8 @@ export class XPCard extends BaseCanvas {
                 type: BackgroundType.COLOR,
                 source: "#333640",
                 opacity: 0.5,
-                width: this.renderingData.width - 40,
-                height: this.renderingData.height - 40,
+                width: 894,
+                height: 242,
                 x: 20,
                 y: 20
             },
@@ -142,5 +143,30 @@ export class XPCard extends BaseCanvas {
 
     setAvatar(source: ImageSourceType) {
         this.renderingData.avatar.source = source;
+    }
+
+    async render(mimeType?: CanvacordOutputFormat): Promise<Buffer> {
+        if (typeof mimeType === "string") this.mimeType = mimeType;
+
+        const { canvas, ctx } = this.makeCanvas(this.renderingData.width, this.renderingData.height);
+
+        // draw background
+        await this.drawBackground(ctx);
+
+        return this.buildImage(canvas);
+    }
+
+    private async drawBackground(ctx: SKRSContext2D) {
+        ctx.globalAlpha = this.renderingData.background.opacity;
+
+        if (this.renderingData.background.type === BackgroundType.IMAGE) {
+            const loadedImage = await this.loadImage(this.renderingData.background.source);
+            ctx.drawImage(loadedImage, 0, 0);
+        } else {
+            ctx.fillStyle = this.renderingData.background.source as string;
+            ctx.fillRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+        }
+
+        ctx.globalAlpha = 1;
     }
 }
