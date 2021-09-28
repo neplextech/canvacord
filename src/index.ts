@@ -4,3 +4,7 @@ export * from "./canvas/MemeCanvas";
 export * from "./canvas/UtilityCanvas";
 export * from "./Utils/Util";
 export * from "./decorators/Singleton";
+export * from "./canvas/XPCard";
+export * from "./enums/Activities";
+export * from "./enums/Builders";
+export * from "./typings/types";
