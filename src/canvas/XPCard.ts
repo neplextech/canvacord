@@ -139,6 +139,23 @@ export class XPCard extends BaseCanvas {
         };
     }
 
+    setSize(width: number, height: number) {
+        this.renderingData.width = width;
+        this.renderingData.height = height;
+    }
+
+    setBackgroundImage(source: ImageSourceType, opacity?: number) {
+        this.renderingData.background.source = source;
+        this.renderingData.background.type = BackgroundType.IMAGE;
+        this.renderingData.background.opacity = opacity ?? 1;
+    }
+
+    setBackgroundColor(source: string, opacity?: number) {
+        this.renderingData.background.source = source;
+        this.renderingData.background.type = BackgroundType.COLOR;
+        this.renderingData.background.opacity = opacity ?? 1;
+    }
+
     setAvatar(source: ImageSourceType, circular = true) {
         this.renderingData.avatar.source = source;
         this.renderingData.avatar.circular = !!circular;
@@ -207,6 +224,7 @@ export class XPCard extends BaseCanvas {
     }
 
     private async drawBackground() {
+        this.ctx.save();
         this.ctx.globalAlpha = this.renderingData.background.opacity;
 
         if (this.renderingData.background.type === BackgroundType.IMAGE) {
@@ -218,5 +236,6 @@ export class XPCard extends BaseCanvas {
         }
 
         this.ctx.globalAlpha = 1;
+        this.ctx.restore();
     }
 }
