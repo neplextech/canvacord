@@ -221,10 +221,10 @@ export class UtilityCanvas extends BaseCanvas {
 
         return await this.buildImage(canvas);
     }
+
     public async gradient(colorFrom: string, colorTo: string, img?: ImageSourceType) {
-        let image = null;
-        if (img) image = await this.loadImage(img);
-        const { canvas, ctx } = this.makeCanvas(image ? image.width : 800, image ? image.height : 600);
+        const image = img ? await this.loadImage(img) : null;
+        const { canvas, ctx } = this.makeCanvas(image?.width ?? 800, image?.height ?? 600);
 
         if (image) {
             ctx.drawImage(image, 0, 0);
