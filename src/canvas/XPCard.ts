@@ -419,7 +419,7 @@ export class XPCard extends BaseCanvas {
         if (failures.length)
             process.emitWarning(new Error(`Could not register fonts for ${failures.map((m) => `"${m}"`).join(", ")}`), {
                 code: "CANVACORD_FONT_FACTORY",
-                detail: `Fonts information: ${failures
+                detail: `Fonts information:\n${failures
                     .map((m, i) => {
                         // @ts-expect-error font registry
                         const picked = fonts[m];
