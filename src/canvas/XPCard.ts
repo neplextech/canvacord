@@ -3,7 +3,7 @@ import { XPCardRenderData, ImageSourceType, CanvacordOutputFormat } from "../typ
 import { BackgroundType } from "../enums/Builders";
 import { ActivityType } from "../enums/Activities";
 import { UtilityCanvas } from "./UtilityCanvas";
-import { Image } from "@napi-rs/canvas";
+import { Image, GlobalFonts } from "@napi-rs/canvas";
 import { Util } from "../Utils/Util";
 
 export class XPCard extends BaseCanvas {
@@ -396,6 +396,40 @@ export class XPCard extends BaseCanvas {
         await this.drawAvatar();
 
         return this.buildImage();
+    }
+
+    registerFonts() {
+        const fonts = {
+            username: this.renderingData.username,
+            tag: this.renderingData.tag,
+            level: this.renderingData.text.level,
+            rank: this.renderingData.text.rank,
+            currentXP: this.renderingData.xp.current,
+            divider: this.renderingData.xp.divider,
+            requiredXP: this.renderingData.xp.required
+        };
+
+        const failures: string[] = [];
+
+        for (const [name, item] of Object.entries(fonts)) {
+            const success = GlobalFonts.registerFromPath(item.fontPath, item.font);
+            if (!success) failures.push(name);
+        }
+
+        if (failures.length)
+            process.emitWarning(new Error(`Could not register fonts for ${failures.map((m) => `"${m}"`).join(", ")}`), {
+                code: "CANVACORD_FONT_FACTORY",
+                detail: `Fonts information: ${failures
+                    .map((m, i) => {
+                        // @ts-expect-error font registry
+                        const picked = fonts[m];
+
+                        return `${"-".repeat(50)}\n[${i + 1}. ${m}]\nName: ${picked.font}\nPath: ${picked.fontPath}`;
+                    })
+                    .join("\n")}`
+            });
+
+        return this;
     }
 
     private async drawOverlay() {
