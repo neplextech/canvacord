@@ -184,7 +184,6 @@ export class XPCard extends BaseCanvas {
 
         void this.makeCanvas(this.renderingData.width, this.renderingData.height);
 
-        // draw background
         await this.drawBackground();
         await this.drawOverlay();
         await this.drawAvatar();

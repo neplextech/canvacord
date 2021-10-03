@@ -73,6 +73,19 @@ export class Util {
         };
     }
 
+    public static get assetsSync() {
+        return {
+            font(name: string) {
+                if (!Assets.font.loaded) Assets.font.loadSync();
+                return Assets.font.get(name);
+            },
+            image(name: string) {
+                if (!Assets.image.loaded) Assets.image.loadSync();
+                return Assets.image.get(name);
+            }
+        };
+    }
+
     public static cleanText(text: string) {
         return weirdToNormalChars(text);
     }
