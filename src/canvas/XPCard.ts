@@ -64,7 +64,8 @@ export class XPCard extends BaseCanvas {
                 required: {
                     color: "#FFFFFF",
                     fontSize: 30,
-                    font: "Manrope",
+                    font: "Manrope Bold",
+                    fontPath: Util.assetsSync.font("MANROPE_BOLD"),
                     x: 685,
                     y: 164,
                     opacity: 1,
@@ -74,7 +75,8 @@ export class XPCard extends BaseCanvas {
                 current: {
                     color: "#FFFFFF",
                     fontSize: 30,
-                    font: "Manrope",
+                    font: "Manrope Bold",
+                    fontPath: Util.assetsSync.font("MANROPE_BOLD"),
                     x: 670,
                     y: 164,
                     opacity: 1,
@@ -84,7 +86,8 @@ export class XPCard extends BaseCanvas {
                 divider: {
                     color: "#FFFFFF",
                     fontSize: 30,
-                    font: "Manrope",
+                    font: "Manrope Bold",
+                    fontPath: Util.assetsSync.font("MANROPE_BOLD"),
                     x: 674,
                     y: 164,
                     opacity: 1,
@@ -95,7 +98,8 @@ export class XPCard extends BaseCanvas {
             username: {
                 color: "#FFFFFF",
                 fontSize: 34,
-                font: "Manrope",
+                font: "Manrope Bold",
+                fontPath: Util.assetsSync.font("MANROPE_BOLD"),
                 x: 275.5,
                 y: 164,
                 opacity: 1,
@@ -105,7 +109,8 @@ export class XPCard extends BaseCanvas {
             tag: {
                 color: "#FFFFFF",
                 fontSize: 28,
-                font: "Manrope",
+                font: "Manrope Bold",
+                fontPath: Util.assetsSync.font("MANROPE_BOLD"),
                 x: 355,
                 y: 164,
                 opacity: 0.4,
@@ -116,22 +121,26 @@ export class XPCard extends BaseCanvas {
                 rank: {
                     color: "#FFFFFF",
                     fontSize: 36,
-                    font: "Manrope",
+                    font: "Manrope Bold",
+                    fontPath: Util.assetsSync.font("MANROPE_BOLD"),
                     x: 786,
                     y: 82,
                     opacity: 1,
                     visible: true,
+                    text: "RANK",
                     value: "0",
                     textColor: "#FFFFFF"
                 },
                 level: {
                     color: "#FFFFFF",
                     fontSize: 36,
-                    font: "Manrope",
+                    font: "Manrope Bold",
+                    fontPath: Util.assetsSync.font("MANROPE_BOLD"),
                     x: 800,
                     y: 82,
                     opacity: 1,
                     visible: true,
+                    text: "LEVEL",
                     value: "0",
                     textColor: "#FFFFFF"
                 }
@@ -176,6 +185,204 @@ export class XPCard extends BaseCanvas {
     setAvatarSize(width: number, height: number) {
         this.renderingData.avatar.width = width;
         this.renderingData.avatar.height = height;
+        return this;
+    }
+
+    setOverlayVisibility(visible = true) {
+        this.renderingData.overlay.visible = !!visible;
+        return this;
+    }
+
+    setOverlayImage(source: ImageSourceType, opacity?: number) {
+        this.renderingData.overlay.source = source;
+        this.renderingData.overlay.type = BackgroundType.IMAGE;
+        this.renderingData.overlay.opacity = opacity ?? 1;
+        return this;
+    }
+
+    setOverlayColor(source: string, opacity?: number) {
+        this.renderingData.overlay.source = source;
+        this.renderingData.overlay.type = BackgroundType.COLOR;
+        this.renderingData.overlay.opacity = opacity ?? 1;
+        return this;
+    }
+
+    setOverlayPosition(x: number, y: number) {
+        this.renderingData.overlay.x = x;
+        this.renderingData.overlay.y = y;
+        return this;
+    }
+
+    setOverlaySize(width: number, height: number) {
+        this.renderingData.overlay.width = width;
+        this.renderingData.overlay.height = height;
+        return this;
+    }
+
+    setActivityStatus(type: ActivityType, ring = true) {
+        this.renderingData.activityStatus.type = type;
+        this.renderingData.activityStatus.ring = !!ring;
+        return this;
+    }
+
+    setActivityStatusPosition(x: number, y: number) {
+        this.renderingData.activityStatus.x = x;
+        this.renderingData.activityStatus.y = y;
+        return this;
+    }
+
+    setActivityStatusVisibility(visible = true) {
+        this.renderingData.activityStatus.visible = !!visible;
+        return this;
+    }
+
+    setProgressBarVisibility(visible = false) {
+        this.renderingData.progressBar.visible = !!visible;
+        return this;
+    }
+
+    setProgressBarPosition(x: number, y: number) {
+        this.renderingData.progressBar.x = x;
+        this.renderingData.progressBar.y = y;
+        return this;
+    }
+
+    setProgressBarSize(width: number, height: number) {
+        this.renderingData.progressBar.width = width;
+        this.renderingData.progressBar.height = height;
+        return this;
+    }
+
+    setProgressBarTrack(color: string | string[]) {
+        this.renderingData.progressBar.track.color = color;
+        return this;
+    }
+
+    setProgressBar(color: string | string[], rounded = true) {
+        this.renderingData.progressBar.track.color = color;
+        this.renderingData.progressBar.rounded = !!rounded;
+        return this;
+    }
+
+    setUsername(name: string, color?: string) {
+        this.renderingData.username.value = name;
+        if (color) this.renderingData.username.color = color;
+
+        return this;
+    }
+
+    setUsernameVisibility(visible = true) {
+        this.renderingData.username.visible = !!visible;
+        return this;
+    }
+
+    setUsernamePosition(x: number, y: number) {
+        this.renderingData.username.x = x;
+        this.renderingData.username.y = y;
+        return this;
+    }
+
+    setUsernameFont(data: Pick<XPCardRenderData["username"], "font" | "fontPath" | "fontSize">) {
+        if (!data || typeof data !== "object") throw new TypeError("font data must be an object");
+        this.renderingData.username.font = data.font;
+        this.renderingData.username.fontPath = data.fontPath;
+        this.renderingData.username.fontSize = data.fontSize;
+        return this;
+    }
+
+    setRank(value: number | string, text: string, opacity?: number) {
+        this.renderingData.text.rank.text = text;
+        this.renderingData.text.rank.value = `${value}`;
+        this.renderingData.text.rank.opacity = opacity ?? 1;
+        return this;
+    }
+
+    setRankColor(color: string, textColor?: string) {
+        this.renderingData.text.rank.color = color;
+        this.renderingData.text.rank.textColor = textColor ?? color;
+        return this;
+    }
+
+    setRankPosition(x: number, y: number) {
+        this.renderingData.text.rank.x = x;
+        this.renderingData.text.rank.y = y;
+        return this;
+    }
+
+    setRankVisibility(visible = true) {
+        this.renderingData.text.rank.visible = !!visible;
+        return this;
+    }
+
+    setRankFont(data: Pick<XPCardRenderData["text"]["rank"], "font" | "fontPath" | "fontSize">) {
+        if (!data || typeof data !== "object") throw new TypeError("font data must be an object");
+        this.renderingData.text.rank.font = data.font;
+        this.renderingData.text.rank.fontPath = data.fontPath;
+        this.renderingData.text.rank.fontSize = data.fontSize;
+        return this;
+    }
+
+    setLevel(value: number | string, text: string, opacity?: number) {
+        this.renderingData.text.level.text = text;
+        this.renderingData.text.level.value = `${value}`;
+        this.renderingData.text.level.opacity = opacity ?? 1;
+        return this;
+    }
+
+    setLevelColor(color: string, textColor?: string) {
+        this.renderingData.text.level.color = color;
+        this.renderingData.text.level.textColor = textColor ?? color;
+        return this;
+    }
+
+    setLevelPosition(x: number, y: number) {
+        this.renderingData.text.level.x = x;
+        this.renderingData.text.level.y = y;
+        return this;
+    }
+
+    setLevelVisibility(visible = true) {
+        this.renderingData.text.level.visible = !!visible;
+        return this;
+    }
+
+    setLevelFont(data: Pick<XPCardRenderData["text"]["level"], "font" | "fontPath" | "fontSize">) {
+        if (!data || typeof data !== "object") throw new TypeError("font data must be an object");
+        this.renderingData.text.level.font = data.font;
+        this.renderingData.text.level.fontPath = data.fontPath;
+        this.renderingData.text.level.fontSize = data.fontSize;
+        return this;
+    }
+
+    setTagFont(data: Pick<XPCardRenderData["tag"], "font" | "fontPath" | "fontSize">) {
+        if (!data || typeof data !== "object") throw new TypeError("font data must be an object");
+        this.renderingData.tag.font = data.font;
+        this.renderingData.tag.fontPath = data.fontPath;
+        this.renderingData.tag.fontSize = data.fontSize;
+        return this;
+    }
+
+    setXPRequiredFont(data: Pick<XPCardRenderData["xp"]["required"], "font" | "fontPath" | "fontSize">) {
+        if (!data || typeof data !== "object") throw new TypeError("font data must be an object");
+        this.renderingData.xp.required.font = data.font;
+        this.renderingData.xp.required.fontPath = data.fontPath;
+        this.renderingData.xp.required.fontSize = data.fontSize;
+        return this;
+    }
+
+    setXPCurrentFont(data: Pick<XPCardRenderData["xp"]["current"], "font" | "fontPath" | "fontSize">) {
+        if (!data || typeof data !== "object") throw new TypeError("font data must be an object");
+        this.renderingData.xp.current.font = data.font;
+        this.renderingData.xp.current.fontPath = data.fontPath;
+        this.renderingData.xp.current.fontSize = data.fontSize;
+        return this;
+    }
+
+    setXPDividerFont(data: Pick<XPCardRenderData["xp"]["divider"], "font" | "fontPath" | "fontSize">) {
+        if (!data || typeof data !== "object") throw new TypeError("font data must be an object");
+        this.renderingData.xp.divider.font = data.font;
+        this.renderingData.xp.divider.fontPath = data.fontPath;
+        this.renderingData.xp.divider.fontSize = data.fontSize;
         return this;
     }
 

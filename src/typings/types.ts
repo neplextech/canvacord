@@ -47,7 +47,7 @@ export interface XPCardRenderData {
         width: number;
         rounded: boolean;
         track: {
-            color: string;
+            color: string | string[];
         };
         bar: {
             color: string | string[];
@@ -58,6 +58,7 @@ export interface XPCardRenderData {
             color: string;
             fontSize: number;
             font: string;
+            fontPath: string;
             x: number;
             y: number;
             opacity: number;
@@ -68,6 +69,7 @@ export interface XPCardRenderData {
             color: string;
             fontSize: number;
             font: string;
+            fontPath: string;
             x: number;
             y: number;
             opacity: number;
@@ -78,6 +80,7 @@ export interface XPCardRenderData {
             color: string;
             fontSize: number;
             font: string;
+            fontPath: string;
             x: number;
             y: number;
             opacity: number;
@@ -89,6 +92,7 @@ export interface XPCardRenderData {
         color: string;
         fontSize: number;
         font: string;
+        fontPath: string;
         x: number;
         y: number;
         opacity: number;
@@ -99,6 +103,7 @@ export interface XPCardRenderData {
         color: string;
         fontSize: number;
         font: string;
+        fontPath: string;
         x: number;
         y: number;
         opacity: number;
@@ -110,22 +115,26 @@ export interface XPCardRenderData {
             color: string;
             fontSize: number;
             font: string;
+            fontPath: string;
             x: number;
             y: number;
             opacity: number;
             visible: boolean;
             value: string;
+            text: string;
             textColor: string;
         };
         level: {
             color: string;
             fontSize: number;
             font: string;
+            fontPath: string;
             x: number;
             y: number;
             opacity: number;
             visible: boolean;
             value: string;
+            text: string;
             textColor: string;
         };
     };
