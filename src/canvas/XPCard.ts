@@ -9,9 +9,10 @@ import { Util } from "../Utils/Util";
 export class XPCard extends BaseCanvas {
     public renderingData: XPCardRenderData;
     public utils = new UtilityCanvas();
-    constructor() {
+    constructor(rdata ?: XPCardRenderData) {
         super();
-
+        if(rdata) this.renderingData = rdata;
+        else if(!rdata) {
         this.renderingData = {
             width: 934,
             height: 282,
@@ -146,6 +147,7 @@ export class XPCard extends BaseCanvas {
                 }
             }
         };
+    };
     }
 
     setSize(width: number, height: number) {
