@@ -1,0 +1,23 @@
+{
+  "name": "canvacord",
+  "version": "6.0.0",
+  "description": "Core pacakge for canvacord.",
+  "main": "lib/core.js",
+  "scripts": {
+    "build":"rimraf build && tsc"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/devsnowflake/canvacord",
+    "directory": "packages/core"
+  },
+  "keywords": [],
+  "author": "DevAndromeda <devandromeda@snowflakedev.org>",
+  "license": "GPL-3.0",
+  "dependencies": {
+    "canvas": "^2.8.0"
+  }
+}
