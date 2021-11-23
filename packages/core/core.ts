@@ -33,11 +33,11 @@ export default class Core {
         return loadImage(url);
     }
 
-    public async build(mimeType: string = "image/png", quality: number = 1.0) {
+    public async build() {
         return this.canvas.toBuffer();
     }
 
-    public async buildBase64(mimeType: string = "image/png", quality: number = 1.0) {
+    public async buildBase64() {
         return this.canvas.toDataURL();
     }
 
