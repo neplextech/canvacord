@@ -12,3 +12,5 @@ test/
 coverage/
 
 lib/
+
+dist/

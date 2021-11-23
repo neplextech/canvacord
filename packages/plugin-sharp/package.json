@@ -1,8 +1,8 @@
 {
-  "name": "canvacord",
+  "name": "@canvacord/plugin-sharp",
   "version": "6.0.0",
-  "description": "Core pacakge for canvacord.",
-  "main": "lib/core.js",
+  "description": "Sharp plugin for canvacord.",
+  "main": "lib/index.js",
   "scripts": {
     "build": "rimraf build && tsc"
   },
@@ -12,15 +12,17 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/DevSnowflake/canvacord",
-    "directory": "packages/core"
+    "directory": "packages/plugin-sharp"
   },
   "keywords": [],
   "author": "DevAndromeda <devandromeda@snowflakedev.org>",
   "license": "GPL-3.0",
   "dependencies": {
-    "canvas": "^2.8.0"
+    "sharp": "^0.29.3"
   },
   "devDependencies": {
+    "@types/node": "^16.11.9",
+    "@types/sharp": "^0.29.4",
     "rimraf": "^3.0.2"
   }
 }

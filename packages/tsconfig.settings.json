@@ -1,12 +1,15 @@
 {
     "compilerOptions": {
-      "target": "es2016",
+      "target": "ES2016",
       "module": "commonjs",
+      "moduleResolution": "node",
       "declaration": true,
       "declarationMap": true,
       "sourceMap": true,
       "strict": true,
       "composite": true,
-      "esModuleInterop": true
+      "esModuleInterop": true,
+      "forceConsistentCasingInFileNames": true,
+      "importHelpers": true
     }
   }

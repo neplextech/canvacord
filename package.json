@@ -1,8 +1,19 @@
 {
   "name": "canvacord-monorepo",
   "private": true,
+  "scripts": {
+    "format": "prettier --write packages/**/*.{js,ts,jsx,tsx}",
+    "lint": "eslint src --ext .ts",
+    "lint:fix": "eslint src --ext .ts --fix",
+    "prepare": "husky install"
+  },
   "devDependencies": {
-    "lerna": "^4.0.0"
+    "@typescript-eslint/eslint-plugin": "^5.4.0",
+    "@typescript-eslint/parser": "^5.4.0",
+    "eslint": "^8.3.0",
+    "husky": "^7.0.4",
+    "lerna": "^4.0.0",
+    "prettier": "^2.4.1"
   },
   "dependencies": {
     "canvas": "^2.8.0"
