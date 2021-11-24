@@ -1,4 +1,5 @@
 export interface CanvasInitOptions {
-    width: number;
-    height: number;
+    Plugins?: Array<any>
+    width?: number
+    height?: number
 }
