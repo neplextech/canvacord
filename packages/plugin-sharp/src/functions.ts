@@ -13,31 +13,31 @@ export function loadImage(image: string | Buffer, format?: keyof sharp.FormatEnu
     return converter.toBuffer();
 }
 
-export function resizeImage(image: string | Buffer, width: number, height: number, format?: keyof sharp.FormatEnum) {
+export function resize(image: string | Buffer, width: number, height: number, format?: keyof sharp.FormatEnum) {
     return fmtImage(sharp(image).resize(width, height), format);
 }
 
-export function rotateImage(image: string | Buffer, angle: number, format?: keyof sharp.FormatEnum) {
+export function rotate(image: string | Buffer, angle: number, format?: keyof sharp.FormatEnum) {
     return fmtImage(sharp(image).rotate(angle), format);
 }
 
-export function blurImage(image: string | Buffer, intensity: optNum = undefined, format?: keyof sharp.FormatEnum) {
+export function blur(image: string | Buffer, intensity: optNum = undefined, format?: keyof sharp.FormatEnum) {
     return fmtImage(sharp(image).blur(intensity), format);
 }
 
-export function compositeImage(image: string | Buffer, options: sharp.OverlayOptions[], format?: keyof sharp.FormatEnum) {
+export function composite(image: string | Buffer, options: sharp.OverlayOptions[], format?: keyof sharp.FormatEnum) {
     return fmtImage(sharp(image).composite(options), format);
 }
 
-export function flattenImage(image: string | Buffer, flatten: boolean | undefined | sharp.FlattenOptions = undefined, format?: keyof sharp.FormatEnum) {
+export function flatten(image: string | Buffer, flatten: boolean | undefined | sharp.FlattenOptions = undefined, format?: keyof sharp.FormatEnum) {
     return fmtImage(sharp(image).flatten(flatten), format);
 }
 
-export function flipImage(image: string | Buffer, format?: keyof sharp.FormatEnum) {
+export function flip(image: string | Buffer, format?: keyof sharp.FormatEnum) {
     return fmtImage(sharp(image).flip(), format);
 }
 
-export function flopImage(image: string | Buffer, format?: keyof sharp.FormatEnum) {
+export function flop(image: string | Buffer, format?: keyof sharp.FormatEnum) {
     return fmtImage(sharp(image).flop(), format);
 }
 
