@@ -1,4 +1,4 @@
-import * as props from './functions';
+import * as props from "./functions";
 
 export default function CanvacordMiddleware() {
     return (pluginsManager: any) => {
@@ -6,4 +6,4 @@ export default function CanvacordMiddleware() {
     };
 }
 
-export * from './functions';
+export * from "./functions";
