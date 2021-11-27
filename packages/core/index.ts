@@ -13,7 +13,7 @@ export default class CanvacordCore<T extends Record<string, CanvacordPlugin> = {
         this.manager = new CanvacordPluginManager(this);
 
         if (options.plugins) options.plugins.forEach((plugin) => plugin?.(this.manager.context));
-        return this as any as CanvacordCore & T;
+        return this as unknown as CanvacordCore & T;
     }
 
     public createCanvas(width: number, height: number) {
