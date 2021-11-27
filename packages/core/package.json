@@ -1,7 +1,7 @@
 {
   "name": "canvacord",
   "version": "6.0.0",
-  "description": "Core pacakge for canvacord.",
+  "description": "Core package for canvacord.",
   "main": "lib/index.js",
   "scripts": {
     "build": "rimraf build && tsc"
