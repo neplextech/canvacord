@@ -53,7 +53,7 @@ export default class CanvacordCore {
         if (this.canvas) return this.canvas.toBuffer();
     }
 
-    public async loadImage<T>(url: T) {
+    public async loadImage<T extends string | Buffer>(url: T) {
         return loadImage(url);
     }
 
