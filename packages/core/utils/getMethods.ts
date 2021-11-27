@@ -8,8 +8,8 @@ export function getAllMethods(obj: any): string[] {
     let proto = Object.getPrototypeOf(obj);
 
     while (proto) {
-        Object.getOwnPropertyNames(proto).forEach(name => {
-            if ((name !== "constructor") && hasMethod(proto, name)) array.push(name)
+        Object.getOwnPropertyNames(proto).forEach((name) => {
+            if (name !== "constructor" && hasMethod(proto, name)) array.push(name);
         });
 
         proto = Object.getPrototypeOf(proto);

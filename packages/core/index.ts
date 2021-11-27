@@ -6,7 +6,6 @@ import { getAllMethods } from "./utils/getMethods";
 type ExtendedProperties<T> = { [P in keyof T]: T[P] };
 
 export default class CanvacordCore {
-
     public canvas: Canvas | undefined;
     public ctx: CanvasRenderingContext2D | undefined;
     public manager: CanvacordPluginManager;
@@ -68,12 +67,9 @@ export default class CanvacordCore {
             let methods = this.manager.extratPluginMethods(plugin);
             let baseMethods = getAllMethods(this);
             methods = methods?.filter((method) => !baseMethods.includes(method));
-            if (methods) 
-                for (let i of methods) 
-                    this.constructor.prototype[i] = new plugin()[i];
+            if (methods) for (let i of methods) this.constructor.prototype[i] = new plugin()[i];
         });
 
         return new CanvacordCore({}) as CanvacordCore & ExtendedProperties<T>;
     }
-
 }

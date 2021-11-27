@@ -4,11 +4,10 @@ import CanvacordCore from "../index";
 const CLASS_REGEX: RegExp = /^\s*class/;
 
 export class CanvacordPluginManager {
-
     plugins = new Map<string, string[]>();
 
     addPlugin(plugin: string | undefined | null, pluginMethods: string[]) {
-        if ((typeof plugin == "string") && !this.plugins.has(plugin)) this.plugins.set(plugin, pluginMethods);
+        if (typeof plugin == "string" && !this.plugins.has(plugin)) this.plugins.set(plugin, pluginMethods);
         else throw new Error(`Plugin ${plugin} already exists or is undefined`);
     }
 
@@ -20,7 +19,7 @@ export class CanvacordPluginManager {
 
     extratPluginMethods(plugin: any): string[] | undefined {
         let methods: string[] = [];
-        
+
         if (CLASS_REGEX.test(plugin.toString())) {
             methods = getAllMethods(new plugin());
             let baseMethods = getAllMethods(CanvacordCore);
@@ -35,7 +34,6 @@ export class CanvacordPluginManager {
     }
 
     addAllMethodsToBase(base: any, methods: Function[], methodNames: string[]): void {
-        methodNames.forEach((method, _posx) => base.prototype[method] = methods[_posx]);
+        methodNames.forEach((method, _posx) => (base.prototype[method] = methods[_posx]));
     }
-
 }
