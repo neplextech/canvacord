@@ -12,7 +12,7 @@ export default class CanvacordCore<T extends Record<string, CanvacordPlugin> = {
         this.ctx = this.getContext();
         this.manager = new CanvacordPluginManager(this);
 
-        if (options.plugins) options.plugins.forEach(plugin => plugin?.(this.manager.context))
+        if (options.plugins) options.plugins.forEach((plugin) => plugin?.(this.manager.context));
         return this as any as CanvacordCore & T;
     }
 
@@ -45,4 +45,4 @@ export default class CanvacordCore<T extends Record<string, CanvacordPlugin> = {
     }
 }
 
-export { CanvacordCore as Canvacord }
+export { CanvacordCore as Canvacord };
