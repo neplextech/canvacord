@@ -1,10 +1,27 @@
-import { getAllMethods } from "../utils/getMethods";
-import CanvacordCore from "../index";
+import { Canvacord } from "../index";
+import { CanvacordPluginContext } from "../types";
 
-const CLASS_REGEX: RegExp = /^\s*class/;
+export class PluginContext implements CanvacordPluginContext {
+
+    constructor(public manager: CanvacordPluginManager) {}
+
+    register(name: string, options: { props: Record<string, Function>; }): void {
+        let methodNames = Object.keys(options.props);
+        Object.entries(options.props).forEach(([k, m]) => 
+            // @ts-ignore
+            this.manager.core[k] = m
+        );
+
+        this.manager.addPlugin(name, methodNames)
+    }
+
+}
 
 export class CanvacordPluginManager {
+    context = new PluginContext(this);
     plugins = new Map<string, string[]>();
+    
+    constructor (public core: Canvacord) {}
 
     addPlugin(plugin: string | undefined | null, pluginMethods: string[]) {
         if (typeof plugin == "string" && !this.plugins.has(plugin)) this.plugins.set(plugin, pluginMethods);
@@ -15,25 +32,5 @@ export class CanvacordPluginManager {
         // @ts-ignore
         if (this.plugins.has(plugin)) return this.plugins.get(plugin);
         else throw new Error(`Plugin ${plugin} does not exist`);
-    }
-
-    extratPluginMethods(plugin: any): string[] | undefined {
-        let methods: string[] = [];
-
-        if (CLASS_REGEX.test(plugin.toString())) {
-            methods = getAllMethods(new plugin());
-            let baseMethods = getAllMethods(CanvacordCore);
-            methods = methods.filter((method) => !baseMethods.includes(method));
-        }
-
-        return methods;
-    }
-
-    addToBase(base: any, method: Function, methodName: string): void {
-        if (method) base.prototype[methodName] = method;
-    }
-
-    addAllMethodsToBase(base: any, methods: Function[], methodNames: string[]): void {
-        methodNames.forEach((method, _posx) => (base.prototype[method] = methods[_posx]));
     }
 }

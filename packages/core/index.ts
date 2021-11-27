@@ -1,35 +1,23 @@
 import { Canvas, createCanvas, loadImage } from "canvas";
-import { CanvasInitOptions } from "./types";
+import { CanvacordOptions, CanvacordPlugin } from "./types";
 import { CanvacordPluginManager } from "./src/PluginManager";
-import { getAllMethods } from "./utils/getMethods";
 
-type ExtendedProperties<T> = { [P in keyof T]: T[P] };
-
-export default class CanvacordCore {
+export default class CanvacordCore<T extends Record<string, CanvacordPlugin> = {}> {
     public canvas: Canvas | undefined;
     public ctx: CanvasRenderingContext2D | undefined;
     public manager: CanvacordPluginManager;
 
-    constructor(public options: CanvasInitOptions) {
-        this.canvas = this.createCanvas();
+    constructor(width: number, height: number, options: CanvacordOptions = {}) {
+        this.canvas = this.createCanvas(width, height);
         this.ctx = this.getContext();
-        this.manager = new CanvacordPluginManager();
+        this.manager = new CanvacordPluginManager(this);
 
-        if (this.options.Plugins) {
-            this.options.Plugins.forEach((plugin, _posx) => {
-                if (typeof this.getClassName(plugin) == "string") {
-                    let methods = this.manager.extratPluginMethods(plugin);
-                    if (methods === undefined) throw new Error(`${this.getClassName(plugin)} is not valid`);
-                    this.manager.addPlugin(this.getClassName(plugin), methods);
-                } else throw new Error(`${this.getClassName(plugin)} is not valid`);
-            });
-
-            this.addFns();
-        }
+        if (options.plugins) options.plugins.forEach(plugin => plugin?.(this.manager.context))
+        return this as any as CanvacordCore & T;
     }
 
-    public createCanvas(width?: number, height?: number) {
-        if (width && height) return createCanvas(this.options.width ?? width, this.options.height ?? height);
+    public createCanvas(width: number, height: number) {
+        if (width && height) return createCanvas(width, height);
     }
 
     public getCanvas() {
@@ -55,21 +43,6 @@ export default class CanvacordCore {
     public async buildBase64() {
         if (this.canvas) return this.canvas.toDataURL();
     }
-
-    private getClassName(obj: any): string {
-        if (typeof obj === "undefined") return "undefined";
-        else if (obj === null) return "null";
-        else return obj.constructor.name;
-    }
-
-    private addFns<T>(): CanvacordCore & ExtendedProperties<T> {
-        this?.options?.Plugins?.forEach((plugin) => {
-            let methods = this.manager.extratPluginMethods(plugin);
-            let baseMethods = getAllMethods(this);
-            methods = methods?.filter((method) => !baseMethods.includes(method));
-            if (methods) for (let i of methods) this.constructor.prototype[i] = new plugin()[i];
-        });
-
-        return new CanvacordCore({}) as CanvacordCore & ExtendedProperties<T>;
-    }
 }
+
+export { CanvacordCore as Canvacord }

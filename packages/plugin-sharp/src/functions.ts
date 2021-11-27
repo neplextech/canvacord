@@ -38,7 +38,7 @@ export function flipImage(image: string | Buffer, format?: keyof sharp.FormatEnu
 }
 
 export function flopImage(image: string | Buffer, format?: keyof sharp.FormatEnum) {
-    return fmtImage(sharp(image).flip(), format);
+    return fmtImage(sharp(image).flop(), format);
 }
 
 // Functions which might be useful in future.
