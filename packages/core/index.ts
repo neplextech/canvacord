@@ -17,7 +17,7 @@ export default class CanvacordCore<T extends Record<string, CanvacordPlugin> = {
     }
 
     public createCanvas(width: number, height: number) {
-        if (width && height) return createCanvas(width, height);
+        if (width && height) return createCanvas(width ?? 100, height ?? 100);
     }
 
     public getCanvas() {
