@@ -1,38 +1,27 @@
 import { getAllMethods } from "../utils/getMethods";
 import CanvacordCore from "../index";
 
+const CLASS_REGEX: RegExp = /^\s*class/;
+
 export class CanvacordPluginManager {
-    plugins: Map<string, Array<string>>;
 
-    constructor() {
-        this.plugins = new Map<string, Array<string>>();
+    plugins = new Map<string, string[]>();
+
+    addPlugin(plugin: string | undefined | null, pluginMethods: string[]) {
+        if ((typeof plugin == "string") && !this.plugins.has(plugin)) this.plugins.set(plugin, pluginMethods);
+        else throw new Error(`Plugin ${plugin} already exists or is undefined`);
     }
 
-    addPlugin(plugin: string | undefined | null, pluginMethods: Array<string>) {
-        if (typeof plugin == "string") {
-            if (!this.plugins.has(plugin)) {
-                this.plugins.set(plugin, pluginMethods);
-            }
-        } else {
-            throw new Error(`Plugin ${plugin} already exists or is undefined`);
-        }
+    getPluginMethods(plugin: string): string[] {
+        // @ts-ignore
+        if (this.plugins.has(plugin)) return this.plugins.get(plugin);
+        else throw new Error(`Plugin ${plugin} does not exist`);
     }
 
-    getPluginMethods(plugin: string): Array<string> {
-        if (this.plugins.has(plugin)) {
-            //@ts-ignore
-            return this.plugins.get(plugin);
-        } else {
-            throw new Error(`Plugin ${plugin} does not exist`);
-        }
-    }
-
-    extratPluginMethods(plugin: any): Array<string> | undefined {
-        let methods: Array<string> = [];
-
-        const isClass = (fn: any) => /^\s*class/.test(fn.toString());
-
-        if (isClass(plugin)) {
+    extratPluginMethods(plugin: any): string[] | undefined {
+        let methods: string[] = [];
+        
+        if (CLASS_REGEX.test(plugin.toString())) {
             methods = getAllMethods(new plugin());
             let baseMethods = getAllMethods(CanvacordCore);
             methods = methods.filter((method) => !baseMethods.includes(method));
@@ -45,9 +34,8 @@ export class CanvacordPluginManager {
         if (method) base.prototype[methodName] = method;
     }
 
-    addAllMethodsToBase(base: any, methods: Array<Function>, methodNames: Array<string>): void {
-        methodNames.forEach((method, _posx) => {
-            base.prototype[method] = methods[_posx];
-        });
+    addAllMethodsToBase(base: any, methods: Function[], methodNames: string[]): void {
+        methodNames.forEach((method, _posx) => base.prototype[method] = methods[_posx]);
     }
+
 }
