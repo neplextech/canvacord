@@ -6,16 +6,13 @@ export class PluginContext implements CanvacordPluginContext {
 
     register(name: string, options: { props: Record<string, Function> }): void {
         let methodNames = Object.keys(options.props);
-        Object.entries(options.props).forEach(
-            ([k, m]) => {
-                // @ts-ignore
-                if (this.manager.core[k] && !this.manager.core.options.overlapPlugins)
-                    throw new Error(`Cannot overlap "${k}" from ${name} plugin over ${this.manager.findPluginByMethod(k)} plugin.\nFix: Set [overlapPlugins] to true in options.`);
+        Object.entries(options.props).forEach(([k, m]) => {
+            // @ts-ignore
+            if (this.manager.core[k] && !this.manager.core.options.overlapPlugins) throw new Error(`Cannot overlap "${k}" from ${name} plugin over ${this.manager.findPluginByMethod(k)} plugin.\nFix: Set [overlapPlugins] to true in options.`);
 
-                // @ts-ignore
-                this.manager.core[k] = m
-            }
-        );
+            // @ts-ignore
+            this.manager.core[k] = m;
+        });
 
         this.manager.addPlugin(name, methodNames);
     }
@@ -39,8 +36,7 @@ export class CanvacordPluginManager {
     }
 
     findPluginByMethod(method: string): string {
-        for (const [n, m] of this.plugins.entries())
-            if (m.includes(method)) return n;
+        for (const [n, m] of this.plugins.entries()) if (m.includes(method)) return n;
 
         return "unknown";
     }
