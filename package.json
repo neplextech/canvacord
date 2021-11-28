@@ -3,7 +3,9 @@
   "private": true,
   "scripts": {
     "format": "prettier --write packages/**/*.{js,ts,jsx,tsx}",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "build":"lerna exec npm run build",
+    "symlink":"lerna bootstrap"
   },
   "devDependencies": {
     "husky": "^7.0.4",
