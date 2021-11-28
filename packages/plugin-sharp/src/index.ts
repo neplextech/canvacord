@@ -1,15 +1,11 @@
-import loadImageSharp from "./functions/loadImage";
-import resizeImageSharp from "./functions/resize";
+import * as props from "./functions";
 
-export default function CanvacordMiddleware() {
+export default function SharpPlugin() {
     return (pluginsManager: any) => {
-        pluginsManager.register("@canvacord/plugin-sharp", {
-            props: {
-                resizeImage: resizeImageSharp,
-                loadImage: loadImageSharp
-            }
-        });
+        pluginsManager.register("@canvacord/plugin-sharp", { props });
     };
 }
 
-export { loadImageSharp as loadImage, resizeImageSharp as resizeImage };
+export type SharpPluginProps = typeof props;
+export * from "./functions";
+export { SharpPlugin as plugin };
