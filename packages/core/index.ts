@@ -7,7 +7,7 @@ export default class CanvacordCore<T extends Record<string, CanvacordPlugin> = {
     public ctx: CanvasRenderingContext2D | undefined;
     public manager: CanvacordPluginManager;
 
-    constructor(width: number, height: number, options: CanvacordOptions = {}) {
+    constructor(width: number, height: number, public options: CanvacordOptions = {}) {
         this.canvas = this.createCanvas(width, height);
         this.ctx = this.getContext();
         this.manager = new CanvacordPluginManager(this);

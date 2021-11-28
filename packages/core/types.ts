@@ -6,4 +6,5 @@ export interface CanvacordPluginContext {
 
 export interface CanvacordOptions {
     plugins?: CanvacordPlugin[];
+    overlapPlugins?: boolean;
 }
