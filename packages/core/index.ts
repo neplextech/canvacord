@@ -7,17 +7,18 @@ export default class CanvacordCore<T extends Record<string, CanvacordPlugin> = {
     public ctx: CanvasRenderingContext2D | undefined;
     public manager: CanvacordPluginManager;
 
-    constructor(width: number, height: number, public options: CanvacordOptions = {}) {
-        this.canvas = this.createCanvas(width, height);
+    constructor(public options: CanvacordOptions = {}) {
+        this.canvas = this.createCanvas(options.width, options.height);
         this.ctx = this.getContext();
         this.manager = new CanvacordPluginManager(this);
 
-        if (options.plugins) options.plugins.forEach((plugin) => plugin?.(this.manager.context));
+        // @ts-ignore
+        if (options.plugins) options.plugins.forEach((plugin) => plugin?.(this.manager.context) && console.log(plugin));
         return this as unknown as CanvacordCore & T;
     }
 
-    public createCanvas(width: number, height: number) {
-        if (width && height) return createCanvas(width ?? 100, height ?? 100);
+    public createCanvas(width?: number, height?: number) {
+        return createCanvas(width ?? 100, height ?? 100);
     }
 
     public getCanvas() {
@@ -42,6 +43,10 @@ export default class CanvacordCore<T extends Record<string, CanvacordPlugin> = {
 
     public async buildBase64() {
         if (this.canvas) return this.canvas.toDataURL();
+    }
+
+    public static default(width: number, height: number) {
+        return new this({ width, height });
     }
 }
 
