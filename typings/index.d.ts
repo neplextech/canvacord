@@ -581,7 +581,7 @@ declare module "canvacord" {
          */
         setColor(id: "title" | "title-border" | "avatar" | "username" | "username-box" | "hashtag" | "discriminator" | "discriminator-box" | "message" | "message-box" | "member-count" | "background" | "border", color: string): Welcomer;
         /**
-         * <p>Ser member count</p>
+         * <p>Set member count</p>
          * @param memberCount - <p>Guild member count</p>
          */
         setMemberCount(memberCount?: number | string): Welcomer;
