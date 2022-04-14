@@ -1,25 +1,21 @@
 {
   "name": "canvacord",
-  "version": "5.2.3",
-  "description": "Powerful image manipulation package for beginners.",
-  "main": "index.js",
-  "types": "typings/index.d.ts",
-  "files": [
-    "libs",
-    "plugins",
-    "src",
-    "index.js",
-    "typings"
-  ],
+  "version": "6.0.0",
+  "description": "Collection of simple and easy-to-use utilities for image manipulation.",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
+  "exports": {
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js"
+  },
   "scripts": {
-    "docs": "docgen --source src --custom docs/index.yml --output docs/docs.json",
-    "docs:test": "docgen --source src --custom docs/index.yml",
-    "test": "cd test && node ."
+    "build": "tsup",
+    "check": "tsc"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/DevSnowflake/Canvacord.git"
-  },
+  "files": [
+    "dist"
+  ],
   "keywords": [
     "canvacord",
     "canvas",
@@ -37,28 +33,26 @@
     "spotify",
     "memegen"
   ],
-  "author": "Snowflake107",
+  "author": "DevAndromeda",
   "funding": {
     "type": "individual",
     "url": "https://paypal.me/devsnowflake"
   },
   "license": "GPL-3.0",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CesiumLabs/Canvacord.git"
+  },
   "bugs": {
-    "url": "https://github.com/DevSnowflake/Canvacord/issues"
+    "url": "https://github.com/CesiumLabs/Canvacord/issues"
   },
   "homepage": "https://canvacord.js.org",
-  "dependencies": {
-    "@canvacord/assets": "^2.0.5",
-    "@canvacord/emoji-parser": "^1.0.1",
-    "canvas": "^2.8.0",
-    "gifencoder": "^2.0.1",
-    "moment": "^2.29.1",
-    "moment-duration-format": "^2.3.2"
-  },
   "devDependencies": {
-    "@discordjs/docgen": "discordjs/docgen",
-    "@types/node": "^16.4.7",
-    "captcha-canvas": "^2.3.1",
-    "discord-canvas": "github:snowflake107/discord-canvas"
+    "@types/node": "^17.0.24",
+    "tsup": "^5.12.5",
+    "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.21"
   }
 }
