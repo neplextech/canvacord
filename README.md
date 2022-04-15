@@ -4,8 +4,11 @@ This branch holds all the assets required by Canvacord.
 
 # Assets Endpoint
 
-Assets metadata can be found at **https://raw.githubusercontent.com/CesiumLabs/canvacord/assets/datasrc.json**
+## Assets Metadata
 
-shasum: **https://raw.githubusercontent.com/CesiumLabs/canvacord/assets/shasum.txt**
+This metadata contains mapping of all the files (images/fonts).
+- **https://raw.githubusercontent.com/CesiumLabs/canvacord/assets/datasrc.json**
+
+> shasum: **https://raw.githubusercontent.com/CesiumLabs/canvacord/assets/shasum.txt**
 
 #### Authored and maintained by CesiumLabs
