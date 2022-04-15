@@ -1,0 +1,32 @@
+{
+  "name": "@canvacord/assets",
+  "version": "0.1.0",
+  "description": "Canvacord Assets Repository",
+  "private": true,
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "convert": "node src/converter.js",
+    "build": "node src/jsondump.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/cesiumlabs/canvacord.git"
+  },
+  "keywords": [
+    "canvacord",
+    "assets"
+  ],
+  "author": "DevAndromeda",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/cesiumlabs/canvacord/issues"
+  },
+  "homepage": "https://github.com/cesiumlabs/canvacord#readme",
+  "dependencies": {
+    "sharp": "^0.30.3"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.24"
+  }
+}
