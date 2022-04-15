@@ -4,7 +4,7 @@ import path from "node:path";
 import { performance } from "node:perf_hooks";
 
 let i = 0, start_time = performance.now();
-const possibleImageFormats = [".png", ".jpg", ".jpeg", ".bmp", ".webp"];
+const possibleImageFormats = [".png", ".jpg", ".jpeg", ".bmp", ".webp", ".tiff"];
 const imageDir = path.resolve("./data/images");
 const files = await fs.readdir(imageDir).then(res => {
     return res
