@@ -1,8 +1,6 @@
 name: Assets
 on:
-  push:
-    branches:
-      - 'assets'
+    workflow_dispatch:
 jobs:
   build:
     name: Build Assets
