@@ -28,7 +28,7 @@ jobs:
       - name: ✅ Git commit changes
         run: |
           git config --local user.email "cesiumlabsbot@snowflakedev.org"
-          git config --local user.name  "CesiumLabs Bot"
+          git config --local user.name  "CesiumLabsBot"
           git add .
           git commit -m "🚀 Build assets metadata"
       - name: 🚀 Push changes
