@@ -5,6 +5,8 @@ on:
       - '*'
       - '!webpack'
       - '!docs'
+      - '!assets'
+      - '!develop'
     tags:
       - '*'
 jobs:

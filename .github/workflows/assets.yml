@@ -1,0 +1,37 @@
+name: Assets
+on:
+  push:
+    branches:
+      - 'assets'
+jobs:
+  docs:
+    name: Build Assets
+    runs-on: ubuntu-latest
+    steps:
+      - name: 👀 Checkout repository
+        uses: actions/checkout@master
+
+      - name: 📥 Install Node.js
+        uses: actions/setup-node@master
+        with:
+          node-version: 17
+
+      - name: 📥 Install dependencies
+        run: yarn install --immutable --immutable-cache --check-cache
+
+      - name: 💥 Convert assets files
+        run: yarn convert
+
+      - name: 🏗️ Build assets
+        run: yarn build
+
+      - name: ✅ Git commit changes
+        run: |
+          git config --local user.email "canvacordbot@snowflakedev.org"
+          git config --local user.name  "Canvacord Bot"
+          git add .
+          git commit -m "🚀 Build assets metadata"
+      - name: 🚀 Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
