@@ -204,6 +204,16 @@ class Rank {
     }
 
     /**
+     * Set font size
+     * @param {string} size
+     * @returns {Rank}
+     */
+    setFontSize(size) {
+        this.data.fontSize = size;
+        return this;
+    }
+
+    /**
      * Set username
      * @param {string} name Username
      * @param {string} color Username color
@@ -499,7 +509,7 @@ class Rank {
         ctx.globalAlpha = 1;
 
         // draw username
-        ctx.font = `bold 36px ${ops.fontX}`;
+        ctx.font = `bold ${this.data.fontSize ?? "36px"} ${ops.fontX}`;
         ctx.fillStyle = this.data.username.color;
         ctx.textAlign = "start";
         const name = Util.shorten(this.data.username.name, 10);
@@ -511,19 +521,19 @@ class Rank {
         if (!this.data.discriminator.discrim) throw new Error("Missing discriminator!");
         const discrim = `${this.data.discriminator.discrim}`;
         if (discrim) {
-            ctx.font = `36px ${ops.fontY}`;
+            ctx.font = `${this.data.fontSize ?? "36px"} ${ops.fontY}`;
             ctx.fillStyle = this.data.discriminator.color;
-            ctx.textAlign = "center";
+            ctx.textAlign = "start";
             ctx.fillText(`#${discrim.substr(0, 4)}`, ctx.measureText(name).width + 20 + 335, 164);
         }
 
         // fill level
         if (this.data.level.display && !isNaN(this.data.level.data)) {
-            ctx.font = `bold 36px ${ops.fontX}`;
+            ctx.font = `bold ${this.data.fontSize ?? "36px"} ${ops.fontX}`;
             ctx.fillStyle = this.data.level.textColor;
             ctx.fillText(this.data.level.displayText, 800 - ctx.measureText(Util.toAbbrev(parseInt(this.data.level.data))).width, 82);
 
-            ctx.font = `bold 32px ${ops.fontX}`;
+            ctx.font = `bold ${this.data.fontSize ?? "32px"} ${ops.fontX}`;
             ctx.fillStyle = this.data.level.color;
             ctx.textAlign = "end";
             ctx.fillText(Util.toAbbrev(parseInt(this.data.level.data)), 860, 82);
@@ -531,18 +541,18 @@ class Rank {
 
         // fill rank
         if (this.data.rank.display && !isNaN(this.data.rank.data)) {
-            ctx.font = `bold 36px ${ops.fontX}`;
+            ctx.font = `bold ${this.data.fontSize ?? "36px"} ${ops.fontX}`;
             ctx.fillStyle = this.data.rank.textColor;
             ctx.fillText(this.data.rank.displayText, 800 - ctx.measureText(Util.toAbbrev(parseInt(this.data.level.data)) || "-").width - 7 - ctx.measureText(this.data.level.displayText).width - 7 - ctx.measureText(Util.toAbbrev(parseInt(this.data.rank.data)) || "-").width, 82);
 
-            ctx.font = `bold 32px ${ops.fontX}`;
+            ctx.font = `bold ${this.data.fontSize ?? "32px"} ${ops.fontX}`;
             ctx.fillStyle = this.data.rank.color;
             ctx.textAlign = "end";
             ctx.fillText(Util.toAbbrev(parseInt(this.data.rank.data)), 790 - ctx.measureText(Util.toAbbrev(parseInt(this.data.level.data)) || "-").width - 7 - ctx.measureText(this.data.level.displayText).width, 82);
         }
 
         // show progress
-        ctx.font = `bold 30px ${ops.fontX}`;
+        ctx.font = `bold ${this.data.fontSize ?? '30px'} ${ops.fontX}`;
         ctx.fillStyle = this.data.requiredXP.color;
         ctx.textAlign = "start";
         ctx.fillText("/ " + Util.toAbbrev(this.data.requiredXP.data), 670 + ctx.measureText(Util.toAbbrev(this.data.currentXP.data)).width + 15, 164);
