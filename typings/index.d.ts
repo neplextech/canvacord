@@ -912,7 +912,7 @@ declare module "canvacord" {
          * @param [ops.fontX = "Manrope"] - <p>Bold font family</p>
          * @param [ops.fontY = "Manrope"] - <p>Regular font family</p>
          */
-        build(ops: {
+        build(ops?: {
             fontX?: string;
             fontY?: string;
         }): Promise<Buffer>;
