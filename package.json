@@ -53,6 +53,6 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.21"
+    "illustrator.js": "^0.1.0-dev"
   }
 }
