@@ -11,7 +11,8 @@
   },
   "scripts": {
     "build": "tsup",
-    "check": "tsc"
+    "check": "tsc",
+    "postinstall": "node scripts/postinstall.mjs"
   },
   "files": [
     "dist"
@@ -49,6 +50,8 @@
   "homepage": "https://canvacord.js.org",
   "devDependencies": {
     "@types/node": "^17.0.24",
+    "chalk": "^5.0.1",
+    "node-fetch": "^3.2.5",
     "tsup": "^5.12.5",
     "typescript": "^4.6.3"
   },
