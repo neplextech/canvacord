@@ -51,12 +51,11 @@
   "devDependencies": {
     "@types/node": "^17.0.24",
     "chalk": "^5.0.1",
-    "node-fetch": "^3.2.5",
     "tsup": "^5.12.5",
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "illustrator.js": "^0.1.0-dev.4",
-    "postinstall": "^0.7.4"
+    "node-fetch": "^3.2.5",
+    "illustrator.js": "^0.1.0-dev"
   }
 }
