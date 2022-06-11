@@ -56,6 +56,7 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "illustrator.js": "^0.1.0-dev"
+    "illustrator.js": "^0.1.0-dev.4",
+    "postinstall": "^0.7.4"
   }
 }

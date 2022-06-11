@@ -1,5 +1,5 @@
-import Canvas from "./classes/Canvas"
+import Filters from "./classes/Filters"
 
-export default {
-    Canvas
+export = {
+    Filters
 }
