@@ -2,11 +2,6 @@
 # yarn lockfile v1
 
 
-"@danieldietrich/copy@^0.4.2":
-  version "0.4.2"
-  resolved "https://registry.npmjs.org/@danieldietrich/copy/-/copy-0.4.2.tgz"
-  integrity sha512-ZVNZIrgb2KeomfNahP77rL445ho6aQj0HHqU6hNlQ61o4rhvca+NS+ePj0d82zQDq2UPk1mjVZBTXgP+ErsDgw==
-
 "@napi-rs/canvas-android-arm64@0.1.22":
   version "0.1.22"
   resolved "https://registry.yarnpkg.com/@napi-rs/canvas-android-arm64/-/canvas-android-arm64-0.1.22.tgz#db813219195d7be38480e9da99a8c0fb376e0788"
@@ -66,6 +61,84 @@
     "@napi-rs/canvas-linux-x64-gnu" "0.1.22"
     "@napi-rs/canvas-linux-x64-musl" "0.1.22"
     "@napi-rs/canvas-win32-x64-msvc" "0.1.22"
+
+"@napi-rs/image-android-arm-eabi@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-android-arm-eabi/-/image-android-arm-eabi-1.3.0.tgz#447913d8025b01cb4c7158e8ae2a79cbde15290b"
+  integrity sha512-cVWPU1y9xPunwZGlbMvNbhp6KIA5u/yrTNMJeEIVYNUNRqyheXepmRtsofn0HFEGgVDeVA2tTmg5KJCTw8iSSQ==
+
+"@napi-rs/image-android-arm64@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-android-arm64/-/image-android-arm64-1.3.0.tgz#64f5af7e4429b1d05cf0106a086941d7b7d60ee6"
+  integrity sha512-kQYOSOywE90LH2I1E1d3TMHAF84kdEU+xHfn3rIUcDYPFbeo7scfsLS/VQv6kBduc3Q67A3VmZPFZIcSWPt6bw==
+
+"@napi-rs/image-darwin-arm64@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-darwin-arm64/-/image-darwin-arm64-1.3.0.tgz#5e99cdea19d0db0dfb3c42263a58d278a27e6b04"
+  integrity sha512-hD8iF8yxqnCU6DcMcdr8K/mLU917jW6GABGVo2TPSw9SJb5JApiKPQTnglpCtGdu/fkJTiKJ2qVGXrJ7oG5GDA==
+
+"@napi-rs/image-darwin-x64@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-darwin-x64/-/image-darwin-x64-1.3.0.tgz#2667776d4ba5ccfb432940a68dded1fb2ba20dd5"
+  integrity sha512-fRH6AIjB0654YNALat+As7GFWSJX0UVhcv+9ADX4zgpWyclVtktQAT3CnNIjK/DVcP1zr+DMyBNIpD3/yvl5cw==
+
+"@napi-rs/image-freebsd-x64@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-freebsd-x64/-/image-freebsd-x64-1.3.0.tgz#947bd057d926fa634664f8d45424ba4d9be96dfe"
+  integrity sha512-2GNOZy7xqWOqnVWHiF8OPEI+cgnoz09mHCUzwapqRagoXxcJjeEL1ciYPAEwUb4d2dEwK+/DdfL5ZiN8yQ0LBw==
+
+"@napi-rs/image-linux-arm-gnueabihf@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-linux-arm-gnueabihf/-/image-linux-arm-gnueabihf-1.3.0.tgz#70fc4f6e6dfa78b4a8da2bc2556d9958678372ee"
+  integrity sha512-1Q+Ztf3A/fPUrbgnHWJU4q/m9iYEnh/cGff96qPNQPG/YqyWFIECvqaC6mIzhW/jBAZHBU/9BPz5IglLC/JWHw==
+
+"@napi-rs/image-linux-arm64-gnu@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-linux-arm64-gnu/-/image-linux-arm64-gnu-1.3.0.tgz#e30527290a7e6424705289efccc352fd45f77815"
+  integrity sha512-5N42L9M2IoxcfDID12yqXUFvYBPuPl8b+2/ktDO6eO/SAIh2AX05fJIGlYsxjmUmL0tK0tS7UiXpnaOKucYt+A==
+
+"@napi-rs/image-linux-arm64-musl@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-linux-arm64-musl/-/image-linux-arm64-musl-1.3.0.tgz#e83d6e02acd245ce48e1f49f3ce75228ee2dca8c"
+  integrity sha512-u0kCoot1pR9cPVnKOrMonIy2VAeQTneWSfnJCV6C3OP6+1XwqB3MTyxwyWjUoXDmUcQuyEyfwAOqFSMsw6ONrw==
+
+"@napi-rs/image-linux-x64-gnu@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-linux-x64-gnu/-/image-linux-x64-gnu-1.3.0.tgz#c612052788703b728c9a9df6c93a30b6dcf0a960"
+  integrity sha512-P48DL8ZZXmXrxYW9t5cH0ZK62KxtSgGjpAlJLo8yh8KuFNk9o5qAP5HqjoJPL58uKbhK4PeBP97fIjamtS5eWw==
+
+"@napi-rs/image-linux-x64-musl@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-linux-x64-musl/-/image-linux-x64-musl-1.3.0.tgz#e81589125d0daa2fc188b100ef87418b94fbe3f3"
+  integrity sha512-sGDtrhCRQqWEKgOoWAUAqOoTGyFUzNnNo2Bqsi9aIoVcwmg65lRBoDFg9LjX29a44HuqBIRC7MWeQ1LaMnUGBw==
+
+"@napi-rs/image-win32-ia32-msvc@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-win32-ia32-msvc/-/image-win32-ia32-msvc-1.3.0.tgz#067d3d24c5c2bac77a2c4d949ef5a9cbe48b715b"
+  integrity sha512-JauaEIs2TfK9p3VJzyNEvO/7Dk4pkcVQ0crowtqM74nydX3/EUm9Ou3X6RQwMu/VOO4c81/B0tg7ahjhjJaH7Q==
+
+"@napi-rs/image-win32-x64-msvc@1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image-win32-x64-msvc/-/image-win32-x64-msvc-1.3.0.tgz#7fd41eebb9e6288d02e537d9cfd9f7d7262211a1"
+  integrity sha512-Npp9507lyJfxoQsFVey+xoZBwGOcVXn81gkNfE8D7IySiaVH5ZiX7/snXiwSDerXK6c62z8NRdK+6SXfj1kiYA==
+
+"@napi-rs/image@^1.3.0":
+  version "1.3.0"
+  resolved "https://registry.yarnpkg.com/@napi-rs/image/-/image-1.3.0.tgz#a457cd57b9ad0bccb27e965f409f627fe5139b9f"
+  integrity sha512-Ie+11kev2JoPJ0o5carlYwuGjR7SUVS5h+oIvPPjWFCaQFTwOUqqjlnJJyBBzmImQoZxQgzPFVIBSMZ8G+tC2w==
+  optionalDependencies:
+    "@napi-rs/image-android-arm-eabi" "1.3.0"
+    "@napi-rs/image-android-arm64" "1.3.0"
+    "@napi-rs/image-darwin-arm64" "1.3.0"
+    "@napi-rs/image-darwin-x64" "1.3.0"
+    "@napi-rs/image-freebsd-x64" "1.3.0"
+    "@napi-rs/image-linux-arm-gnueabihf" "1.3.0"
+    "@napi-rs/image-linux-arm64-gnu" "1.3.0"
+    "@napi-rs/image-linux-arm64-musl" "1.3.0"
+    "@napi-rs/image-linux-x64-gnu" "1.3.0"
+    "@napi-rs/image-linux-x64-musl" "1.3.0"
+    "@napi-rs/image-win32-ia32-msvc" "1.3.0"
+    "@napi-rs/image-win32-x64-msvc" "1.3.0"
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"
@@ -428,18 +501,6 @@ glob@7.1.6:
     once "^1.3.0"
     path-is-absolute "^1.0.0"
 
-glob@^7.1.7:
-  version "7.2.3"
-  resolved "https://registry.npmjs.org/glob/-/glob-7.2.3.tgz"
-  integrity sha512-nFR0zLpU2YCaRxwoCJvL6UvCH2JFyFVIvwTLsIf21AuHlMskA1hhTdk+LlYJtOlYt9v6dvszD2BGRqBL+iQK9Q==
-  dependencies:
-    fs.realpath "^1.0.0"
-    inflight "^1.0.4"
-    inherits "2"
-    minimatch "^3.1.1"
-    once "^1.3.0"
-    path-is-absolute "^1.0.0"
-
 globby@^11.0.3:
   version "11.1.0"
   resolved "https://registry.npmjs.org/globby/-/globby-11.1.0.tgz"
@@ -462,12 +523,13 @@ ignore@^5.2.0:
   resolved "https://registry.npmjs.org/ignore/-/ignore-5.2.0.tgz"
   integrity sha512-CmxgYGiEPCLhfLnpPp1MoRmifwEIOgjcHXxOBjv7mY96c+eWScsOP9c112ZyLdWHi0FxHjI+4uVhKYp/gcdRmQ==
 
-illustrator.js@^0.1.0-dev.4:
-  version "0.1.0-dev.4"
-  resolved "https://registry.npmjs.org/illustrator.js/-/illustrator.js-0.1.0-dev.4.tgz"
-  integrity sha512-CX00fLAbQFQGfAoKR5r/nTD8keH7tra6c/RSXB654fw97DrWRwZmEPdN8gbAaKGgM83yN51Rg88xhEgLmU+vfA==
+illustrator.js@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/illustrator.js/-/illustrator.js-0.2.0.tgz#6a683f7d5b1dc143ee1ab46fac80473e059a7fb7"
+  integrity sha512-Hels50aGHzfWC/CrAK50SgRaAP2rxjbCS2aPTVWIArArzQXl/jiCn3AJ+XON/smirBqnUKLrnBp4GuNDEZKw5Q==
   dependencies:
     "@napi-rs/canvas" "^0.1.21"
+    "@napi-rs/image" "^1.3.0"
     "@skyra/gifenc" "^1.0.0"
     tslib "^2.4.0"
 
@@ -566,17 +628,12 @@ mimic-fn@^2.1.0:
   resolved "https://registry.npmjs.org/mimic-fn/-/mimic-fn-2.1.0.tgz"
   integrity sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==
 
-minimatch@^3.0.4, minimatch@^3.1.1:
+minimatch@^3.0.4:
   version "3.1.2"
   resolved "https://registry.npmjs.org/minimatch/-/minimatch-3.1.2.tgz"
   integrity sha512-J7p63hRiAjw1NDEww1W7i37+ByIrOWO5XQQAzZ3VOcL0PNybwpfmV/N05zFAzwQ9USyEcX6t3UO+K5aqBQOIHw==
   dependencies:
     brace-expansion "^1.1.7"
-
-minimist@^1.2.5:
-  version "1.2.6"
-  resolved "https://registry.npmjs.org/minimist/-/minimist-1.2.6.tgz"
-  integrity sha512-Jsjnk4bw3YJqYzbdyBiNsPWHPfO++UGG749Cxs6peCu5Xg4nrena6OVxOYxrQTqww0Jmwt+Ref8rggumkTLz9Q==
 
 ms@2.1.2:
   version "2.1.2"
@@ -670,17 +727,6 @@ postcss-load-config@^3.0.1:
     lilconfig "^2.0.5"
     yaml "^1.10.2"
 
-postinstall@^0.7.4:
-  version "0.7.4"
-  resolved "https://registry.npmjs.org/postinstall/-/postinstall-0.7.4.tgz"
-  integrity sha512-jrItKnoJJCY6wuhP/LpTy5KyWJYUOOs+2477PUAXDCrJOZX2vgzCD3jgXawhJG4qdFxvAepaJLum1trieFbEuw==
-  dependencies:
-    "@danieldietrich/copy" "^0.4.2"
-    glob "^7.1.7"
-    minimist "^1.2.5"
-    resolve-from "^5.0.0"
-    resolve-pkg "^2.0.0"
-
 punycode@^2.1.0:
   version "2.1.1"
   resolved "https://registry.npmjs.org/punycode/-/punycode-2.1.1.tgz"
@@ -702,13 +748,6 @@ resolve-from@^5.0.0:
   version "5.0.0"
   resolved "https://registry.npmjs.org/resolve-from/-/resolve-from-5.0.0.tgz"
   integrity sha512-qYg9KP24dD5qka9J47d0aVky0N+b4fTU89LN9iDnjB5waksiC49rvMB0PrUJQGoTmH50XPiqOvAjDfaijGxYZw==
-
-resolve-pkg@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npmjs.org/resolve-pkg/-/resolve-pkg-2.0.0.tgz"
-  integrity sha512-+1lzwXehGCXSeryaISr6WujZzowloigEofRB+dj75y9RRa/obVcYgbHJd53tdYw8pvZj8GojXaaENws8Ktw/hQ==
-  dependencies:
-    resolve-from "^5.0.0"
 
 reusify@^1.0.4:
   version "1.0.4"

@@ -5,6 +5,7 @@
   "main": "dist/index.js",
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
+  "bin": "./bin/canvacord.js",
   "exports": {
     "import": "./dist/index.mjs",
     "require": "./dist/index.js"
@@ -55,7 +56,7 @@
     "typescript": "^4.6.3"
   },
   "dependencies": {
-    "node-fetch": "^3.2.5",
-    "illustrator.js": "^0.1.0-dev"
+    "illustrator.js": "^0.2.0",
+    "node-fetch": "^3.2.5"
   }
 }

@@ -1,32 +1,54 @@
-import { Illustrator, Tools, loadImage, IllustratorImageSource } from 'illustrator.js';
+import { ImageLoader, IllustratorImageSource, IllustratorImage } from 'illustrator.js';
 
-export default class Filters {
-    /**
-     * **⚠ You may not instantiate Canvacord class! ⚠**
-     * @hideconstructor
-     */
-    constructor() {
-        throw new Error(`The ${this.constructor.name} class may not be instantiated!`);
+export interface CanvacordCropOptions {
+    from: number;
+    to: number;
+    width: number;
+    height: number;
+}
+
+export default class CanvacordFilters extends null {
+    private constructor() {}
+
+    static async invert(image: IllustratorImageSource): Promise<Buffer> {
+        if (!image) throw new Error("image source is required");
+        const img = await ImageLoader.loadImage(image, true);
+        return new IllustratorImage(img).invert().png();
     }
 
-    static async invert(image: IllustratorImageSource, amount: number = 100): Promise<Buffer> {
-        if (!image) throw new Error("Please provide a image");
+    static async blur(image: IllustratorImageSource, sigma = 3): Promise<Buffer> {
+        if (!image) throw new Error("image source is required");
+        const img = await ImageLoader.loadImage(image, true);
+        return new IllustratorImage(img).blur(sigma).png();
+    }
 
-        const loadedImage = await loadImage(image);
-        const illustrator = new Illustrator(loadedImage.width, loadedImage.height);
+    static async grayscale(image: IllustratorImageSource): Promise<Buffer> {
+        if (!image) throw new Error("image source is required");
+        const img = await ImageLoader.loadImage(image, true);
+        return new IllustratorImage(img).grayscale().png();
+    }
 
-        const imageTool = new Tools.ImageTool(illustrator.backgroundLayer);
+    static async huerotate(image: IllustratorImageSource, hue: number): Promise<Buffer> {
+        if (!image) throw new Error("image source is required");
+        const img = await ImageLoader.loadImage(image, true);
+        return new IllustratorImage(img).huerotate(hue).png();
+    }
 
-        illustrator.backgroundLayer.unlock();
+    static async crop(image: IllustratorImageSource, options: CanvacordCropOptions): Promise<Buffer> {
+        if (!image) throw new Error("image source is required");
+        const img = await ImageLoader.loadImage(image, true);
+        return new IllustratorImage(img).crop(options.from, options.to, options.width, options.height).png();
+    }
 
-        imageTool.draw(loadedImage, 0, 0);
-        imageTool.render();
+    static async brighten(image: IllustratorImageSource, brightness: number): Promise<Buffer> {
+        if (!image) throw new Error("image source is required");
+        const img = await ImageLoader.loadImage(image, true);
+        return new IllustratorImage(img).brighten(brightness).png();
+    }
 
-        const filterTool = new Tools.FilterTool(illustrator.backgroundLayer);
-
-        filterTool.invert(amount);
-        filterTool.render();
-
-        return await illustrator.export();
+    static async contrast(image: IllustratorImageSource, contrast: number): Promise<Buffer> {
+        if (!image) throw new Error("image source is required");
+        const img = await ImageLoader.loadImage(image, true);
+        return new IllustratorImage(img).adjustContrast(contrast).png();
     }
 }

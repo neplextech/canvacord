@@ -1,5 +1,1 @@
-import Filters from "./classes/Filters"
-
-export = {
-    Filters
-}
+export * from "./classes/Filters";
