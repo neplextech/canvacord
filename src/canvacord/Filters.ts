@@ -7,7 +7,7 @@ export interface CanvacordCropOptions {
     height: number;
 }
 
-export default class CanvacordFilters extends null {
+export class Filters extends null {
     private constructor() {}
 
     static async invert(image: IllustratorImageSource): Promise<Buffer> {

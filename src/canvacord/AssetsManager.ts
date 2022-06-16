@@ -13,15 +13,17 @@ const store = {
     images: {} as Record<string, ImageStore>
 };
 
+let loaded = false;
+
 function loadAssets(warnIfFailed = true) {
     for (const asset of ["fonts", "images"]) {
         try {
-            const data = fs.readdirSync(`${__dirname}/../../assets/${asset}`);
+            const data = fs.readdirSync(`${__dirname}/../assets/${asset}`);
             data.forEach(d => {
                 const name = d.split(".").shift() as string;
                 (asset === "fonts" ? store.fonts : store.images)[name] = {
                     name,
-                    path: `${__dirname}/../../assets/${asset}/${d}`,
+                    path: `${__dirname}/../assets/${asset}/${d}`,
                     type: asset === "fonts" ? "FONT" : "IMAGE"
                 };
             });
@@ -31,23 +33,34 @@ function loadAssets(warnIfFailed = true) {
     }
 }
 
+const ensureLoaded = () => {
+    if (!loaded) {
+        loadAssets();
+        loaded = true;
+    }
+};
+
 export const AssetsManager = {
     load: loadAssets,
     fonts: {
         get(name: string) {
             if (!name || typeof name !== "string") throw new TypeError("font name must be a string");
+            ensureLoaded();
             return store.fonts[name];
         },
         all() {
+            ensureLoaded();
             return store.fonts;
         }
     },
     images: {
         get(name: string) {
             if (!name || typeof name !== "string") throw new TypeError("image name must be a string");
+            ensureLoaded();
             return store.images[name];
         },
         all() {
+            ensureLoaded();
             return store.images;
         }
     }
