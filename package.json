@@ -51,12 +51,12 @@
   "homepage": "https://canvacord.js.org",
   "devDependencies": {
     "@types/node": "^17.0.24",
-    "chalk": "^5.0.1",
     "rimraf": "^3.0.2",
     "tsup": "^5.12.5",
     "typescript": "^4.6.3"
   },
   "dependencies": {
+    "chalk": "^5.0.1",
     "illustrator.js": "^0.3.1",
     "node-fetch": "^3.2.5"
   }
