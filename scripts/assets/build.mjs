@@ -5,7 +5,7 @@ import { fileURLToPath } from "node:url";
 import { dirname } from "node:path";
 
 const METADATA_URL = "https://raw.githubusercontent.com/CesiumLabs/canvacord/assets/datasrc.json";
-const ASSETS_DIR = `${dirname(fileURLToPath(import.meta.url))}/../../assets`;
+const ASSETS_DIR = "CANVACORD_ASSETS" in process.env ? process.env.CANVACORD_ASSETS : `${dirname(fileURLToPath(import.meta.url))}/../../assets`;
 
 export async function build(force = false) {
     if (!fs.existsSync(ASSETS_DIR)) await fs.promises.mkdir(ASSETS_DIR, { recursive: true });
