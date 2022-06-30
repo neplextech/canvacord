@@ -3,3 +3,4 @@ dist/
 dev/
 assets/
 !scripts/assets/
+package-lock.json
