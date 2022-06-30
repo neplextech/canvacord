@@ -1,7 +1,7 @@
 /**
  *! TO-DO
  - fix: changeMyMind
- - create: impostor, youtube, phub
+ - create: impostor, youtube, phub, discord
  */
 
 import { Illustrator, IllustratorImageSource, ImageLoader, Tools } from "illustrator.js";
@@ -423,6 +423,48 @@ export class ImageGen extends null {
 
         imageTool.draw(background, 0, 0, illustrator.width, illustrator.height);
         imageTool.draw(img, 309, 0, 309, 304);
+
+        imageTool.render();
+
+        return await illustrator.export();
+    }
+
+    static async kick(kicker: IllustratorImageSource, kicked: IllustratorImageSource): Promise<Buffer> {
+        if (!kicker) throw new Error("kicker source is required");
+        if (!kicked) throw new Error("kicked source is required");
+
+        const kickerLoaded = await ImageLoader.loadImage(kicker);
+        const kickedLoaded = await ImageLoader.loadImage(kicked);
+        const background = await ImageLoader.loadImage(AssetsManager.images.get("KICK").path);
+
+        const illustrator = new Illustrator(background.width, background.height);
+
+        const imageTool = new Tools.ImageTool(illustrator.layers.createLayer({ name: "main" }));
+
+        imageTool.draw(background, 0, 0, illustrator.width, illustrator.height);
+        imageTool.draw(kickedLoaded, 175, 30, 90, 90);
+        imageTool.draw(kickerLoaded, 600, 60, 90, 90);
+
+        imageTool.render();
+
+        return await illustrator.export();
+    }
+
+    static async punch(puncher: IllustratorImageSource, punched: IllustratorImageSource): Promise<Buffer> {
+        if (!puncher) throw new Error("puncher source is required");
+        if (!punched) throw new Error("punched source is required");
+
+        const puncherLoaded = await ImageLoader.loadImage(puncher);
+        const punchedLoaded = await ImageLoader.loadImage(punched);
+        const background = await ImageLoader.loadImage(AssetsManager.images.get("PUNCH").path);
+
+        const illustrator = new Illustrator(background.width, background.height);
+
+        const imageTool = new Tools.ImageTool(illustrator.layers.createLayer({ name: "main" }));
+
+        imageTool.draw(background, 0, 0, illustrator.width, illustrator.height);
+        imageTool.draw(punchedLoaded,70, 120, 200, 200);
+        imageTool.draw(puncherLoaded, 480, -10, 500, 500);
 
         imageTool.render();
 
