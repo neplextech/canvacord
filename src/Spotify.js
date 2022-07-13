@@ -1,4 +1,4 @@
-const Canvas = require("canvas");
+const Canvas = require("@napi-rs/canvas");
 const Util = require("./Util");
 const assets = require("./Assets");
 
@@ -90,30 +90,6 @@ class Spotify {
             bgColor: "#E8E8E8",
             color: "#1DB954"
         };
-
-        this.__registerFonts();
-    }
-
-    /**
-     * Register fonts
-     * @returns {void}
-     * @ignore
-     * @private
-     */
-    __registerFonts() {
-        setTimeout(() => {
-            Canvas.registerFont(assets.font.get("MANROPE_REGULAR"), {
-                family: "Manrope",
-                weight: "regular",
-                style: "normal"
-            });
-
-            Canvas.registerFont(assets.font.get("MANROPE_BOLD"), {
-                family: "Manrope",
-                weight: "bold",
-                style: "normal"
-            });
-        }, 250);
     }
 
     /**
@@ -265,29 +241,29 @@ class Spotify {
 
         // draw songname
         ctx.fillStyle = "#FFFFFF";
-        ctx.font = "bold 20px Manrope";
+        ctx.font = "bold 20px MANROPE_BOLD";
         await Util.renderEmoji(ctx, Util.shorten(this.title, 30), 170, 40);
 
         // draw artist name
         ctx.fillStyle = "#F1F1F1";
-        ctx.font = "14px Manrope";
+        ctx.font = "14px MANROPE_REGULAR";
         await Util.renderEmoji(ctx, `by ${Util.shorten(this.artist, 40)}`, 170, 70);
 
         // add album
         if (this.album && typeof this.album === "string") {
             ctx.fillStyle = "#F1F1F1";
-            ctx.font = "14px Manrope";
+            ctx.font = "14px MANROPE_REGULAR";
             await Util.renderEmoji(ctx, `on ${Util.shorten(this.album, 40)}`, 170, 90);
         }
 
         // ending point
         ctx.fillStyle = "#B3B3B3";
-        ctx.font = "14px Manrope";
+        ctx.font = "14px MANROPE_REGULAR";
         await Util.renderEmoji(ctx, ending, 430, 130);
 
         // progress
         ctx.fillStyle = "#B3B3B3";
-        ctx.font = "14px Manrope";
+        ctx.font = "14px MANROPE_REGULAR";
         await Util.renderEmoji(ctx, progressF, 170, 130);
 
           // progressbar track
@@ -300,7 +276,7 @@ class Spotify {
         ctx.fillRect(170, 110, this.__calculateProgress(progress, total), 4);
 
         // return
-        return canvas.toBuffer();
+        return canvas.encode("png");
     }
 
     /**

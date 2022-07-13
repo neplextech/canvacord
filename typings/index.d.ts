@@ -405,11 +405,6 @@ declare module "canvacord" {
             replyText?: string;
         }): Promise<Buffer>;
         /**
-         * <p>Canvacord method used to <code>wait</code>.</p>
-         * @param dur - <p>Number of milliseconds to wait</p>
-         */
-        static __wait(dur: number): Promise<void>;
-        /**
          * <p>Matrix data for <strong>Canvacord.convolute()</strong></p>
          */
         static CONVOLUTION_MATRIX: ConvolutionMatrix;
@@ -909,8 +904,8 @@ declare module "canvacord" {
         /**
          * <p>Builds rank card</p>
          * @param ops - <p>Fonts</p>
-         * @param [ops.fontX = "Manrope"] - <p>Bold font family</p>
-         * @param [ops.fontY = "Manrope"] - <p>Regular font family</p>
+         * @param [ops.fontX = "MANROPE_BOLD"] - <p>Bold font family</p>
+         * @param [ops.fontY = "MANROPE_REGULAR"] - <p>Regular font family</p>
          */
         build(ops?: {
             fontX?: string;

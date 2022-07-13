@@ -1,4 +1,4 @@
-const Canvas = require("canvas");
+const Canvas = require("@napi-rs/canvas");
 
 module.exports = async (img) => {
     const image = await Canvas.loadImage(img);
@@ -17,5 +17,5 @@ module.exports = async (img) => {
 
     ctx.putImageData(imgData, 0, 0);
 
-    return canvas.toBuffer();
+    return canvas.encode("png");
 };

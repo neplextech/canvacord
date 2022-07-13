@@ -15,5 +15,5 @@ module.exports = num => {
             break;
         }
     }
-    return num;
+    return `${num}`;
 };

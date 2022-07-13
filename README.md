@@ -15,7 +15,7 @@ $ npm i canvacord
 - Super simple and easy to use 😎
 - Faster than canvacord v4 🚀
 - More than **50 methods**...? Yay! 🎉
-- Built on node-canvas and no bullsh*t involved 🔥
+- Built on **[@napi-rs/canvas](https://npm.im/@napi-rs/canvas)** 🔥
 - Object oriented 💻
 - Beginner friendly 🤓
 - Supports emojis 😀
@@ -24,7 +24,7 @@ $ npm i canvacord
 **[https://canvacord.js.org](https://canvacord.js.org)**
 
 # Join our Discord server
-**[https://discord.gg/2SUybzb](https://discord.gg/2SUybzb)**
+**[https://discord.gg/CR8JxrxSwr](https://discord.gg/CR8JxrxSwr)**
 
 # Examples
 ## Rank Card
@@ -52,7 +52,7 @@ rank.build()
 ```
 
 ### Preview
-![RankCard](https://raw.githubusercontent.com/Snowflake107/canvacord/v5/test/images/RankCard.png)
+![RankCard](https://raw.githubusercontent.com/DevAndromeda/canvacord/v5/test/images/RankCard.png)
 
 ## Other Examples
 

@@ -1,12 +1,10 @@
-// Created and maintained by Snowflake Studio ❄
+// Created and maintained by DevAndromeda
 
 const Canvacord = require("./src/Canvacord");
 
 // load default fonts
 try {
-    setTimeout(() => {
-        Canvacord.registerFonts();
-    });
+    Canvacord.registerFonts();
 } catch(e) {}
 
 /**
@@ -33,7 +31,7 @@ module.exports = {
     FortniteStats: load("discord-canvas") ? load("discord-canvas").FortniteStats : null,
     Plugins: require("./src/Plugins"),
     Util: require("./src/Util"),
-    Assets: require("@canvacord/assets"),
+    Assets: require("./src/Assets"),
     MSX: {
         Brightness: require("./libs/Brightness"),
         Convolute: require("./libs/Convolute"),
@@ -45,6 +43,6 @@ module.exports = {
         Trigger: require("./libs/Trigger")
     },
     write: Canvacord.write,
-    author: "Snowflake Studio ❄",
+    author: "DevAndromeda",
     version: require("./package.json").version
 };
