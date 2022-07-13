@@ -57,7 +57,7 @@
     "chalk": "^5.0.1",
     "moment": "^2.29.1",
     "moment-duration-format": "^2.3.2",
-    "node-fetch": "2.6.6"
+    "node-fetch": "2.6.7"
   },
   "devDependencies": {
     "@discordjs/docgen": "^0.11.1",
