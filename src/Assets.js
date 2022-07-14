@@ -34,10 +34,13 @@ const ensureLoaded = () => {
     }
 };
 
-module.exports = {
-    load: loadAssets,
-    ASSETS_DIR,
-    font: {
+module.exports = class CanvacordAssets {
+    constructor() {
+        return CanvacordAssets;
+    }
+    static load = loadAssets;
+    static ASSETS_DIR = ASSETS_DIR;
+    static font = {
         get(name) {
             if (!name || typeof name !== "string") throw new TypeError("font name must be a string");
             ensureLoaded();
@@ -52,8 +55,8 @@ module.exports = {
             ensureLoaded();
             return store.fonts;
         }
-    },
-    image: {
+    };
+    static image = {
         get(name) {
             if (!name || typeof name !== "string") throw new TypeError("image name must be a string");
             ensureLoaded();
