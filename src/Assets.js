@@ -1,6 +1,7 @@
 const fs = require("fs");
+const path = require("path");
 
-const ASSETS_DIR = "CANVACORD_ASSETS" in process.env ? process.env.CANVACORD_ASSETS : `${__dirname}/../assets`;
+const ASSETS_DIR = "CANVACORD_ASSETS" in process.env ? process.env.CANVACORD_ASSETS : path.join(__dirname, "..", "assets");
 
 let loaded = false;
 
@@ -17,7 +18,7 @@ function loadAssets(warnIfFailed = true) {
                 const name = d.split(".").shift();
                 (asset === "fonts" ? store.fonts : store.images)[name] = {
                     name,
-                    path: `${ASSETS_DIR}/${asset}/${d}`,
+                    path: path.join(ASSETS_DIR, asset, d),
                     type: asset === "fonts" ? "FONT" : "IMAGE"
                 };
             });

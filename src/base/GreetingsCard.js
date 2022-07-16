@@ -4,7 +4,6 @@
 */
 
 const Canvas = require("@napi-rs/canvas");
-const assets = require("../Assets");
 
 const _1pxBase64 = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAATSURBVHjaYvj//z8DAAAA//8DAAj8Av7TpXVhAAAAAElFTkSuQmCC`
 
@@ -150,7 +149,7 @@ module.exports = class Greeting {
 
         // Draw # for discriminator
         ctx.fillStyle = this.colorHashtag;
-        ctx.font = "75px SketchMatch";
+        ctx.font = "75px SKETCHMATCH";
         ctx.fillText("#", canvas.width - 690, canvas.height - 165);
 
         // Draw title

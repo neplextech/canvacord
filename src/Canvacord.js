@@ -375,12 +375,11 @@ class Canvacord {
     static async registerFonts(fontArray = []) {
         if (!fontArray.length) {
             // Canvas.GlobalFonts.loadFontsFromDir(`${Canvacord.assets.ASSETS_DIR}/fonts`)
-            Canvas.GlobalFonts.registerFromPath(Canvacord.assets.font.get("MANROPE_BOLD"), "MANROPE_BOLD");
-            Canvas.GlobalFonts.registerFromPath(Canvacord.assets.font.get("MANROPE_REGULAR"), "MANROPE_REGULAR");
-            Canvas.GlobalFonts.registerFromPath(Canvacord.assets.font.get("WHITNEY_MEDIUM"), "WHITNEY_MEDIUM");
-            Canvas.GlobalFonts.registerFromPath(Canvacord.assets.font.get("WHITNEY_BOOK"), "WHITNEY_BOOK");
-            Canvas.GlobalFonts.registerFromPath(Canvacord.assets.font.get("ROBOTO_LIGHT"), "ROBOTO_LIGHT");
-            Canvas.GlobalFonts.registerFromPath(Canvacord.assets.font.get("ROBOTO_REGULAR"), "ROBOTO_REGULAR");
+            const fonts = Canvacord.assets.font.all();
+
+            for (const font in fonts) {
+                Canvas.GlobalFonts.registerFromPath(fonts[font].path, fonts[font].name);
+            }
         } else {
             fontArray.forEach(font => {
                 Canvas.GlobalFonts.registerFromPath(font.path, font.name || font.face?.family);
@@ -1323,7 +1322,7 @@ class Canvacord {
 
     /**
      * Canvacord assets
-     * @type {CanvacordAssets}
+     * @e {CanvacordAssets}
      * @private
      */
     static get assets() {
