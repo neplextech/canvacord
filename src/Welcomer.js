@@ -1,4 +1,4 @@
-const { Base } = require("discord-canvas");
+const Base = require("./base/GreetingsCard");
 const Util = require("./Util");
 
 class Welcomer extends Base {
@@ -87,7 +87,7 @@ class Welcomer extends Base {
      * @returns {Promise<Buffer>}
      */
     async build() {
-        return (await this.toAttachment()).toBuffer();
+        return (await this.toAttachment()).encode("png");
     }
 
 }
