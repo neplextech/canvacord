@@ -6,6 +6,8 @@
 const Canvas = require("@napi-rs/canvas");
 const assets = require("../Assets");
 
+const _1pxBase64 = `data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAIGNIUk0AAHolAACAgwAA+f8AAIDpAAB1MAAA6mAAADqYAAAXb5JfxUYAAAATSURBVHjaYvj//z8DAAAA//8DAAj8Av7TpXVhAAAAAElFTkSuQmCC`
+
 const formatVariable = (prefix, variable) => {
     const formattedVariable = variable.toLowerCase()
         .split("-").map((word) => word.charAt(0).toUpperCase() + word.substr(1, word.length).toLowerCase()).join("");
@@ -28,21 +30,21 @@ module.exports = class Greeting {
         this.colorTitleBorder = "#000000";
         this.colorMemberCount = "#ffffff";
         this.textMemberCount = "- {count}th member !";
-        this.memberCount = "0";
-        this.backgroundImage = assets.image.get("GREETINGS_BACKGROUND");
+        this.memberCount = 0;
+        this.backgroundImage = _1pxBase64;
         this.avatar = null;
-        this.opacityBorder = "0.4";
+        this.opacityBorder = 0.4;
         this.colorBorder = "#000000";
         this.colorUsername = "#ffffff";
         this.colorUsernameBox = "#000000";
-        this.opacityUsernameBox = "0.4";
+        this.opacityUsernameBox = 0.4;
         this.discriminator = "XXXX";
         this.colorDiscriminator = "#ffffff";
-        this.opacityDiscriminatorBox = "0.4";
+        this.opacityDiscriminatorBox = 0.4;
         this.colorDiscriminatorBox = "#000000";
         this.colorMessage = "#ffffff";
         this.colorHashtag = "#ffffff";
-        this.colorBackground = "000000";
+        this.colorBackground = "#000000";
     }
 
     setAvatar(value) {
@@ -121,8 +123,8 @@ module.exports = class Greeting {
         ctx.fillStyle = this.colorDiscriminatorBox;
         ctx.globalAlpha = this.opacityDiscriminatorBox;
         ctx.fillRect(389, canvas.height - 225, 138, 65);
-        ctx.fillStyle = this.colorMessageBox;
-        ctx.globalAlpha = this.opacityMessageBox;
+        ctx.fillStyle = this.colorMessageBox || "#000000";
+        ctx.globalAlpha = typeof this.opacityMessageBox !== "number" ? 1 : this.opacityMessageBox;
         ctx.fillRect(308, canvas.height - 110, 672, 65);
 
         // Draw username
@@ -156,13 +158,13 @@ module.exports = class Greeting {
         ctx.strokeStyle = this.colorTitleBorder;
         ctx.lineWidth = 15;
         ctx.strokeText(this.textTitle, canvas.width - 620, canvas.height - 330);
-        ctx.fillStyle = this.colorTitle;
+        if (this.colorTitle) ctx.fillStyle = this.colorTitle;
         ctx.fillText(this.textTitle, canvas.width - 620, canvas.height - 330);
 
         // Draw avatar circle
         ctx.beginPath();
         ctx.lineWidth = 10;
-        ctx.strokeStyle = this.colorAvatar;
+        if (this.colorAvatar) ctx.strokeStyle = this.colorAvatar;
         ctx.arc(180, 225, 135, 0, Math.PI * 2, true);
         ctx.stroke();
         ctx.closePath();
