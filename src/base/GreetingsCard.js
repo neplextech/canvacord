@@ -21,8 +21,11 @@ const applyText = (canvas, text, defaultFontSize, width, font) => {
     return ctx.font;
 }
 
-module.exports = class Greeting {
+class Greeting {
 
+    /**
+     * The base greetings class from discord-canvas
+     */
     constructor() {
         this.username = "Clyde";
         this.guildName = "ServerName";
@@ -46,54 +49,106 @@ module.exports = class Greeting {
         this.colorBackground = "#000000";
     }
 
+    /**
+     * Set avatar
+     * @param {string|Buffer} value The avatar
+     * @returns {Greeting}
+     */
     setAvatar(value) {
         this.avatar = value;
         return this;
     }
 
+    /**
+     * Sets discriminator
+     * @param {string} value the discriminator
+     * @returns {Greeting}
+     */
     setDiscriminator(value) {
         this.discriminator = value;
         return this;
     }
 
+    /**
+     * Set username
+     * @param {string} value The username
+     * @returns {Greeting}
+     */
     setUsername(value) {
         this.username = value;
         return this;
     }
 
+    /**
+     * Set guild name
+     * @param {string} value The guild name
+     * @returns {Greeting}
+     */
     setGuildName(value) {
         this.guildName = value;
         return this;
     }
 
+    /**
+     * Sets member count
+     * @param {number} value The member count
+     * @returns {Greeting}
+     */
     setMemberCount(value) {
         this.memberCount = value;
         return this;
     }
 
+    /**
+     * Set background image
+     * @param {string|Buffer} value The background image
+     * @returns {Greeting}
+     */
     setBackground(value) {
         this.backgroundImage = value;
         return this;
     }
 
+    /**
+     * Sets color
+     * @param {string} variable The variable to set the color at
+     * @param {string} value The color
+     * @returns {Greeting}
+     */
     setColor(variable, value) {
         const formattedVariable = formatVariable("color", variable);
         if (this[formattedVariable]) this[formattedVariable] = value;
         return this;
     }
 
+    /**
+     * Sets text
+     * @param {string} variable The variable to set the text at
+     * @param {string} value The text
+     * @returns {Greeting}
+     */
     setText(variable, value) {
         const formattedVariable = formatVariable("text", variable);
         if (this[formattedVariable]) this[formattedVariable] = value;
         return this;
     }
 
+    /**
+     * Sets opacity
+     * @param {string} variable Sets the opacity of the given variable
+     * @param {number} value The opacity to set
+     * @returns {Greeting}
+     */
     setOpacity(variable, value) {
         const formattedVariable = formatVariable("opacity", variable);
         if (this[formattedVariable]) this[formattedVariable] = value;
         return this;
     }
 
+    /**
+     * Builds the image
+     * @returns {Promise<Buffer>}
+     */
     async toAttachment() {
         if (!this.avatar) throw new Error("avatar is required");
         // Create canvas
@@ -174,3 +229,5 @@ module.exports = class Greeting {
         return canvas;
     }
 };
+
+module.exports = Greeting;

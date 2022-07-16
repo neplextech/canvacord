@@ -26,6 +26,7 @@ module.exports = {
     Spotify: require("./src/Spotify"),
     Welcomer: require("./src/Welcomer"),
     Leaver: require("./src/Leaver"),
+    Greeting: require("./src/base/GreetingsCard"),
     CaptchaGen: load("captcha-canvas") ? load("captcha-canvas").CaptchaGenerator : null,
     FortniteShop: load("discord-canvas") ? load("discord-canvas").FortniteShop : null,
     FortniteStats: load("discord-canvas") ? load("discord-canvas").FortniteStats : null,

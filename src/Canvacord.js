@@ -1322,7 +1322,7 @@ class Canvacord {
 
     /**
      * Canvacord assets
-     * @e {CanvacordAssets}
+     * @type {CanvacordAssets}
      * @private
      */
     static get assets() {
