@@ -7,8 +7,8 @@ const start_time = performance.now();
 const date = new Date();
 const imgDir = path.resolve("./data/images");
 const fontsDir = path.resolve("./data/fonts");
-const GH_RAW_URL_BASE = "https://raw.githubusercontent.com/CesiumLabs/canvacord/assets/data";
-const GH_URL_BASE = "https://github.com/CesiumLabs/canvacord/blob/assets/data";
+const GH_RAW_URL_BASE = "https://raw.githubusercontent.com/DevAndromeda/canvacord/assets/data";
+const GH_URL_BASE = "https://github.com/DevAndromeda/canvacord/blob/assets/data";
 
 console.log("Building JSON data of assets");
 const imageFiles = await fs.readdir(imgDir).then(res => {
@@ -50,12 +50,12 @@ const datasrc = {
     total_files: imageFiles.length + fontFiles.length,
     images_count: imageFiles.length,
     fonts_count: fontFiles.length,
-    github: "https://github.com/CesiumLabs/canvacord",
+    github: "https://github.com/DevAndromeda/canvacord",
     website: "https://canvacord.js.org",
     npm: "https://www.npmjs.com/package/canvacord",
     generated_timestamp: date.getTime(),
     generated_timestamp_iso: date.toISOString(),
-    shasum: "https://raw.githubusercontent.com/CesiumLabs/canvacord/assets/shasum.txt"
+    shasum: "https://raw.githubusercontent.com/DevAndromeda/canvacord/assets/shasum.txt"
 };
 
 const datasrc_stringified = JSON.stringify(datasrc);
@@ -71,5 +71,5 @@ Shasum: ${shasum}
 Generated Timestamp: ${datasrc.generated_timestamp_iso}
 Total Files: ${datasrc.total_files} (${datasrc.fonts_count} fonts, ${datasrc.images_count} images)
 Shasum URL: ${datasrc.shasum}
-Endpoint: https://raw.githubusercontent.com/CesiumLabs/canvacord/assets/datasrc.json
+Endpoint: https://raw.githubusercontent.com/DevAndromeda/canvacord/assets/datasrc.json
 ${"-".repeat(30)}`);
