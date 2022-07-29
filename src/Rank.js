@@ -626,11 +626,11 @@ class Rank {
         const rx = this.data.requiredXP.data;
 
         if (rx <= 0) return 1;
-        if (cx > rx) return this.data.progressBar.width;
+        if (cx > rx) return parseInt(this.data.progressBar.width) || 0;
 
         let width = (cx * 615) / rx;
         if (width > this.data.progressBar.width) width = this.data.progressBar.width;
-        return width;
+        return parseInt(width) || 0;
     }
 
 }
