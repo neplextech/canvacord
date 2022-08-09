@@ -244,7 +244,7 @@ class Rank {
                 this.data.progressBar.rounded = !!rounded;
                 break;
             default:
-                throw new Error(`Unsupported progressbar type "${type}"!`);
+                throw new Error(`Unsupported progressbar type "${fillType}"!`);
         }
 
         return this;
