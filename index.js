@@ -33,6 +33,7 @@ module.exports = {
     Plugins: require("./src/Plugins"),
     Util: require("./src/Util"),
     Assets: require("./src/Assets"),
+    // MiScellaneous eXtensions
     MSX: {
         Brightness: require("./libs/Brightness"),
         Convolute: require("./libs/Convolute"),

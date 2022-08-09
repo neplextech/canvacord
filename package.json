@@ -52,7 +52,7 @@
   },
   "homepage": "https://canvacord.js.org",
   "dependencies": {
-    "@napi-rs/canvas": "^0.1.25",
+    "@napi-rs/canvas": "^0.1.26",
     "@skyra/gifenc": "^1.0.0",
     "chalk": "^5.0.1",
     "moment": "^2.29.4",

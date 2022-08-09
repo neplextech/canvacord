@@ -15,7 +15,7 @@ $ npm i canvacord
 - Super simple and easy to use 😎
 - Faster than canvacord v4 🚀
 - More than **50 methods**...? Yay! 🎉
-- Built on **[@napi-rs/canvas](https://npm.im/@napi-rs/canvas)** 🔥
+- Built on top of **[@napi-rs/canvas](https://npm.im/@napi-rs/canvas)** 🔥
 - Object oriented 💻
 - Beginner friendly 🤓
 - Supports emojis 😀
