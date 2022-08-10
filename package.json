@@ -11,7 +11,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/cesiumlabs/canvacord.git"
+    "url": "git+https://github.com/DevAndromeda/canvacord.git"
   },
   "keywords": [
     "canvacord",
@@ -20,9 +20,9 @@
   "author": "DevAndromeda",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/cesiumlabs/canvacord/issues"
+    "url": "https://github.com/DevAndromeda/canvacord/issues"
   },
-  "homepage": "https://github.com/cesiumlabs/canvacord#readme",
+  "homepage": "https://github.com/DevAndromeda/canvacord#readme",
   "dependencies": {
     "sharp": "^0.30.3"
   },
