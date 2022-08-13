@@ -1,6 +1,6 @@
 {
   "name": "canvacord",
-  "version": "5.4.4",
+  "version": "5.4.5",
   "description": "Powerful image manipulation package for beginners.",
   "main": "index.js",
   "types": "typings/index.d.ts",
