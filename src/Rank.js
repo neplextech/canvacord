@@ -459,7 +459,7 @@ class Rank {
      * @param {string} [ops.fontY="MANROPE_REGULAR"] Regular font family
      * @returns {Promise<Buffer>}
      */
-    async build(ops = { fontX: "MANROPE_BOLD", fontY: "MANROPE_BOLD" }) {
+    async build(ops = { fontX: "MANROPE_BOLD,APPLE_COLOR_EMOJI", fontY: "MANROPE_BOLD,APPLE_COLOR_EMOJI" }) {
         if (typeof this.data.currentXP.data !== "number") throw new Error(`Expected currentXP to be a number, received ${typeof this.data.currentXP.data}!`);
         if (typeof this.data.requiredXP.data !== "number") throw new Error(`Expected requiredXP to be a number, received ${typeof this.data.requiredXP.data}!`);
         if (!this.data.avatar.source) throw new Error("Avatar source not found!");

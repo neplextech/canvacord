@@ -204,7 +204,7 @@ class Greeting {
 
         // Draw # for discriminator
         ctx.fillStyle = this.colorHashtag;
-        ctx.font = "75px SKETCHMATCH";
+        ctx.font = "75px SKETCHMATCH,APPLE_COLOR_EMOJI";
         ctx.fillText("#", canvas.width - 690, canvas.height - 165);
 
         // Draw title

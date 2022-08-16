@@ -241,29 +241,29 @@ class Spotify {
 
         // draw songname
         ctx.fillStyle = "#FFFFFF";
-        ctx.font = "bold 20px MANROPE_BOLD";
+        ctx.font = "bold 20px MANROPE_BOLD,APPLE_COLOR_EMOJI";
         await Util.renderEmoji(ctx, Util.shorten(this.title, 30), 170, 40);
 
         // draw artist name
         ctx.fillStyle = "#F1F1F1";
-        ctx.font = "14px MANROPE_REGULAR";
+        ctx.font = "14px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
         await Util.renderEmoji(ctx, `by ${Util.shorten(this.artist, 40)}`, 170, 70);
 
         // add album
         if (this.album && typeof this.album === "string") {
             ctx.fillStyle = "#F1F1F1";
-            ctx.font = "14px MANROPE_REGULAR";
+            ctx.font = "14px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
             await Util.renderEmoji(ctx, `on ${Util.shorten(this.album, 40)}`, 170, 90);
         }
 
         // ending point
         ctx.fillStyle = "#B3B3B3";
-        ctx.font = "14px MANROPE_REGULAR";
+        ctx.font = "14px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
         await Util.renderEmoji(ctx, ending, 430, 130);
 
         // progress
         ctx.fillStyle = "#B3B3B3";
-        ctx.font = "14px MANROPE_REGULAR";
+        ctx.font = "14px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
         await Util.renderEmoji(ctx, progressF, 170, 130);
 
           // progressbar track

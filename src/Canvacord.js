@@ -244,7 +244,7 @@ class Canvacord {
 
         if (!!displayHex) {
             const ic = Util.invertColor(color);
-            ctx.font = "bold 72px MANROPE_BOLD";
+            ctx.font = "bold 72px MANROPE_BOLD,APPLE_COLOR_EMOJI";
             ctx.fillStyle = ic;
             ctx.fillText(color.toUpperCase(), canvas.width / 3, canvas.height / 2);
         }
@@ -822,7 +822,7 @@ class Canvacord {
         ctx.drawImage(ava, 260, 180, 70, 70);
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-        ctx.font = "bold 15px arial";
+        ctx.font = "bold 15px ROBOTO_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#000000";
         await Util.renderEmoji(ctx, Util.shorten(msg, 24), canvas.width / 10, canvas.height / 1.51);
 
@@ -866,7 +866,7 @@ class Canvacord {
 
         ctx.drawImage(bg, 0, 0, canvas.width, canvas.height);
 
-        ctx.font = "bold 50px Times New Roman";
+        ctx.font = "bold 50px ROBOTO_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#000000";
         await Util.renderEmoji(ctx, Util.shorten(message, 20), 540, 195);
 
@@ -887,7 +887,7 @@ class Canvacord {
         const ctx = canvas.getContext("2d");
         ctx.drawImage(base, 0, 0, canvas.width, canvas.height);
         let x = text.length;
-        let fontSize = 70;
+        let fontSize = 60;
         if (x <= 15) {
             ctx.translate(310, 365);
         } else if (x <= 30) {
@@ -915,13 +915,13 @@ class Canvacord {
             fontSize = 7;
             ctx.translate(310, 335);
         }
-        ctx.font = `${fontSize}px 'Arial'`;
+        ctx.font = `${fontSize}px ROBOTO_REGULAR,APPLE_COLOR_EMOJI`;
         ctx.rotate(-0.39575);
 
         const lines = Util.getLines({ text, ctx, maxWidth: 345 });
         let i = 0;
         while (i < lines.length) {
-            ctx.fillText(lines[i], 10, i * fontSize - 5);
+            ctx.fillText(lines[i], 10, i * fontSize + 15);
             i++;
         }
         return canvas.encode("png");
@@ -946,27 +946,27 @@ class Canvacord {
         ctx.drawImage(avatar, 75, 30, 130, 130);
         ctx.drawImage(badge, 360, 45, 100, 40);
 
-        ctx.font = "40px MANROPE_REGULAR";
+        ctx.font = "40px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#FFFFFF";
         ctx.textAlign = "start";
         await Util.renderEmoji(ctx, Util.shorten(message, 66), 230, 150);
 
-        ctx.font = "50px WHITNEY_MEDIUM";
+        ctx.font = "50px WHITNEY_MEDIUM,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#FFFFFF";
         ctx.textAlign = "start";
         ctx.fillText("Clyde", 230, 80);
 
-        ctx.font = "40px WHITNEY_MEDIUM";
+        ctx.font = "40px WHITNEY_MEDIUM,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#7D7D7D";
         ctx.textAlign = "start";
         ctx.fillText(Util.discordTime(), 470, 80);
 
-        ctx.font = "20px MANROPE_REGULAR";
+        ctx.font = "20px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#7D7D7D";
         ctx.textAlign = "start";
         ctx.fillText("Only you can see this  —", 240, 190);
 
-        ctx.font = "20px MANROPE_REGULAR";
+        ctx.font = "20px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#2785C7";
         ctx.textAlign = "start";
         ctx.fillText("delete this message.", 240 + ctx.measureText("Only you can see this  —").width + 10, 190);
@@ -1000,17 +1000,17 @@ class Canvacord {
 
         ctx.drawImage(image, 75, 30, 130, 130);
 
-        ctx.font = "40px MANROPE_REGULAR";
+        ctx.font = "40px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#FFFFFF";
         ctx.textAlign = "start";
         await Util.renderEmoji(ctx, Util.shorten(options.message, 66), 230, 150);
 
-        ctx.font = "50px WHITNEY_MEDIUM";
+        ctx.font = "50px WHITNEY_MEDIUM,APPLE_COLOR_EMOJI";
         ctx.fillStyle = typeof options.color == "string" ? options.color : "#FFFFFF";
         ctx.textAlign = "start";
         ctx.fillText(typeof options.username === "string" ? Util.shorten(options.username, 17) : "Clyde", 230, 80);
 
-        ctx.font = "40px WHITNEY_MEDIUM";
+        ctx.font = "40px WHITNEY_MEDIUM,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#7D7D7D";
         ctx.textAlign = "start";
         ctx.fillText(Util.discordTime(), 240 + ctx.measureText(Util.shorten(options.username, 17)).width + 110, 80);
@@ -1041,12 +1041,12 @@ class Canvacord {
         ctx.drawImage(baseImage, 0, 0, canvas.width, canvas.height);
         ctx.drawImage(image, 30, 310, 70, 70);
 
-        ctx.font = "32px Arial";
+        ctx.font = "32px ROBOTO_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#F99600";
         ctx.textAlign = "start";
         ctx.fillText(Util.shorten(options.username, 20), 115, 350);
 
-        ctx.font = "32px Arial";
+        ctx.font = "32px ROBOTO_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#CCCCCC";
         ctx.textAlign = "start";
         await Util.renderEmoji(ctx, Util.shorten(options.message, 50), 30, 430);
@@ -1125,15 +1125,15 @@ class Canvacord {
         const username = Util.shorten(ops.username, 21);
         const comment = Util.shorten(ops.content, 60);
 
-        ctx.font = "20px Roboto";
+        ctx.font = "20px ROBOTO_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = ops.dark ? "#FFFFFF" : "#000000";
         ctx.fillText(username, 92, 50);
         
-        ctx.font = "16px Roboto";
+        ctx.font = "16px ROBOTO_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#909090";
         ctx.fillText(time, ctx.measureText(username).width + 140, 50);
 
-        ctx.font = "18px Roboto";
+        ctx.font = "18px ROBOTO_REGULAR,APPLE_COLOR_EMOJI";
         ctx.fillStyle = ops.dark ? "#FFFFFF" : "#000000";
         await Util.renderEmoji(ctx, comment, 92, 80);
 
@@ -1188,7 +1188,7 @@ class Canvacord {
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
         ctx.fillStyle = "#FFFFFF";
-        ctx.font = `bold ${size / 4}px WHITNEY_MEDIUM`;
+        ctx.font = `bold ${size / 4}px WHITNEY_MEDIUM,APPLE_COLOR_EMOJI`;
         await Util.renderEmoji(ctx, str, canvas.width / 4, canvas.height / 1.7);
 
         return canvas.encode("png");
@@ -1244,35 +1244,35 @@ class Canvacord {
         ctx.fillStyle = "#ffffff";
         ctx.textAlign = "left";
 
-        ctx.font = "38px MANROPE_REGULAR";
+        ctx.font = "38px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
 
         await Util.renderEmoji(ctx, Util.shorten(replyText, 32), 186, 200);
 
-        ctx.font = "38px WHITNEY_MEDIUM";
+        ctx.font = "38px WHITNEY_MEDIUM,APPLE_COLOR_EMOJI";
         ctx.fillStyle = Util.formatHex(hex1, "#FFFFFF");
         ctx.fillText(user1, 185, 147);
 
         const usernameWidth = ctx.measureText(user1).width;
         ctx.fillStyle = "#d1d1d1";
-        ctx.font = "38px MANROPE_REGULAR";
+        ctx.font = "38px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
 
         ctx.fillText(" replied to ", 165 + usernameWidth + 20, 147);
 
         const repliedWidth = ctx.measureText(" replied to ").width;
 
         ctx.fillStyle = Util.formatHex(hex2, "#FFFFFF");
-        ctx.font = "38px WHITNEY_MEDIUM";
+        ctx.font = "38px WHITNEY_MEDIUM,APPLE_COLOR_EMOJI";
         ctx.fillText(user2, 165 + usernameWidth + repliedWidth + 20, 167 - 20);
 
         const secondMemberUserWidth = ctx.measureText(user2).width;
 
-        ctx.font = "26px WHITNEY_MEDIUM";
+        ctx.font = "26px WHITNEY_MEDIUM,APPLE_COLOR_EMOJI";
         ctx.fillStyle = "#7a7c80";
         const time = Util.discordTime();
 
         ctx.fillText(` ${time}`, 165 + usernameWidth + repliedWidth + secondMemberUserWidth + 3 + 20, 167 - 20)
 
-        ctx.font = "29px WHITNEY_MEDIUM";
+        ctx.font = "29px WHITNEY_MEDIUM,APPLE_COLOR_EMOJI";
         ctx.globalAlpha = 0.7;
         ctx.fillStyle = "#d1d1d1";
         ctx.fillText(Util.shorten(mainText, 64), 195 + 20 + 20, 100 + 5 - 20);
