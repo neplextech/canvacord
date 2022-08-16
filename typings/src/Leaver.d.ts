@@ -35,11 +35,6 @@ declare class Leaver extends Base {
      * @returns {Leaver}
      */
     setMemberCount(memberCount?: number | string): Leaver;
-    /**
-     * Builds welcome image
-     * @returns {Promise<Buffer>}
-     */
-    build(): Promise<Buffer>;
 }
 import Base = require("./base/GreetingsCard");
 //# sourceMappingURL=Leaver.d.ts.map

@@ -147,7 +147,7 @@ class Greeting {
 
     /**
      * Builds the image
-     * @returns {Promise<Buffer>}
+     * @returns {Promise<Canvas.Canvas>}
      */
     async toAttachment() {
         if (!this.avatar) throw new Error("avatar is required");
@@ -227,6 +227,14 @@ class Greeting {
         ctx.drawImage(avatar, 45, 90, 270, 270);
 
         return canvas;
+    }
+
+    /**
+     * Builds the image
+     * @returns {Promise<Buffer>}
+     */
+    async build() {
+        return (await this.toAttachment()).encode("png");
     }
 };
 

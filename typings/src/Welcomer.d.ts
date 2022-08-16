@@ -34,11 +34,6 @@ declare class Welcomer extends Base {
      * @returns {Welcomer}
      */
     setMemberCount(memberCount?: number | string): Welcomer;
-    /**
-     * Builds welcome image
-     * @returns {Promise<Buffer>}
-     */
-    build(): Promise<Buffer>;
 }
 import Base = require("./base/GreetingsCard");
 //# sourceMappingURL=Welcomer.d.ts.map
