@@ -385,7 +385,7 @@ class Rank {
      * @returns {Rank}
      */
     setStatus(status, circle = false, width = 5) {
-        switch(status) {
+        switch (status) {
             case "online":
                 this.data.status.type = "online";
                 this.data.status.color = "#43B581";
@@ -425,7 +425,7 @@ class Rank {
      */
     setBackground(type, data) {
         if (!data) throw new Error("Missing field : data");
-        switch(type) {
+        switch (type) {
             case "COLOR":
                 this.data.background.type = "color";
                 this.data.background.image = data && typeof data === "string" ? data : "#23272A";
@@ -459,7 +459,7 @@ class Rank {
      * @param {string} [ops.fontY="MANROPE_REGULAR"] Regular font family
      * @returns {Promise<Buffer>}
      */
-    async build(ops = { fontX: "MANROPE_BOLD,APPLE_COLOR_EMOJI", fontY: "MANROPE_BOLD,APPLE_COLOR_EMOJI" }) {
+    async build(ops = { fontX: "MANROPE_BOLD,NOTO_COLOR_EMOJI", fontY: "MANROPE_BOLD,NOTO_COLOR_EMOJI" }) {
         if (typeof this.data.currentXP.data !== "number") throw new Error(`Expected currentXP to be a number, received ${typeof this.data.currentXP.data}!`);
         if (typeof this.data.requiredXP.data !== "number") throw new Error(`Expected requiredXP to be a number, received ${typeof this.data.requiredXP.data}!`);
         if (!this.data.avatar.source) throw new Error("Avatar source not found!");
@@ -539,7 +539,7 @@ class Rank {
         ctx.fillStyle = this.data.requiredXP.color;
         ctx.textAlign = "start";
         ctx.fillText("/ " + Util.toAbbrev(this.data.requiredXP.data), 670 + ctx.measureText(Util.toAbbrev(this.data.currentXP.data)).width + 15, 164);
-        
+
         ctx.fillStyle = this.data.currentXP.color;
         ctx.fillText(Util.toAbbrev(this.data.currentXP.data), 670, 164);
 

@@ -99,7 +99,7 @@ class Spotify {
      * @returns {Spotify}
      */
     setProgressBar(type, color) {
-        switch(type) {
+        switch (type) {
 
             case "BAR":
                 this.progressBar.color = color && typeof color === "string" ? color : "#1DB954";
@@ -189,16 +189,16 @@ class Spotify {
      * @returns {Spotify}
      */
     setBackground(type = "COLOR", data = "#2F3136") {
-        switch(type) {
+        switch (type) {
             case "COLOR":
                 this.background.type = 0;
                 this.background.data = data && typeof data === "string" ? data : "#2F3136";
-            break;
+                break;
             case "IMAGE":
                 if (!data) throw new Error("Missing background data!");
                 this.background.type = 1;
                 this.background.data = data;
-            break;
+                break;
             default:
                 throw new Error(`Invalid background type "${type}"!`);
         }
@@ -241,34 +241,34 @@ class Spotify {
 
         // draw songname
         ctx.fillStyle = "#FFFFFF";
-        ctx.font = "bold 20px MANROPE_BOLD,APPLE_COLOR_EMOJI";
+        ctx.font = "bold 20px MANROPE_BOLD,NOTO_COLOR_EMOJI";
         await Util.renderEmoji(ctx, Util.shorten(this.title, 30), 170, 40);
 
         // draw artist name
         ctx.fillStyle = "#F1F1F1";
-        ctx.font = "14px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
+        ctx.font = "14px MANROPE_REGULAR,NOTO_COLOR_EMOJI";
         await Util.renderEmoji(ctx, `by ${Util.shorten(this.artist, 40)}`, 170, 70);
 
         // add album
         if (this.album && typeof this.album === "string") {
             ctx.fillStyle = "#F1F1F1";
-            ctx.font = "14px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
+            ctx.font = "14px MANROPE_REGULAR,NOTO_COLOR_EMOJI";
             await Util.renderEmoji(ctx, `on ${Util.shorten(this.album, 40)}`, 170, 90);
         }
 
         // ending point
         ctx.fillStyle = "#B3B3B3";
-        ctx.font = "14px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
+        ctx.font = "14px MANROPE_REGULAR,NOTO_COLOR_EMOJI";
         await Util.renderEmoji(ctx, ending, 430, 130);
 
         // progress
         ctx.fillStyle = "#B3B3B3";
-        ctx.font = "14px MANROPE_REGULAR,APPLE_COLOR_EMOJI";
+        ctx.font = "14px MANROPE_REGULAR,NOTO_COLOR_EMOJI";
         await Util.renderEmoji(ctx, progressF, 170, 130);
 
-          // progressbar track
+        // progressbar track
         ctx.rect(170, 170, 300, 4);
-        ctx.fillStyle = this.progressBar.bgColor ||  "#E8E8E8";
+        ctx.fillStyle = this.progressBar.bgColor || "#E8E8E8";
         ctx.fillRect(170, 110, 300, 4);
 
         // progressbar
