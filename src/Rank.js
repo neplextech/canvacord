@@ -557,7 +557,7 @@ class Rank {
             ctx.beginPath();
             // apply color
             if (this.data.progressBar.bar.type === "gradient") {
-                let gradientContext = ctx.createRadialGradient(this._calculateProgress, 0, 500, 0);
+                let gradientContext = ctx.createRadialGradient(this._calculateProgress, 0, 500, 0, 0, 0);
                 this.data.progressBar.bar.color.forEach((color, index) => {
                     gradientContext.addColorStop(index, color);
                 });
