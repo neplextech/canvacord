@@ -3,6 +3,9 @@
 # Canvacord
 Powerful image manipulation tool to manipulate images easily.
 
+## Important Notice
+<blockquote><h2>⚠️ It takes a lot of time and effort to maintain these libs and I don't feel motivated enough to work on this when I am not getting anything out of my work. This lib isn't deprecated; it is still usable and will work as it is but it will not receive further updates. I might get back to this lib once the situation is stable. The repository will remain archived until further notice.</h2></blockquote>
+
 # Installation
 
 ```sh
