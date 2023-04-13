@@ -294,6 +294,7 @@ class Rank {
         this.data.requiredXP.color = color && typeof color === "string" ? color : "#FFFFFF";
         return this;
     }
+    
     /**
      * Set minimum xp of the current level
      * @param {number} data Required xp
