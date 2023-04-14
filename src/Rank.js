@@ -156,7 +156,11 @@ class Rank {
                 name: null,
                 color: "#FFFFFF"
             },
-            renderEmojis: false
+            renderEmojis: false,
+            minXP: {
+                data: 0,
+                color: "#FFFFFF"
+            }
         };
 
         // Load default fonts
@@ -288,6 +292,19 @@ class Rank {
         if (typeof data !== "number") throw new Error(`Required xp data type must be a number, received ${typeof data}!`);
         this.data.requiredXP.data = data;
         this.data.requiredXP.color = color && typeof color === "string" ? color : "#FFFFFF";
+        return this;
+    }
+    
+    /**
+     * Set minimum xp of the current level
+     * @param {number} data Required xp
+     * @param {string} color  Color
+     * @returns {Rank}
+    */
+    setMinXP(data, color = "#FFFFFF") {
+        if (typeof data !== "number") throw new Error(`Min xp data type must be a number, received ${typeof data}!`);
+        this.data.minXP.data = data;
+        this.data.minXP.color = color && typeof color === "string" ? color : "#FFFFFF";
         return this;
     }
 
@@ -627,6 +644,15 @@ class Rank {
 
         if (rx <= 0) return 1;
         if (cx > rx) return parseInt(this.data.progressBar.width) || 0;
+
+        if (this.data.minXP.data > 0) {
+            const mx = this.data.minXP.data;
+            if (cx < mx) return 0;
+
+            const nx = cx - mx;
+            const nr = rx - mx;
+            return (nx * 615) / nr;
+        }
 
         let width = (cx * 615) / rx;
         if (width > this.data.progressBar.width) width = this.data.progressBar.width;

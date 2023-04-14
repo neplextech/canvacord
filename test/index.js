@@ -14,7 +14,8 @@ const rank = new canvacord.Rank()
     .setProgressBar(["#14C49E", "#FF0000"], "GRADIENT", true)
     .setProgressBarTrack("#FFFFFF")
     .setUsername("Snowflake")
-    .setDiscriminator("0007");
+    .setDiscriminator("0007")
+    .setMinXP(300);
 
 rank.build()
     .then(data => {
