@@ -175,7 +175,7 @@ declare class Rank {
      * @param {number|boolean} width Status width
      * @returns {Rank}
      */
-    setStatus(status: "online" | "idle" | "dnd" | "offline" | "streaming", circle?: boolean, width?: number | boolean): Rank;
+    setStatus(status: "online" | "idle" | "dnd" | "offline" | "streaming" | "invisible", circle?: boolean, width?: number | boolean): Rank;
     /**
      * Set background image/color
      * @param {"COLOR"|"IMAGE"} type Background type
