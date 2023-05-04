@@ -11,8 +11,7 @@ const rank = new canvacord.Rank()
     .setRequiredXP(data.requiredXP)
     .setStatus(data.status)
     .setProgressBar("#FFFFFF", "COLOR")
-    .setUsername(data.username)
-    .setDiscriminator(data.discriminator);
+    .setUsername(data.username);
 
 rank.build()
     .then(buffer => {

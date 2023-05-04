@@ -40,7 +40,7 @@ const rank = new canvacord.Rank()
     .setStatus("dnd")
     .setProgressBar("#FFFFFF", "COLOR")
     .setUsername("Snowflake")
-    .setDiscriminator("0007");
+    //.setDiscriminator("0007");  @deprecated Due to Discord removing Discriminators this won't work anymore.
 
 rank.build()
     .then(data => {
