@@ -53,9 +53,6 @@ const assets = require("./Assets");
  * @property {object} requiredXP Rank card required xp
  * @property {number} [requiredXP.data=0] required xp
  * @property {string} [requiredXP.color="#FFFFFF"] Rank card required xp color
- * @property {object} discriminator Rank card discriminator
- * @property {number|string} [discriminator.discrim=null] The discriminator
- * @property {string} [discriminator.color="rgba(255, 255, 255, 0.4)"] Rank card discriminator color
  * @property {object} username Username Data
  * @property {string} [username.name=null] Rank card username
  * @property {string} [username.color="#FFFFFF"] Rank card username color
@@ -148,10 +145,6 @@ class Rank {
                 data: 0,
                 color: "#FFFFFF"
             },
-            discriminator: {
-                discrim: null,
-                color: "rgba(255, 255, 255, 0.4)"
-            },
             username: {
                 name: null,
                 color: "#FFFFFF"
@@ -210,18 +203,6 @@ class Rank {
         if (typeof name !== "string") throw new Error(`Expected username to be a string, received ${typeof name}!`);
         this.data.username.name = name;
         this.data.username.color = color && typeof color === "string" ? color : "#FFFFFF";
-        return this;
-    }
-
-    /**
-     * Set discriminator
-     * @param {string|number} discriminator User discriminator
-     * @param {string} color Discriminator color
-     * @returns {Rank}
-     */
-    setDiscriminator(discriminator, color = "rgba(255, 255, 255, 0.4)") {
-        this.data.discriminator.discrim = !isNaN(discriminator) && `${discriminator}`.length === 4 ? discriminator : null;
-        this.data.discriminator.color = color && typeof color === "string" ? color : "rgba(255, 255, 255, 0.4)";
         return this;
     }
 
@@ -516,16 +497,6 @@ class Rank {
 
         // apply username
         !this.data.renderEmojis ? ctx.fillText(`${name}`, 257 + 18.5, 164) : await Util.renderEmoji(ctx, name, 257 + 18.5, 164);
-
-        // draw discriminator
-        if (!this.data.discriminator.discrim) throw new Error("Missing discriminator!");
-        const discrim = `${this.data.discriminator.discrim}`;
-        if (discrim) {
-            ctx.font = `36px ${ops.fontY}`;
-            ctx.fillStyle = this.data.discriminator.color;
-            ctx.textAlign = "center";
-            ctx.fillText(`#${discrim.substr(0, 4)}`, ctx.measureText(name).width + 20 + 335, 164);
-        }
 
         // fill level
         if (this.data.level.display && !isNaN(this.data.level.data)) {
