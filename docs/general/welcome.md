@@ -51,7 +51,15 @@ rank.build()
 ```
 
 ### Preview
-![RankCard](https://raw.githubusercontent.com/DevAndromeda/canvacord/v5/test/images/RankCard.png)
+![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/images/RankCard.png)
+
+## Rank Card Variants
+
+![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Gamer.png)
+
+![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Nerd.png)
+
+![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Player.png)
 
 ## Other Examples
 
