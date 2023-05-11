@@ -159,7 +159,7 @@ class Canvacord {
             rect(ctx, track.x, track.y, track.height, bar.width, bar.color, false);
         }
 
-        return canvas.toBuffer();
+        return canvas.toBuffer("image/png");
     }
 
     /**
@@ -249,7 +249,7 @@ class Canvacord {
             ctx.fillText(color.toUpperCase(), canvas.width / 3, canvas.height / 2);
         }
 
-        return canvas.toBuffer();
+        return canvas.toBuffer("image/png");
     }
 
     /**
@@ -283,7 +283,7 @@ class Canvacord {
         const ctx = canvas.getContext("2d");
         rect(ctx, x, y, canvas.height, canvas.width, color, !!stroke, lineWidth);
         round(ctx, x, y, canvas.width, canvas.height);
-        return canvas.toBuffer();
+        return canvas.toBuffer("image/png");
     }
 
     /**
@@ -799,7 +799,7 @@ class Canvacord {
             fill[x] === "X" ? drawX(data.x, data.y) : drawO(data.x, data.y);
         });
 
-        return canvas.toBuffer();
+        return canvas.toBuffer("image/png");
     }
 
     /**
@@ -850,7 +850,7 @@ class Canvacord {
         ctx.fillStyle = gradient;
         ctx.fillRect(0, 0, canvas.width, canvas.height);
 
-        return canvas.toBuffer();
+        return canvas.toBuffer("image/png");
     }
 
     /**
