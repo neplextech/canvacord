@@ -528,7 +528,7 @@ class Rank {
                 ctx.font = `36px ${ops.fontY}`;
                 ctx.fillStyle = this.data.discriminator.color;
                 ctx.textAlign = "center";
-                ctx.fillText(discrim.substring(0, 4), ctx.measureText(name).width + 20 + 335, yCoord);
+                ctx.fillText(discrim.substring(0, 5), ctx.measureText(name).width + 20 + 335, yCoord);
             } else {
                 ctx.font = `26px ${ops.fontY}`;
                 ctx.fillStyle = this.data.discriminator.color;
