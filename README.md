@@ -23,8 +23,7 @@ $ npm i canvacord
 # Documentation
 **[https://canvacord.js.org](https://canvacord.js.org)**
 
-# Join our Discord server
-**[https://discord.gg/CR8JxrxSwr](https://discord.gg/CR8JxrxSwr)**
+**[Join our Discord server](https://neplextech.com/discord)**
 
 # Examples
 ## Rank Card
@@ -52,7 +51,15 @@ rank.build()
 ```
 
 ### Preview
-![RankCard](https://raw.githubusercontent.com/DevAndromeda/canvacord/v5/test/images/RankCard.png)
+![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/images/RankCard.png)
+
+## Rank Card Variants
+
+![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Gamer.png)
+
+![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Nerd.png)
+
+![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Player.png)
 
 ## Other Examples
 
@@ -77,9 +84,6 @@ client.on("message", async (message) => {
 
 client.login("Your_Bot_Token_here");
 ```
-
-# Support me
-[![](https://www.paypalobjects.com/webstatic/icon/pp258.png)](https://paypal.me/devsnowflake)
 
 # Note
 > ⚠ | In order to use `Canvacord#Welcomer`/`Canvacord#Leaver`/`Canvacord#CaptchaGen`, you may need to install packages like **[discord-canvas](https://npmjs.com/package/discord-canvas)** & **[captcha-canvas](https://npmjs.com/package/captcha-canvas)**.

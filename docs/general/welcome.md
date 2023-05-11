@@ -1,3 +1,5 @@
+[![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
+
 # Canvacord
 Powerful image manipulation tool to manipulate images easily.
 
@@ -13,7 +15,7 @@ $ npm i canvacord
 - Super simple and easy to use 😎
 - Faster than canvacord v4 🚀
 - More than **50 methods**...? Yay! 🎉
-- Built on node-canvas and no bullsh*t involved 🔥
+- Built on top of **[@napi-rs/canvas](https://npm.im/@napi-rs/canvas)** 🔥
 - Object oriented 💻
 - Beginner friendly 🤓
 - Supports emojis 😀
@@ -21,8 +23,7 @@ $ npm i canvacord
 # Documentation
 **[https://canvacord.js.org](https://canvacord.js.org)**
 
-# Join our Discord server
-**[https://discord.gg/2SUybzb](https://discord.gg/2SUybzb)**
+**[Join our Discord server](https://neplextech.com/discord)**
 
 # Examples
 ## Rank Card
@@ -50,7 +51,7 @@ rank.build()
 ```
 
 ### Preview
-![RankCard](https://raw.githubusercontent.com/Snowflake107/canvacord/v5/test/images/RankCard.png)
+![RankCard](https://raw.githubusercontent.com/DevAndromeda/canvacord/v5/test/images/RankCard.png)
 
 ## Other Examples
 
@@ -75,9 +76,6 @@ client.on("message", async (message) => {
 
 client.login("Your_Bot_Token_here");
 ```
-
-# Support me
-[![](https://www.paypalobjects.com/webstatic/icon/pp258.png)](https://paypal.me/devsnowflake)
 
 # Note
 > ⚠ | In order to use `Canvacord#Welcomer`/`Canvacord#Leaver`/`Canvacord#CaptchaGen`, you may need to install packages like **[discord-canvas](https://npmjs.com/package/discord-canvas)** & **[captcha-canvas](https://npmjs.com/package/captcha-canvas)**.

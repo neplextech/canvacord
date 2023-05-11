@@ -1,5 +1,3 @@
-// Created and maintained by DevAndromeda
-
 const Canvacord = require("./src/Canvacord");
 
 // load default fonts
@@ -17,6 +15,8 @@ function load(moduleName) {
         return null;
     }
 }
+
+const { author, version } = require("./package.json");
 
 module.exports = {
     Canvas: Canvacord,
@@ -45,6 +45,6 @@ module.exports = {
         Trigger: require("./libs/Trigger")
     },
     write: Canvacord.write,
-    author: "DevAndromeda",
-    version: require("./package.json").version
+    author,
+    version
 };

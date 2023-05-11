@@ -4,7 +4,7 @@ import chalk from "chalk";
 import { fileURLToPath } from "url";
 import { dirname } from "path";
 
-const METADATA_URL = "https://raw.githubusercontent.com/DevAndromeda/canvacord/assets/datasrc.json";
+const METADATA_URL = "https://raw.githubusercontent.com/neplextech/canvacord/assets/datasrc.json";
 const ASSETS_DIR = "CANVACORD_ASSETS" in process.env ? process.env.CANVACORD_ASSETS : `${dirname(fileURLToPath(import.meta.url))}/../../assets`;
 
 export async function build(force = false) {
