@@ -1,89 +1,79 @@
 [![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
 
 # Canvacord
-Powerful image manipulation tool to manipulate images easily.
 
-# Installation
+Easily generate images on-the-fly with node.js using wide range of templates.
 
-```sh
-$ npm i canvacord
-```
+> **__NOTE:__** You are looking at the next version of canvacord, which is under development. Go to the [main branch](https://github.com/neplextech/canvacord/tree/main) to view legacy codebase.
 
-[![NPM](https://nodei.co/npm/canvacord.png)](https://nodei.co/npm/canvacord/)
+## Features
 
-# Features
-- Super simple and easy to use 😎
-- Faster than canvacord v4 🚀
-- More than **50 methods**...? Yay! 🎉
-- Built on top of **[@napi-rs/canvas](https://npm.im/@napi-rs/canvas)** 🔥
-- Object oriented 💻
-- Beginner friendly 🤓
-- Supports emojis 😀
+**Coming Soon!**
 
-# Documentation
-**[https://canvacord.js.org](https://canvacord.js.org)**
+# Contributing
 
-**[Join our Discord server](https://neplextech.com/discord)**
+## About the project
 
-# Examples
-## Rank Card
+Unlike previous versions, this project internally uses react-like elements (JSX) to generate an image with the help of [satori](https://github.com/vercel/satori), without depending upon [canvas](https://npm.im/canvas) libraries. Internally, there exists a concept of `Node`s which are basically components for canvacord template. The root node is known as a template. Templates are dynamic, which makes it easier to customize each and every part of the image you are generating. You can follow the example below to add your own components/templates to this library:
 
-```js
-const canvacord = require("canvacord");
-const img = "https://cdn.discordapp.com/embed/avatars/0.png";
+### Adding custom template and node
 
-const userData = getDataSomehow();
+```tsx
+import { JSX, Node, Builder } from "canvacord";
 
-const rank = new canvacord.Rank()
-    .setAvatar(img)
-    .setCurrentXP(userData.xp)
-    .setRequiredXP(userData.requiredXP)
-    .setStatus("dnd")
-    .setProgressBar("#FFFFFF", "COLOR")
-    .setUsername("Snowflake")
-    .setDiscriminator("0007");
+// JSX refers to JSX factory
+// Builder refers to template builder
+// Node refers to component base
 
-rank.build()
-    .then(data => {
-        const attachment = new Discord.MessageAttachment(data, "RankCard.png");
-        message.channel.send(attachment);
+class TextNode extends Node<{
+  data: string;
+  color: string;
+}> {
+  /*
+   * Visual representation of this node
+   */
+  public toElement() {
+    return (
+      <h1
+        style={{
+          color: this.getProperty("color"),
+        }}
+      >
+        {this.getProperty("data")}
+      </h1>
+    );
+  }
+}
+
+class ProfileCard extends Builder {
+  public setUsername(name: string, color: string) {
+    const node = new TextNode({
+      data: name,
+      color,
     });
+
+    super.addComponent(node);
+  }
+
+  public render() {
+    // return root layout along with components
+    return (
+      <div
+        style={{
+          width: `${this.width}px`,
+          height: `${this.height}px`,
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#1A1A23",
+        }}
+      >
+        {/* Render all of the components in the canvas */}
+        {this.components.map((component) => {
+          return component.toElement();
+        })}
+      </div>
+    );
+  }
+}
 ```
-
-### Preview
-![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/images/RankCard.png)
-
-## Rank Card Variants
-
-![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Gamer.png)
-
-![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Nerd.png)
-
-![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Player.png)
-
-## Other Examples
-
-```js
-const Discord = require("discord.js");
-const client = new Discord.Client();
-const canvacord = require("canvacord");
-
-client.on("ready", () => {
-    console.log("I'm online!");
-});
-
-client.on("message", async (message) => {
-    if (message.author.bot) return;
-    if (message.content === "!triggered") {
-        let avatar = message.author.displayAvatarURL({ dynamic: false, format: 'png' });
-        let image = await canvacord.Canvas.trigger(avatar);
-        let attachment = new Discord.MessageAttachment(image, "triggered.gif");
-        return message.channel.send(attachment);
-    }
-});
-
-client.login("Your_Bot_Token_here");
-```
-
-# Note
-> ⚠ | In order to use `Canvacord#Welcomer`/`Canvacord#Leaver`/`Canvacord#CaptchaGen`, you may need to install packages like **[discord-canvas](https://npmjs.com/package/discord-canvas)** & **[captcha-canvas](https://npmjs.com/package/captcha-canvas)**.

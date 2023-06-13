@@ -13,6 +13,10 @@ export class Builder {
     public readonly height: number
   ) {}
 
+  public addComponent<T extends Node>(component: T) {
+    this.components.push(component);
+  }
+
   public addText(data: NodeProps<TextNodeProps>) {
     const node = new TextNode(data);
     this.components.push(node);
