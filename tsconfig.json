@@ -3,10 +3,15 @@
         "src/**/*"
     ],
     "compilerOptions": {
-        "allowJs": true,
+        "outDir": "dist",
+        "strict": true,
+        "strictNullChecks": true,
+        "target": "ES2017",
+        "moduleResolution": "node",
+        "module": "CommonJS",
         "declaration": true,
-        "emitDeclarationOnly": true,
-        "outDir": "./typings",
-        "declarationMap": true
+        "jsx": "react",
+        "jsxFactory": "JSX.createElement",
+        "jsxFragmentFactory": "JSX.Fragment"
     }
 }

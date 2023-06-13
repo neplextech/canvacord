@@ -1,6 +1,7 @@
 node_modules/
-assets/
+legacy/
 !scripts/assets
-package-lock.json
-yarn.lock
 docs/
+dist/
+.yarn/cache
+.yarn/*.gz
