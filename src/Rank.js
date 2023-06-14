@@ -512,7 +512,7 @@ class Rank {
         ctx.font = `bold 36px ${ops.fontX}`;
         ctx.fillStyle = this.data.username.color;
         ctx.textAlign = "start";
-        const name = Util.shorten(this.data.username.name, 10);
+        const name = Util.shorten(this.data.username.name, this.data.discriminator.discrim ? 10 : 15);
 
         const hasHandle = typeof this.data.discriminator.discrim === 'string' && this.data.discriminator.discrim.startsWith('@');
         const yCoord = hasHandle ? 140 : 164;
