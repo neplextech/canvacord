@@ -45,12 +45,16 @@ export class Builder {
     this.components.push(...component);
   }
 
+  private _render() {
+    return this.components.map((component) => {
+      if (component instanceof Element) return component;
+      if (component instanceof Node) return component.toElement();
+      return <span>{String(component)}</span>;
+    });
+  }
+
   public render(): Element {
-    return (
-      <div style={this.style}>
-        {this.components.map((component) => (component instanceof Element ? component : component.toElement()))}
-      </div>
-    );
+    return <div style={this.style}>{this._render()}</div>;
   }
 
   public async build(options: Partial<BuilderBuildOptions> = {}) {
