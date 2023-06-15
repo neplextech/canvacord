@@ -1,35 +1,39 @@
-import { RankCard, Font } from "../src/index";
-import { writeFileSync } from "fs";
+import { Builder, ContainerNode, ImageNode, TextNode } from '../src/index';
+import { writeFileSync } from 'fs';
+import { styles } from './common';
 
-const roboto = Font.fromFileSync(`${__dirname}/Roboto-Regular.ttf`, "Roboto");
-const manrope = Font.fromFileSync(
-  `${__dirname}/Manrope-Regular.ttf`,
-  "Manrope"
-);
+const img = new Builder(700, 300);
 
-const card = new RankCard(700, 300);
+img.style = styles.root;
 
-card.addText({
-  color: "#AA0000",
-  data: "Canva",
-  fontSize: "48px",
-  x: 0,
-  y: 0,
-  font: roboto,
+img.addComponent([
+  new ImageNode({
+    src: 'https://cdn.discordapp.com/embed/avatars/0.png?size=256',
+    style: styles.image
+  }),
+  new ContainerNode({
+    children: [
+      new TextNode({
+        data: 'Canva',
+        style: styles.canva
+      }),
+      new TextNode({
+        data: 'cord',
+        style: styles.cord
+      })
+    ],
+    style: styles.container
+  })
+]);
+
+img.build().then((data) => {
+  writeFileSync(`${__dirname}/normal/test.png`, data);
 });
 
-card.addText({
-  color: "#00EEFF",
-  data: "cord",
-  fontSize: "36px",
-  x: 0,
-  y: 0,
-  font: manrope,
-});
-
-card.build().then((data) => {
-  writeFileSync(`${__dirname}/test.png`, data);
-});
-card.build(true).then((data) => {
-  writeFileSync(`${__dirname}/test.svg`, data);
-});
+img
+  .build({
+    format: 'svg'
+  })
+  .then((data) => {
+    writeFileSync(`${__dirname}/normal/test.svg`, data);
+  });

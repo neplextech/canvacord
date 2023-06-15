@@ -1,21 +1,29 @@
-import { JSX } from "../helpers/jsx";
+import type { CSSProperties } from 'react';
+import { Element, JSX } from '../helpers/jsx';
 
 export interface NodeProperties {
-  x: number;
-  y: number;
+  style?: CSSProperties;
+  children?: Node | Element | Node[] | Element[];
 }
 
 export type NodeProps<T extends object = {}> = NodeProperties & T;
 
 export class Node<T extends object = {}> {
-  public x!: number;
-  public y!: number;
-
   public constructor(public props: NodeProps<T>) {}
 
-  public getProperty<K extends keyof NodeProps<T>>(
-    propertyName: K
-  ): NodeProps<T>[K] {
+  public get children() {
+    return this.getProperty('children');
+  }
+
+  public get style() {
+    return this.props.style || {};
+  }
+
+  public set style(style: CSSProperties) {
+    this.props.style = style;
+  }
+
+  public getProperty<K extends keyof NodeProps<T>>(propertyName: K): NodeProps<T>[K] {
     return this.props[propertyName];
   }
 
@@ -23,7 +31,15 @@ export class Node<T extends object = {}> {
     this.props[propertyName] = value;
   }
 
-  public toElement() {
-    return <></>;
+  public toElement(): Element {
+    return (
+      <>
+        {Array.isArray(this.children)
+          ? this.children.map((c) => (c instanceof Element ? c : c.toElement()))
+          : this.children instanceof Element
+          ? this.children
+          : this.children?.toElement()}
+      </>
+    );
   }
 }

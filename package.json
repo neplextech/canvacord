@@ -8,8 +8,10 @@
     "satori": "^0.10.1"
   },
   "scripts": {
+    "format": "prettier --write \"./src/**/*.{js,ts,jsx,tsx}\"",
     "build": "tsc",
-    "test": "tsx ./test/index.ts"
+    "test": "tsx ./test/index.ts",
+    "test:jsx": "tsx ./test/jsxTest.tsx"
   },
   "repository": {
     "type": "git",
@@ -33,6 +35,7 @@
   "devDependencies": {
     "@types/node": "^20.3.1",
     "@types/react": "^18.2.12",
+    "prettier": "^2.8.8",
     "tsx": "^3.12.7",
     "typescript": "^5.1.3"
   }

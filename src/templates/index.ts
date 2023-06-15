@@ -1,2 +1,1 @@
-export * from "./Builder";
-export * from "./RankCard";
+export * from './Builder';
