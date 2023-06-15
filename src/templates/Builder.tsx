@@ -47,10 +47,11 @@ export class Builder {
 
   private _render() {
     return this.components.map((component) => {
+      if (component == null) return [];
       if (component instanceof Element) return component;
       if (component instanceof Node) return component.toElement();
       return <span>{String(component)}</span>;
-    });
+    }).flat(1);
   }
 
   public render(): Element {
