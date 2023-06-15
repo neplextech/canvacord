@@ -5,6 +5,7 @@
   "main": "./dist/index.js",
   "dependencies": {
     "@resvg/resvg-js": "^2.4.1",
+    "file-type": "16.5.4",
     "satori": "^0.10.1"
   },
   "scripts": {

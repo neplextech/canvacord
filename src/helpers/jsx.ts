@@ -1,4 +1,5 @@
 import type { Key } from 'react';
+import { Node } from '../fabric';
 import { performObjectCleanup } from './StyleSheet';
 
 export type ElementInit = {
@@ -44,3 +45,16 @@ export const JSX = {
     return new Element({ type: 'Fragment', props: { children }, children });
   }
 };
+
+export function render(components: (Node | Element | unknown)[]) {
+  return components
+    .map((component) => {
+      if (component == null) return [];
+      if (component instanceof Element) return component;
+      if (component instanceof Node) return component.toElement();
+
+      const child = String(component) as unknown as Element;
+      return JSX.createElement('span', { children: child }, child);
+    })
+    .flat(1);
+}

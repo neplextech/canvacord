@@ -1,17 +1,9 @@
 import { Node, NodeProps } from './Node';
-import { Element, JSX } from '../helpers';
+import { Element, JSX, render } from '../helpers';
 
 export class ContainerNode extends Node {
   public toElement(): Element {
-    return (
-      <div style={this.style}>
-        {Array.isArray(this.children)
-          ? this.children.map((c) => (c instanceof Element ? c : c.toElement()))
-          : this.children instanceof Element
-          ? this.children
-          : this.children?.toElement()}
-      </div>
-    );
+    return <div style={this.style}>{render(this.children as unknown[])}</div>;
   }
 }
 

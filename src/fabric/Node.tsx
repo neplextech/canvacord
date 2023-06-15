@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Element, JSX } from '../helpers/jsx';
+import { Element, JSX, render } from '../helpers/jsx';
 
 export interface NodeProperties {
   style?: CSSProperties;
@@ -32,14 +32,6 @@ export class Node<T extends object = {}> {
   }
 
   public toElement(): Element {
-    return (
-      <>
-        {Array.isArray(this.children)
-          ? this.children.map((c) => (c instanceof Element ? c : c.toElement()))
-          : this.children instanceof Element
-          ? this.children
-          : this.children?.toElement()}
-      </>
-    );
+    return <>{render(this.children as unknown[])}</>;
   }
 }
