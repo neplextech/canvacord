@@ -43,7 +43,6 @@ export class Builder {
       component = component.children;
     if (!Array.isArray(component)) component = [component];
     this.components.push(...component);
-    this.components = this.components.flat(1);
   }
 
   public render(): Element {
