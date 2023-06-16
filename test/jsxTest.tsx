@@ -20,7 +20,7 @@ const baseStyle = StyleSheet.create({
   progress: {
     borderRadius: '20px',
     height: '29px',
-    width: '582px'
+    width: '591px'
   }
 });
 
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     width: '100%'
   },
   progressContainer: {
-    marginTop: '1rem'
+    marginTop: '0.3rem'
   }
 });
 
@@ -139,7 +139,7 @@ async function main() {
               <Text data="Username" style={styles.username} />
             </Container>
             <Container>
-              <Text data="124/400" style={styles.stats} />
+              <Text data="124/400" style={styles.progress} />
             </Container>
           </Container>
           <Container style={styles.progressContainer}>
