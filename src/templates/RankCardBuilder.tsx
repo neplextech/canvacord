@@ -20,10 +20,11 @@ interface CanvacordRankCardBuilderState {
   discriminator: string;
   level: number;
   rank: number;
+  background: ImageSource;
 }
 
 const colors = {
-  LightGray: '#666A6E',
+  LightGray: '#A0A1A3',
   Gray: '#474B4E',
   DarkGray: '#272A2D',
   White: '#FFFFFF',
@@ -165,6 +166,7 @@ export class RankCardBuilder extends Builder {
     currentXP: 0,
     requiredXP: 0,
     status: 'invisible',
+    background: '',
     fonts: {
       username: undefined,
       stats: undefined,
@@ -191,6 +193,11 @@ export class RankCardBuilder extends Builder {
 
   public setAvatar(image: ImageSource) {
     this.#data.avatar = image;
+    return this;
+  }
+
+  public setBackground(image: ImageSource) {
+    this.#data.background = image;
     return this;
   }
 
@@ -236,6 +243,11 @@ export class RankCardBuilder extends Builder {
     const firstFont = FontFactory.values().next().value as Font;
     const avatar = await loadImage(this.#data.avatar);
 
+    let background;
+    if (this.#data.background) {
+      background = await loadImage(this.#data.background);
+    }
+
     this.#data.fonts.username ??= firstFont.name;
     this.#data.fonts.progress ??= firstFont.name;
     this.#data.fonts.stats ??= firstFont.name;
@@ -263,7 +275,8 @@ export class RankCardBuilder extends Builder {
           this.#data.style.root
         )}
       >
-        <Container style={this.style.overlay}>
+        <Container style={{ ...this.style.overlay, position: 'relative', overflow: 'hidden' }}>
+          {background ? <Image src={background} style={{ position: 'absolute', top: 0, left: 0 }} /> : <></>}
           <Container style={this.style.statsContainer}>
             <Container style={this.style.statsSection}>
               <Text data={`Level ${this.#data.level}`} style={this.style.stats} />
