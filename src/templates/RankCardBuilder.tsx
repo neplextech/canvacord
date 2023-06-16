@@ -2,6 +2,7 @@ import { Font, FontFactory } from '../assets';
 import { Container, Image, Text } from '../fabric';
 import { CSSPropertiesLike, JSX, StyleSheet } from '../helpers';
 import { CanvacordImage } from '../helpers/image';
+import { Builder } from './Builder';
 
 interface CanvacordRankCardBuilderState {
   avatar: CanvacordImage | null;
@@ -26,9 +27,7 @@ const colors = {
   Blue: '#8ACDFF'
 } as const;
 
-type DefaultCSSConfig = {} & Required<CanvacordRankCardBuilderState['fonts']>;
-
-const createDefaultCSS = (config: DefaultCSSConfig) => {
+const createDefaultCSS = (config: CanvacordRankCardBuilderState) => {
   const baseStyle = StyleSheet.create({
     text: {
       color: colors.White,
@@ -66,7 +65,7 @@ const createDefaultCSS = (config: DefaultCSSConfig) => {
       {
         fontWeight: 'bold',
         fontSize: '36px',
-        fontFamily: config.username
+        fontFamily: config.fonts.username
       },
       baseStyle.text
     ),
@@ -74,7 +73,7 @@ const createDefaultCSS = (config: DefaultCSSConfig) => {
       {
         fontWeight: 'lighter',
         fontSize: '24px',
-        fontFamily: config.progress
+        fontFamily: config.fonts.progress
       },
       baseStyle.text
     ),
@@ -85,7 +84,7 @@ const createDefaultCSS = (config: DefaultCSSConfig) => {
         fontWeight: 'bold',
         marginRight: '2rem',
         lineHeight: '10%',
-        fontFamily: config.stats
+        fontFamily: config.fonts.stats
       },
       baseStyle.text
     ),
@@ -97,7 +96,7 @@ const createDefaultCSS = (config: DefaultCSSConfig) => {
     ),
     progressbarThumb: {
       backgroundColor: colors.Blue,
-      width: '53%',
+      width: `${(config.currentXP / config.requiredXP) * 100}%`,
       borderRadius: '20px'
     },
     statsContainer: {
@@ -139,7 +138,7 @@ const createDefaultCSS = (config: DefaultCSSConfig) => {
   return styles;
 };
 
-export class RankCardBuilder {
+export class RankCardBuilder extends Builder {
   #data: CanvacordRankCardBuilderState = {
     avatar: null,
     style: null,
@@ -155,12 +154,21 @@ export class RankCardBuilder {
     }
   };
 
+  public constructor() {
+    super(832, 228);
+  }
+
   public get style() {
     return this.#data.style || {};
   }
 
   public setStyle(style: CSSPropertiesLike) {
     this.#data.style = style;
+  }
+
+  public setFonts(fontConfig: Required<CanvacordRankCardBuilderState['fonts']>) {
+    this.#data.fonts = fontConfig;
+    return this;
   }
 
   public setAvatar(image: CanvacordImage) {
@@ -203,37 +211,43 @@ export class RankCardBuilder {
     this.#data.fonts.progress ??= firstFont.name;
     this.#data.fonts.stats ??= firstFont.name;
 
-    this.#data.style ??= createDefaultCSS({
-      progress: this.#data.fonts.progress,
-      stats: this.#data.fonts.stats,
-      username: this.#data.fonts.username
-    });
+    this.#data.style ??= createDefaultCSS(this.#data);
 
     return (
-      <Container style={this.style.overlay}>
-        <Container style={this.style.statsContainer}>
-          <Container style={this.style.statsSection}>
-            <Text data={`Level ${this.#data.level}`} style={this.style.stats} />
-            <Text data={`Rank ${this.#data.rank}`} style={this.style.stats} />
-          </Container>
-        </Container>
-        <Container style={this.style.body}>
-          <Image src={this.#data.avatar} style={this.style.avatar} />
-          <Container style={this.style.bodyContent}>
-            <Container style={this.style.infoContainer}>
-              <Container>
-                <Text data={this.#data.username} style={this.style.username} />
-              </Container>
-              <Container>
-                <Text
-                  data={`${this.#data.currentXP.toLocaleString()}/${this.#data.requiredXP.toLocaleString()}`}
-                  style={this.style.progress}
-                />
-              </Container>
+      <Container
+        style={StyleSheet.compose(
+          {
+            width: `${this.width}px`,
+            height: `${this.height}px`
+          },
+          this.#data.style.root
+        )}
+      >
+        <Container style={this.style.overlay}>
+          <Container style={this.style.statsContainer}>
+            <Container style={this.style.statsSection}>
+              <Text data={`Level ${this.#data.level}`} style={this.style.stats} />
+              <Text data={`Rank ${this.#data.rank}`} style={this.style.stats} />
             </Container>
-            <Container style={this.style.progressContainer}>
-              <Container style={this.style.progressbarTrack}>
-                <Container style={this.style.progressbarThumb}></Container>
+          </Container>
+          <Container style={this.style.body}>
+            <Image src={this.#data.avatar} style={this.style.avatar} />
+            <Container style={this.style.bodyContent}>
+              <Container style={this.style.infoContainer}>
+                <Container>
+                  <Text data={this.#data.username} style={this.style.username} />
+                </Container>
+                <Container>
+                  <Text
+                    data={`${this.#data.currentXP.toLocaleString()}/${this.#data.requiredXP.toLocaleString()}`}
+                    style={this.style.progress}
+                  />
+                </Container>
+              </Container>
+              <Container style={this.style.progressContainer}>
+                <Container style={this.style.progressbarTrack}>
+                  <Container style={this.style.progressbarThumb}></Container>
+                </Container>
               </Container>
             </Container>
           </Container>

@@ -1,44 +1,33 @@
-import { Builder, ContainerNode, ImageNode, loadImage, TextNode } from '../src/index';
+import { RankCardBuilder, loadImage } from '../src/index';
 import { writeFileSync } from 'fs';
-import { styles } from './common';
+import { manrope, manropeBold, roboto } from './common'
 
 async function main() {
-  const img = new Builder(700, 300);
-
-  img.style = styles.root;
-
   const avatar = await loadImage('https://cdn.discordapp.com/embed/avatars/0.png?size=256');
-
-  img.addComponent([
-    new ImageNode({
-      src: avatar,
-      style: styles.image
-    }),
-    new ContainerNode({
-      children: [
-        new TextNode({
-          data: 'Canva',
-          style: styles.canva
-        }),
-        new TextNode({
-          data: 'cord',
-          style: styles.cord
-        })
-      ],
-      style: styles.container
+  
+  const card = new RankCardBuilder()
+    .setAvatar(avatar)
+    .setCurrentXP(300)
+    .setRequiredXP(500)
+    .setLevel(2)
+    .setRank(5)
+    .setFonts({
+      progress: roboto.name,
+      stats: manrope.name,
+      username: manropeBold.name
     })
-  ]);
+    .setUsername('@wumpus');
 
-  img.build().then((data) => {
-    writeFileSync(`${__dirname}/normal/test.png`, data);
+  card.build().then((data) => {
+    writeFileSync(`${__dirname}/normal/rankCard.png`, data);
   });
 
-  img
+  card
     .build({
       format: 'svg'
     })
     .then((data) => {
-      writeFileSync(`${__dirname}/normal/test.svg`, data);
+      writeFileSync(`${__dirname}/normal/rankCard.svg`, data);
     });
 }
 

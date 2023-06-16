@@ -1,10 +1,13 @@
+import { randomUUID } from 'crypto';
 import { readFileSync } from 'fs';
 import { readFile } from 'fs/promises';
 import { Font as FontData } from 'satori';
 import { FontFactory } from './FontFactory';
 
+const randomAlias = () => randomUUID() as string;
+
 export class Font {
-  public constructor(public data: Buffer | ArrayBuffer, public alias: string) {
+  public constructor(public data: Buffer | ArrayBuffer, public alias = randomAlias()) {
     FontFactory.set(this.alias, this);
   }
 
@@ -29,12 +32,12 @@ export class Font {
     return this.getData();
   }
 
-  public static async fromFile(path: string, alias: string) {
+  public static async fromFile(path: string, alias?: string) {
     const buffer = await readFile(path);
     return new Font(buffer, alias);
   }
 
-  public static fromFileSync(path: string, alias: string) {
+  public static fromFileSync(path: string, alias?: string) {
     const buffer = readFileSync(path);
     return new Font(buffer, alias);
   }
