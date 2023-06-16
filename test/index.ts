@@ -4,17 +4,19 @@ import { manrope, manropeBold, roboto } from './common';
 
 async function main() {
   const card = new RankCardBuilder()
+    .setUsername('@wumpus')
+    .setDiscriminator('1234')
     .setAvatar('https://cdn.discordapp.com/embed/avatars/0.png?size=256')
     .setCurrentXP(300)
     .setRequiredXP(600)
     .setLevel(2)
     .setRank(5)
+    .setStatus('online')
     .setFonts({
-      progress: roboto.name,
-      stats: manrope.name,
+      progress: manropeBold.name,
+      stats: manropeBold.name,
       username: manropeBold.name
-    })
-    .setUsername('@wumpus');
+    });
 
   card.build().then((data) => {
     writeFileSync(`${__dirname}/normal/rankCard.png`, data);

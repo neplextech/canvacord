@@ -17,11 +17,13 @@ interface CanvacordRankCardBuilderState {
   currentXP: number;
   requiredXP: number;
   username: string;
+  discriminator: string;
   level: number;
   rank: number;
 }
 
 const colors = {
+  LightGray: '#666A6E',
   Gray: '#474B4E',
   DarkGray: '#272A2D',
   White: '#FFFFFF',
@@ -67,12 +69,22 @@ const createDefaultCSS = (config: CanvacordRankCardBuilderState) => {
     },
     username: StyleSheet.compose(
       {
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
         fontWeight: 'bold',
         fontSize: '36px',
+        marginBottom: '30px',
         fontFamily: config.fonts.username
       },
       baseStyle.text
     ),
+    discriminator: {
+      fontSize: '30px',
+      color: colors.LightGray,
+      marginBottom: '-5px',
+      marginLeft: '5px'
+    },
     progress: StyleSheet.compose(
       {
         fontWeight: 'lighter',
@@ -149,6 +161,7 @@ export class RankCardBuilder extends Builder {
     level: 0,
     rank: 0,
     username: '',
+    discriminator: '',
     currentXP: 0,
     requiredXP: 0,
     status: 'invisible',
@@ -188,6 +201,11 @@ export class RankCardBuilder extends Builder {
 
   public setUsername(name: string) {
     this.#data.username = name;
+    return this;
+  }
+
+  public setDiscriminator(discrim: string) {
+    this.#data.discriminator = discrim;
     return this;
   }
 
@@ -260,7 +278,12 @@ export class RankCardBuilder extends Builder {
             <Container style={this.style.bodyContent}>
               <Container style={this.style.infoContainer}>
                 <Container>
-                  <Text data={this.#data.username} style={this.style.username} />
+                  <p style={this.style.username}>
+                    <span>{this.#data.username}</span>
+                    <span style={this.style.discriminator}>
+                      {this.#data.discriminator ? `#${this.#data.discriminator}` : ''}
+                    </span>
+                  </p>
                 </Container>
 
                 <Container>
