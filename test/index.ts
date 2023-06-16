@@ -1,12 +1,12 @@
 import { RankCardBuilder, loadImage } from '../src/index';
 import { writeFileSync } from 'fs';
-import { manrope, manropeBold, roboto } from './common'
+import { manrope, manropeBold, roboto } from './common';
 
-async function main() {  
+async function main() {
   const card = new RankCardBuilder()
-    .setAvatar('https://cdn.discordapp.com/embed/avatars/4.png?size=256')
+    .setAvatar('https://cdn.discordapp.com/embed/avatars/0.png?size=256')
     .setCurrentXP(300)
-    .setRequiredXP(500)
+    .setRequiredXP(600)
     .setLevel(2)
     .setRank(5)
     .setFonts({

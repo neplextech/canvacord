@@ -3,6 +3,8 @@ import { Container, Image, Text } from '../fabric';
 import { CSSPropertiesLike, ImageSource, JSX, loadImage, StyleSheet } from '../helpers';
 import { Builder } from './Builder';
 
+type StatusType = 'online' | 'idle' | 'dnd' | 'invisible';
+
 interface CanvacordRankCardBuilderState {
   avatar: ImageSource | null;
   style: CSSPropertiesLike | null;
@@ -11,6 +13,7 @@ interface CanvacordRankCardBuilderState {
     progress: string;
     stats: string;
   }>;
+  status: StatusType;
   currentXP: number;
   requiredXP: number;
   username: string;
@@ -23,6 +26,8 @@ const colors = {
   DarkGray: '#272A2D',
   White: '#FFFFFF',
   Green: '#22A559',
+  Yellow: '#F0B332',
+  Red: '#F24043',
   Blue: '#8ACDFF'
 } as const;
 
@@ -58,7 +63,7 @@ const createDefaultCSS = (config: CanvacordRankCardBuilderState) => {
       width: '144px',
       height: '144px',
       borderRadius: '50%',
-      border: `6px solid ${colors.Green}`
+      border: '6px solid'
     },
     username: StyleSheet.compose(
       {
@@ -146,6 +151,7 @@ export class RankCardBuilder extends Builder {
     username: '',
     currentXP: 0,
     requiredXP: 0,
+    status: 'invisible',
     fonts: {
       username: undefined,
       stats: undefined,
@@ -175,6 +181,11 @@ export class RankCardBuilder extends Builder {
     return this;
   }
 
+  public setStatus(status: StatusType) {
+    this.#data.status = status;
+    return this;
+  }
+
   public setUsername(name: string) {
     this.#data.username = name;
     return this;
@@ -201,8 +212,8 @@ export class RankCardBuilder extends Builder {
   }
 
   public async render() {
-    if (!this.#data.avatar) throw new Error('avatar is required');
-    if (!FontFactory.size) throw new Error('no fonts are loaded');
+    if (!this.#data.avatar) throw new Error('Avatar is required.');
+    if (!FontFactory.size) throw new Error('No fonts are loaded.');
 
     const firstFont = FontFactory.values().next().value as Font;
     const avatar = await loadImage(this.#data.avatar);
@@ -212,6 +223,17 @@ export class RankCardBuilder extends Builder {
     this.#data.fonts.stats ??= firstFont.name;
 
     this.#data.style ??= createDefaultCSS(this.#data);
+
+    const { status } = this.#data;
+
+    const avatarBorderColor =
+      status === 'online'
+        ? colors.Green
+        : status === 'idle'
+        ? colors.Yellow
+        : status === 'dnd'
+        ? colors.Red
+        : colors.Gray;
 
     return (
       <Container
@@ -227,16 +249,20 @@ export class RankCardBuilder extends Builder {
           <Container style={this.style.statsContainer}>
             <Container style={this.style.statsSection}>
               <Text data={`Level ${this.#data.level}`} style={this.style.stats} />
+
               <Text data={`Rank ${this.#data.rank}`} style={this.style.stats} />
             </Container>
           </Container>
+
           <Container style={this.style.body}>
-            <Image src={avatar} style={this.style.avatar} />
+            <Image src={avatar} style={{ ...this.style.avatar, borderColor: avatarBorderColor }} />
+
             <Container style={this.style.bodyContent}>
               <Container style={this.style.infoContainer}>
                 <Container>
                   <Text data={this.#data.username} style={this.style.username} />
                 </Container>
+
                 <Container>
                   <Text
                     data={`${this.#data.currentXP.toLocaleString()}/${this.#data.requiredXP.toLocaleString()}`}
@@ -244,6 +270,7 @@ export class RankCardBuilder extends Builder {
                   />
                 </Container>
               </Container>
+
               <Container style={this.style.progressContainer}>
                 <Container style={this.style.progressbarTrack}>
                   <Container style={this.style.progressbarThumb}></Container>
