@@ -1,6 +1,6 @@
 import type { CSSProperties } from 'react';
 
-export type CSSPropertiesLike = Record<string, CSSProperties>;
+export type CSSPropertiesLike<K extends string | number | symbol = string> = Record<K, CSSProperties>;
 
 export const performObjectCleanup = (obj: Record<string, any>, deep = false) => {
   for (const prop in obj) {
@@ -12,12 +12,14 @@ export const performObjectCleanup = (obj: Record<string, any>, deep = false) => 
 export class StyleSheet extends null {
   private constructor() {}
 
-  public static create<T extends CSSPropertiesLike>(styles: T): T {
-    if (!styles || typeof styles !== 'object') return {} as T;
+  public static create<O extends CSSPropertiesLike, K extends keyof O>(
+    styles: CSSPropertiesLike<K>
+  ): CSSPropertiesLike<K> {
+    if (!styles || typeof styles !== 'object') return {} as O;
 
     performObjectCleanup(styles);
 
-    return styles;
+    return styles as O;
   }
 
   public static compose(style1: CSSProperties, style2: CSSProperties) {

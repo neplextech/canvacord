@@ -1,6 +1,6 @@
 import { Font, StyleSheet } from '../src';
 
-const roboto = Font.fromFileSync(`${__dirname}/Roboto-Regular.ttf`, 'Roboto');
+export const roboto = Font.fromFileSync(`${__dirname}/Roboto-Regular.ttf`, 'Roboto');
 const manrope = Font.fromFileSync(`${__dirname}/Manrope-Regular.ttf`, 'Manrope');
 
 export const styles = StyleSheet.create({

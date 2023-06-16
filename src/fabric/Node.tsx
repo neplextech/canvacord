@@ -9,7 +9,10 @@ export interface NodeProperties {
 export type NodeProps<T extends object = {}> = NodeProperties & T;
 
 export class Node<T extends object = {}> {
-  public constructor(public props: NodeProps<T>) {}
+  public constructor(public props: NodeProps<T>) {
+    this.props.style ??= {};
+    this.props.style.display ??= 'flex';
+  }
 
   public get children() {
     return this.getProperty('children');
