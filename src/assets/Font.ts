@@ -3,11 +3,13 @@ import { readFileSync } from 'fs';
 import { readFile } from 'fs/promises';
 import { Font as FontData } from 'satori';
 import { FontFactory } from './FontFactory';
+import { GlobalFonts } from '@napi-rs/canvas';
 
 const randomAlias = () => randomUUID() as string;
 
 export class Font {
-  public constructor(public data: Buffer | ArrayBuffer, public alias = randomAlias()) {
+  public constructor(public data: Buffer, public alias = randomAlias()) {
+    GlobalFonts.register(data, alias);
     FontFactory.set(this.alias, this);
   }
 

@@ -103,7 +103,7 @@ function makeRequest(
     : http;
 
   lib
-    .get(url, requestOptions || {}, (res) => {
+    .get(url.toString(), requestOptions || {}, (res) => {
       const shouldRedirect = REDIRECT_STATUSES.has(res.statusCode!) && typeof res.headers.location === 'string';
       if (shouldRedirect && redirectCount > 0)
         return makeRequest(new URL(res.headers.location!), resolve, reject, redirectCount - 1, requestOptions);
