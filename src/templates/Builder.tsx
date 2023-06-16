@@ -56,14 +56,14 @@ export class Builder {
       .flat(1);
   }
 
-  public render(): Element {
+  public async render(): Promise<Element> {
     return <div style={this.style}>{this._render()}</div>;
   }
 
   public async build(options: Partial<BuilderBuildOptions> = {}) {
     options.format ??= 'png';
 
-    const svg = await satori(this.render(), {
+    const svg = await satori(await this.render(), {
       height: this.height,
       width: this.width,
       fonts: Array.from(FontFactory.values()).map((font) => font.getData()),

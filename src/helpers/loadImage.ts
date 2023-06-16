@@ -12,6 +12,7 @@ const MAX_REDIRECTS = 20,
   DATA_URI = /^\s*data:/;
 
 export type ImageSource =
+  | CanvacordImage
   | Buffer
   | ArrayBuffer
   | Uint16Array
@@ -30,6 +31,8 @@ export interface LoadImageOptions {
 }
 
 export async function loadImage(source: ImageSource, options: LoadImageOptions = {}) {
+  // load canvacord image
+  if (source instanceof CanvacordImage) return source;
   // load readable stream as image
   if (source instanceof Readable) return createImage(await consumeStream(source));
   // use the same buffer without copying if the source is a buffer

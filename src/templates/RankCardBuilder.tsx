@@ -1,11 +1,10 @@
 import { Font, FontFactory } from '../assets';
 import { Container, Image, Text } from '../fabric';
-import { CSSPropertiesLike, JSX, StyleSheet } from '../helpers';
-import { CanvacordImage } from '../helpers/image';
+import { CSSPropertiesLike, ImageSource, JSX, loadImage, StyleSheet } from '../helpers';
 import { Builder } from './Builder';
 
 interface CanvacordRankCardBuilderState {
-  avatar: CanvacordImage | null;
+  avatar: ImageSource | null;
   style: CSSPropertiesLike | null;
   fonts: Partial<{
     username: string;
@@ -171,7 +170,7 @@ export class RankCardBuilder extends Builder {
     return this;
   }
 
-  public setAvatar(image: CanvacordImage) {
+  public setAvatar(image: ImageSource) {
     this.#data.avatar = image;
     return this;
   }
@@ -201,11 +200,12 @@ export class RankCardBuilder extends Builder {
     return this;
   }
 
-  public render() {
+  public async render() {
     if (!this.#data.avatar) throw new Error('avatar is required');
     if (!FontFactory.size) throw new Error('no fonts are loaded');
 
     const firstFont = FontFactory.values().next().value as Font;
+    const avatar = await loadImage(this.#data.avatar);
 
     this.#data.fonts.username ??= firstFont.name;
     this.#data.fonts.progress ??= firstFont.name;
@@ -231,7 +231,7 @@ export class RankCardBuilder extends Builder {
             </Container>
           </Container>
           <Container style={this.style.body}>
-            <Image src={this.#data.avatar} style={this.style.avatar} />
+            <Image src={avatar} style={this.style.avatar} />
             <Container style={this.style.bodyContent}>
               <Container style={this.style.infoContainer}>
                 <Container>

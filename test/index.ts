@@ -2,11 +2,9 @@ import { RankCardBuilder, loadImage } from '../src/index';
 import { writeFileSync } from 'fs';
 import { manrope, manropeBold, roboto } from './common'
 
-async function main() {
-  const avatar = await loadImage('https://cdn.discordapp.com/embed/avatars/0.png?size=256');
-  
+async function main() {  
   const card = new RankCardBuilder()
-    .setAvatar(avatar)
+    .setAvatar('https://cdn.discordapp.com/embed/avatars/4.png?size=256')
     .setCurrentXP(300)
     .setRequiredXP(500)
     .setLevel(2)
