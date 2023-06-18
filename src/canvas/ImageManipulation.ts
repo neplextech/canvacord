@@ -50,7 +50,7 @@ class ImageManipulation {
   }
 
   public dropShadow(source: ImageSource, x: number, y: number, radius: number, color: string) {
-    return this.filter(source, `drop-shadow(${[x, y, radius, color].join(' ')})`);
+    return this.filter(source, `drop-shadow(${[x, y, `${radius}px`, color].join(' ')})`);
   }
 
   public async filter(source: ImageSource, filter: string = 'none') {
