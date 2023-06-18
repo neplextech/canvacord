@@ -1,6 +1,6 @@
 import { CSSProperties } from 'react';
 import satori, { SatoriOptions } from 'satori';
-import { FontFactory } from '../assets/FontFactory';
+import { FontFactory } from '../assets/AssetsFactory';
 import { Node } from '../fabric/Node';
 import { StyleSheet } from '../helpers';
 import { toPNG } from '../helpers/image';

@@ -1,2 +1,2 @@
 export * from './Font';
-export * from './FontFactory';
+export * from './AssetsFactory';

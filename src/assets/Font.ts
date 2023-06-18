@@ -2,7 +2,7 @@ import { randomUUID } from 'crypto';
 import { readFileSync } from 'fs';
 import { readFile } from 'fs/promises';
 import { Font as FontData } from 'satori';
-import { FontFactory } from './FontFactory';
+import { FontFactory } from './AssetsFactory';
 import { GlobalFonts } from '@napi-rs/canvas';
 
 const randomAlias = () => randomUUID() as string;
