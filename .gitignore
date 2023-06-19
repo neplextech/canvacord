@@ -2,5 +2,7 @@ node_modules/
 assets/
 !scripts/assets
 package-lock.json
-yarn.lock
 docs/
+
+.yarn/cache
+.yarn/*.gz
