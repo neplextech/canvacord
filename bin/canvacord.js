@@ -28,6 +28,7 @@ async function main() {
 ${chalk.blue("help")}               : shows this menu
 ${chalk.blue("rebuild")} ${chalk.grey(`[--force]`)}  : rebuilds assets
 ${chalk.blue("version")}            : shows canvacord version info
+${chalk.blue("discord")}            : canvacord discord support server invite
 ${chalk.blue("github")}             : returns github repository url for canvacord
 
 ${chalk.cyanBright(`Canvacord v${version}`)}`;
@@ -36,6 +37,7 @@ ${chalk.cyanBright(`Canvacord v${version}`)}`;
         return await assetsBuilder(!!getArgs("--force"));
     }
     if (getArgs("version")) return console.log(chalk.cyan(`Canvacord v${version}`));
+    if (getArgs("discord")) return console.log(chalk.cyan('https://neplextech.com/discord'));
     if (getArgs("github")) return console.log(chalk.blue(repository.url.replace("git+", "")));
     console.log(helpMessage);
 }
