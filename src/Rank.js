@@ -532,8 +532,7 @@ class Rank {
             } else {
                 ctx.font = `26px ${ops.fontY}`;
                 ctx.fillStyle = this.data.discriminator.color;
-                ctx.textAlign = "center";
-                ctx.fillText(discrim, 320, 170);
+                ctx.fillText(discrim, 270, 170);
             }
             ctx.restore();
         }
