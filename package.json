@@ -6,6 +6,7 @@
   "dependencies": {
     "@napi-rs/canvas": "^0.1.41",
     "@resvg/resvg-js": "^2.4.1",
+    "@skyra/gifenc": "^1.0.1",
     "file-type": "16.5.4",
     "satori": "^0.10.1"
   },

@@ -4,6 +4,7 @@ import { Readable } from 'stream';
 import * as fs from 'fs';
 import { CanvacordImage } from './image';
 import { fromBuffer } from 'file-type';
+import { Image } from '@napi-rs/canvas';
 
 let http: typeof import('http'), https: typeof import('https');
 
@@ -22,7 +23,8 @@ export type ImageSource =
   | SharedArrayBuffer
   | Readable
   | string
-  | URL;
+  | URL
+  | Image;
 
 export interface LoadImageOptions {
   headers?: Record<string, string>;
@@ -41,7 +43,7 @@ export async function loadImage(source: ImageSource, options: LoadImageOptions =
   // @ts-expect-error
   if (isBufferLike(source)) return createImage(Buffer.from(source));
   // if the source is Image instance, copy the image src to new image
-  if (source instanceof CanvacordImage) return createImage(source.data);
+  if (source instanceof Image) return createImage(source.src);
   // if source is string and in data uri format, construct image using data uri
   if (typeof source === 'string' && DATA_URI.test(source)) {
     const commaIdx = source.indexOf(',');
