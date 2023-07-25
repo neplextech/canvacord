@@ -3,6 +3,7 @@ import { ImageSource } from '../helpers';
 import { createCanvasImage } from './utils';
 import { GifEncoder, EncoderOptions } from '@skyra/gifenc';
 import { Encodable } from './Encodable';
+import { TemplateImage } from '../assets';
 
 export interface ImageGenerationStep {
   image?: ImgenStep[];
@@ -11,7 +12,7 @@ export interface ImageGenerationStep {
 }
 
 export interface ImgenStep {
-  source: ImageSource;
+  source: TemplateImage;
   x: number;
   y: number;
   width?: number;
@@ -74,9 +75,7 @@ export class ImageGen extends Encodable {
     const firstImg = this.template.steps[0].image?.[0];
     if (!firstImg) throw new Error('Cannot infer size from non-image template');
 
-    const img = await createCanvasImage(firstImg.source);
-
-    this.template.steps[0].image![0].source = img;
+    const img = await firstImg.source.resolve();
 
     return { width: img.width, height: img.height };
   }
@@ -127,15 +126,15 @@ export class ImageGen extends Encodable {
     return this;
   }
 
-  public getFinalCanvas(): Canvas {
+  public getFinalCanvas(): Promise<Canvas> {
     if (!this._canvas) throw new Error('render() or generateGif() must be called before accessing the final canvas');
-    return this._canvas;
+    return Promise.resolve(this._canvas);
   }
 
   async #applyGeneration(canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) {
     if (step.image) {
       for (const img of step.image) {
-        const image = await createCanvasImage(img.source);
+        const image = await img.source.resolve();
         if (!img.width || !img.height) {
           ctx.drawImage(image, img.x, img.y);
         } else {

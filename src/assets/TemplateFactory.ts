@@ -1,6 +1,19 @@
+import { Image } from '@napi-rs/canvas';
+import { createCanvasImage } from '../canvas';
 import { ImageGenerationStep, ImageGenerationTemplate } from '../canvas/ImageGen';
 import { ImageSource } from '../helpers';
 import { ImageFactory } from './AssetsFactory';
+import { randomUUID } from 'node:crypto';
+
+export class TemplateImage {
+  #resolved: Image | null = null;
+  public constructor(public source: ImageSource) {}
+
+  public async resolve(): Promise<Image> {
+    if (this.#resolved) return this.#resolved;
+    return (this.#resolved = await createCanvasImage(this.source));
+  }
+}
 
 export const TemplateFactory: Record<string, (image: ImageSource) => ImageGenerationTemplate> = {
   Affect: (image: ImageSource) => {
@@ -9,7 +22,7 @@ export const TemplateFactory: Record<string, (image: ImageSource) => ImageGenera
         {
           image: [
             {
-              source: ImageFactory.AFFECT,
+              source: new TemplateImage(ImageFactory.AFFECT),
               x: 0,
               y: 0
             }
@@ -18,7 +31,7 @@ export const TemplateFactory: Record<string, (image: ImageSource) => ImageGenera
         {
           image: [
             {
-              source: image,
+              source: new TemplateImage(image),
               x: 180,
               y: 383,
               width: 200,
@@ -30,6 +43,9 @@ export const TemplateFactory: Record<string, (image: ImageSource) => ImageGenera
     };
   },
   Triggered: (image: ImageSource) => {
+    const src = new TemplateImage(image);
+    const factory = new TemplateImage(ImageFactory.TRIGGERED);
+
     return {
       gif: {
         repeat: 0,
@@ -47,14 +63,14 @@ export const TemplateFactory: Record<string, (image: ImageSource) => ImageGenera
           d.push({
             image: [
               {
-                source: image,
+                source: src,
                 x: Math.floor(Math.random() * BR) - BR,
                 y: Math.floor(Math.random() * BR) - BR,
                 width: 256 + BR,
                 height: 310 - 54 + BR
               },
               {
-                source: ImageFactory.TRIGGERED,
+                source: factory,
                 x: Math.floor(Math.random() * LR) - LR,
                 y: 310 - 54 + Math.floor(Math.random() * LR) - LR,
                 width: 256 + LR,

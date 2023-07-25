@@ -1,11 +1,19 @@
-import { Canvas, SKRSContext2D } from '@napi-rs/canvas';
+import { Canvas, Image, SKRSContext2D } from '@napi-rs/canvas';
 import { ImageSource } from '../helpers';
 import { CanvasHelper } from './CanvasHelper';
-import { CanvasImage } from './CanvasImage';
 import { createCanvasImage } from './utils';
 
 export class ImageFilterer extends CanvasHelper {
   #filters = [] as string[];
+
+  public drawImage(image: ImageSource, x = 0, y = 0, width = this.width, height = this.height) {
+    this.steps.push(async (ctx) => {
+      const img = await createCanvasImage(image);
+      ctx.drawImage(img, x, y, width, height);
+    });
+
+    return this;
+  }
 
   public invert(value: number) {
     if (typeof value !== 'number') throw new TypeError(`Expected "value" to be a number, received ${typeof value}`);
@@ -68,7 +76,11 @@ export class ImageFilterer extends CanvasHelper {
   }
 
   public async process(canvas: Canvas, ctx: SKRSContext2D) {
-    ctx.filter = this.#filters.join(' ') || 'none';
+    if (this.#filters.length) ctx.filter = this.#filters.join(' ');
+
+    while (this.steps.length > 0) {
+      await this.steps.shift()!(ctx);
+    }
   }
 }
 
@@ -78,9 +90,3 @@ export interface DropShadowConfig {
   radius: number;
   color: string;
 }
-
-export const filterer = async (source: ImageSource) => {
-  const img = await createCanvasImage(source);
-
-  return new CanvasImage(img, img.width, img.height);
-};

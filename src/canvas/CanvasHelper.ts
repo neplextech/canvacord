@@ -1,4 +1,4 @@
-import { AvifConfig, Canvas, createCanvas, SKRSContext2D } from '@napi-rs/canvas';
+import { Canvas, createCanvas, SKRSContext2D } from '@napi-rs/canvas';
 import { Encodable } from './Encodable';
 import { ContextManipulationStep } from './utils';
 
@@ -9,9 +9,12 @@ export abstract class CanvasHelper extends Encodable {
     super();
   }
 
-  public getFinalCanvas(): Canvas {
-    if (!this._canvas) this._canvas = createCanvas(this.width, this.height);
-    this.process(this._canvas, this._canvas.getContext('2d'));
+  public async getFinalCanvas(): Promise<Canvas> {
+    this._canvas ??= createCanvas(this.width, this.height);
+    const ctx = this._canvas.getContext('2d');
+
+    await this.process(this._canvas, ctx);
+
     return this._canvas;
   }
 

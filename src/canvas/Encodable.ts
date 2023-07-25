@@ -3,14 +3,14 @@ import { AvifConfig, Canvas } from '@napi-rs/canvas';
 export type EncodingFormat = 'png' | 'jpeg' | 'webp' | 'avif';
 
 export abstract class Encodable {
-  public abstract getFinalCanvas(): Canvas;
+  public abstract getFinalCanvas(): Promise<Canvas>;
 
   public async encode(): Promise<Buffer>;
   public async encode(format: 'png'): Promise<Buffer>;
   public async encode(format: 'jpeg' | 'webp', options?: number): Promise<Buffer>;
   public async encode(format: 'avif', options?: AvifConfig): Promise<Buffer>;
   public async encode(format: EncodingFormat = 'png', options?: number | AvifConfig): Promise<Buffer> {
-    const canvas = this.getFinalCanvas();
+    const canvas = await this.getFinalCanvas();
 
     switch (format) {
       case 'png':
