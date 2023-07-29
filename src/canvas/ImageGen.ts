@@ -72,7 +72,7 @@ export class ImageGen extends Encodable {
     if ([width, height].some((r) => r != null)) return { width: (width ?? height)!, height: (height ?? width)! };
 
     if (!this.template.steps.length) throw new Error('Cannot infer size from empty template');
-    const firstImg = this.template.steps[0].image?.[0];
+    const firstImg = this.template.steps.find(s => s.image?.length)?.image?.[0];
     if (!firstImg) throw new Error('Cannot infer size from non-image template');
 
     const img = await firstImg.source.resolve();
@@ -136,7 +136,7 @@ export class ImageGen extends Encodable {
       for (const img of step.image) {
         const image = await img.source.resolve();
         if (!img.width || !img.height) {
-          ctx.drawImage(image, img.x, img.y);
+          ctx.drawImage(image, img.x, img.y, canvas.width, canvas.height);
         } else {
           ctx.drawImage(image, img.x, img.y, img.width, img.height);
         }

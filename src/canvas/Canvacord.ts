@@ -22,6 +22,79 @@ export interface CanvacordFactory {
   affect(image: ImageSource): Promise<Buffer>;
 
   /**
+   * Fuse two images together.
+   * @param destination The destination image
+   * @param source The source image
+   * @returns The generated image
+   */
+  fuse(destination: ImageSource, source: ImageSource): Promise<Buffer>;
+
+  /**
+   * Kisses the provided image.
+   * @param image The image to use
+   * @param image2 The image to use
+   * @returns The generated image
+   */
+  kiss(image: ImageSource, image2: ImageSource): Promise<Buffer>;
+
+  /**
+   * Spanks the provided image.
+   * @param image The image to use
+   * @param image2 The image to use
+   * @returns The generated image
+   */
+  spank(image: ImageSource, image2: ImageSource): Promise<Buffer>;
+
+  /**
+   * Slaps the provided image.
+   * @param image The image to use
+   * @param image2 The image to use
+   * @returns The generated image
+   */
+  slap(image: ImageSource, image2: ImageSource): Promise<Buffer>;
+
+  /**
+   * Oh this? This is beautiful.
+   * @param image The image to use
+   * @returns The generated image
+   */
+  beautiful(image: ImageSource): Promise<Buffer>;
+
+  /**
+   * Rainbow.
+   * @param image The image to use
+   * @returns The generated image
+   */
+  rainbow(image: ImageSource): Promise<Buffer>;
+
+  /**
+   * Facepalm.
+   * @param image The image to use
+   * @returns The generated image
+   */
+  facepalm(image: ImageSource): Promise<Buffer>;
+
+  /**
+   * RIP!
+   * @param image The image to use
+   */
+  rip(image: ImageSource): Promise<Buffer>;
+
+  /**
+   * A trash.
+   * @param image The image to use
+   * @returns The generated image
+   */
+  trash(image: ImageSource): Promise<Buffer>;
+
+  /**
+   * Worse than hitler.
+   * @param image The image to use
+   * @returns The generated image
+   */
+  hitler(image: ImageSource): Promise<Buffer>;
+
+  /**
    * Generates Triggered gif with the provided image.
    * @param image The image to use
    * @param [asBuffer] Whether to return a buffer instead of a stream
@@ -65,12 +138,25 @@ const factory = {
 } as CanvacordFactory;
 
 // TODO: Add more methods
-const simpleImageGeneratorMethods = ['affect'] as const;
+const simpleImageGeneratorMethods = [
+  'affect',
+  'fuse',
+  'kiss',
+  'spank',
+  'slap',
+  'beautiful',
+  'facepalm',
+  'rainbow',
+  'rip',
+  'trash',
+  'hitler'
+] as Readonly<Array<Exclude<keyof CanvacordFactory, 'triggered' | 'filters'>>>;
 
 const capitalize = <S extends string>(str: S) => (str[0].toUpperCase() + str.slice(1)) as Capitalize<S>;
 
 for (const method of simpleImageGeneratorMethods) {
   factory[method] = async function (...args: Parameters<CanvacordFactory[typeof method]>) {
+    // @ts-expect-error
     const template = TemplateFactory[capitalize(method)](...args);
     const generator = new ImageGen(template);
 

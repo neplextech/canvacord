@@ -15,8 +15,14 @@ export class TemplateImage {
   }
 }
 
-export const TemplateFactory: Record<string, (image: ImageSource) => ImageGenerationTemplate> = {
-  Affect: (image: ImageSource) => {
+const defineTemplate = <F extends (...args: any[]) => any, P extends Parameters<F>>(
+  cb: (...args: P) => ImageGenerationTemplate
+) => {
+  return cb as (...args: Parameters<typeof cb>) => ImageGenerationTemplate;
+};
+
+export const TemplateFactory = {
+  Affect: defineTemplate((image: ImageSource) => {
     return {
       steps: [
         {
@@ -41,8 +47,8 @@ export const TemplateFactory: Record<string, (image: ImageSource) => ImageGenera
         }
       ]
     };
-  },
-  Triggered: (image: ImageSource) => {
+  }),
+  Triggered: defineTemplate((image: ImageSource) => {
     const src = new TemplateImage(image);
     const factory = new TemplateImage(ImageFactory.TRIGGERED);
 
@@ -83,5 +89,335 @@ export const TemplateFactory: Record<string, (image: ImageSource) => ImageGenera
         return d;
       })()
     };
-  }
+  }),
+  Fuse: defineTemplate((destination: ImageSource, source: ImageSource) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(destination),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          process(canvas, ctx) {
+            ctx.globalCompositeOperation = 'multiply';
+          }
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(source),
+              x: 0,
+              y: 0
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Kiss: defineTemplate((image1: ImageSource, image2: ImageSource) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.KISS),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image1),
+              x: 370,
+              y: 25,
+              width: 200,
+              height: 200
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image2),
+              x: 150,
+              y: 25,
+              width: 200,
+              height: 200
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Spank: defineTemplate((image1: ImageSource, image2: ImageSource) => {
+    return {
+      width: 500,
+      height: 500,
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.SPANK),
+              x: 0,
+              y: 0,
+              width: 500,
+              height: 500
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image1),
+              x: 350,
+              y: 220,
+              width: 120,
+              height: 120
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image2),
+              x: 225,
+              y: 5,
+              width: 140,
+              height: 140
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Slap: defineTemplate((image1: ImageSource, image2: ImageSource) => {
+    return {
+      width: 1000,
+      height: 500,
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.BATSLAP),
+              x: 0,
+              y: 0,
+              width: 1000,
+              height: 500
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image1),
+              x: 350,
+              y: 70,
+              width: 220,
+              height: 220
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image2),
+              x: 580,
+              y: 260,
+              width: 200,
+              height: 200
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Beautiful: defineTemplate((image: ImageSource) => {
+    return {
+      width: 376,
+      height: 400,
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.BEAUTIFUL),
+              x: 0,
+              y: 0,
+              width: 376,
+              height: 400
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 258,
+              y: 28,
+              width: 84,
+              height: 95
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 258,
+              y: 229,
+              width: 84,
+              height: 95
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Facepalm: defineTemplate((image: ImageSource) => {
+    return {
+      width: 632,
+      height: 357,
+      steps: [
+        {
+          process(canvas, ctx) {
+            ctx.fillStyle = '#000000';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+          }
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 199,
+              y: 112,
+              width: 235,
+              height: 235
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.FACEPALM),
+              x: 0,
+              y: 0,
+              width: 632,
+              height: 357
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Rainbow: defineTemplate((image: ImageSource) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.RAINBOW),
+              x: 0,
+              y: 0
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Rip: defineTemplate((image: ImageSource) => {
+    return {
+      width: 244,
+      height: 253,
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.RIP),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 63,
+              y: 110,
+              width: 90,
+              height: 90
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Trash: defineTemplate((image: ImageSource) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.TRASH),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 309,
+              y: 0,
+              width: 309,
+              height: 304
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Hitler: defineTemplate((image: ImageSource) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.HITLER),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 46,
+              y: 43,
+              width: 140,
+              height: 140
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  
 };
