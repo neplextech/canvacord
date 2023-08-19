@@ -1,14 +1,19 @@
-import { Canvas, createCanvas, SKRSContext2D } from '@napi-rs/canvas';
-import { ImageSource } from '../helpers';
-import { createCanvasImage } from './utils';
+import { Canvas, createCanvas, Image, SKRSContext2D } from '@napi-rs/canvas';
 import { GifEncoder, EncoderOptions } from '@skyra/gifenc';
 import { Encodable } from './Encodable';
-import { TemplateImage } from '../assets';
+import { TemplateImage } from '../assets/TemplateFactory';
 
 export interface ImageGenerationStep {
   image?: ImgenStep[];
   text?: TextGenerationStep[];
-  process?: (canvas: Canvas, ctx: SKRSContext2D) => Awaited<void>;
+  custom?: CustomGenerationStep[];
+  preprocess?: (canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) => Awaited<void>;
+  process?: (canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) => Awaited<void>;
+  postprocess?: (canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) => Awaited<void>;
+}
+
+export interface CustomGenerationStep {
+  process: (canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) => Awaited<void>;
 }
 
 export interface ImgenStep {
@@ -17,6 +22,9 @@ export interface ImgenStep {
   y: number;
   width?: number;
   height?: number;
+  preprocess?: (canvas: Canvas, ctx: SKRSContext2D, source: ImgenStep) => Awaited<void>;
+  process?: (canvas: Canvas, ctx: SKRSContext2D, source: ImgenStep) => Awaited<void>;
+  postprocess?: (canvas: Canvas, ctx: SKRSContext2D, source: ImgenStep) => Awaited<void>;
 }
 
 export interface TextGenerationStep {
@@ -32,13 +40,79 @@ export interface TextGenerationStep {
   align?: 'left' | 'center' | 'right';
   baseline?: 'top' | 'middle' | 'bottom';
   direction?: 'inherit' | 'ltr' | 'rtl';
+  preprocess?: (canvas: Canvas, ctx: SKRSContext2D, text: TextGenerationStep) => Awaited<void>;
+  process?: (canvas: Canvas, ctx: SKRSContext2D, text: TextGenerationStep) => Awaited<void>;
+  postprocess?: (canvas: Canvas, ctx: SKRSContext2D, text: TextGenerationStep) => Awaited<void>;
 }
 
-export interface ImageGenerationTemplate {
+export interface IImageGenerationTemplate {
   width?: number;
   height?: number;
   steps: ImageGenerationStep[];
   gif?: EncoderOptions;
+}
+
+export class ImageGenerationTemplate implements IImageGenerationTemplate {
+  public steps: ImageGenerationStep[] = [];
+  public gif?: EncoderOptions;
+
+  public static from(template: IImageGenerationTemplate) {
+    return new ImageGenerationTemplate(template.width, template.height)
+      .setSteps(template.steps)
+      .setGifOptions(template.gif);
+  }
+
+  public constructor(public readonly width?: number, public readonly height?: number) {}
+
+  public setSteps(steps: ImageGenerationStep[]) {
+    this.steps = steps;
+    return this;
+  }
+
+  public setGifOptions(options?: EncoderOptions) {
+    this.gif = options;
+    return this;
+  }
+
+  public isGif() {
+    return this.gif != null;
+  }
+
+  public addStep(step: ImageGenerationStep) {
+    this.steps.push(step);
+    return this;
+  }
+
+  public addSteps(steps: ImageGenerationStep[]) {
+    this.steps.push(...steps);
+    return this;
+  }
+
+  public clearSteps() {
+    this.steps = [];
+    return this;
+  }
+
+  public isInferrable() {
+    return [this.width, this.height].some((r) => r != null);
+  }
+
+  public getWidth() {
+    return this.width ?? this.height;
+  }
+
+  public getHeight() {
+    return this.height ?? this.width;
+  }
+
+  public toJSON(): IImageGenerationTemplate {
+    return {
+      width: this.width,
+      height: this.height,
+      steps: this.steps,
+      gif: this.gif
+    };
+  }
 }
 
 export class ImageGen extends Encodable {
@@ -48,31 +122,29 @@ export class ImageGen extends Encodable {
   }
 
   public addStep(step: ImageGenerationStep) {
-    this.template.steps.push(step);
+    this.template.addStep(step);
     return this;
   }
 
   public addSteps(steps: ImageGenerationStep[]) {
-    this.template.steps.push(...steps);
+    this.template.addSteps(steps);
     return this;
   }
 
   public setGifOptions(options?: EncoderOptions) {
-    this.template.gif = options;
+    this.template.setGifOptions(options);
     return this;
   }
 
   public isGif() {
-    return this.template.gif != null;
+    return this.template.isGif();
   }
 
   async #inferSize() {
-    const { width, height } = this.template;
-
-    if ([width, height].some((r) => r != null)) return { width: (width ?? height)!, height: (height ?? width)! };
+    if (this.template.isInferrable()) return { width: this.template.getWidth()!, height: this.template.getHeight()! };
 
     if (!this.template.steps.length) throw new Error('Cannot infer size from empty template');
-    const firstImg = this.template.steps.find(s => s.image?.length)?.image?.[0];
+    const firstImg = this.template.steps.find((s) => s.image?.length)?.image?.[0];
     if (!firstImg) throw new Error('Cannot infer size from non-image template');
 
     const img = await firstImg.source.resolve();
@@ -132,32 +204,71 @@ export class ImageGen extends Encodable {
   }
 
   async #applyGeneration(canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) {
-    if (step.image) {
-      for (const img of step.image) {
-        const image = await img.source.resolve();
-        if (!img.width || !img.height) {
-          ctx.drawImage(image, img.x, img.y, canvas.width, canvas.height);
-        } else {
-          ctx.drawImage(image, img.x, img.y, img.width, img.height);
+    if (step.preprocess) {
+      await step.preprocess(canvas, ctx, step);
+    }
+
+    if (step.process) {
+      await step.process(canvas, ctx, step);
+    } else {
+      if (step.custom) {
+        for (const custom of step.custom) {
+          await custom.process(canvas, ctx, step);
+        }
+      }
+
+      if (step.image) {
+        for (const img of step.image) {
+          if (img.preprocess) {
+            await img.preprocess(canvas, ctx, img);
+          }
+
+          if (img.process) {
+            await img.process(canvas, ctx, img);
+          } else {
+            const image = await img.source.resolve();
+
+            if (!img.width || !img.height) {
+              ctx.drawImage(image, img.x, img.y, canvas.width, canvas.height);
+            } else {
+              ctx.drawImage(image, img.x, img.y, img.width, img.height);
+            }
+          }
+
+          if (img.postprocess) {
+            await img.postprocess(canvas, ctx, img);
+          }
+        }
+      }
+
+      if (step.text) {
+        for (const text of step.text) {
+          if (text.preprocess) {
+            await text.preprocess(canvas, ctx, text);
+          }
+
+          if (text.process) {
+            await text.process(canvas, ctx, text);
+          } else {
+            if (text.font != null) ctx.font = text.font;
+            if (text.color != null) ctx[text.stroke ? 'strokeStyle' : 'fillStyle'] = text.color;
+            if (text.align != null) ctx.textAlign = text.align;
+            if (text.baseline != null) ctx.textBaseline = text.baseline;
+            if (text.direction != null) ctx.direction = text.direction;
+            if (text.lineWidth != null) ctx.lineWidth = text.lineWidth;
+
+            ctx[text.stroke ? 'strokeText' : 'fillText'](text.value, text.x, text.y, text.maxWidth);
+          }
+
+          if (text.postprocess) {
+            await text.postprocess(canvas, ctx, text);
+          }
         }
       }
     }
 
-    if (step.text) {
-      for (const text of step.text) {
-        if (text.font != null) ctx.font = text.font;
-        if (text.color != null) ctx[text.stroke ? 'strokeStyle' : 'fillStyle'] = text.color;
-        if (text.align != null) ctx.textAlign = text.align;
-        if (text.baseline != null) ctx.textBaseline = text.baseline;
-        if (text.direction != null) ctx.direction = text.direction;
-        if (text.lineWidth != null) ctx.lineWidth = text.lineWidth;
-
-        ctx[text.stroke ? 'strokeText' : 'fillText'](text.value, text.x, text.y, text.maxWidth);
-      }
-    }
-
-    if (step.process) {
-      await step.process(canvas, ctx);
+    if (step.postprocess) {
+      await step.postprocess(canvas, ctx, step);
     }
   }
 }

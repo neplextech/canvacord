@@ -1,6 +1,6 @@
-import { RankCardBuilder, loadImage } from '../src/index';
+import { RankCardBuilder } from '../src/index';
 import { writeFileSync } from 'fs';
-import { manrope, manropeBold, roboto } from './common';
+import { manropeBold } from './common';
 
 async function main() {
   const card = new RankCardBuilder()

@@ -1,98 +1,24 @@
-import { TemplateFactory } from '../assets/TemplateFactory';
 import { ImageSource } from '../helpers';
 import { ImageGen } from './ImageGen';
 import { buffer } from 'stream/consumers';
 import type { Readable } from 'stream';
 import { ImageFilterer } from './ImageFilterer';
 import { CanvasImage } from './CanvasImage';
+import { TemplateFactory } from '../assets/TemplateFactory';
 
-export interface CanvacordFactory {
+export type ImageGeneratorImplementor = {
+  [K in Lowercase<Exclude<keyof typeof TemplateFactory, 'Triggered'>>]: (
+    ...args: Parameters<(typeof TemplateFactory)[Capitalize<K>]>
+  ) => Promise<Buffer>;
+};
+
+export interface CanvacordFactory extends ImageGeneratorImplementor {
   /**
    * Creates a new ImageFilterer instance.
    * @param width The width of the image
    * @param height The height of the image
    */
   filters(width: number, height: number): ImageFilterer;
-
-  /**
-   * Generates "No this does not affect my baby" meme with the provided image.
-   * @param image The image to use
-   * @returns The generated image
-   */
-  affect(image: ImageSource): Promise<Buffer>;
-
-  /**
-   * Fuse two images together.
-   * @param destination The destination image
-   * @param source The source image
-   * @returns The generated image
-   */
-  fuse(destination: ImageSource, source: ImageSource): Promise<Buffer>;
-
-  /**
-   * Kisses the provided image.
-   * @param image The image to use
-   * @param image2 The image to use
-   * @returns The generated image
-   */
-  kiss(image: ImageSource, image2: ImageSource): Promise<Buffer>;
-
-  /**
-   * Spanks the provided image.
-   * @param image The image to use
-   * @param image2 The image to use
-   * @returns The generated image
-   */
-  spank(image: ImageSource, image2: ImageSource): Promise<Buffer>;
-
-  /**
-   * Slaps the provided image.
-   * @param image The image to use
-   * @param image2 The image to use
-   * @returns The generated image
-   */
-  slap(image: ImageSource, image2: ImageSource): Promise<Buffer>;
-
-  /**
-   * Oh this? This is beautiful.
-   * @param image The image to use
-   * @returns The generated image
-   */
-  beautiful(image: ImageSource): Promise<Buffer>;
-
-  /**
-   * Rainbow.
-   * @param image The image to use
-   * @returns The generated image
-   */
-  rainbow(image: ImageSource): Promise<Buffer>;
-
-  /**
-   * Facepalm.
-   * @param image The image to use
-   * @returns The generated image
-   */
-  facepalm(image: ImageSource): Promise<Buffer>;
-
-  /**
-   * RIP!
-   * @param image The image to use
-   */
-  rip(image: ImageSource): Promise<Buffer>;
-
-  /**
-   * A trash.
-   * @param image The image to use
-   * @returns The generated image
-   */
-  trash(image: ImageSource): Promise<Buffer>;
-
-  /**
-   * Worse than hitler.
-   * @param image The image to use
-   * @returns The generated image
-   */
-  hitler(image: ImageSource): Promise<Buffer>;
 
   /**
    * Generates Triggered gif with the provided image.
@@ -137,24 +63,12 @@ const factory = {
   }
 } as CanvacordFactory;
 
-// TODO: Add more methods
-const simpleImageGeneratorMethods = [
-  'affect',
-  'fuse',
-  'kiss',
-  'spank',
-  'slap',
-  'beautiful',
-  'facepalm',
-  'rainbow',
-  'rip',
-  'trash',
-  'hitler'
-] as Readonly<Array<Exclude<keyof CanvacordFactory, 'triggered' | 'filters'>>>;
-
 const capitalize = <S extends string>(str: S) => (str[0].toUpperCase() + str.slice(1)) as Capitalize<S>;
 
-for (const method of simpleImageGeneratorMethods) {
+for (const key in TemplateFactory) {
+  const method = key.toLowerCase() as Lowercase<keyof typeof TemplateFactory>;
+  if (method === 'triggered') continue;
+
   factory[method] = async function (...args: Parameters<CanvacordFactory[typeof method]>) {
     // @ts-expect-error
     const template = TemplateFactory[capitalize(method)](...args);

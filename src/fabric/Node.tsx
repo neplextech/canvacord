@@ -4,6 +4,7 @@ import { Element, JSX, render } from '../helpers/jsx';
 export interface NodeProperties {
   style?: CSSProperties;
   children?: Node | Element | Node[] | Element[];
+  tw?: string;
 }
 
 export type NodeProps<T extends object = {}> = NodeProperties & T;

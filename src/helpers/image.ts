@@ -1,8 +1,31 @@
-import { Resvg } from '@resvg/resvg-js';
+// import { renderAsync } from '@resvg/resvg-js';
+import { EncodingFormat } from '../canvas/Encodable';
+import { AvifConfig, PngEncodeOptions, Transformer } from '@napi-rs/image';
 
-export function toPNG(svg: string) {
-  const resvg = new Resvg(svg);
-  return resvg.render().asPng();
+export type RenderSvgOptions = PngEncodeOptions | AvifConfig | number | null;
+
+export async function renderSvg(
+  svg: string,
+  format: EncodingFormat,
+  options?: RenderSvgOptions,
+  signal?: AbortSignal | null
+): Promise<Buffer> {
+  const transformer = Transformer.fromSvg(svg);
+  options ??= null;
+  signal ??= null;
+
+  switch (format) {
+    case 'png':
+      return transformer.png(options as PngEncodeOptions, signal);
+    case 'avif':
+      return transformer.avif(options as AvifConfig, signal);
+    case 'jpeg':
+      return transformer.jpeg(options as number, signal);
+    case 'webp':
+      return transformer.webp(options as number, signal);
+    default:
+      throw new TypeError(`Unsupported encoding format: "${format}"`);
+  }
 }
 
 export class CanvacordImage {

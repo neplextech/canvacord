@@ -1,13 +1,16 @@
-import { Image } from '@napi-rs/canvas';
-import { createCanvasImage } from '../canvas';
-import { ImageGenerationStep, ImageGenerationTemplate } from '../canvas/ImageGen';
+import { createCanvasImage } from '../canvas/utils';
+import { IImageGenerationTemplate, ImageGenerationStep, ImageGenerationTemplate } from '../canvas/ImageGen';
 import { ImageSource } from '../helpers';
 import { ImageFactory } from './AssetsFactory';
-import { randomUUID } from 'node:crypto';
+import type { Image, SKRSContext2D } from '@napi-rs/canvas';
 
 export class TemplateImage {
   #resolved: Image | null = null;
   public constructor(public source: ImageSource) {}
+
+  public resolved() {
+    return this.#resolved != null;
+  }
 
   public async resolve(): Promise<Image> {
     if (this.#resolved) return this.#resolved;
@@ -15,14 +18,18 @@ export class TemplateImage {
   }
 }
 
-const defineTemplate = <F extends (...args: any[]) => any, P extends Parameters<F>>(
-  cb: (...args: P) => ImageGenerationTemplate
+export const createTemplate = <F extends (...args: any[]) => any, P extends Parameters<F>>(
+  cb: (...args: P) => IImageGenerationTemplate
 ) => {
-  return cb as (...args: Parameters<typeof cb>) => ImageGenerationTemplate;
+  return (...args: Parameters<typeof cb>) => {
+    const template = cb(...args);
+
+    return ImageGenerationTemplate.from(template);
+  };
 };
 
 export const TemplateFactory = {
-  Affect: defineTemplate((image: ImageSource) => {
+  Affect: createTemplate((image: ImageSource) => {
     return {
       steps: [
         {
@@ -48,7 +55,7 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Triggered: defineTemplate((image: ImageSource) => {
+  Triggered: createTemplate((image: ImageSource) => {
     const src = new TemplateImage(image);
     const factory = new TemplateImage(ImageFactory.TRIGGERED);
 
@@ -90,7 +97,7 @@ export const TemplateFactory = {
       })()
     };
   }),
-  Fuse: defineTemplate((destination: ImageSource, source: ImageSource) => {
+  Fuse: createTemplate((destination: ImageSource, source: ImageSource) => {
     return {
       steps: [
         {
@@ -103,7 +110,7 @@ export const TemplateFactory = {
           ]
         },
         {
-          process(canvas, ctx) {
+          preprocess(canvas, ctx) {
             ctx.globalCompositeOperation = 'multiply';
           }
         },
@@ -119,7 +126,7 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Kiss: defineTemplate((image1: ImageSource, image2: ImageSource) => {
+  Kiss: createTemplate((image1: ImageSource, image2: ImageSource) => {
     return {
       steps: [
         {
@@ -156,7 +163,7 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Spank: defineTemplate((image1: ImageSource, image2: ImageSource) => {
+  Spank: createTemplate((image1: ImageSource, image2: ImageSource) => {
     return {
       width: 500,
       height: 500,
@@ -197,7 +204,7 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Slap: defineTemplate((image1: ImageSource, image2: ImageSource) => {
+  Slap: createTemplate((image1: ImageSource, image2: ImageSource) => {
     return {
       width: 1000,
       height: 500,
@@ -238,7 +245,7 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Beautiful: defineTemplate((image: ImageSource) => {
+  Beautiful: createTemplate((image: ImageSource) => {
     return {
       width: 376,
       height: 400,
@@ -279,13 +286,13 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Facepalm: defineTemplate((image: ImageSource) => {
+  Facepalm: createTemplate((image: ImageSource) => {
     return {
       width: 632,
       height: 357,
       steps: [
         {
-          process(canvas, ctx) {
+          preprocess(canvas, ctx) {
             ctx.fillStyle = '#000000';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
           }
@@ -315,7 +322,7 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Rainbow: defineTemplate((image: ImageSource) => {
+  Rainbow: createTemplate((image: ImageSource) => {
     return {
       steps: [
         {
@@ -339,7 +346,7 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Rip: defineTemplate((image: ImageSource) => {
+  Rip: createTemplate((image: ImageSource) => {
     return {
       width: 244,
       height: 253,
@@ -367,7 +374,7 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Trash: defineTemplate((image: ImageSource) => {
+  Trash: createTemplate((image: ImageSource) => {
     return {
       steps: [
         {
@@ -393,7 +400,7 @@ export const TemplateFactory = {
       ]
     };
   }),
-  Hitler: defineTemplate((image: ImageSource) => {
+  Hitler: createTemplate((image: ImageSource) => {
     return {
       steps: [
         {
@@ -419,5 +426,78 @@ export const TemplateFactory = {
       ]
     };
   }),
-  
+  Distracted: createTemplate((image1: ImageSource, image2: ImageSource, image3?: ImageSource | null) => {
+    return {
+      steps: (() => {
+        const clipCircle = (ctx: SKRSContext2D, width: number, height: number) => {
+          ctx.save();
+          ctx.globalCompositeOperation = 'destination-in';
+          ctx.beginPath();
+          ctx.arc(width / 2, height / 2, width / 2, 0, Math.PI * 2);
+          ctx.closePath();
+          ctx.fill();
+          ctx.restore();
+        };
+
+        const ret: ImageGenerationStep[] = [
+          {
+            image: [
+              {
+                source: new TemplateImage(ImageFactory.DISTRACTED),
+                x: 0,
+                y: 0
+              }
+            ]
+          },
+          {
+            image: [
+              {
+                source: new TemplateImage(image1),
+                x: 180,
+                y: 90,
+                width: 150,
+                height: 150,
+                postprocess(canvas, ctx) {
+                  clipCircle(ctx, 150, 150);
+                }
+              }
+            ]
+          },
+          {
+            image: [
+              {
+                source: new TemplateImage(image2),
+                x: 480,
+                y: 35,
+                width: 130,
+                height: 130,
+                postprocess(canvas, ctx) {
+                  clipCircle(ctx, 130, 130);
+                }
+              }
+            ]
+          }
+        ];
+
+        if (image3) {
+          ret.push({
+            image: [
+              {
+                source: new TemplateImage(image3),
+                x: 730,
+                y: 110,
+                width: 130,
+                height: 130,
+                postprocess(canvas, ctx) {
+                  clipCircle(ctx, 130, 130);
+                }
+              }
+            ]
+          });
+        }
+
+        return ret;
+      })()
+    };
+  })
 };

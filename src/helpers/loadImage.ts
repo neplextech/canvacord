@@ -3,7 +3,7 @@
 import { Readable } from 'stream';
 import * as fs from 'fs';
 import { CanvacordImage } from './image';
-import { fromBuffer } from 'file-type';
+import * as fileType from 'file-type';
 import { Image } from '@napi-rs/canvas';
 
 let http: typeof import('http'), https: typeof import('https');
@@ -129,7 +129,7 @@ function consumeStream(res: Readable) {
 }
 
 async function createImage(src: Buffer) {
-  const mime = await fromBuffer(src);
+  const mime = await fileType.fromBuffer(src);
   if (!mime?.mime) throw new Error('failed to load image');
   return new CanvacordImage(src, mime.mime);
 }

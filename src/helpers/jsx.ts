@@ -1,18 +1,18 @@
-import type { Key } from 'react';
+import type * as React from 'react';
 import { Node } from '../fabric';
 import { performObjectCleanup } from './StyleSheet';
 
 export type ElementInit = {
   type: string;
   props: Record<string, unknown>;
-  key?: Key | null;
+  key?: React.Key | null;
   children?: any;
 };
 
 export class Element {
   public type: string;
   public props: Record<string, unknown>;
-  public key: Key | null;
+  public key: React.Key | null;
   public children?: any;
 
   public constructor(_init: ElementInit) {
@@ -57,4 +57,18 @@ export function render(components: (Node | Element | unknown)[]) {
       return JSX.createElement('span', { children: child }, child);
     })
     .flat(1);
+}
+
+declare module 'react' {
+  interface DOMAttributes<T> {
+    tw?: string;
+  }
+}
+
+declare global {
+  namespace JSX {
+    interface IntrinsicAttributes {
+      tw?: string;
+    }
+  }
 }

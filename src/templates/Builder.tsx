@@ -2,8 +2,8 @@ import { CSSProperties } from 'react';
 import satori, { SatoriOptions } from 'satori';
 import { FontFactory } from '../assets/AssetsFactory';
 import { Node } from '../fabric/Node';
-import { StyleSheet } from '../helpers';
-import { toPNG } from '../helpers/image';
+import { CSSPropertiesLike, StyleSheet } from '../helpers';
+import { renderSvg, RenderSvgOptions } from '../helpers/image';
 import { JSX, Element } from '../helpers/jsx';
 
 export interface BuilderTemplate {
@@ -13,22 +13,26 @@ export interface BuilderTemplate {
   style?: CSSProperties;
 }
 
-export type BuildFormat = 'svg' | 'png';
+export type BuildFormat = 'svg' | 'png' | 'avif' | 'jpeg' | 'webp';
 
 export type BuilderBuildOptions = {
   format?: BuildFormat;
+  options?: RenderSvgOptions;
+  signal?: AbortSignal;
 } & SatoriOptions;
 
 export class Builder {
-  #style = StyleSheet.create({
-    root: {
-      width: `${this.width}px`,
-      height: `${this.height}px`
-    }
-  });
+  #style: CSSPropertiesLike = {};
   public components = new Array<Node | Element>();
 
-  public constructor(public readonly width: number, public readonly height: number) {}
+  public constructor(public readonly width: number, public readonly height: number) {
+    this.#style = StyleSheet.create({
+      root: {
+        width: `${this.width}px`,
+        height: `${this.height}px`
+      }
+    });
+  }
 
   public get style() {
     return this.#style.root;
@@ -71,7 +75,7 @@ export class Builder {
       ...options
     });
 
-    return options?.format === 'svg' ? svg : toPNG(svg);
+    return options?.format === 'svg' ? svg : renderSvg(svg, options.format, options.options, options.signal);
   }
 
   public static from(template: BuilderTemplate) {

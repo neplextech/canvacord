@@ -275,7 +275,12 @@ export class RankCardBuilder extends Builder {
           this.#data.style.root
         )}
       >
-        <Container style={{ ...this.style.overlay, position: 'relative', overflow: 'hidden' }}>
+        <Container
+          style={StyleSheet.compose(this.style.overlay, {
+            position: 'relative',
+            overflow: 'hidden'
+          })}
+        >
           {background ? <Image src={background} style={{ position: 'absolute', top: 0, left: 0 }} /> : <></>}
           <Container style={this.style.statsContainer}>
             <Container style={this.style.statsSection}>

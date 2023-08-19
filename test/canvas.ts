@@ -3,6 +3,7 @@ import { createWriteStream, promises as fsp } from 'fs';
 
 const img = 'https://cdn.discordapp.com/embed/avatars/0.png?size=512';
 const img2 = 'https://cdn.discordapp.com/embed/avatars/2.png?size=512';
+const img3 = 'https://cdn.discordapp.com/embed/avatars/3.png?size=512';
 
 (async () => {
   // template
@@ -60,4 +61,8 @@ const img2 = 'https://cdn.discordapp.com/embed/avatars/2.png?size=512';
   // hitler
   const hitler = await canvacord.hitler(img);
   fsp.writeFile(`${__dirname}/canvas/hitler.png`, hitler);
+
+  // distracted
+  const distracted = await canvacord.distracted(img, img2, img3);
+  fsp.writeFile(`${__dirname}/canvas/distracted.png`, distracted);
 })();

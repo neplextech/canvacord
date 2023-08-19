@@ -3,7 +3,11 @@ import { Element, JSX, render } from '../helpers';
 
 export class ContainerNode extends Node {
   public toElement(): Element {
-    return <div style={this.style}>{render(this.children as unknown[])}</div>;
+    return (
+      <div tw={this.getProperty('tw')} style={this.style}>
+        {render(this.children as unknown[])}
+      </div>
+    );
   }
 }
 

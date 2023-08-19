@@ -5,16 +5,17 @@
   "main": "./dist/index.js",
   "dependencies": {
     "@napi-rs/canvas": "^0.1.41",
-    "@resvg/resvg-js": "^2.4.1",
+    "@napi-rs/image": "^1.6.1",
     "@skyra/gifenc": "^1.0.1",
     "file-type": "16.5.4",
     "satori": "^0.10.1"
   },
   "scripts": {
     "format": "prettier --write \"./src/**/*.{js,ts,jsx,tsx}\"",
-    "build": "tsc",
+    "build": "tsup",
     "test": "tsx ./test/index.ts",
-    "test:jsx": "tsx ./test/jsxTest.tsx"
+    "test:jsx": "tsx ./test/jsxTest.tsx",
+    "bench": "cd ./benchmark && node jsx-renderer.mjs"
   },
   "repository": {
     "type": "git",
@@ -38,7 +39,10 @@
   "devDependencies": {
     "@types/node": "^20.3.1",
     "@types/react": "^18.2.12",
+    "benny": "^3.7.1",
     "prettier": "^2.8.8",
+    "tailwindcss": "^3.3.3",
+    "tsup": "^7.2.0",
     "tsx": "^3.12.7",
     "typescript": "^5.1.3"
   }
