@@ -51,3 +51,7 @@ const filtered = await canvacord(image, 512, 512)
 
 fs.writeFileSync('filtered.png', filtered);
 ```
+
+## XP Card Preview
+
+![XP Card Preview](https://raw.githubusercontent.com/neplextech/canvacord/main/test/jsx/test2.svg)

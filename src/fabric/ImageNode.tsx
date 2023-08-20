@@ -18,6 +18,7 @@ export class ImageNode extends Node<ImageNodeProps> {
         style={this.getProperty('style')}
         width={this.getProperty('width')}
         height={this.getProperty('height')}
+        tw={this.getProperty('tw')}
       />
     );
   }

@@ -19,7 +19,11 @@ export class TextNode extends Node<TextNodeProps> {
   }
 
   public toElement() {
-    return <h1 style={this.getProperty('style')}>{this.getProperty('data')}</h1>;
+    return (
+      <h1 style={this.getProperty('style')} tw={this.getProperty('tw')}>
+        {this.getProperty('data')}
+      </h1>
+    );
   }
 }
 
