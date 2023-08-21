@@ -11,6 +11,7 @@
     "declaration": true,
     "jsx": "react",
     "jsxFactory": "JSX.createElement",
-    "jsxFragmentFactory": "JSX.Fragment"
+    "jsxFragmentFactory": "JSX.Fragment",
+    "esModuleInterop": true
   }
 }

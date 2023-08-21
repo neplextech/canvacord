@@ -47,6 +47,12 @@ export class Builder {
       component = component.children;
     if (!Array.isArray(component)) component = [component];
     this.components.push(...component);
+    return this;
+  }
+
+  public setStyle(newStyle: CSSProperties) {
+    StyleSheet.compose(this.#style.root, newStyle);
+    return this;
   }
 
   private _render() {
