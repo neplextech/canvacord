@@ -1,7 +1,7 @@
 import { JSX, Builder, StyleSheet, loadImage } from '../src/index';
 import { writeFileSync } from 'fs';
 import { manropeBold } from './common';
-import path = require('path');
+import path from 'path';
 
 const colors = {
   LightGray: '#A0A1A3',

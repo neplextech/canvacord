@@ -184,6 +184,7 @@ export class RankCardBuilder extends Builder {
 
   public setStyle(style: CSSPropertiesLike) {
     this.#data.style = style;
+    return this;
   }
 
   public setFonts(fontConfig: Required<CanvacordRankCardBuilderState['fonts']>) {
