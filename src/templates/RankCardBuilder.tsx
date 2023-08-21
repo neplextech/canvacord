@@ -17,6 +17,7 @@ interface CanvacordRankCardBuilderState {
   currentXP: number;
   requiredXP: number;
   username: string;
+  displayName: string;
   discriminator: string;
   level: number;
   rank: number;
@@ -25,6 +26,7 @@ interface CanvacordRankCardBuilderState {
   tw: {
     username: string;
     discriminator: string;
+    displayName: string;
     level: string;
     rank: string;
     xp: string;
@@ -44,6 +46,7 @@ interface CanvacordRankCardBuilderState {
     rank: boolean;
     status: boolean;
     username: boolean;
+    displayName: boolean;
     discriminator: boolean;
     progress: boolean;
     xp: boolean;
@@ -207,6 +210,7 @@ export class RankCardBuilder extends Builder {
     tw: {
       username: '',
       discriminator: '',
+      displayName: '',
       level: '',
       rank: '',
       xp: '',
@@ -222,6 +226,7 @@ export class RankCardBuilder extends Builder {
     level: 0,
     rank: 0,
     username: '',
+    displayName: '',
     discriminator: '',
     currentXP: 0,
     requiredXP: 0,
@@ -258,7 +263,8 @@ export class RankCardBuilder extends Builder {
       discriminator: true,
       progress: true,
       xp: true,
-      progressbar: true
+      progressbar: true,
+      displayName: true
     }
   };
 
@@ -302,6 +308,11 @@ export class RankCardBuilder extends Builder {
 
   public setUsername(name: string) {
     this.#data.username = name;
+    return this;
+  }
+
+  public setDisplayName(name: string) {
+    this.#data.displayName = name;
     return this;
   }
 
@@ -447,7 +458,9 @@ export class RankCardBuilder extends Builder {
       return formatter.format(v);
     };
 
-    const { currentXP: xp, requiredXP, status, username, level, rank } = this.#data;
+    const { currentXP: xp, requiredXP, status, level, rank } = this.#data;
+    const username = this.#data.username || this.#data.discriminator;
+    const displayName = this.#data.displayName || this.#data.username;
 
     const percentage = ((xp / requiredXP) * 100).toFixed(0);
     const config = this.#data.renders;
@@ -507,7 +520,23 @@ export class RankCardBuilder extends Builder {
           </div>
           <div tw="flex flex-col">
             <div tw="flex items-end justify-between">
-              {config.username && <h1 tw={StyleSheet.cn('text-white text-6xl', tws.username)}>{username}</h1>}
+              <div tw="flex flex-col">
+                {config.displayName && (
+                  <h1 tw={StyleSheet.cn(`${username ? '-mb-2' : ''} text-white text-6xl mr-5`, tws.displayName)}>
+                    {displayName}
+                  </h1>
+                )}
+                {username && (
+                  <h1
+                    tw={StyleSheet.cn(
+                      !config.displayName ? 'text-white text-6xl' : 'text-[#A7A7A7] text-4xl mb-7',
+                      tws.username
+                    )}
+                  >
+                    @{username}
+                  </h1>
+                )}
+              </div>
               {config.progress && <h1 tw={StyleSheet.cn('text-[#A7A7A7] text-4xl', tws.percentage)}>{percentage}%</h1>}
             </div>
             {config.progressbar && (
