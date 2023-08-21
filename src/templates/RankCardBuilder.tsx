@@ -21,20 +21,63 @@ interface CanvacordRankCardBuilderState {
   level: number;
   rank: number;
   background: ImageSource;
+  variant: RankCardVariant;
+  tw: {
+    username: string;
+    discriminator: string;
+    level: string;
+    rank: string;
+    xp: string;
+    progress: {
+      track: string;
+      thumb: string;
+    };
+    overlay: string;
+    percentage: string;
+    avatar: string;
+    status: string;
+  };
+  renders: {
+    avatar: boolean;
+    background: boolean;
+    level: boolean;
+    rank: boolean;
+    status: boolean;
+    username: boolean;
+    discriminator: boolean;
+    progress: boolean;
+    xp: boolean;
+    progressbar: boolean;
+    constants: {
+      rank: string;
+      level: string;
+      xp: string;
+      statusColors: {
+        LightGray: string;
+        Gray: string;
+        DarkGray: string;
+        White: string;
+        Green: string;
+        Yellow: string;
+        Red: string;
+        Blue: string;
+      };
+    };
+  };
 }
 
-const colors = {
-  LightGray: '#A0A1A3',
-  Gray: '#474B4E',
-  DarkGray: '#272A2D',
-  White: '#FFFFFF',
-  Green: '#22A559',
-  Yellow: '#F0B332',
-  Red: '#F24043',
-  Blue: '#8ACDFF'
-} as const;
-
 const createDefaultCSS = (config: CanvacordRankCardBuilderState) => {
+  const colors = {
+    LightGray: '#A0A1A3',
+    Gray: '#474B4E',
+    DarkGray: '#272A2D',
+    White: '#FFFFFF',
+    Green: '#22A559',
+    Yellow: '#F0B332',
+    Red: '#F24043',
+    Blue: '#8ACDFF'
+  };
+
   const baseStyle = StyleSheet.create({
     text: {
       color: colors.White,
@@ -155,10 +198,27 @@ const createDefaultCSS = (config: CanvacordRankCardBuilderState) => {
   return styles;
 };
 
+export type RankCardVariant = 'classic' | 'modern';
+
 export class RankCardBuilder extends Builder {
   #data: CanvacordRankCardBuilderState = {
     avatar: null,
     style: null,
+    tw: {
+      username: '',
+      discriminator: '',
+      level: '',
+      rank: '',
+      xp: '',
+      progress: {
+        track: '',
+        thumb: ''
+      },
+      overlay: '',
+      percentage: '',
+      avatar: '',
+      status: ''
+    },
     level: 0,
     rank: 0,
     username: '',
@@ -171,6 +231,34 @@ export class RankCardBuilder extends Builder {
       username: undefined,
       stats: undefined,
       progress: undefined
+    },
+    variant: 'modern',
+    renders: {
+      constants: {
+        rank: 'RANK',
+        level: 'LEVEL',
+        xp: 'XP',
+        statusColors: {
+          LightGray: '#A0A1A3',
+          Gray: '#474B4E',
+          DarkGray: '#272A2D',
+          White: '#FFFFFF',
+          Green: '#22A559',
+          Yellow: '#F0B332',
+          Red: '#F24043',
+          Blue: '#8ACDFF'
+        }
+      },
+      avatar: true,
+      background: true,
+      level: true,
+      rank: true,
+      status: true,
+      username: true,
+      discriminator: true,
+      progress: true,
+      xp: true,
+      progressbar: true
     }
   };
 
@@ -184,6 +272,11 @@ export class RankCardBuilder extends Builder {
 
   public setStyle(style: CSSPropertiesLike) {
     this.#data.style = style;
+  }
+
+  public setVariant(variant: RankCardVariant) {
+    this.#data.variant = variant;
+    return this;
   }
 
   public setFonts(fontConfig: Required<CanvacordRankCardBuilderState['fonts']>) {
@@ -236,7 +329,12 @@ export class RankCardBuilder extends Builder {
     return this;
   }
 
-  public async render() {
+  public configureRenderer(config: Partial<CanvacordRankCardBuilderState['renders']>) {
+    this.#data.renders = { ...this.#data.renders, ...config };
+    return this;
+  }
+
+  private async renderClassic() {
     if (!this.#data.avatar) throw new Error('Avatar is required.');
     if (!FontFactory.size) throw new Error('No fonts are loaded.');
 
@@ -254,7 +352,9 @@ export class RankCardBuilder extends Builder {
 
     this.#data.style ??= createDefaultCSS(this.#data);
 
-    const { status } = this.#data;
+    const { status, renders } = this.#data;
+
+    const colors = renders.constants.statusColors;
 
     const avatarBorderColor =
       status === 'online'
@@ -322,5 +422,134 @@ export class RankCardBuilder extends Builder {
         </Container>
       </Container>
     );
+  }
+
+  private async renderModern() {
+    if (!this.#data.avatar) throw new Error('Avatar is required.');
+    if (!FontFactory.size) throw new Error('No fonts are loaded.');
+
+    const avatar = await loadImage(this.#data.avatar);
+
+    let background;
+    if (this.#data.background) {
+      background = await loadImage(this.#data.background);
+    }
+
+    const firstFont = FontFactory.values().next().value as Font;
+
+    this.#data.fonts.username ??= firstFont.name;
+    this.#data.fonts.progress ??= firstFont.name;
+    this.#data.fonts.stats ??= firstFont.name;
+
+    const fixed = (v: number) => {
+      const formatter = new Intl.NumberFormat('en-US', { notation: 'compact' });
+      return formatter.format(v);
+    };
+
+    const { currentXP: xp, requiredXP, status, username, level, rank } = this.#data;
+
+    const percentage = ((xp / requiredXP) * 100).toFixed(0);
+    const config = this.#data.renders;
+    const tws = this.#data.tw;
+    const colors = config.constants.statusColors;
+
+    const statusColor =
+      status === 'online'
+        ? colors.Green
+        : status === 'idle'
+        ? colors.Yellow
+        : status === 'dnd'
+        ? colors.Red
+        : colors.Gray;
+
+    return (
+      <div
+        style={{
+          display: 'flex',
+          width: '100%',
+          height: '100%',
+          justifyContent: 'center',
+          alignItems: 'center',
+          borderRadius: '1.5rem',
+          background: background
+            ? `url(${background.toDataURL()})`
+            : this.#data.style?.root?.backgroundColor ?? '#4FBEFA'
+        }}
+      >
+        <div
+          tw={StyleSheet.cn(
+            'flex bg-[#2F3136]/80 h-[80%] w-[95%] items-center justify-around rounded-3xl',
+            tws.overlay
+          )}
+        >
+          <div tw="flex relative">
+            {config.avatar ? (
+              <>
+                <img
+                  src={avatar.toDataURL()}
+                  alt="avatar"
+                  tw={StyleSheet.cn(
+                    `h-[311px] w-[311px] rounded-full mr-8 ${config.status ? 'border-[#272A2D]/80' : ''} border-8`,
+                    tws.avatar
+                  )}
+                />
+                {config.status ? (
+                  <div
+                    tw={StyleSheet.cn(
+                      `bg-[${statusColor}] h-16 w-16 rounded-full flex absolute bottom-12 right-5 border-[#272A2D]/80 border-8`,
+                      tws.status
+                    )}
+                  ></div>
+                ) : null}
+              </>
+            ) : null}
+          </div>
+          <div tw="flex flex-col">
+            <div tw="flex items-end justify-between">
+              {config.username && <h1 tw={StyleSheet.cn('text-white text-6xl', tws.username)}>{username}</h1>}
+              {config.progress && <h1 tw={StyleSheet.cn('text-[#A7A7A7] text-4xl', tws.percentage)}>{percentage}%</h1>}
+            </div>
+            {config.progressbar && (
+              <div tw={StyleSheet.cn('flex bg-[#292929]/70 h-[50px] w-[1413px] rounded-full', tws.progress.track)}>
+                <div
+                  tw={StyleSheet.cn(`flex bg-[#5865F2] h-[50px] w-[${percentage}%] rounded-full`, tws.progress.thumb)}
+                ></div>
+              </div>
+            )}
+            <div tw="flex justify-between w-[55%] font-bold">
+              {config.level && (
+                <h1 tw={StyleSheet.cn('text-4xl', tws.level)}>
+                  <span tw="text-[#A7A7A7] mr-2">{config.constants.level}:</span>
+                  <span tw="text-white">{level}</span>
+                </h1>
+              )}
+              {config.xp && (
+                <h1 tw={StyleSheet.cn('text-4xl', tws.xp)}>
+                  <span tw="text-[#A7A7A7] mr-2">{config.constants.xp}:</span>
+                  <span tw="text-white">
+                    {fixed(xp)}/{fixed(requiredXP)}
+                  </span>
+                </h1>
+              )}
+              {config.rank && (
+                <h1 tw={StyleSheet.cn('text-4xl', tws.rank)}>
+                  <span tw="text-[#A7A7A7] mr-2">{config.constants.rank}:</span>
+                  <span tw="text-white">#{rank}</span>
+                </h1>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  public async render() {
+    switch (this.#data.variant) {
+      case 'modern':
+        return this.renderModern();
+      default:
+        return this.renderClassic();
+    }
   }
 }

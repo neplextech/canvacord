@@ -8,7 +8,8 @@
     "@napi-rs/image": "^1.6.1",
     "@skyra/gifenc": "^1.0.1",
     "file-type": "16.5.4",
-    "satori": "^0.10.1"
+    "satori": "^0.10.1",
+    "tailwind-merge": "^1.14.0"
   },
   "scripts": {
     "format": "prettier --write \"./src/**/*.{js,ts,jsx,tsx}\"",

@@ -1,4 +1,5 @@
 import type { CSSProperties } from 'react';
+import { twMerge, ClassNameValue } from 'tailwind-merge';
 
 export type CSSPropertiesLike<K extends string | number | symbol = string> = Record<K, CSSProperties>;
 
@@ -34,5 +35,9 @@ export class StyleSheet extends null {
       performObjectCleanup(current);
       return Object.assign(previous, current);
     }, {} as CSSProperties);
+  }
+
+  public static cn(...classes: ClassNameValue[]) {
+    return twMerge(...classes);
   }
 }
