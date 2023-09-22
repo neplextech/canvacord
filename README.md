@@ -1,89 +1,57 @@
 [![SWUbanner](https://raw.githubusercontent.com/vshymanskyy/StandWithUkraine/main/banner2-direct.svg)](https://vshymanskyy.github.io/StandWithUkraine)
 
 # Canvacord
-Powerful image manipulation tool to manipulate images easily.
 
-# Installation
+Easily generate images on-the-fly with node.js using wide range of templates.
 
-```sh
-$ npm i canvacord
+> **Warning**
+>
+> You are looking at the next version of canvacord, which is under development. Go to the [legacy branch](https://github.com/neplextech/canvacord/tree/legacy) to view legacy codebase.
+
+## Features
+
+- image generation _(wip)_
+- image manipulation _(wip)_
+- image templates _(wip)_
+- image filters _(wip)_
+- complex layouts _(wip)_
+
+## Example
+
+### Image Generation
+
+<!-- prettier-ignore -->
+```ts
+import { canvacord } from 'canvacord';
+import fs from 'node:fs';
+
+// triggered gif
+const triggered = await canvacord.triggered(image);
+triggered.pipe(fs.createWriteStream('triggered.gif'));
+
+// filters
+const filtered = await canvacord
+    .filters(512, 512)
+    .drawImage(image)
+    .hueRotate(90)
+    .invert(2)
+    .sepia(1)
+    .opacity(0.5)
+    .saturate(2)
+    .encode();
+
+// alternative syntax
+const filtered = await canvacord(image, 512, 512)
+    .hueRotate(90)
+    .invert(2)
+    .sepia(1)
+    .opacity(0.5)
+    .saturate(2)
+    .encode();
+
+fs.writeFileSync('filtered.png', filtered);
 ```
 
-[![NPM](https://nodei.co/npm/canvacord.png)](https://nodei.co/npm/canvacord/)
+## XP Card Preview
 
-# Features
-- Super simple and easy to use 😎
-- Faster than canvacord v4 🚀
-- More than **50 methods**...? Yay! 🎉
-- Built on top of **[@napi-rs/canvas](https://npm.im/@napi-rs/canvas)** 🔥
-- Object oriented 💻
-- Beginner friendly 🤓
-- Supports emojis 😀
-
-# Documentation
-**[https://canvacord.js.org](https://canvacord.js.org)**
-
-**[Join our Discord server](https://neplextech.com/discord)**
-
-# Examples
-## Rank Card
-
-```js
-const canvacord = require("canvacord");
-const img = "https://cdn.discordapp.com/embed/avatars/0.png";
-
-const userData = getDataSomehow();
-
-const rank = new canvacord.Rank()
-    .setAvatar(img)
-    .setCurrentXP(userData.xp)
-    .setRequiredXP(userData.requiredXP)
-    .setStatus("dnd")
-    .setProgressBar("#FFFFFF", "COLOR")
-    .setUsername("Snowflake")
-    .setDiscriminator("0007");
-
-rank.build()
-    .then(data => {
-        const attachment = new Discord.MessageAttachment(data, "RankCard.png");
-        message.channel.send(attachment);
-    });
-```
-
-### Preview
-![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/images/RankCard.png)
-
-## Rank Card Variants
-
-![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Gamer.png)
-
-![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Nerd.png)
-
-![RankCard](https://raw.githubusercontent.com/neplextech/canvacord/main/test/Player.png)
-
-## Other Examples
-
-```js
-const Discord = require("discord.js");
-const client = new Discord.Client();
-const canvacord = require("canvacord");
-
-client.on("ready", () => {
-    console.log("I'm online!");
-});
-
-client.on("message", async (message) => {
-    if (message.author.bot) return;
-    if (message.content === "!triggered") {
-        let avatar = message.author.displayAvatarURL({ dynamic: false, format: 'png' });
-        let image = await canvacord.Canvas.trigger(avatar);
-        let attachment = new Discord.MessageAttachment(image, "triggered.gif");
-        return message.channel.send(attachment);
-    }
-});
-
-client.login("Your_Bot_Token_here");
-```
-
-# Note
-> ⚠ | In order to use `Canvacord#Welcomer`/`Canvacord#Leaver`/`Canvacord#CaptchaGen`, you may need to install packages like **[discord-canvas](https://npmjs.com/package/discord-canvas)** & **[captcha-canvas](https://npmjs.com/package/captcha-canvas)**.
+![xp-card](https://raw.githubusercontent.com/neplextech/canvacord/next/test/jsx/test2.svg)

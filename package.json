@@ -1,65 +1,50 @@
 {
   "name": "canvacord",
-  "version": "5.4.10",
-  "description": "Powerful image manipulation package for beginners.",
-  "main": "index.js",
-  "types": "./typings/index.d.ts",
-  "bin": "./bin/canvacord.js",
-  "files": [
-    "bin",
-    "scripts",
-    "libs",
-    "plugins",
-    "src",
-    "index.js",
-    "typings"
-  ],
+  "description": "Generate images on-the-fly inside your node application",
+  "version": "6.0.0",
+  "main": "./dist/index.js",
+  "dependencies": {
+    "@napi-rs/canvas": "^0.1.41",
+    "@napi-rs/image": "^1.6.1",
+    "@skyra/gifenc": "^1.0.1",
+    "file-type": "16.5.4",
+    "satori": "^0.10.1",
+    "tailwind-merge": "^1.14.0"
+  },
   "scripts": {
-    "docs": "docgen --source src --custom docs/index.yml --output docs/docs.json",
-    "docs:test": "docgen --source src --custom docs/index.yml",
-    "test": "cd test && node .",
-    "types": "tsc",
-    "postinstall": "node scripts/postinstall.mjs"
+    "format": "prettier --write \"./src/**/*.{js,ts,jsx,tsx}\"",
+    "build": "tsup",
+    "test": "tsx ./test/index.ts",
+    "test:jsx": "tsx ./test/jsxTest.tsx",
+    "bench": "cd ./benchmark && node jsx-renderer.mjs"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/neplextech/Canvacord.git"
+    "url": "git+https://github.com/neplextech/canvacord.git"
   },
   "keywords": [
-    "canvacord",
-    "canvas",
+    "canavcord",
     "image",
-    "manipulation",
-    "easy",
-    "simple",
-    "fast",
     "api",
-    "rank",
-    "card",
-    "rankcard",
-    "welcomer",
-    "leaver",
-    "spotify",
-    "memegen"
+    "manipulation",
+    "nodejs",
+    "typescript"
   ],
-  "author": "neplextech",
-  "license": "GPL-3.0",
+  "author": "Neplex",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/neplextech/canvacord/issues"
   },
-  "homepage": "https://canvacord.js.org",
-  "dependencies": {
-    "@napi-rs/canvas": "^0.1.29",
-    "@skyra/gifenc": "^1.0.0",
-    "chalk": "^5.0.1",
-    "moment": "^2.29.4",
-    "moment-duration-format": "^2.3.2",
-    "node-fetch": "2.6.7"
-  },
+  "homepage": "https://github.com/neplextech/canvacord#readme",
+  "packageManager": "yarn@3.6.0",
   "devDependencies": {
-    "@discordjs/docgen": "^0.11.1",
-    "@types/node": "^16.4.7",
-    "typescript": "^4.7.4"
-  },
-  "packageManager": "yarn@3.6.0"
+    "@types/node": "^20.3.1",
+    "@types/react": "^18.2.12",
+    "benny": "^3.7.1",
+    "prettier": "^2.8.8",
+    "tailwindcss": "^3.3.3",
+    "tsup": "^7.2.0",
+    "tsx": "^3.12.7",
+    "typescript": "^5.1.3"
+  }
 }

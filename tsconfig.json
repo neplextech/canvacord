@@ -1,12 +1,17 @@
 {
-    "include": [
-        "src/**/*"
-    ],
-    "compilerOptions": {
-        "allowJs": true,
-        "declaration": true,
-        "emitDeclarationOnly": true,
-        "outDir": "./typings",
-        "declarationMap": true
-    }
+  "include": ["src/**/*", "./test/**/*"],
+  "compilerOptions": {
+    "outDir": "dist",
+    "strict": true,
+    "strictNullChecks": true,
+    "target": "ES2017",
+    "moduleResolution": "node",
+    "allowJs": true,
+    "module": "CommonJS",
+    "declaration": true,
+    "jsx": "react",
+    "jsxFactory": "JSX.createElement",
+    "jsxFragmentFactory": "JSX.Fragment",
+    "esModuleInterop": true
+  }
 }
