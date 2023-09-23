@@ -1,6 +1,6 @@
 import type * as React from 'react';
 import { Node } from '../fabric';
-import { performObjectCleanup } from './StyleSheet';
+import { performObjectCleanup, StyleSheet } from './StyleSheet';
 
 export type ElementInit = {
   type: string;
@@ -32,6 +32,21 @@ export const JSX = {
   Element,
   createElement(type: string | Element, props: Record<string, unknown>, ...children: Element[]): Element {
     if (type instanceof Element) return type;
+
+    // monkey-patch layout issues
+    if ('className' in props) props.tw ??= props.className;
+
+    if (type === 'div') {
+      if ('tw' in props) {
+        props.tw = StyleSheet.cn('flex flex-col content-start shrink-0', props.tw as string);
+      } else if ('style' in props) {
+        props.style = StyleSheet.compose(
+          { display: 'flex', flexDirection: 'column', alignContent: 'flex-start', flexShrink: 0 },
+          props.style as Record<string, unknown>
+        );
+      }
+    }
+
     return new Element({
       type,
       props: {
