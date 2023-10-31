@@ -499,5 +499,94 @@ export const TemplateFactory = {
         return ret;
       })()
     };
+  }),
+  Colorfy: createTemplate((image: ImageSource, color: string) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          preprocess(canvas, ctx) {
+            ctx.fillStyle = color;
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+          }
+        }
+      ]
+    };
+  }),
+  Jail: createTemplate((image: ImageSource, greyscale?: boolean) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.JAIL),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 0,
+              y: 0,
+              width: 256,
+              height: 256,
+              postprocess(canvas, ctx) {
+                if (greyscale) {
+                  ctx.filter = 'grayscale(100%)';
+                }
+              }
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Bed: createTemplate((image1: ImageSource, image2: ImageSource) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.BED),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image1),
+              x: 0,
+              y: 0,
+              width: 256,
+              height: 256
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image2),
+              x: 256,
+              y: 0,
+              width: 256,
+              height: 256
+            }
+          ]
+        }
+      ]
+    };
   })
 };
