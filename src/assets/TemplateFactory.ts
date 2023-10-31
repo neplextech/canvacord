@@ -703,5 +703,44 @@ export const TemplateFactory = {
         }
       ]
     };
+  }),
+  Shit: createTemplate((image: ImageSource) => {
+    const clipCircle = (ctx: SKRSContext2D, width: number, height: number) => {
+      ctx.save();
+      ctx.globalCompositeOperation = 'destination-in';
+      ctx.beginPath();
+      ctx.arc(width / 2, height / 2, width / 2, 0, Math.PI * 2);
+      ctx.closePath();
+      ctx.fill();
+      ctx.restore();
+    };
+
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.SHIT),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 210,
+              y: 700,
+              width: 170,
+              height: 170,
+              preprocess(_canvas, ctx) {
+                clipCircle(ctx, 170, 170);
+              }
+            }
+          ]
+        }
+      ]
+    };
   })
 };
