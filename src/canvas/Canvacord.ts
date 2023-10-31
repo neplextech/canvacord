@@ -8,6 +8,7 @@ import { TemplateFactory } from '../assets/TemplateFactory';
 
 export type ImageGeneratorImplementor = {
   [K in Lowercase<Exclude<keyof typeof TemplateFactory, 'Triggered'>>]: (
+    // @ts-expect-error
     ...args: Parameters<(typeof TemplateFactory)[Capitalize<K>]>
   ) => Promise<Buffer>;
 };

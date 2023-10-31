@@ -5,6 +5,7 @@ import * as fs from 'fs';
 import { CanvacordImage } from './image';
 import * as fileType from 'file-type';
 import { Image } from '@napi-rs/canvas';
+import { buffer } from 'stream/consumers';
 
 let http: typeof import('http'), https: typeof import('https');
 
@@ -36,7 +37,7 @@ export async function loadImage(source: ImageSource, options: LoadImageOptions =
   // load canvacord image
   if (source instanceof CanvacordImage) return source;
   // load readable stream as image
-  if (source instanceof Readable) return createImage(await consumeStream(source));
+  if (source instanceof Readable) return createImage(await buffer(source));
   // use the same buffer without copying if the source is a buffer
   if (Buffer.isBuffer(source)) return createImage(source);
   // construct a buffer if the source is buffer-like
@@ -113,19 +114,9 @@ function makeRequest(
         return reject(new Error(`remote source rejected with status code ${res.statusCode}`));
       }
 
-      consumeStream(res).then(resolve, reject);
+      buffer(res).then(resolve, reject);
     })
     .on('error', reject);
-}
-
-function consumeStream(res: Readable) {
-  return new Promise<Buffer>((resolve, reject) => {
-    const chunks: Buffer[] = [];
-
-    res.on('data', (chunk) => chunks.push(chunk));
-    res.on('end', () => resolve(Buffer.concat(chunks)));
-    res.on('error', reject);
-  });
 }
 
 async function createImage(src: Buffer) {
