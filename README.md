@@ -10,11 +10,11 @@ Easily generate images on-the-fly with node.js using wide range of templates.
 
 ## Features
 
-- image generation _(wip)_
-- image manipulation _(wip)_
-- image templates _(wip)_
-- image filters _(wip)_
-- complex layouts _(wip)_
+- Image generation _(wip)_
+- Image manipulation _(wip)_
+- Image templates _(wip)_
+- Image filters _(wip)_
+- Complex layouts _(wip)_
 
 ## Example
 
