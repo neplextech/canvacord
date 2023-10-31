@@ -589,5 +589,66 @@ export const TemplateFactory = {
         }
       ]
     };
+  }),
+  JokeOverHead: createTemplate((image: ImageSource) => {
+    return {
+      steps: [
+        {
+          preprocess(_canvas, ctx) {
+            ctx.globalCompositeOperation = 'color';
+            ctx.fillStyle = 'black';
+            ctx.fillRect(0, 0, 425, 404);
+          }
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 125,
+              y: 130,
+              width: 140,
+              height: 135
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.JOKEOVERHEAD),
+              x: 0,
+              y: 0,
+              width: 425,
+              height: 404
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Delete: createTemplate((image: ImageSource) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.DELETE),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 120,
+              y: 135,
+              width: 195,
+              height: 195
+            }
+          ]
+        }
+      ]
+    };
   })
 };
