@@ -514,6 +514,7 @@ export const TemplateFactory = {
         },
         {
           preprocess(canvas, ctx) {
+            ctx.globalCompositeOperation = 'color';
             ctx.fillStyle = color;
             ctx.fillRect(0, 0, canvas.width, canvas.height);
           }
