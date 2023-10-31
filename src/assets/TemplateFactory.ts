@@ -650,5 +650,58 @@ export const TemplateFactory = {
         }
       ]
     };
+  }),
+  Wanted: createTemplate((image: ImageSource) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.WANTED),
+              x: 0,
+              y: 0
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 145,
+              y: 282,
+              width: 447,
+              height: 447
+            }
+          ]
+        }
+      ]
+    };
+  }),
+  Wasted: createTemplate((image: ImageSource) => {
+    return {
+      steps: [
+        {
+          image: [
+            {
+              source: new TemplateImage(image),
+              x: 0,
+              y: 0,
+              preprocess(_canvas, ctx) {
+                ctx.filter = 'greyscale(100%)';
+              }
+            }
+          ]
+        },
+        {
+          image: [
+            {
+              source: new TemplateImage(ImageFactory.WASTED),
+              x: 145,
+              y: 282
+            }
+          ]
+        }
+      ]
+    };
   })
 };
