@@ -4,6 +4,7 @@ import { readFile } from 'fs/promises';
 import { Font as FontData } from 'satori';
 import { FontFactory } from './AssetsFactory';
 import { GlobalFonts } from '@napi-rs/canvas';
+import { Fonts } from './fonts/fonts';
 
 const randomAlias = () => randomUUID() as string;
 
@@ -42,5 +43,13 @@ export class Font {
   public static fromFileSync(path: string, alias?: string) {
     const buffer = readFileSync(path);
     return new Font(buffer, alias);
+  }
+
+  public static fromBuffer(buffer: Buffer, alias?: string) {
+    return new Font(buffer, alias);
+  }
+
+  public static loadDefault() {
+    return this.fromBuffer(Fonts.Geist, 'geist');
   }
 }

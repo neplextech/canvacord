@@ -1,6 +1,10 @@
 import type * as React from 'react';
-import { Node } from '../fabric';
 import { performObjectCleanup, StyleSheet } from './StyleSheet';
+import { Node } from '..';
+
+const isNode = (node: unknown): node is Node => {
+  return typeof node === 'object' && node != null && 'toElement' in node;
+};
 
 export type ElementInit = {
   type: string;
@@ -33,17 +37,14 @@ export const JSX = {
   createElement(type: string | Element, props: Record<string, unknown>, ...children: Element[]): Element {
     if (type instanceof Element) return type;
 
+    props ??= {};
+
     // monkey-patch layout issues
     if ('className' in props) props.tw ??= props.className;
 
     if (type === 'div') {
-      if ('tw' in props) {
+      if (!('tw' in props) && !('style' in props)) {
         props.tw = StyleSheet.cn('flex flex-col content-start shrink-0', props.tw as string);
-      } else if ('style' in props) {
-        props.style = StyleSheet.compose(
-          { display: 'flex', flexDirection: 'column', alignContent: 'flex-start', flexShrink: 0 },
-          props.style as Record<string, unknown>
-        );
       }
     }
 
@@ -66,7 +67,7 @@ export function render(components: (Node | Element | unknown)[]) {
     .map((component) => {
       if (component == null) return [];
       if (component instanceof Element) return component;
-      if (component instanceof Node) return component.toElement();
+      if (isNode(component)) return component.toElement();
 
       const child = String(component) as unknown as Element;
       return JSX.createElement('span', { children: child }, child);

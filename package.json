@@ -6,9 +6,10 @@
   "dependencies": {
     "@napi-rs/canvas": "^0.1.41",
     "@napi-rs/image": "^1.7.0",
+    "@resvg/resvg-js": "^2.6.0",
     "@skyra/gifenc": "^1.0.1",
     "file-type": "16.5.4",
-    "satori": "^0.10.1",
+    "satori": "^0.10.9",
     "tailwind-merge": "^1.14.0"
   },
   "scripts": {

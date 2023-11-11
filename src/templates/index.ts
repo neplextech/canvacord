@@ -1,2 +1,2 @@
 export * from './Builder';
-export * from './RankCardBuilder';
+export * from './BuilderOptionsManager';

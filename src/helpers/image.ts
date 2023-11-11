@@ -1,22 +1,42 @@
-// import { renderAsync } from '@resvg/resvg-js';
+import { renderAsync, type ResvgRenderOptions } from '@resvg/resvg-js';
 import { EncodingFormat } from '../canvas/Encodable';
 import { AvifConfig, PngEncodeOptions, Transformer } from '@napi-rs/image';
 
 export type RenderSvgOptions = PngEncodeOptions | AvifConfig | number | null;
 
-export async function renderSvg(
-  svg: string,
-  format: EncodingFormat,
-  options?: RenderSvgOptions,
-  signal?: AbortSignal | null
-): Promise<Buffer> {
-  const transformer = Transformer.fromSvg(svg);
+export async function renderSvg({
+  svg,
+  format,
+  options,
+  signal
+}: {
+  svg: string;
+  format: EncodingFormat;
+  options?: RenderSvgOptions;
+  signal?: AbortSignal | null;
+}): Promise<Buffer> {
+  const opts: ResvgRenderOptions = {
+    font: {
+      loadSystemFonts: false
+    },
+    logLevel: 'off'
+  };
+
+  // Transformer.fromSvg gives weird output for some reason
+  const output = await renderAsync(svg, opts);
+
+  if (format === 'png') {
+    return output.asPng();
+  }
+
+  const transformer = Transformer.fromRgbaPixels(output.pixels, output.width, output.height);
+
   options ??= null;
   signal ??= null;
 
   switch (format) {
-    case 'png':
-      return transformer.png(options as PngEncodeOptions, signal);
+    // case 'png':
+    //   return transformer.png(options as PngEncodeOptions, signal);
     case 'avif':
       return transformer.avif(options as AvifConfig, signal);
     case 'jpeg':
