@@ -1,8 +1,21 @@
 {
   "name": "canvacord",
-  "description": "Generate images on-the-fly inside your node application",
-  "version": "6.0.0",
+  "description": "Generate images on-the-fly with the help of wide range of templates.",
+  "version": "6.0.0-beta.0",
   "main": "./dist/index.js",
+  "exports": {
+    "require": {
+      "default": "./dist/index.js",
+      "types": "./dist/index.d.ts"
+    },
+    "import": {
+      "default": "./dist/index.mjs",
+      "types": "./dist/index.d.mts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
   "dependencies": {
     "@napi-rs/canvas": "^0.1.41",
     "@napi-rs/image": "^1.7.0",
@@ -31,7 +44,7 @@
     "nodejs",
     "typescript"
   ],
-  "author": "Neplex",
+  "author": "twlite",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/neplextech/canvacord/issues"

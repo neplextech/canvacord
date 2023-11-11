@@ -1,12 +1,12 @@
 import b from 'benny';
 import { Builder, JSX, Font } from '../dist/index.mjs';
 
-const roboto = await Font.fromFile('./Roboto-Regular.ttf', 'Roboto');
+const geist = Font.loadDefault();
 
 const builder = new Builder(800, 185);
 builder.style = {
     display: 'flex',
-    fontFamily: roboto.name
+    fontFamily: geist.name
 };
 
 builder.addComponent(

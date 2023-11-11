@@ -1,4 +1,4 @@
-import { Font, LeaderboardBuilder } from '../src';
+import { Font, LeaderboardBuilder } from '../dist/index.js';
 import { writeFileSync } from 'fs';
 
 Font.loadDefault();
