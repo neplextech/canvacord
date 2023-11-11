@@ -721,6 +721,135 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@resvg/resvg-js-android-arm-eabi@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-android-arm-eabi@npm:2.6.0"
+  conditions: os=android & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-android-arm64@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-android-arm64@npm:2.6.0"
+  conditions: os=android & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-darwin-arm64@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-darwin-arm64@npm:2.6.0"
+  conditions: os=darwin & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-darwin-x64@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-darwin-x64@npm:2.6.0"
+  conditions: os=darwin & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-linux-arm-gnueabihf@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-linux-arm-gnueabihf@npm:2.6.0"
+  conditions: os=linux & cpu=arm
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-linux-arm64-gnu@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-linux-arm64-gnu@npm:2.6.0"
+  conditions: os=linux & cpu=arm64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-linux-arm64-musl@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-linux-arm64-musl@npm:2.6.0"
+  conditions: os=linux & cpu=arm64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-linux-x64-gnu@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-linux-x64-gnu@npm:2.6.0"
+  conditions: os=linux & cpu=x64 & libc=glibc
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-linux-x64-musl@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-linux-x64-musl@npm:2.6.0"
+  conditions: os=linux & cpu=x64 & libc=musl
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-win32-arm64-msvc@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-win32-arm64-msvc@npm:2.6.0"
+  conditions: os=win32 & cpu=arm64
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-win32-ia32-msvc@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-win32-ia32-msvc@npm:2.6.0"
+  conditions: os=win32 & cpu=ia32
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js-win32-x64-msvc@npm:2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js-win32-x64-msvc@npm:2.6.0"
+  conditions: os=win32 & cpu=x64
+  languageName: node
+  linkType: hard
+
+"@resvg/resvg-js@npm:^2.6.0":
+  version: 2.6.0
+  resolution: "@resvg/resvg-js@npm:2.6.0"
+  dependencies:
+    "@resvg/resvg-js-android-arm-eabi": 2.6.0
+    "@resvg/resvg-js-android-arm64": 2.6.0
+    "@resvg/resvg-js-darwin-arm64": 2.6.0
+    "@resvg/resvg-js-darwin-x64": 2.6.0
+    "@resvg/resvg-js-linux-arm-gnueabihf": 2.6.0
+    "@resvg/resvg-js-linux-arm64-gnu": 2.6.0
+    "@resvg/resvg-js-linux-arm64-musl": 2.6.0
+    "@resvg/resvg-js-linux-x64-gnu": 2.6.0
+    "@resvg/resvg-js-linux-x64-musl": 2.6.0
+    "@resvg/resvg-js-win32-arm64-msvc": 2.6.0
+    "@resvg/resvg-js-win32-ia32-msvc": 2.6.0
+    "@resvg/resvg-js-win32-x64-msvc": 2.6.0
+  dependenciesMeta:
+    "@resvg/resvg-js-android-arm-eabi":
+      optional: true
+    "@resvg/resvg-js-android-arm64":
+      optional: true
+    "@resvg/resvg-js-darwin-arm64":
+      optional: true
+    "@resvg/resvg-js-darwin-x64":
+      optional: true
+    "@resvg/resvg-js-linux-arm-gnueabihf":
+      optional: true
+    "@resvg/resvg-js-linux-arm64-gnu":
+      optional: true
+    "@resvg/resvg-js-linux-arm64-musl":
+      optional: true
+    "@resvg/resvg-js-linux-x64-gnu":
+      optional: true
+    "@resvg/resvg-js-linux-x64-musl":
+      optional: true
+    "@resvg/resvg-js-win32-arm64-msvc":
+      optional: true
+    "@resvg/resvg-js-win32-ia32-msvc":
+      optional: true
+    "@resvg/resvg-js-win32-x64-msvc":
+      optional: true
+  checksum: 27744f3954b7b0af1578db0c8a2fee19a1751c0d791596b67990c48d8921a0d31436f206a143d0c6bb2bcdd7daa0a8c81c599a5d4f18d357884d5d89000c6a75
+  languageName: node
+  linkType: hard
+
 "@shuding/opentype.js@npm:1.4.0-beta.0":
   version: 1.4.0-beta.0
   resolution: "@shuding/opentype.js@npm:1.4.0-beta.0"
@@ -1060,13 +1189,14 @@ __metadata:
   dependencies:
     "@napi-rs/canvas": ^0.1.41
     "@napi-rs/image": ^1.7.0
+    "@resvg/resvg-js": ^2.6.0
     "@skyra/gifenc": ^1.0.1
     "@types/node": ^20.3.1
     "@types/react": ^18.2.12
     benny: ^3.7.1
     file-type: 16.5.4
     prettier: ^2.8.8
-    satori: ^0.10.1
+    satori: ^0.10.9
     tailwind-merge: ^1.14.0
     tailwindcss: ^3.3.3
     tsup: ^7.2.0
@@ -2784,21 +2914,21 @@ __metadata:
   languageName: node
   linkType: hard
 
-"satori@npm:^0.10.1":
-  version: 0.10.1
-  resolution: "satori@npm:0.10.1"
+"satori@npm:^0.10.9":
+  version: 0.10.9
+  resolution: "satori@npm:0.10.9"
   dependencies:
-    "@shuding/opentype.js": "npm:1.4.0-beta.0"
-    css-background-parser: "npm:^0.1.0"
-    css-box-shadow: "npm:1.0.0-3"
-    css-to-react-native: "npm:^3.0.0"
-    emoji-regex: "npm:^10.2.1"
-    escape-html: "npm:^1.0.3"
-    linebreak: "npm:^1.1.0"
-    parse-css-color: "npm:^0.2.1"
-    postcss-value-parser: "npm:^4.2.0"
-    yoga-wasm-web: "npm:^0.3.3"
-  checksum: fd6df0f80002bb1387bbec413f0d07414c1c1d6825abecf79a59f17283ca87db88c6928898ff494230946b9ee4773e389e71e6c4ed8ce5964323ef3baf2ed884
+    "@shuding/opentype.js": 1.4.0-beta.0
+    css-background-parser: ^0.1.0
+    css-box-shadow: 1.0.0-3
+    css-to-react-native: ^3.0.0
+    emoji-regex: ^10.2.1
+    escape-html: ^1.0.3
+    linebreak: ^1.1.0
+    parse-css-color: ^0.2.1
+    postcss-value-parser: ^4.2.0
+    yoga-wasm-web: ^0.3.3
+  checksum: 56cb35e553cf8a65ee08ec29357e441a10adcc7c0cd68977c4e24c613f8999b0862ae05fe3c648498c4bda8dfc5a1c15d883cfbc30c815a9117fd99531ee4355
   languageName: node
   linkType: hard
 

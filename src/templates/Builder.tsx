@@ -1,10 +1,10 @@
-import { CSSProperties } from 'react';
+import type { CSSProperties } from 'react';
 import satori, { SatoriOptions } from 'satori';
 import { FontFactory } from '../assets/AssetsFactory';
-import { Node } from '../fabric/Node';
 import { CSSPropertiesLike, StyleSheet } from '../helpers';
 import { renderSvg, RenderSvgOptions } from '../helpers/image';
 import { JSX, Element } from '../helpers/jsx';
+import { BuilderOptionsManager } from './BuilderOptionsManager';
 
 export interface BuilderTemplate {
   components: Array<Node | Element>;
@@ -21,17 +21,32 @@ export type BuilderBuildOptions = {
   signal?: AbortSignal;
 } & SatoriOptions;
 
-export class Builder {
-  #style: CSSPropertiesLike = {};
-  public components = new Array<Node | Element>();
+export interface Node {
+  toElement(): Element;
+}
 
-  public constructor(public readonly width: number, public readonly height: number) {
+export class Builder<T extends Record<string, any> = Record<string, unknown>> {
+  #style: CSSPropertiesLike = {};
+  public tw: string = '';
+  public components = new Array<Node | Element>();
+  public options = new BuilderOptionsManager<T>();
+
+  public constructor(public width: number, public height: number) {
+    this.adjustCanvas();
+  }
+
+  public bootstrap(data: T) {
+    this.options.setOptions(data);
+  }
+
+  public adjustCanvas() {
     this.#style = StyleSheet.create({
       root: {
         width: `${this.width}px`,
         height: `${this.height}px`
       }
     });
+    return this;
   }
 
   public get style() {
@@ -51,7 +66,7 @@ export class Builder {
   }
 
   public setStyle(newStyle: CSSProperties) {
-    StyleSheet.compose(this.#style.root, newStyle);
+    StyleSheet.compose(this.#style.root || {}, newStyle || {});
     return this;
   }
 
@@ -60,7 +75,7 @@ export class Builder {
       .map((component) => {
         if (component == null) return [];
         if (component instanceof Element) return component;
-        if (component instanceof Node) return component.toElement();
+        if (component.toElement) return component.toElement();
         return <span>{String(component)}</span>;
       })
       .flat(1);
@@ -73,15 +88,25 @@ export class Builder {
   public async build(options: Partial<BuilderBuildOptions> = {}) {
     options.format ??= 'png';
 
-    const svg = await satori(await this.render(), {
+    const fonts = Array.from(FontFactory.values()).map((font) => font.getData());
+    const element = await this.render();
+
+    const svg = await satori(element, {
+      ...options,
       height: this.height,
       width: this.width,
-      fonts: Array.from(FontFactory.values()).map((font) => font.getData()),
-      embedFont: true,
-      ...options
+      fonts,
+      embedFont: true
     });
 
-    return options?.format === 'svg' ? svg : renderSvg(svg, options.format, options.options, options.signal);
+    return options?.format === 'svg'
+      ? svg
+      : renderSvg({
+          svg,
+          format: options.format,
+          options: options.options,
+          signal: options.signal
+        });
   }
 
   public static from(template: BuilderTemplate) {

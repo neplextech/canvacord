@@ -4,7 +4,8 @@ import { manropeBold } from './common';
 
 async function main() {
   const card = new RankCardBuilder()
-    .setUsername('@wumpus')
+    .setUsername('wumpus')
+    .setDisplayName('Wumpus')
     .setDiscriminator('1234')
     .setAvatar('https://cdn.discordapp.com/embed/avatars/0.png?size=256')
     .setCurrentXP(300)
@@ -18,9 +19,13 @@ async function main() {
       username: manropeBold.name
     });
 
-  card.build().then((data) => {
-    writeFileSync(`${__dirname}/normal/rankCard.png`, data);
-  });
+  card
+    .build({
+      format: 'png'
+    })
+    .then((data) => {
+      writeFileSync(`${__dirname}/normal/rankCard.png`, data);
+    });
 
   card
     .build({
