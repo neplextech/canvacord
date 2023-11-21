@@ -112,4 +112,10 @@ Object.assign(CanvacordConstructor, factory);
 
 export type Canvacord = CanvacordFactory & typeof CanvacordConstructor;
 
+/**
+ * Creates a new Canvacord image processor.
+ * @param source The image source to use
+ * @param options The options to use
+ * @returns The image processor
+ */
 export const canvacord = CanvacordConstructor as Canvacord;
