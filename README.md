@@ -15,6 +15,8 @@ Easily generate images on-the-fly with node.js using wide range of templates.
 - image templates _(wip)_
 - image filters _(wip)_
 - complex layouts _(wip)_
+- templates api _(wip)_
+- builder api _(wip)_
 
 ## Example
 
