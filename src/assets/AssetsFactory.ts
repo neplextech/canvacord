@@ -5,6 +5,9 @@ export const FontFactory = new Map<string, Font>();
 const BASE_URL = process.env.CANVACORD_ASSETS_BASE_URL || 'https://cdn.neplextech.com/canvacord';
 const prepareURL = (path: string) => `${BASE_URL}/${path}`;
 
+/**
+ * The image assets factory.
+ */
 export const ImageFactory = {
   AFFECT: prepareURL('AFFECT.png'),
   BATSLAP: prepareURL('BATSLAP.png'),

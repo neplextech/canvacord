@@ -10,19 +10,58 @@ const DefaultColors = {
 };
 
 export interface LeaderboardProps {
+  /**
+   * The background image.
+   */
   background: ImageSource | null;
+  /**
+   * The background color.
+   */
   backgroundColor: string;
+  /**
+   * The header of this leaderboard ui.
+   */
   header?: {
+    /**
+     * The title of this leaderboard ui.
+     */
     title: string;
+    /**
+     * The subtitle of this leaderboard ui.
+     */
     subtitle: string;
+    /**
+     * The image of this leaderboard ui.
+     */
     image: ImageSource;
   };
+  /**
+   * The players of this leaderboard ui.
+   */
   players: {
+    /**
+     * The display name of this player.
+     */
     displayName: string;
+    /**
+     * The username of this player.
+     */
     username: string;
+    /**
+     * The level of this player.
+     */
     level: number;
+    /**
+     * The xp of this player.
+     */
     xp: number;
+    /**
+     * The rank of this player.
+     */
     rank: number;
+    /**
+     * The avatar of this player.
+     */
     avatar: ImageSource;
   }[];
 }
@@ -42,6 +81,9 @@ const MAX_RENDER_HEIGHT = 1080;
 const MIN_RENDER_HEIGHT = 1000;
 
 export class LeaderboardBuilder extends Builder<LeaderboardProps> {
+  /**
+   * Create a new leaderboard ui builder
+   */
   public constructor() {
     super(500, MIN_RENDER_HEIGHT);
 
@@ -56,21 +98,37 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
     });
   }
 
+  /**
+   * Set background for this leaderboard ui
+   * @param background background image
+   */
   public setBackground(background: ImageSource) {
     this.options.set('background', background);
     return this;
   }
 
+  /**
+   * Set background color for this leaderboard ui
+   * @param color background color
+   */
   public setBackgroundColor(color: string) {
     this.options.set('backgroundColor', color);
     return this;
   }
 
+  /**
+   * Set header for this leaderboard ui
+   * @param data header data
+   */
   public setHeader(data: LeaderboardProps['header'] & {}) {
     this.options.set('header', data);
     return this;
   }
 
+  /**
+   * Set players for this leaderboard ui
+   * @param players players data
+   */
   public setPlayers(players: LeaderboardProps['players']) {
     const items = players.slice(0, 10);
     this.options.set('players', items);
@@ -86,6 +144,9 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
     return this;
   }
 
+  /**
+   * Render this leaderboard ui on the canvas
+   */
   public async render() {
     const options = this.options.getOptions();
 
@@ -128,10 +189,16 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
     );
   }
 
+  /**
+   * Render players ui on the canvas
+   */
   public renderPlayers(players: JSX.Element[]) {
     return <div className="mt-4 flex flex-col items-center justify-center w-[95%]">{players}</div>;
   }
 
+  /**
+   * Render top players ui on the canvas
+   */
   public async renderTop({ avatar, displayName, level, rank, username, xp }: LeaderboardProps['players'][number]) {
     const image = await loadImage(avatar);
     const currentColor = DefaultColors[rank === 1 ? 'Yellow' : rank === 2 ? 'Blue' : 'Green'];
@@ -171,6 +238,9 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
     );
   }
 
+  /**
+   * Render player ui on the canvas
+   */
   public async renderPlayer({ avatar, displayName, level, rank, username, xp }: LeaderboardProps['players'][number]) {
     const image = await loadImage(avatar);
 

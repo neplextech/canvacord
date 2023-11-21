@@ -1,5 +1,5 @@
 import { ImageSource } from '../helpers';
-import { ImageGen } from './ImageGen';
+import { ImageGen, ImageGenerationTemplate } from './ImageGen';
 import { buffer } from 'stream/consumers';
 import type { Readable } from 'stream';
 import { ImageFilterer } from './ImageFilterer';

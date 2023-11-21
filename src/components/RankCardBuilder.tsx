@@ -1,67 +1,235 @@
-import { Font, FontFactory } from '../assets';
+import { FontFactory } from '../assets';
 import { CSSPropertiesLike, ImageSource, JSX, loadImage, StyleSheet } from '../helpers';
 import { fixed, getDefaultFont } from '../helpers/utils';
 import { Builder } from '../templates/Builder';
 
+/**
+ * The user status type.
+ */
 type StatusType = 'online' | 'idle' | 'dnd' | 'invisible';
 
+/**
+ * The rank card builder props.
+ */
 interface RankCardBuilderProps {
+  /**
+   * The avatar for this rank card.
+   */
   avatar: ImageSource | null;
+  /**
+   * The style for this rank card.
+   */
   style: CSSPropertiesLike | null;
+  /**
+   * The fonts to be used for this rank card.
+   */
   fonts: Partial<{
+    /**
+     * The username font.
+     */
     username: string;
+    /**
+     * The progress font.
+     */
     progress: string;
+    /**
+     * The stats font.
+     */
     stats: string;
   }>;
+  /**
+   * The status for this rank card.
+   */
   status: StatusType;
+  /**
+   * The current xp for this rank card.
+   */
   currentXP: number;
+  /**
+   * The required xp for this rank card.
+   */
   requiredXP: number;
+  /**
+   * The username for this rank card.
+   */
   username: string;
+  /**
+   * The display name for this rank card.
+   */
   displayName: string;
+  /**
+   * The discriminator for this rank card.
+   */
   discriminator: string;
+  /**
+   * The level of this rank card.
+   */
   level: number;
+  /**
+   * The rank of this rank card.
+   */
   rank: number;
+  /**
+   * The background for this rank card.
+   */
   background: ImageSource;
+  /**
+   * The styles for each element of this rank card.
+   */
   tw: {
+    /**
+     * The username style.
+     */
     username: string;
+    /**
+     * The discriminator style.
+     */
     discriminator: string;
+    /**
+     * The display name style.
+     */
     displayName: string;
+    /**
+     * The level style.
+     */
     level: string;
+    /**
+     * The rank style.
+     */
     rank: string;
+    /**
+     * The xp style.
+     */
     xp: string;
+    /**
+     * The progressbar style.
+     */
     progress: {
+      /**
+       * The progressbar track style.
+       */
       track: string;
+      /**
+       * The progressbar thumb style.
+       */
       thumb: string;
     };
+    /**
+     * The overlay style.
+     */
     overlay: string;
+    /**
+     * The percentage style.
+     */
     percentage: string;
+    /**
+     * The avatar style.
+     */
     avatar: string;
+    /**
+     * The status style.
+     */
     status: string;
   };
+  /**
+   * The renderer configuration for this rank card.
+   */
   renders: {
+    /**
+     * Whether to render the avatar.
+     */
     avatar: boolean;
+    /**
+     * Whether to render the background.
+     */
     background: boolean;
+    /**
+     * Whether to render the level.
+     */
     level: boolean;
+    /**
+     * Whether to render the rank.
+     */
     rank: boolean;
+    /**
+     * Whether to render the status.
+     */
     status: boolean;
+    /**
+     * Whether to render the username.
+     */
     username: boolean;
+    /**
+     * Whether to render the display name.
+     */
     displayName: boolean;
+    /**
+     * Whether to render the discriminator.
+     */
     discriminator: boolean;
+    /**
+     * Whether to render the progress.
+     */
     progress: boolean;
+    /**
+     * Whether to render the xp.
+     */
     xp: boolean;
+    /**
+     * Whether to render the progressbar.
+     */
     progressbar: boolean;
+    /**
+     * The constants for this rank card.
+     */
     constants: {
+      /**
+       * The rank constant.
+       */
       rank: string;
+      /**
+       * The level constant.
+       */
       level: string;
+      /**
+       * The xp constant.
+       */
       xp: string;
+      /**
+       * The status colors constant.
+       */
       statusColors: {
+        /**
+         * The light gray color.
+         */
         LightGray: string;
+        /**
+         * The gray color.
+         */
         Gray: string;
+        /**
+         * The dark gray color.
+         */
         DarkGray: string;
+        /**
+         * The white color.
+         */
         White: string;
+        /**
+         * The green color.
+         */
         Green: string;
+        /**
+         * The yellow color.
+         */
         Yellow: string;
+        /**
+         * The red color.
+         */
         Red: string;
+        /**
+         * The blue color.
+         */
         Blue: string;
       };
     };
@@ -69,6 +237,24 @@ interface RankCardBuilderProps {
 }
 
 export class RankCardBuilder extends Builder<RankCardBuilderProps> {
+  /**
+   * Creates a new rank card builder.
+   * @example
+   * const card = new RankCardBuilder()
+   *     .setUsername('kiki')
+   *     .setDisplayName('Kiki')
+   *     .setDiscriminator('1234')
+   *     .setAvatar('...')
+   *     .setCurrentXP(300)
+   *     .setRequiredXP(600)
+   *     .setLevel(2)
+   *     .setRank(5)
+   *     .setStatus('online');
+   *
+   * const pngBuffer = await card.build({
+   *   format: 'png'
+   * });
+   */
   public constructor() {
     super(2000, 512);
 
@@ -132,66 +318,117 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
     });
   }
 
+  /**
+   * Sets the fonts to be used for this rank card.
+   * @param fontConfig The fonts to be used for this rank card.
+   */
   public setFonts(fontConfig: Required<RankCardBuilderProps['fonts']>) {
     this.options.set('fonts', fontConfig);
     return this;
   }
 
+  /**
+   * Sets the avatar for this rank card.
+   * @param image The avatar for this rank card.
+   */
   public setAvatar(image: ImageSource) {
     this.options.set('avatar', image);
     return this;
   }
 
+  /**
+   * Sets the background for this rank card.
+   * @param image The background for this rank card.
+   */
   public setBackground(image: ImageSource) {
     this.options.set('background', image);
     return this;
   }
 
+  /**
+   * Sets the status for this rank card.
+   * @param status The status for this rank card.
+   */
   public setStatus(status: StatusType) {
     this.options.set('status', status);
     return this;
   }
 
+  /**
+   * Sets the username for this rank card.
+   * @param name The username for this rank card.
+   */
   public setUsername(name: string) {
     this.options.set('username', name);
     return this;
   }
 
+  /**
+   * Sets the display name for this rank card.
+   * @param name The display name for this rank card.
+   */
   public setDisplayName(name: string) {
     this.options.set('displayName', name);
     return this;
   }
 
+  /**
+   * Sets the discriminator for this rank card.
+   * @param discriminator The discriminator for this rank card.
+   */
   public setDiscriminator(discriminator: string) {
     this.options.set('discriminator', discriminator);
     return this;
   }
 
+  /**
+   * Sets the current xp for this rank card.
+   * @param xp The current xp for this rank card.
+   */
   public setCurrentXP(xp: number) {
     this.options.set('currentXP', xp);
     return this;
   }
 
+  /**
+   * Sets the required xp for this rank card.
+   * @param xp The required xp for this rank card.
+   */
   public setRequiredXP(xp: number) {
     this.options.set('requiredXP', xp);
     return this;
   }
 
+  /**
+   * Sets the level of this rank card.
+   * @param level The level of this rank card.
+   */
   public setLevel(level: number) {
     this.options.set('level', level);
     return this;
   }
 
+  /**
+   * Sets the rank of this rank card.
+   * @param rank The rank of this rank card.
+   */
   public setRank(rank: number) {
     this.options.set('rank', rank);
     return this;
   }
 
+  /**
+   * Configures the renderer for this rank card.
+   * @param config The configuration for this rank card.
+   */
   public configureRenderer(config: Partial<RankCardBuilderProps['renders']>) {
     this.options.merge('renders', config);
     return this;
   }
 
+  /**
+   * Renders this rank card into the canvas.
+   */
   public async render() {
     const options = this.options.getOptions();
 

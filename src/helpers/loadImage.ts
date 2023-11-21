@@ -13,6 +13,9 @@ const MAX_REDIRECTS = 20,
   REDIRECT_STATUSES = new Set([301, 302]),
   DATA_URI = /^\s*data:/;
 
+/**
+ * The supported image sources. It can be a buffer, a readable stream, a string, a URL instance or an Image instance.
+ */
 export type ImageSource =
   | CanvacordImage
   | Buffer
@@ -27,12 +30,29 @@ export type ImageSource =
   | URL
   | Image;
 
+/**
+ * The options for loading an image.
+ */
 export interface LoadImageOptions {
+  /**
+   * The headers to use when downloading the image.
+   */
   headers?: Record<string, string>;
+  /**
+   * The maximum number of redirects to follow.
+   */
   maxRedirects?: number;
+  /**
+   * Other request options to use when downloading the image.
+   */
   requestOptions?: import('http').RequestOptions;
 }
 
+/**
+ * Loads an image from the specified source.
+ * @param source The image source
+ * @param [options] The options for loading the image
+ */
 export async function loadImage(source: ImageSource, options: LoadImageOptions = {}) {
   // load canvacord image
   if (source instanceof CanvacordImage) return source;
