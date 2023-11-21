@@ -137,6 +137,29 @@ const affectedMeme = await generator.encode('png');
 
 ## Creating images using custom builder
 
+This is an advanced method of creating images. Canvacord builder api allows you to create your own image generator using JSX elements and a subset of tailwind class names. This is also possible without JSX, you can find an example [here](https://github.com/neplextech/canvacord/blob/7651c1aa51a844c2591cbe68a6e21eb9d1d6287a/benchmark/jsx-renderer.mjs).
+
+If you want to use JSX with typescript, you need to add the following options to your `tsconfig.json`:
+
+```jsonc
+{
+  "compilerOptions": {
+    // other options
+    "jsx": "react",
+    "jsxFactory": "JSX.createElement",
+    "jsxFragmentFactory": "JSX.Fragment"
+  }
+  // other options
+}
+```
+
+You can also use pragma comments to define JSX factory and fragment factory:
+
+```js
+/** @jsx JSX */
+/** @jsxFrag JSX */
+```
+
 ```tsx
 // JSX import is required if you want to use JSX syntax
 // Builder is a base class to create your own builders
