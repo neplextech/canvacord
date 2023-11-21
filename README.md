@@ -156,8 +156,8 @@ If you want to use JSX with typescript, you need to add the following options to
 You can also use pragma comments to define JSX factory and fragment factory:
 
 ```js
-/** @jsx JSX */
-/** @jsxFrag JSX */
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
 ```
 
 ```tsx
