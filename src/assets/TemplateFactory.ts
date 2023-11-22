@@ -6,18 +6,36 @@ import type { Image, SKRSContext2D } from '@napi-rs/canvas';
 
 export class TemplateImage {
   #resolved: Image | null = null;
+
+  /**
+   * Creates a new TemplateImage instance.
+   * @param source The image source
+   * @example ```typescript
+   * const image = new TemplateImage('https://example.com/image.png');
+   * ```
+   */
   public constructor(public source: ImageSource) {}
 
+  /**
+   * Whether this image has been resolved.
+   */
   public resolved() {
     return this.#resolved != null;
   }
 
+  /**
+   * Resolves this image to consumable form.
+   */
   public async resolve(): Promise<Image> {
     if (this.#resolved) return this.#resolved;
     return (this.#resolved = await createCanvasImage(this.source));
   }
 }
 
+/**
+ * Creates a new template from the provided template.
+ * @param template The template to create from
+ */
 export const createTemplate = <F extends (...args: any[]) => any, P extends Parameters<F>>(
   cb: (...args: P) => IImageGenerationTemplate
 ) => {
@@ -28,6 +46,9 @@ export const createTemplate = <F extends (...args: any[]) => any, P extends Para
   };
 };
 
+/**
+ * The built-in template factory.
+ */
 export const TemplateFactory = {
   Affect: createTemplate((image: ImageSource) => {
     return {

@@ -1,5 +1,5 @@
 import { ImageSource } from '../helpers';
-import { ImageGen } from './ImageGen';
+import { ImageGen, ImageGenerationTemplate } from './ImageGen';
 import { buffer } from 'stream/consumers';
 import type { Readable } from 'stream';
 import { ImageFilterer } from './ImageFilterer';
@@ -112,4 +112,10 @@ Object.assign(CanvacordConstructor, factory);
 
 export type Canvacord = CanvacordFactory & typeof CanvacordConstructor;
 
+/**
+ * Creates a new Canvacord image processor.
+ * @param source The image source to use
+ * @param options The options to use
+ * @returns The image processor
+ */
 export const canvacord = CanvacordConstructor as Canvacord;

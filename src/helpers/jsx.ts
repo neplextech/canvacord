@@ -6,6 +6,9 @@ const isNode = (node: unknown): node is Node => {
   return typeof node === 'object' && node != null && 'toElement' in node;
 };
 
+/**
+ * The element initialization options.
+ */
 export type ElementInit = {
   type: string;
   props: Record<string, unknown>;
@@ -13,12 +16,31 @@ export type ElementInit = {
   children?: any;
 };
 
+/**
+ * The JSX element.
+ */
 export class Element {
+  /**
+   * The type of the element.
+   */
   public type: string;
+  /**
+   * The props of the element.
+   */
   public props: Record<string, unknown>;
+  /**
+   * The key of the element.
+   */
   public key: React.Key | null;
+  /**
+   * The children of the element.
+   */
   public children?: any;
 
+  /**
+   * Creates a new JSX element.
+   * @param _init The initialization options
+   */
   public constructor(_init: ElementInit) {
     this.type = _init.type;
     this.props = _init.props;
@@ -32,8 +54,21 @@ const cleanStyles = <T extends Record<string, unknown>>(properties: T): T => {
   return properties;
 };
 
+/**
+ * The JSX factory for canvacord jsx.
+ */
 export const JSX = {
+  /**
+   * The JSX element instance.
+   */
   Element,
+  /**
+   * Creates a new JSX element.
+   * @param type The type of the element
+   * @param props The props of the element
+   * @param children The children of the element
+   * @returns The created element
+   */
   createElement(type: string | Element, props: Record<string, unknown>, ...children: Element[]): Element {
     if (type instanceof Element) return type;
 
@@ -57,11 +92,18 @@ export const JSX = {
       children
     });
   },
+  /**
+   * Creates a new JSX fragment.
+   * @param children The children of the fragment
+   */
   Fragment({ children }: { children: Element[] | string }): Element {
     return new Element({ type: 'Fragment', props: { children }, children });
   }
 };
 
+/**
+ * Renders the components.
+ */
 export function render(components: (Node | Element | unknown)[]) {
   return components
     .map((component) => {
@@ -77,6 +119,9 @@ export function render(components: (Node | Element | unknown)[]) {
 
 declare module 'react' {
   interface DOMAttributes<T> {
+    /**
+     * A subset of TailwindCSS classes to apply to the element.
+     */
     tw?: string;
   }
 }
@@ -84,6 +129,9 @@ declare module 'react' {
 declare global {
   namespace JSX {
     interface IntrinsicAttributes {
+      /**
+       * A subset of TailwindCSS classes to apply to the element.
+       */
       tw?: string;
     }
   }

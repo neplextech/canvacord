@@ -1,3 +1,6 @@
+/**
+ * The bundled fonts in this package.
+ */
 export const Fonts = {
   /**
    * Geist sans font

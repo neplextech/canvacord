@@ -2,15 +2,25 @@ import { renderAsync, type ResvgRenderOptions } from '@resvg/resvg-js';
 import { EncodingFormat } from '../canvas/Encodable';
 import { AvifConfig, PngEncodeOptions, Transformer } from '@napi-rs/image';
 
+/**
+ * The options for rendering the svg.
+ */
 export type RenderSvgOptions = PngEncodeOptions | AvifConfig | number | null;
 
+/**
+ * Renders the svg to the specified format.
+ * @param svg The svg `string` or `Buffer` to render
+ * @param format The format to render to
+ * @param [options] The options for rendering
+ * @param [signal] The abort signal
+ */
 export async function renderSvg({
   svg,
   format,
   options,
   signal
 }: {
-  svg: string;
+  svg: string | Buffer;
   format: EncodingFormat;
   options?: RenderSvgOptions;
   signal?: AbortSignal | null;
