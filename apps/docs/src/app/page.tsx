@@ -1,119 +1,96 @@
-import Image from "next/image";
-import { JetBrains_Mono } from "next/font/google";
+import DiscordInvite from "@/components/discord-invite";
+import { Button } from "@/components/ui/button";
+import {
+  Card,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Label } from "@/components/ui/label";
+import { Separator } from "@/components/ui/separator";
+import { Features } from "@/lib/constants";
+import { cn } from "@/lib/utils";
+import { ArrowRightIcon, GitHubLogoIcon } from "@radix-ui/react-icons";
+import { JetBrains_Mono, Orbitron } from "next/font/google";
+import Link from "next/link";
 
-const jetbrains = JetBrains_Mono({ subsets: ["latin"] });
+const orbitron = Orbitron({ subsets: ["latin"] });
+const jbMono = JetBrains_Mono({ subsets: ["latin"] });
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          New website under construction
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://neplextech.com"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Developed by Neplex{" "}
-            <Image
-              src="/neplex.svg"
-              alt="Neplex Logo"
-              className="dark:invert"
-              width={72}
-              height={72}
-              priority
-            />
-          </a>
-        </div>
-      </div>
-
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <div className="text-center space-y-6">
-          {" "}
+    <main className="min-h-[80vh] grid place-items-center">
+      <div className="mt-5 flex items-center justify-center flex-col min-h-[75vh]">
+        <div className="text-center flex flex-col items-center md:max-w-[90%] lg:max-w-[70%] mt-16 space-y-10">
           <h1
-            className={`relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] text-5xl ${jetbrains.className}`}
+            className={cn(
+              "lg:text-8xl md:text-7xl text-6xl uppercase select-none font-extrabold",
+              orbitron.className
+            )}
           >
-            canvacord v6
+            canvacord
           </h1>
-          <p>
-            Easily generate images on-the-fly with node.js using wide range of
-            customizable templates.
-          </p>
+          <h5 className="mt-2 text-muted-foreground font-normal border-t-0 text-center">
+            Canvacord allows you to easily generate custom images using React
+            and tailwindcss-like syntax.
+          </h5>
+        </div>
+        <div className="mt-5">
+          <Link
+            href={"https://canvacord-v5.neplextech.com"}
+            className="inline-flex items-center rounded-lg bg-muted px-3 py-1 text-sm font-medium"
+          >
+            📖 <Separator orientation="vertical" /> Looking for v5 docs?{" "}
+            <span className="font-bold ml-1">Click here</span>{" "}
+            <ArrowRightIcon className="h-4 w-4" />
+          </Link>
+        </div>
+        <div className="flex items-center gap-4 mt-6 px-4 flex-col md:flex-row w-full md:w-auto">
+          <Link href="/docs" className="w-full md:w-auto">
+            <Button size="lg" className="w-full md:w-auto">
+              Get Started
+            </Button>
+          </Link>
+          <Link
+            href="https://github.com/neplextech/canvacord"
+            target="_blank"
+            rel="noreferrer noopener"
+            className="w-full md:w-auto"
+          >
+            <Button
+              variant="outline"
+              className="gap-1 w-full  md:w-auto"
+              size="lg"
+            >
+              <GitHubLogoIcon className="h-5 w-5" />
+              GitHub
+            </Button>
+          </Link>
+        </div>
+        <div className="mt-5">
+          <Label className={cn(jbMono.className, "text-muted-foreground")}>
+            <span className="select-none">$</span> npm i --save canvacord
+          </Label>
+        </div>
+
+        <div className="mt-5">
+          <DiscordInvite />
         </div>
       </div>
-
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://canvacord-v5.neplextech.com"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            v5 Docs{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Go to v5 documentation of canvacord.
-          </p>
-        </a>
-
-        <a
-          href="https://www.npmjs.com/package/canvacord/v/6.0.0-beta.0"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Beta Release{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Experiment early with v6 beta release.
-          </p>
-        </a>
-
-        <a
-          href="https://github.com/neplextech/canvacord"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            GitHub{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Track v6 progress on GitHub.
-          </p>
-        </a>
-
-        <a
-          href="https://neplextech.com/discord"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Discord{" "}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Join our Discord server for updates and support.
-          </p>
-        </a>
-      </div>
+      <section className="container mb-16">
+        <h2 className="text-2xl font-bold mb-2">Why choose canvacord?</h2>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 grid-flow-row gap-8">
+          {Features.map((feature) => (
+            <Card className="bg-transparent" key={feature.title}>
+              <CardHeader>
+                <CardTitle>{feature.title}</CardTitle>
+                <CardDescription>{feature.description}</CardDescription>
+              </CardHeader>
+            </Card>
+          ))}
+        </div>
+      </section>
+      <section></section>
     </main>
   );
 }
