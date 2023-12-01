@@ -1,5 +1,5 @@
 import b from 'benny';
-import { Builder, JSX, Font } from '../dist/index.mjs';
+import { Builder, JSX, Font } from 'canvacord';
 
 const geist = Font.loadDefault();
 

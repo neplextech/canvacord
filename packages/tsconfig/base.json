@@ -1,0 +1,19 @@
+{
+    "$schema": "https://json.schemastore.org/tsconfig",
+    "display": "Default",
+    "compilerOptions": {
+        "outDir": "dist",
+        "strict": true,
+        "strictNullChecks": true,
+        "target": "ES2020",
+        "moduleResolution": "node",
+        "allowJs": true,
+        "module": "CommonJS",
+        "declaration": true,
+        "esModuleInterop": true
+    },
+    "exclude": [
+        "node_modules",
+        "dist"
+    ]
+}
