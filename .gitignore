@@ -1,7 +1,7 @@
 node_modules/
 legacy/
 !scripts/assets
-docs/
 dist/
 .yarn/cache
 .yarn/*.gz
+.turbo/
