@@ -86,7 +86,7 @@ const image = await card.build({
 await writeFileSync('./card.png', data);
 ```
 
-![xp-card](https://raw.githubusercontent.com/neplextech/canvacord/main/test/jsx/test2.svg)
+![xp-card](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/jsx/test2.svg)
 
 ## Creating images using custom template
 
@@ -133,7 +133,7 @@ const affectedMeme = await generator.encode('png');
 
 #### Result
 
-![output](https://raw.githubusercontent.com/neplextech/canvacord/main/test/canvas/affected.png)
+![output](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/canvas/affected.png)
 
 ## Creating images using custom builder
 
