@@ -32,3 +32,7 @@ export const pages = [
     ],
   },
 ];
+
+export default function Data() {
+  return null;
+}
