@@ -9,7 +9,6 @@ import {
 } from "@edge-ui/react";
 import Link from "next/link";
 import { SunIcon, MoonIcon, Menu } from "lucide-react";
-import { TextMark } from "../assets/TextMark";
 import { useRouter } from "next/router";
 import { SearchBox } from "../searchbox/SearchBox";
 import { useState } from "react";
@@ -23,8 +22,8 @@ export default function Navbar() {
       <div className="container py-2 hidden lg:flex">
         <div className="mr-4 hidden md:flex justify-between w-full">
           <div className="flex items-center gap-6">
-            <Link href="/" className="mr-6 flex items-center space-x-2">
-              <TextMark className="h-10 w-10" />
+            <Link href="/" className="mr-6 font-semibold">
+              Canvacord
             </Link>
             <nav className="flex items-center space-x-6 text-sm font-medium">
               <Link
@@ -49,7 +48,7 @@ export default function Navbar() {
               >
                 Guide
               </Link>
-              <Link
+              {/* <Link
                 href="/showcase"
                 className={cn(
                   "transition-colors hover:text-foreground/80",
@@ -59,7 +58,7 @@ export default function Navbar() {
                 )}
               >
                 Showcase
-              </Link>
+              </Link> */}
               <Link
                 href={"https://github.com/neplextech/canvacord"}
                 className={cn(
@@ -107,8 +106,8 @@ function MobileNav() {
 
   return (
     <div className="lg:hidden p-2 flex items-center justify-between">
-      <Link href="/">
-        <TextMark className="h-10 w-10" />
+      <Link href="/" className="font-semibold">
+        Canvacord
       </Link>
       <div className="flex flex-row items-center gap-4">
         <SearchBox />
@@ -161,7 +160,7 @@ function MobileNav() {
                 >
                   Guide
                 </Link>
-                <Link
+                {/* <Link
                   onClick={() => {
                     setOpen(false);
                   }}
@@ -174,7 +173,7 @@ function MobileNav() {
                   )}
                 >
                   Showcase
-                </Link>
+                </Link> */}
                 <Link
                   onClick={() => {
                     setOpen(false);

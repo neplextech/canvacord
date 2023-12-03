@@ -27,6 +27,10 @@ export function ContentArea({ data }: IProps) {
         ? "classes"
         : type === "function"
         ? "functions"
+        : type === "variables"
+        ? "variable"
+        : type === "enum"
+        ? "enum"
         : "types";
     const res = data[t as Exclude<keyof typeof data, "name">] as unknown as {
       data: DocumentedClass | DocumentedTypes | DocumentedFunction;
@@ -45,14 +49,32 @@ export function ContentArea({ data }: IProps) {
   useEffect(() => {
     if (!packageName) return;
     if (!target || !type) {
-      if (data.classes.length || data.functions.length || data.types.length) {
+      if (
+        data.classes.length ||
+        data.functions.length ||
+        data.types.length ||
+        data.variables.length ||
+        data.enum.length
+      ) {
         const t = data.classes.length
           ? "classes"
           : data.functions.length
           ? "functions"
+          : data.variables.length
+          ? "variable"
+          : data.enum.length
+          ? "enum"
           : "types";
         const resolvedType =
-          t === "classes" ? "class" : t === "functions" ? "function" : "type";
+          t === "classes"
+            ? "class"
+            : t === "functions"
+            ? "function"
+            : type === "variable"
+            ? "variable"
+            : type === "enum"
+            ? "enum"
+            : "type";
         if (!type) {
           const dest = `/docs/${encodeURIComponent(
             packageName as string
@@ -70,11 +92,16 @@ export function ContentArea({ data }: IProps) {
           ? "classes"
           : type === "function"
           ? "functions"
+          : type === "variable"
+          ? "variables"
+          : type === "enum"
+          ? "enum"
           : "types";
       const res = data[t as Exclude<keyof typeof data, "name">] as unknown as {
         data: DocumentedClass | DocumentedTypes | DocumentedFunction;
       }[];
-      const entity = res.find((e) => e.data.name === target)?.data || null;
+
+      const entity = res?.find((e) => e.data.name === target)?.data || null;
       setCurrentItem(entity);
     }
   }, [target, type, packageName, data]);
@@ -89,8 +116,11 @@ export function ContentArea({ data }: IProps) {
         description={`Documentation for ${currentItem.name}.`}
       />
       <div className="mb-16">
-        {type === "type" ? (
-          <TypeRenderer entity={currentItem as DocumentedTypes} />
+        {["enum", "type", "variable"].includes(type as string) ? (
+          <TypeRenderer
+            entity={currentItem as DocumentedTypes}
+            type={type as any}
+          />
         ) : type === "class" ? (
           <ClassRenderer entity={currentItem as DocumentedClass} />
         ) : type === "function" ? (

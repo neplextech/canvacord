@@ -6,11 +6,17 @@ import { ParameterTable } from "../entities/ParameterTable";
 import { Properties } from "../entities/Properties";
 import { Type } from "../entities/Type";
 
-export function TypeRenderer({ entity }: { entity: DocumentedTypes }) {
+export function TypeRenderer({
+  entity,
+  type,
+}: {
+  entity: DocumentedTypes;
+  type: "interface" | "variable" | "enum";
+}) {
   return (
     <>
       <EntitySymbol
-        type={"interface"}
+        type={type}
         id={`c-${entity.name}`}
         link
         source={entity.metadata?.url}

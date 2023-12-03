@@ -156,7 +156,7 @@ export default function DocsPage() {
                     link={(name) => {
                       return `/docs/${encodeURIComponent(
                         currentLib.name
-                      )}/type/${name}`;
+                      )}/variable/${name}`;
                     }}
                     icon={<VscSymbolVariable className="h-5 w-5" />}
                   />
@@ -226,6 +226,42 @@ export default function DocsPage() {
                             )}/function/${name}`;
                           }}
                           icon={<VscSymbolMethod className="h-5 w-5" />}
+                        />
+                      ) : null}
+                      {currentLib.types.length ? (
+                        <DocsItemList
+                          name="Enum"
+                          data={currentLib.enum.map((m) => {
+                            return {
+                              lib: currentLib.name,
+                              name: m.data.name,
+                              type: "enum",
+                            };
+                          })}
+                          link={(name) => {
+                            return `/docs/${encodeURIComponent(
+                              currentLib.name
+                            )}/enum/${name}`;
+                          }}
+                          icon={<VscSymbolEnum className="h-5 w-5" />}
+                        />
+                      ) : null}
+                      {currentLib.types.length ? (
+                        <DocsItemList
+                          name="Variables"
+                          data={currentLib.variables.map((m) => {
+                            return {
+                              lib: currentLib.name,
+                              name: m.data.name,
+                              type: "variables",
+                            };
+                          })}
+                          link={(name) => {
+                            return `/docs/${encodeURIComponent(
+                              currentLib.name
+                            )}/variables/${name}`;
+                          }}
+                          icon={<VscSymbolVariable className="h-5 w-5" />}
                         />
                       ) : null}
                       {currentLib.types.length ? (

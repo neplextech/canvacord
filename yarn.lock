@@ -161,6 +161,7 @@ __metadata:
     eslint-config-next: "npm:13.4.7"
     fuse.js: "npm:^6.6.2"
     lucide-react: "npm:^0.252.0"
+    micro-docgen: "npm:^0.2.0"
     next: "npm:13.4.7"
     postcss: "npm:8.4.24"
     react: "npm:18.2.0"
@@ -170,7 +171,7 @@ __metadata:
     semver: "npm:^7.5.3"
     tailwindcss: "npm:3.3.2"
     tsup: "npm:^7.2.0"
-    typescript: "npm:5.1.3"
+    typescript: "npm:5.3.2"
     vitest: "npm:^0.34.6"
   languageName: unknown
   linkType: soft
@@ -9267,17 +9268,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@npm:5.1.3":
-  version: 5.1.3
-  resolution: "typescript@npm:5.1.3"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: 2d656e635d85a8354955d4f63e5835f5217b1d2b0cea7d82409e324bd7d24f68883e43208a9b250b764bbf2833d83878c05de55dbe4b8b73996b2025c6e50140
-  languageName: node
-  linkType: hard
-
-"typescript@npm:^5.1.3, typescript@npm:^5.3.2":
+"typescript@npm:5.3.2, typescript@npm:^5.1.3, typescript@npm:^5.3.2":
   version: 5.3.2
   resolution: "typescript@npm:5.3.2"
   bin:
@@ -9287,17 +9278,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"typescript@patch:typescript@npm%3A5.1.3#optional!builtin<compat/typescript>":
-  version: 5.1.3
-  resolution: "typescript@patch:typescript@npm%3A5.1.3#optional!builtin<compat/typescript>::version=5.1.3&hash=5da071"
-  bin:
-    tsc: bin/tsc
-    tsserver: bin/tsserver
-  checksum: dade91ba4155d0e9eb58a83cfec0d8271fefedc87b106443c396f9961aa8b231f8585d283b126a8373897aff7823da7874ce5c0b3b18a548b51ffb474f01565e
-  languageName: node
-  linkType: hard
-
-"typescript@patch:typescript@npm%3A^5.1.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.3.2#optional!builtin<compat/typescript>":
+"typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.1.3#optional!builtin<compat/typescript>, typescript@patch:typescript@npm%3A^5.3.2#optional!builtin<compat/typescript>":
   version: 5.3.2
   resolution: "typescript@patch:typescript@npm%3A5.3.2#optional!builtin<compat/typescript>::version=5.3.2&hash=e012d7"
   bin:
