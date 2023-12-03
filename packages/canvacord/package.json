@@ -1,7 +1,7 @@
 {
     "name": "canvacord",
     "description": "Generate images on-the-fly with the help of wide range of templates.",
-    "version": "6.0.0-beta.0",
+    "version": "6.0.0-beta.1",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "module": "./dist/index.mjs",

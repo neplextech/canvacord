@@ -6,6 +6,51 @@ import { renderSvg, RenderSvgOptions } from "../helpers/image";
 import { JSX, Element } from "../helpers/jsx";
 import { BuilderOptionsManager } from "./BuilderOptionsManager";
 
+export type GraphemeProvider = Record<string, string>;
+
+const isEmoji = (str: string) => {
+  const emojiRegex = /^[\p{Emoji}]$/u;
+  return emojiRegex.test(str);
+};
+
+function emojiToUnicode(emoji: string): string {
+  if (emoji.length === 1) return emoji.charCodeAt(0).toString(16);
+  let comp =
+    (emoji.charCodeAt(0) - 0xd800) * 0x400 +
+    (emoji.charCodeAt(1) - 0xdc00) +
+    0x10000;
+  if (comp < 0) return emoji.charCodeAt(0).toString(16);
+  return comp.toString(16).toLowerCase();
+}
+
+const createTwemojiProxy = (
+  graphemeProvider: GraphemeProvider
+): GraphemeProvider => {
+  const handler: ProxyHandler<GraphemeProvider> = {
+    has(target, p) {
+      return isEmoji(p as string) || p in target;
+    },
+    get(target, prop: string) {
+      if (isEmoji(prop)) {
+        const url = (code: string) =>
+          `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/${code}.svg`;
+        const code = emojiToUnicode(prop);
+        const urlCode = url(code);
+
+        return urlCode;
+      }
+
+      return prop;
+    },
+  };
+
+  return new Proxy(graphemeProvider, handler);
+};
+
+export const BuiltInGraphemeProvider = {
+  TWEMOJI: createTwemojiProxy({}),
+};
+
 /**
  * The builder template.
  */
@@ -77,6 +122,11 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
   public options = new BuilderOptionsManager<T>();
 
   /**
+   * The grapheme provider of this builder.
+   */
+  public graphemeProvider: GraphemeProvider = BuiltInGraphemeProvider.TWEMOJI;
+
+  /**
    * Create a new builder.
    * @param width the width of this builder.
    * @param height the height of this builder.
@@ -124,10 +174,21 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
    * @param component the component to add.
    */
   public addComponent<T extends Node | Element>(component: T | T[]) {
-    if (component instanceof Element && (component.type as unknown as Function) === JSX.Fragment)
+    if (
+      component instanceof Element &&
+      (component.type as unknown as Function) === JSX.Fragment
+    )
       component = component.children;
     if (!Array.isArray(component)) component = [component];
     this.components.push(...component);
+    return this;
+  }
+
+  /**
+   * Set grapheme image provider for this builder.
+   */
+  public setGraphemeProvider(provider: GraphemeProvider) {
+    this.graphemeProvider = provider;
     return this;
   }
 
@@ -166,7 +227,9 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
   public async build(options: Partial<BuilderBuildOptions> = {}) {
     options.format ??= "png";
 
-    const fonts = Array.from(FontFactory.values()).map((font) => font.getData());
+    const fonts = Array.from(FontFactory.values()).map((font) =>
+      font.getData()
+    );
     const element = await this.render();
 
     const svg = await satori(element, {
@@ -175,6 +238,7 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
       width: this.width,
       fonts,
       embedFont: true,
+      graphemeImages: this.graphemeProvider,
     });
 
     return options?.format === "svg"

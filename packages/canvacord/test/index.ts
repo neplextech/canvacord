@@ -1,27 +1,26 @@
-import { RankCardBuilder } from '../src/index';
-import { writeFileSync } from 'fs';
-import { manropeBold } from './common';
+import { RankCardBuilder, Font } from "../src/index";
+import { writeFileSync } from "fs";
+import { RankCardUserStatus } from "../src/components/rank-card/NeoClassicalCard";
+
+Font.loadDefault();
 
 async function main() {
   const card = new RankCardBuilder()
-    .setUsername('wumpus')
-    .setDisplayName('Wumpus')
-    .setDiscriminator('1234')
-    .setAvatar('https://cdn.discordapp.com/embed/avatars/0.png?size=256')
+    .setUsername("Wumpus")
+    .setHandle("wumpus")
+    .setAvatar("https://cdn.discordapp.com/embed/avatars/0.png?size=256")
     .setCurrentXP(300)
     .setRequiredXP(600)
     .setLevel(2)
     .setRank(5)
-    .setStatus('online')
-    .setFonts({
-      progress: manropeBold.name,
-      stats: manropeBold.name,
-      username: manropeBold.name
-    });
+    .setOverlay(70)
+    .setBackground("#23272a")
+    // .setBackground(`${__dirname}/minecraft.png`)
+    .setStatus(RankCardUserStatus.Online);
 
   card
     .build({
-      format: 'png'
+      format: "png",
     })
     .then((data) => {
       writeFileSync(`${__dirname}/normal/rankCard.png`, data);
@@ -29,7 +28,7 @@ async function main() {
 
   card
     .build({
-      format: 'svg'
+      format: "svg",
     })
     .then((data) => {
       writeFileSync(`${__dirname}/normal/rankCard.svg`, data);
