@@ -10,9 +10,9 @@ export class TemplateImage {
   /**
    * Creates a new TemplateImage instance.
    * @param source The image source
-   * @example ```typescript
+   *
    * const image = new TemplateImage('https://example.com/image.png');
-   * ```
+   
    */
   public constructor(public source: ImageSource) {}
 

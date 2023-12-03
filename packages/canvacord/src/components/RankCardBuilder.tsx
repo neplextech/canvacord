@@ -554,7 +554,7 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
                 <h1 className={StyleSheet.cn("text-4xl", tws.xp)}>
                   <span className="text-[#A7A7A7] mr-2">{config.constants.xp}:</span>
                   <span className="text-white">
-                    {fixed(xp)}/{fixed(requiredXP)}
+                    {fixed(xp, true)}/{fixed(requiredXP, true)}
                   </span>
                 </h1>
               )}

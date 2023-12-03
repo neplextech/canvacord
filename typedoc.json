@@ -1,0 +1,13 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "entryPointStrategy": "packages",
+  "entryPoints": ["packages/canvacord"],
+  "githubPages": false,
+  "readme": "none",
+  "skipErrorChecking": true,
+  "cleanOutputDir": true,
+  "name": "Canvacord",
+  "hideGenerator": true,
+  "excludePrivate": true,
+  "excludeExternals": true
+}
