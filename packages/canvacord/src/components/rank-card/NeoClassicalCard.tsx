@@ -63,17 +63,12 @@ export function NeoClassicalCard(props: RankCardProps) {
     <div className="flex flex-col bg-[#23272a] h-full rounded-md w-full p-6">
       <div className="bg-[#2b2f35]/80 flex items-center gap-6 rounded-lg h-full w-full px-4">
         <div className="flex relative">
-          <img
-            src="https://cdn.discordapp.com/embed/avatars/0.png"
-            className="h-38 w-38 rounded-full"
-          />
+          <img src="https://cdn.discordapp.com/embed/avatars/0.png" className="h-38 w-38 rounded-full" />
           <div className="absolute h-8 w-8 rounded-full bg-green-500 bottom-5 right-0" />
         </div>
         <div className="flex flex-col ml-12">
           <div className="flex flex-col">
-            <h1 className="text-white font-semibold text-3xl mb-0">
-              Lost Ctrl
-            </h1>
+            <h1 className="text-white font-semibold text-3xl mb-0">Lost Ctrl</h1>
             <p className="text-[#8a8d92] font-semibold text-lg mt-0">@twlite</p>
           </div>
           <div className="flex relative">
@@ -91,8 +86,7 @@ export function NeoClassicalCard(props: RankCardProps) {
                 <h3>
                   XP:
                   <span className="text-white ml-1">
-                    {fixed(currentXP ?? 0, abbreviate)}/
-                    {fixed(requiredXP ?? 0, abbreviate)}
+                    {fixed(currentXP ?? 0, abbreviate)}/{fixed(requiredXP ?? 0, abbreviate)}
                   </span>
                 </h3>
               </div>

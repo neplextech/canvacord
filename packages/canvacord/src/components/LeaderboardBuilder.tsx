@@ -232,7 +232,7 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
           <h1 className="text-white text-base font-extrabold m-0">{displayName}</h1>
           <h2 className="text-white text-xs font-thin m-0 mb-2">@{username}</h2>
           <h4 className={`text-sm text-[${currentColor}] m-0`}>Level {level}</h4>
-          <h4 className={`text-sm text-[${currentColor}] m-0`}>{fixed(xp)} XP</h4>
+          <h4 className={`text-sm text-[${currentColor}] m-0`}>{fixed(xp, true)} XP</h4>
         </div>
       </div>
     );
@@ -259,7 +259,7 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
         </div>
         <div className="flex flex-col items-start justify-center">
           <h4 className="text-white font-medium text-sm m-0">Level {level}</h4>
-          <h4 className="text-white font-medium text-sm m-0">{fixed(xp)} XP</h4>
+          <h4 className="text-white font-medium text-sm m-0">{fixed(xp, true)} XP</h4>
         </div>
       </div>
     );

@@ -13,10 +13,10 @@ export class Font {
    * Creates and registers a new Font instance for both canvas and builder apis.
    * @param data The font data
    * @param [alias] The font alias. If not provided, a random UUID will be used.
-   * @example ```typescript
+   *
    * const data = await readFile('path/to/font.ttf');
    * const font = new Font(data, 'my-font');
-   * ```
+   
    */
   public constructor(public data: Buffer, public alias = randomAlias()) {
     GlobalFonts.register(data, alias);
@@ -60,9 +60,9 @@ export class Font {
    * Creates a new Font instance from a file.
    * @param path The path to the font file
    * @param [alias] The font alias. If not provided, a random UUID will be used.
-   * @example ```typescript
+   *
    * const font = await Font.fromFile('path/to/font.ttf', 'my-font');
-   * ```
+   
    */
   public static async fromFile(path: string, alias?: string) {
     const buffer = await readFile(path);
@@ -73,9 +73,8 @@ export class Font {
    * Creates a new Font instance from a file synchronously.
    * @param path The path to the font file
    * @param [alias] The font alias. If not provided, a random UUID will be used.
-   * @example ```typescript
+   *
    * const font = Font.fromFileSync('path/to/font.ttf', 'my-font');
-   * ```
    */
   public static fromFileSync(path: string, alias?: string) {
     const buffer = readFileSync(path);
@@ -86,10 +85,10 @@ export class Font {
    * Creates a new Font instance from a buffer.
    * @param buffer The buffer containing the font data
    * @param [alias] The font alias. If not provided, a random UUID will be used.
-   * @example ```typescript
+   *
    * const buffer = await readFile('path/to/font.ttf');
    * const font = Font.fromBuffer(buffer, 'my-font');
-   * ```
+   
    */
   public static fromBuffer(buffer: Buffer, alias?: string) {
     return new Font(buffer, alias);
@@ -97,9 +96,9 @@ export class Font {
 
   /**
    * Loads the default font bundled with this package.
-   * @example ```typescript
+   *
    * const font = Font.loadDefault();
-   * ```
+   
    */
   public static loadDefault() {
     return this.fromBuffer(Fonts.Geist, "geist");

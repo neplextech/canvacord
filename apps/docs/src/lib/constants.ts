@@ -1,4 +1,15 @@
-export const Features = [
+import { JetBrains_Mono, Inter, Orbitron } from "next/font/google";
+
+interface IFeature {
+  title: string;
+  description: string;
+}
+
+interface ITools extends IFeature {
+  link: string;
+}
+
+export const features: IFeature[] = [
   {
     title: "React-like Syntax for Image Creation",
     description:
@@ -30,3 +41,40 @@ export const Features = [
       "Canvacord provides extensive font support, allowing developers to enhance text elements in their generated images with a wide range of fonts, styles, and sizes.",
   },
 ];
+
+export const tools: ITools[] = [
+  {
+    title: "satori",
+    link: "https://github.com/vercel/satori",
+    description: "Enlightened library to convert HTML and CSS to SVG",
+  },
+  {
+    title: "@napi-rs/canvas",
+    link: "https://github.com/Brooooooklyn/canvas",
+    description:
+      "High performance skia binding to Node.js. Zero system dependencies and pure npm packages without any postinstall scripts nor node-gyp.",
+  },
+  {
+    title: "resvg-js",
+    link: "https://github.com/yisibl/resvg-js",
+    description:
+      "A high-performance SVG renderer and toolkit, powered by Rust based resvg and napi-rs.",
+  },
+];
+
+export const orbitron = Orbitron({
+  subsets: ["latin"],
+});
+
+export const jbMono = JetBrains_Mono({
+  subsets: ["latin"],
+});
+
+export const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-sans",
+  display: "swap",
+});
+
+export const DISCORD_INVITE = "https://neplextech.com/discord";
+export const DISCORD_ICON = "https://github.com/neplextech.png";

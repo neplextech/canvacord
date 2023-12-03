@@ -3,7 +3,9 @@
   "compilerOptions": {
     "jsx": "react",
     "jsxFactory": "JSX.createElement",
-    "jsxFragmentFactory": "JSX.Fragment"
+    "jsxFragmentFactory": "JSX.Fragment",
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true
   },
   "include": ["src/**/*", "./test/**/*"]
 }

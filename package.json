@@ -14,14 +14,19 @@
     "build": "turbo build",
     "dev": "turbo dev",
     "format": "turbo format",
-    "lint": "turbo lint"
+    "lint": "turbo lint",
+    "docgen": "tsx ./scripts/docgen.mts"
   },
   "dependencies": {
+    "@biomejs/biome": "1.4.1",
+    "micro-docgen": "^0.2.0",
     "tsup": "^8.0.1",
+    "tsx": "^4.6.2",
     "turbo": "^1.10.16"
   },
+  "packageManager": "yarn@4.0.1",
   "devDependencies": {
-    "@biomejs/biome": "1.4.1"
-  },
-  "packageManager": "yarn@4.0.1"
+    "@types/fs-extra": "^11.0.4",
+    "fs-extra": "^11.2.0"
+  }
 }
