@@ -33,7 +33,7 @@
     "bugs": {
         "url": "https://github.com/neplextech/canvacord/issues"
     },
-    "homepage": "https://github.com/neplextech/canvacord#readme",
+    "homepage": "https://canvacord.js.org",
     "packageManager": "yarn@3.6.0",
     "devDependencies": {
         "@biomejs/biome": "^1.4.1",

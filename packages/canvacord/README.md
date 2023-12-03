@@ -4,9 +4,9 @@
 
 Easily generate images on-the-fly with node.js using wide range of templates.
 
-> **Warning**
->
-> You are looking at the next version of canvacord, which is under development. Go to the [legacy branch](https://github.com/neplextech/canvacord/tree/legacy) to view legacy codebase.
+## Documentation
+
+https://canvacord.js.org
 
 ## Features
 
@@ -63,27 +63,27 @@ fs.writeFileSync('filtered.png', filtered);
 ## XP Card
 
 ```ts
-import { Font, RankCardBuilder } from 'canvacord';
-import { writeFile } from 'fs/promises';
+import { Font, RankCardBuilder } from "canvacord";
+import { writeFile } from "fs/promises";
 
 // load default font
 Font.loadDefault();
 
 const card = new RankCardBuilder()
-  .setUsername('Lost Ctrl')
-  .setDisplayName('thearchaeopteryx')
-  .setAvatar('...')
+  .setUsername("Lost Ctrl")
+  .setDisplayName("thearchaeopteryx")
+  .setAvatar("...")
   .setCurrentXP(3800)
   .setRequiredXP(2500)
   .setLevel(54)
   .setRank(32)
-  .setStatus('online');
+  .setStatus("online");
 
 const image = await card.build({
-  format: 'png'
+  format: "png",
 });
 
-await writeFileSync('./card.png', data);
+await writeFileSync("./card.png", data);
 ```
 
 ![xp-card](https://raw.githubusercontent.com/neplextech/canvacord/main/test/jsx/test2.svg)
@@ -91,7 +91,12 @@ await writeFileSync('./card.png', data);
 ## Creating images using custom template
 
 ```ts
-import { createTemplate, ImageFactory, TemplateImage, createImageGenerator } from 'canvacord';
+import {
+  createTemplate,
+  ImageFactory,
+  TemplateImage,
+  createImageGenerator,
+} from "canvacord";
 
 const AffectedMeme = createTemplate((image: ImageSource) => {
   return {
@@ -101,9 +106,9 @@ const AffectedMeme = createTemplate((image: ImageSource) => {
           {
             source: new TemplateImage(ImageFactory.AFFECT),
             x: 0,
-            y: 0
-          }
-        ]
+            y: 0,
+          },
+        ],
       },
       {
         image: [
@@ -112,11 +117,11 @@ const AffectedMeme = createTemplate((image: ImageSource) => {
             x: 180,
             y: 383,
             width: 200,
-            height: 157
-          }
-        ]
-      }
-    ]
+            height: 157,
+          },
+        ],
+      },
+    ],
   };
 });
 
@@ -128,7 +133,7 @@ const generator = createImageGenerator(AffectedMeme(photo));
 await generator.render();
 
 // get the resulting image in png format
-const affectedMeme = await generator.encode('png');
+const affectedMeme = await generator.encode("png");
 ```
 
 #### Result
@@ -167,8 +172,8 @@ You can also use pragma comments to define JSX factory and fragment factory:
 // JSX import is required if you want to use JSX syntax
 // Builder is a base class to create your own builders
 // Font is a utility class to load fonts
-import { JSX, Builder, Font } from 'canvacord';
-import { writeFile } from 'fs/promises';
+import { JSX, Builder, Font } from "canvacord";
+import { writeFile } from "fs/promises";
 
 // declare props types
 interface Props {
@@ -180,12 +185,12 @@ class Design extends Builder<Props> {
     // set width and height
     super(500, 500);
     // initialize props
-    this.bootstrap({ text: '' });
+    this.bootstrap({ text: "" });
   }
 
   // define custom methods for your builder
   setText(text: string) {
-    this.options.set('text', text);
+    this.options.set("text", text);
     return this;
   }
 
@@ -193,7 +198,9 @@ class Design extends Builder<Props> {
   async render() {
     return (
       <div className="flex items-center justify-center h-full w-full bg-teal-500">
-        <h1 className="text-white font-bold text-7xl">{this.options.get('text')}</h1>
+        <h1 className="text-white font-bold text-7xl">
+          {this.options.get("text")}
+        </h1>
       </div>
     );
   }
@@ -204,11 +211,11 @@ class Design extends Builder<Props> {
 Font.loadDefault();
 
 // create design
-const design = new Design().setText('Hello World');
-const image = await design.build({ format: 'png' });
+const design = new Design().setText("Hello World");
+const image = await design.build({ format: "png" });
 
 // do something with generated image
-await writeFile('./test.png', image);
+await writeFile("./test.png", image);
 ```
 
 #### Result
