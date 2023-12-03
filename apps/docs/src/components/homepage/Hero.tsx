@@ -15,16 +15,16 @@ import DiscordInvite from "./DiscordInvite";
 export default function Hero() {
   return (
     <div className="mt-5 flex items-center justify-center flex-col background min-h-[75vh]">
-      <div className="text-center md:max-w-[90%] lg:max-w-[70%] mt-16 space-y-10 flex items-center flex-col">
+      <div className="flex flex-col items-center md:max-w-[90%] lg:max-w-[70%] mt-16 space-y-10">
         <Heading.H1
           className={cn(
-            "lg:text-8xl md:text-7xl text-6xl uppercase select-none",
+            "lg:text-8xl md:text-7xl text-5xl uppercase select-none text-center",
             orbitron.className
           )}
         >
           canvacord
         </Heading.H1>
-        <Heading.H5 className="mt-2 text-muted-foreground font-normal border-t-0 text-start md:text-center">
+        <Heading.H5 className="text-muted-foreground font-normal border-t-0 text-center md:text-center">
           Canvacord allows you to easily generate custom images using React and
           tailwindcss-like syntax.
         </Heading.H5>
