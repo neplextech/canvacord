@@ -53,6 +53,8 @@ await fse.writeFile(
   [
     "import { lazy } from 'react';",
     "",
+    "export default function GuideData() {\n    return null;\n}",
+    "",
     "export const pages = [",
     ...meta.map(
       (m) => `{

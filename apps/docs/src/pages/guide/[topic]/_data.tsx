@@ -1,5 +1,9 @@
 import { lazy } from 'react';
 
+export default function GuideData() {
+    return null;
+}
+
 export const pages = [
 {
       name: "examples",
