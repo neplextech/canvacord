@@ -7,6 +7,7 @@ import {
   NeoClassicalCard,
   RankCardProps,
   RankCardUserStatus,
+  StatusData,
 } from "./rank-card/NeoClassicalCard";
 
 /**
@@ -76,7 +77,7 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
       overlay: 90,
       rank: null,
       requiredXP: 0,
-      status: RankCardUserStatus.Offline,
+      status: RankCardUserStatus.None,
       styles: {},
       texts: {},
       username: null,
@@ -115,7 +116,7 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
    * Sets the status for this rank card.
    * @param status The status for this rank card.
    */
-  public setStatus(status: RankCardUserStatus) {
+  public setStatus(status: RankCardUserStatus | StatusData) {
     this.options.set("status", status);
     return this;
   }

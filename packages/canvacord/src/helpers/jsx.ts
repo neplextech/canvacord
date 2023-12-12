@@ -69,17 +69,26 @@ export const JSX = {
    * @param children The children of the element
    * @returns The created element
    */
-  createElement(type: string | Element, props: Record<string, unknown>, ...children: Element[]): Element {
+  createElement(
+    type: string | Element,
+    props: Record<string, unknown>,
+    ...children: Element[]
+  ): Element {
     if (type instanceof Element) return type;
 
     props ??= {};
+
+    if (isObjectEmpty(props.style)) delete props.style;
 
     // monkey-patch layout issues
     if ("className" in props) props.tw ??= props.className;
 
     if (type === "div") {
       if (!("tw" in props) && !("style" in props)) {
-        props.tw = StyleSheet.cn("flex flex-col content-start shrink-0", props.tw as string);
+        props.tw = StyleSheet.cn(
+          "flex flex-col content-start shrink-0",
+          props.tw as string
+        );
       }
     }
 
@@ -115,4 +124,8 @@ export function render(components: (Node | Element | unknown)[]) {
       return JSX.createElement("span", { children: child }, child);
     })
     .flat(1);
+}
+
+function isObjectEmpty(obj: any) {
+  return obj ? Object.keys(obj).length === 0 : false;
 }

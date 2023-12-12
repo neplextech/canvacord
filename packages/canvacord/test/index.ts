@@ -13,10 +13,10 @@ async function main() {
     .setRequiredXP(600)
     .setLevel(2)
     .setRank(5)
-    .setOverlay(70)
+    .setOverlay(90)
     .setBackground("#23272a")
-    // .setBackground(`${__dirname}/minecraft.png`)
-    .setStatus(RankCardUserStatus.Online);
+    .setBackground(`${__dirname}/minecraft.png`)
+    .setStatus(RankCardUserStatus.None);
 
   card
     .build({
