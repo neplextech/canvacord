@@ -3,18 +3,12 @@ import { FontFactory } from "../assets";
 import { ImageSource, JSX, loadImage } from "../helpers";
 import { getDefaultFont } from "../helpers/utils";
 import { Builder } from "../templates/Builder";
-import {
-  NeoClassicalCard,
-  RankCardProps,
-  RankCardUserStatus,
-  StatusData,
-} from "./rank-card/NeoClassicalCard";
+import { NeoClassicalCard, RankCardProps, RankCardUserStatus, StatusData } from "./rank-card/NeoClassicalCard";
 
 /**
  * The rank card builder props.
  */
-interface RankCardBuilderProps
-  extends Omit<RankCardProps, "avatar" | "backgroundColor"> {
+interface RankCardBuilderProps extends Omit<RankCardProps, "avatar" | "backgroundColor"> {
   avatar: ImageSource;
   background: ImageSource;
   backgroundCrop?: Partial<{
@@ -82,8 +76,7 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
       texts: {},
       username: null,
       fonts: {},
-      calculateProgress: (currentXP, requiredXP) =>
-        ((currentXP ?? 0) / (requiredXP ?? 0)) * 100,
+      calculateProgress: (currentXP, requiredXP) => ((currentXP ?? 0) / (requiredXP ?? 0)) * 100,
     });
   }
 
@@ -197,9 +190,7 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
   /**
    * Set background crop for this rank card.
    */
-  public setBackgroundCrop(
-    pos: Partial<RankCardBuilderProps["backgroundCrop"]>
-  ) {
+  public setBackgroundCrop(pos: Partial<RankCardBuilderProps["backgroundCrop"]>) {
     this.options.set("backgroundCrop", pos);
     return this;
   }
@@ -244,16 +235,14 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
             const width = options.backgroundCrop.width ?? this.width;
             const height = options.backgroundCrop.height ?? this.height;
 
-            const buffer = await new Transformer(e.data)
-              .crop(x, y, width, height)
-              .png();
+            const buffer = await new Transformer(e.data).crop(x, y, width, height).png();
 
             e.data = buffer;
           }
 
           return `url(${e.toDataURL()})`;
         },
-        () => options.background as string
+        () => options.background as string,
       );
     }
 

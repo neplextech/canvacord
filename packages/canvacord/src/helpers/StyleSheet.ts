@@ -11,20 +11,15 @@ export type Stylable =
 /**
  * The CSS properties like object.
  */
-export type CSSPropertiesLike<K extends string | number | symbol = string> =
-  Record<K, CSSProperties>;
+export type CSSPropertiesLike<K extends string | number | symbol = string> = Record<K, CSSProperties>;
 
 /**
  * Performs object cleanup by deleting all undefined properties that could interfere with builder methods.
  */
-export const performObjectCleanup = (
-  obj: Record<string, any>,
-  deep = false
-) => {
+export const performObjectCleanup = (obj: Record<string, any>, deep = false) => {
   for (const prop in obj) {
     if (obj[prop] === undefined) delete obj[prop];
-    if (typeof obj[prop] === "object" && deep)
-      performObjectCleanup(obj[prop], deep);
+    if (typeof obj[prop] === "object" && deep) performObjectCleanup(obj[prop], deep);
   }
 };
 
@@ -35,7 +30,7 @@ export class StyleSheet extends null {
    * Creates a new CSSPropertiesLike object.
    */
   public static create<O extends CSSPropertiesLike, K extends keyof O>(
-    styles: CSSPropertiesLike<K>
+    styles: CSSPropertiesLike<K>,
   ): CSSPropertiesLike<K> {
     if (!styles || typeof styles !== "object") return {} as O;
 

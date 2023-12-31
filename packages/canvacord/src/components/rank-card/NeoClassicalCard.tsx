@@ -10,13 +10,7 @@ export enum RankCardUserStatus {
   None = "none",
 }
 
-export type StatusData =
-  | "online"
-  | "idle"
-  | "dnd"
-  | "offline"
-  | "streaming"
-  | "none";
+export type StatusData = "online" | "idle" | "dnd" | "offline" | "streaming" | "none";
 
 export interface RankCardProps {
   handle: string | null;
@@ -106,30 +100,21 @@ export function NeoClassicalCard(props: RankCardProps) {
 
   const shouldSkipStats = currentXP == null && requiredXP == null;
   const progress = calculateProgress(currentXP ?? 0, requiredXP ?? 0);
-  const progressWidth =
-    typeof progress !== "number" || isNaN(progress) ? 0 : clamp(progress);
+  const progressWidth = typeof progress !== "number" || isNaN(progress) ? 0 : clamp(progress);
 
   return (
     <div
       className={StyleSheet.cn(
-        backgroundColor && !backgroundColor.startsWith("url(")
-          ? `bg-[${backgroundColor}]`
-          : "bg-[#23272a]",
+        backgroundColor && !backgroundColor.startsWith("url(") ? `bg-[${backgroundColor}]` : "bg-[#23272a]",
         "flex flex-col h-full rounded-md w-full p-6",
-        StyleSheet.tw(styles.background)
+        StyleSheet.tw(styles.background),
       )}
       style={StyleSheet.compose(
         {
-          backgroundImage:
-            backgroundColor && backgroundColor.startsWith("url(")
-              ? backgroundColor
-              : undefined,
-          backgroundSize:
-            backgroundColor && backgroundColor.startsWith("url(")
-              ? "100% 100%"
-              : undefined,
+          backgroundImage: backgroundColor && backgroundColor.startsWith("url(") ? backgroundColor : undefined,
+          backgroundSize: backgroundColor && backgroundColor.startsWith("url(") ? "100% 100%" : undefined,
         },
-        StyleSheet.css(styles.background)
+        StyleSheet.css(styles.background),
       )}
     >
       <div
@@ -140,23 +125,17 @@ export function NeoClassicalCard(props: RankCardProps) {
               }`
             : null,
           "flex items-center rounded-lg h-full w-full px-4",
-          StyleSheet.tw(styles.overlay)
+          StyleSheet.tw(styles.overlay),
         )}
         style={StyleSheet.css(styles.overlay)}
       >
         <div
-          className={StyleSheet.cn(
-            "flex relative",
-            StyleSheet.tw(styles.avatar?.container)
-          )}
+          className={StyleSheet.cn("flex relative", StyleSheet.tw(styles.avatar?.container))}
           style={StyleSheet.css(styles.avatar?.container)}
         >
           <img
             src={avatar}
-            className={StyleSheet.cn(
-              "h-38 w-38 rounded-full ml-4",
-              StyleSheet.tw(styles.avatar?.image)
-            )}
+            className={StyleSheet.cn("h-38 w-38 rounded-full ml-4", StyleSheet.tw(styles.avatar?.image))}
             style={StyleSheet.css(styles.avatar?.image)}
           />
           {status && status !== RankCardUserStatus.None ? (
@@ -164,24 +143,18 @@ export function NeoClassicalCard(props: RankCardProps) {
               className={StyleSheet.cn(
                 "absolute h-8 w-8 rounded-full bottom-5 right-0 flex",
                 `bg-[${Colors[status]}]`,
-                StyleSheet.tw(styles.avatar?.status)
+                StyleSheet.tw(styles.avatar?.status),
               )}
               style={StyleSheet.css(styles.avatar?.status)}
             />
           ) : null}
         </div>
         <div
-          className={StyleSheet.cn(
-            "flex flex-col ml-8",
-            StyleSheet.tw(styles.container)
-          )}
+          className={StyleSheet.cn("flex flex-col ml-8", StyleSheet.tw(styles.container))}
           style={StyleSheet.css(styles.container)}
         >
           <div
-            className={StyleSheet.cn(
-              "flex flex-col",
-              StyleSheet.tw(styles.username?.container)
-            )}
+            className={StyleSheet.cn("flex flex-col", StyleSheet.tw(styles.username?.container))}
             style={StyleSheet.css(styles.username?.container)}
           >
             {username && (
@@ -189,7 +162,7 @@ export function NeoClassicalCard(props: RankCardProps) {
                 className={StyleSheet.cn(
                   "text-white font-semibold text-3xl mb-0",
                   StyleSheet.tw(styles.username?.name),
-                  !handle ? "mb-2" : ""
+                  !handle ? "mb-2" : "",
                 )}
                 style={StyleSheet.css(styles.username?.name)}
               >
@@ -200,7 +173,7 @@ export function NeoClassicalCard(props: RankCardProps) {
               <p
                 className={StyleSheet.cn(
                   "text-[#808386] font-semibold text-lg mt-0",
-                  StyleSheet.tw(styles.username?.handle)
+                  StyleSheet.tw(styles.username?.handle),
                 )}
                 style={StyleSheet.css(styles.username?.handle)}
               >
@@ -209,16 +182,13 @@ export function NeoClassicalCard(props: RankCardProps) {
             )}
           </div>
           <div
-            className={StyleSheet.cn(
-              "flex relative",
-              StyleSheet.tw(styles.progressbar?.container)
-            )}
+            className={StyleSheet.cn("flex relative", StyleSheet.tw(styles.progressbar?.container))}
             style={StyleSheet.css(styles.progressbar?.container)}
           >
             <div
               className={StyleSheet.cn(
                 "bg-[#484b4e] w-160 h-6 rounded-xl flex",
-                StyleSheet.tw(styles.progressbar?.track)
+                StyleSheet.tw(styles.progressbar?.track),
               )}
               style={StyleSheet.css(styles.progressbar?.track)}
             />
@@ -226,23 +196,20 @@ export function NeoClassicalCard(props: RankCardProps) {
               className={StyleSheet.cn(
                 "bg-[#fff] max-w-160 h-6 rounded-xl absolute flex",
                 `w-[${progressWidth}%]`,
-                StyleSheet.tw(styles.progressbar?.thumb)
+                StyleSheet.tw(styles.progressbar?.thumb),
               )}
               style={StyleSheet.css(styles.progressbar?.thumb)}
             />
           </div>
           <div
-            className={StyleSheet.cn(
-              "flex",
-              StyleSheet.tw(styles.statistics?.container)
-            )}
+            className={StyleSheet.cn("flex", StyleSheet.tw(styles.statistics?.container))}
             style={StyleSheet.css(styles.statistics?.container)}
           >
             {level != null && (
               <div
                 className={StyleSheet.cn(
                   "flex items-center text-[#808386] font-medium",
-                  StyleSheet.tw(styles.statistics?.level?.container)
+                  StyleSheet.tw(styles.statistics?.level?.container),
                 )}
                 style={StyleSheet.css(styles.statistics?.level?.container)}
               >
@@ -252,10 +219,7 @@ export function NeoClassicalCard(props: RankCardProps) {
                 >
                   {texts.level || "LEVEL:"}
                   <span
-                    className={StyleSheet.cn(
-                      "text-white ml-1",
-                      StyleSheet.tw(styles.statistics?.level?.value)
-                    )}
+                    className={StyleSheet.cn("text-white ml-1", StyleSheet.tw(styles.statistics?.level?.value))}
                     style={StyleSheet.css(styles.statistics?.level?.value)}
                   >
                     {fixed(level, abbreviate)}
@@ -267,7 +231,7 @@ export function NeoClassicalCard(props: RankCardProps) {
               <div
                 className={StyleSheet.cn(
                   "flex items-center text-[#808386] font-medium ml-8",
-                  StyleSheet.tw(styles.statistics?.xp?.container)
+                  StyleSheet.tw(styles.statistics?.xp?.container),
                 )}
                 style={StyleSheet.css(styles.statistics?.xp?.container)}
               >
@@ -277,14 +241,10 @@ export function NeoClassicalCard(props: RankCardProps) {
                 >
                   {texts.xp || "XP:"}
                   <span
-                    className={StyleSheet.cn(
-                      "text-white ml-1",
-                      StyleSheet.tw(styles.statistics?.xp?.value)
-                    )}
+                    className={StyleSheet.cn("text-white ml-1", StyleSheet.tw(styles.statistics?.xp?.value))}
                     style={StyleSheet.css(styles.statistics?.xp?.value)}
                   >
-                    {fixed(currentXP ?? 0, abbreviate)}/
-                    {fixed(requiredXP ?? 0, abbreviate)}
+                    {fixed(currentXP ?? 0, abbreviate)}/{fixed(requiredXP ?? 0, abbreviate)}
                   </span>
                 </h3>
               </div>
@@ -293,7 +253,7 @@ export function NeoClassicalCard(props: RankCardProps) {
               <div
                 className={StyleSheet.cn(
                   "flex items-center text-[#808386] font-medium ml-8",
-                  StyleSheet.tw(styles.statistics?.rank?.container)
+                  StyleSheet.tw(styles.statistics?.rank?.container),
                 )}
                 style={StyleSheet.css(styles.statistics?.rank?.container)}
               >
@@ -303,10 +263,7 @@ export function NeoClassicalCard(props: RankCardProps) {
                 >
                   {texts.rank || "RANK:"}
                   <span
-                    className={StyleSheet.cn(
-                      "text-white ml-1",
-                      StyleSheet.tw(styles.statistics?.rank?.value)
-                    )}
+                    className={StyleSheet.cn("text-white ml-1", StyleSheet.tw(styles.statistics?.rank?.value))}
                     style={StyleSheet.css(styles.statistics?.rank?.value)}
                   >
                     #{fixed(rank, abbreviate)}

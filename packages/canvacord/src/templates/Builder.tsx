@@ -15,17 +15,12 @@ const isEmoji = (str: string) => {
 
 function emojiToUnicode(emoji: string): string {
   if (emoji.length === 1) return emoji.charCodeAt(0).toString(16);
-  let comp =
-    (emoji.charCodeAt(0) - 0xd800) * 0x400 +
-    (emoji.charCodeAt(1) - 0xdc00) +
-    0x10000;
+  let comp = (emoji.charCodeAt(0) - 0xd800) * 0x400 + (emoji.charCodeAt(1) - 0xdc00) + 0x10000;
   if (comp < 0) return emoji.charCodeAt(0).toString(16);
   return comp.toString(16).toLowerCase();
 }
 
-export const createEmojiProvider = (
-  builder: (code: string) => string
-): GraphemeProvider => {
+export const createEmojiProvider = (builder: (code: string) => string): GraphemeProvider => {
   const graphemeProvider: GraphemeProvider = {};
 
   const handler: ProxyHandler<GraphemeProvider> = {
@@ -47,34 +42,23 @@ export const createEmojiProvider = (
   return new Proxy(graphemeProvider, handler);
 };
 
-const FluentEmojiBase = (s: string) =>
-  `https://cdn.jsdelivr.net/gh/shuding/fluentui-emoji-unicode/assets/${s}.svg`;
+const FluentEmojiBase = (s: string) => `https://cdn.jsdelivr.net/gh/shuding/fluentui-emoji-unicode/assets/${s}.svg`;
 
 export const BuiltInGraphemeProvider = {
   Twemoji: createEmojiProvider(
-    (code: string) =>
-      `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/${code}.svg`
+    (code: string) => `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/${code}.svg`,
   ),
-  FluentEmojiHighContrast: createEmojiProvider((code) =>
-    FluentEmojiBase(`${code}_high-contrast`)
-  ),
-  FluentEmojiFlat: createEmojiProvider((code) =>
-    FluentEmojiBase(`${code}_flat`)
-  ),
-  FluentEmojiColor: createEmojiProvider((code) =>
-    FluentEmojiBase(`${code}_color`)
-  ),
+  FluentEmojiHighContrast: createEmojiProvider((code) => FluentEmojiBase(`${code}_high-contrast`)),
+  FluentEmojiFlat: createEmojiProvider((code) => FluentEmojiBase(`${code}_flat`)),
+  FluentEmojiColor: createEmojiProvider((code) => FluentEmojiBase(`${code}_color`)),
   Openmoji: createEmojiProvider(
-    (code) =>
-      `https://cdn.jsdelivr.net/npm/@svgmoji/openmoji@2.0.0/svg/${code.toUpperCase()}.svg`
+    (code) => `https://cdn.jsdelivr.net/npm/@svgmoji/openmoji@2.0.0/svg/${code.toUpperCase()}.svg`,
   ),
   Noto: createEmojiProvider(
-    (code) =>
-      `https://cdn.jsdelivr.net/gh/svgmoji/svgmoji/packages/svgmoji__noto/svg/${code.toUpperCase()}.svg`
+    (code) => `https://cdn.jsdelivr.net/gh/svgmoji/svgmoji/packages/svgmoji__noto/svg/${code.toUpperCase()}.svg`,
   ),
   Blobmoji: createEmojiProvider(
-    (code) =>
-      `https://cdn.jsdelivr.net/npm/@svgmoji/blob@2.0.0/svg/${code.toUpperCase()}.svg`
+    (code) => `https://cdn.jsdelivr.net/npm/@svgmoji/blob@2.0.0/svg/${code.toUpperCase()}.svg`,
   ),
   None: {} as GraphemeProvider,
 };
@@ -204,10 +188,7 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
    * @param component the component to add.
    */
   public addComponent<T extends Node | Element>(component: T | T[]) {
-    if (
-      component instanceof Element &&
-      (component.type as unknown as Function) === JSX.Fragment
-    )
+    if (component instanceof Element && (component.type as unknown as Function) === JSX.Fragment)
       component = component.children;
     if (!Array.isArray(component)) component = [component];
     this.components.push(...component);
@@ -257,9 +238,7 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
   public async build(options: Partial<BuilderBuildOptions> = {}) {
     options.format ??= "png";
 
-    const fonts = Array.from(FontFactory.values()).map((font) =>
-      font.getData()
-    );
+    const fonts = Array.from(FontFactory.values()).map((font) => font.getData());
     const element = await this.render();
 
     const svg = await satori(element, {
@@ -269,8 +248,7 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
       fonts,
       embedFont: true,
       loadAdditionalAsset: async (languageCode, segment) => {
-        const fallback = () =>
-          options?.loadAdditionalAsset?.(languageCode, segment) ?? segment;
+        const fallback = () => options?.loadAdditionalAsset?.(languageCode, segment) ?? segment;
         if (languageCode === "emoji" && this.graphemeProvider) {
           const cached = EmojiCache.get(segment);
           if (cached) return cached;
@@ -282,9 +260,7 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
             const response = await fetch(url);
             if (!response.ok) return fallback();
             const svg = await response.arrayBuffer();
-            const base64 = `data:image/svg+xml;base64,${Buffer.from(
-              svg
-            ).toString("base64")}`;
+            const base64 = `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}`;
             EmojiCache.set(segment, base64);
             return base64;
           } catch {

@@ -14,13 +14,7 @@ const MAX_REDIRECTS = 20,
   REDIRECT_STATUSES = new Set([301, 302]),
   DATA_URI = /^\s*data:/;
 
-const NEEDS_TRANSFORMATION = [
-  "image/webp",
-  "image/gif",
-  "image/bmp",
-  "image/icns",
-  "image/tiff",
-];
+const NEEDS_TRANSFORMATION = ["image/webp", "image/gif", "image/bmp", "image/icns", "image/tiff"];
 
 /**
  * The supported image sources. It can be a buffer, a readable stream, a string, a URL instance or an Image instance.
@@ -62,10 +56,7 @@ export interface LoadImageOptions {
  * @param source The image source
  * @param [options] The options for loading the image
  */
-export async function loadImage(
-  source: ImageSource,
-  options: LoadImageOptions = {}
-) {
+export async function loadImage(source: ImageSource, options: LoadImageOptions = {}) {
   // load canvacord image
   if (source instanceof CanvacordImage) return source;
   // load readable stream as image
@@ -80,8 +71,7 @@ export async function loadImage(
   // if source is string and in data uri format, construct image using data uri
   if (typeof source === "string" && DATA_URI.test(source)) {
     const commaIdx = source.indexOf(",");
-    const encoding =
-      source.lastIndexOf("base64", commaIdx) < 0 ? "utf-8" : "base64";
+    const encoding = source.lastIndexOf("base64", commaIdx) < 0 ? "utf-8" : "base64";
     const data = Buffer.from(source.slice(commaIdx + 1), encoding);
     return createImage(data);
   }
@@ -97,10 +87,7 @@ export async function loadImage(
           // @ts-expect-error
           headers: options.requestOptions?.headers,
         }).then(async (res) => {
-          if (!res.ok)
-            throw new Error(
-              `remote source rejected with status code ${res.status}`
-            );
+          if (!res.ok) throw new Error(`remote source rejected with status code ${res.status}`);
           return await createImage(Buffer.from(await res.arrayBuffer()));
         });
       }
@@ -112,11 +99,9 @@ export async function loadImage(
           source as URL,
           resolve,
           reject,
-          typeof options.maxRedirects === "number" && options.maxRedirects >= 0
-            ? options.maxRedirects
-            : MAX_REDIRECTS,
-          options.requestOptions || {}
-        )
+          typeof options.maxRedirects === "number" && options.maxRedirects >= 0 ? options.maxRedirects : MAX_REDIRECTS,
+          options.requestOptions || {},
+        ),
       );
       return createImage(data);
     }
@@ -131,7 +116,7 @@ function makeRequest(
   resolve: (res: Buffer) => void,
   reject: (err: unknown) => void,
   redirectCount: number,
-  requestOptions: import("http").RequestOptions
+  requestOptions: import("http").RequestOptions,
 ) {
   const isHttps = url.protocol === "https:";
   // lazy load the lib
@@ -140,29 +125,16 @@ function makeRequest(
       ? (https = require("https"))
       : https
     : !http
-    ? (http = require("http"))
-    : http;
+      ? (http = require("http"))
+      : http;
 
   lib
     .get(url.toString(), requestOptions || {}, (res) => {
-      const shouldRedirect =
-        REDIRECT_STATUSES.has(res.statusCode!) &&
-        typeof res.headers.location === "string";
+      const shouldRedirect = REDIRECT_STATUSES.has(res.statusCode!) && typeof res.headers.location === "string";
       if (shouldRedirect && redirectCount > 0)
-        return makeRequest(
-          new URL(res.headers.location!),
-          resolve,
-          reject,
-          redirectCount - 1,
-          requestOptions
-        );
-      if (
-        typeof res.statusCode === "number" &&
-        (res.statusCode < 200 || res.statusCode >= 300)
-      ) {
-        return reject(
-          new Error(`remote source rejected with status code ${res.statusCode}`)
-        );
+        return makeRequest(new URL(res.headers.location!), resolve, reject, redirectCount - 1, requestOptions);
+      if (typeof res.statusCode === "number" && (res.statusCode < 200 || res.statusCode >= 300)) {
+        return reject(new Error(`remote source rejected with status code ${res.statusCode}`));
       }
 
       buffer(res).then(resolve, reject);
