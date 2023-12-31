@@ -2,7 +2,9 @@ import type { Font } from "./Font";
 
 export const FontFactory = new Map<string, Font>();
 
-const BASE_URL = process.env.CANVACORD_ASSETS_BASE_URL || "https://cdn.neplextech.com/canvacord";
+const BASE_URL =
+  process.env.CANVACORD_ASSETS_BASE_URL ||
+  "https://raw.githubusercontent.com/neplextech/canvacord-assets/main/public/canvacord";
 const prepareURL = (path: string) => `${BASE_URL}/${path}`;
 
 /**
