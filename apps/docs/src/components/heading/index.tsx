@@ -16,14 +16,14 @@ export function HeadingMeta(props: IProps) {
     <Head>
       <meta name="viewport" content="width=device-width, initial-scale=1.0" />
       <meta httpEquiv="Content-Type" content="text/html;charset=UTF-8" />
-      <link rel="icon" href="/icon.png" type="image/png" />
+      <link rel="icon" href="/icon.jpg" type="image/jpeg" />
       <title>{title}</title>
       <meta name="description" content={description} />
       <meta
         name="keywords"
         content="canvas,canvacord,node-canvas,satori,html-to-image,javascript,typescript,image-generation,api"
       />
-      <meta name="theme-color" content="#0d9488" />
+      <meta name="theme-color" content="#2c4f6d" />
     </Head>
   );
 }

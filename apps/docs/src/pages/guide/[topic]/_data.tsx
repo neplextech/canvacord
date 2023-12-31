@@ -42,4 +42,15 @@ export const pages = [
       },
     ],
   },
+  {
+    name: "welcome",
+    displayName: "Welcome",
+    pages: [
+      {
+        name: "welcome.md",
+        displayName: "Welcome",
+        component: lazy(() => import("../_guides/Welcome/welcome.md")),
+      },
+    ],
+  },
 ];

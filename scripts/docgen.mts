@@ -71,7 +71,7 @@ await fse.writeFile(
           )
           .join(",\n")}
       ]
-    }`
+    },`
     ),
     "];",
     "",

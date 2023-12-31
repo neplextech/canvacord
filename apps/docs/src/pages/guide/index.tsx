@@ -7,7 +7,7 @@ export default function GuideEntryPoint() {
   const router = useRouter();
 
   useEffect(() => {
-    router.push(`/guide/examples/greetings-card.md`);
+    router.push(`/guide/welcome/welcome.md`);
   }, [router]);
 
   return (

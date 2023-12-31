@@ -2,215 +2,40 @@
 
 # Canvacord
 
-Easily generate images on-the-fly with node.js using wide range of templates.
-
-> **Warning**
->
-> You are looking at the next version of canvacord, which is under development. Go to the [legacy branch](https://github.com/neplextech/canvacord/tree/legacy) to view legacy codebase.
+Easily generate images using html and css in nodejs. Canvacord is suitable for creating dynamic images such as social media posts, greetings cards, memes, etc. It is also possible to create your own templates and builders to generate images. You are only limited by your imagination.
 
 ## Features
 
-- image generation _(wip)_
-- image manipulation _(wip)_
-- image templates _(wip)_
-- image filters _(wip)_
-- complex layouts _(wip)_
-- templates api _(wip)_
-- builder api _(wip)_
+- 🪟 **Open source, no privacy issues, 100% transparent** - Canvacord is completely open source and free to use. This makes everything transparent and you can even contribute to the project. Best of all, you dont have to worry about privacy issues 😊.
+- 💪 **Easy to use** - Canvacord provides a simple api to generate images on-the-fly.
+- 🎨 **Customizable** - You can create your own templates and builders to generate images. Canvacord allows you to define how your image should look using html and css. No more hassle learning complicated canvas api.
+- 🚀 **Fast** - Canvacord is powered by highly optimized, battle tested libraries, which makes it fast and reliable.
+- 🔒 **Typescript support** - Canvacord is written in typescript and provides type definitions out of the box.
+- 📸 **Wide formats support** - Canvacord supports many image formats such as png, jpeg, webp, gif, svg, etc.
+- 📄 **Wide range of templates** - Canvacord provides many built-in templates to generate images such as triggered gif, beautiful image, facepalm image, etc. to quickly generate that meme you saw on reddit 🤡. No need to touch complicated canvas api, just a simple schema object is enough.
 
-## Example
+## Installation
 
-### Image Generation
-
-#### Using built-in templates (New "Legacy api")
-
-<!-- prettier-ignore -->
-```ts
-import { canvacord } from 'canvacord';
-import fs from 'node:fs';
-
-// triggered gif
-const triggered = await canvacord.triggered(image);
-triggered.pipe(fs.createWriteStream('triggered.gif'));
-
-// image generation
-const beautiful = await canvacord.beautiful(img);
-const facepalm = await canvacord.facepalm(img);
-
-// filters
-const filtered = await canvacord
-    .filters(512, 512)
-    .drawImage(image)
-    .hueRotate(90)
-    .invert(2)
-    .sepia(1)
-    .opacity(0.5)
-    .saturate(2)
-    .encode();
-
-// alternative syntax
-const filtered = await canvacord(image, 512, 512)
-    .hueRotate(90)
-    .invert(2)
-    .sepia(1)
-    .opacity(0.5)
-    .saturate(2)
-    .encode();
-
-fs.writeFileSync('filtered.png', filtered);
+```sh
+$ npm install canvacord
 ```
 
-## XP Card
+Canvacord stays away from node-gyp based dependencies, so you don't have to worry about weird errors while installing the library. Although canvacord utilizes [@napi-rs/canvas](https://npm.im/@napi-rs/canvas) under the hood, it is recommended to use the builder api for image generation. Only utilize the canvas api if you need to perform image manipulation.
 
-```ts
-import { Font, RankCardBuilder } from 'canvacord';
-import { writeFile } from 'fs/promises';
+# Documentation
 
-// load default font
-Font.loadDefault();
+[https://canvacord.js.org](https://canvacord.js.org)
 
-const card = new RankCardBuilder()
-  .setUsername('Lost Ctrl')
-  .setDisplayName('thearchaeopteryx')
-  .setAvatar('...')
-  .setCurrentXP(3800)
-  .setRequiredXP(2500)
-  .setLevel(54)
-  .setRank(32)
-  .setStatus('online');
+# Discord support server
 
-const image = await card.build({
-  format: 'png'
-});
+[https://neplextech.com/discord](https://neplextech.com/discord)
 
-await writeFileSync('./card.png', data);
-```
+# Support the project
 
-![xp-card](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/jsx/test2.svg)
+You can support the project by donating on [patreon](https://www.patreon.com/twlite) or [buymeacoffee](https://www.buymeacoffee.com/twlite). This will help us to keep the project alive and maintain it regularly. You can also contribute to the project by submitting a pull request or reporting a bug.
 
-## Creating images using custom template
+<a href="https://www.buymeacoffee.com/twlite"><img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy me a coffee" width="200" height="50"></a> <a href="https://www.patreon.com/twlite"><img src="https://c5.patreon.com/external/logo/become_a_patron_button.png" alt="Become a Patron!" width="200" height="50"></a>
 
-```ts
-import { createTemplate, ImageFactory, TemplateImage, createImageGenerator } from 'canvacord';
+#### GPL-3.0 License - [Neplex Technologies](https://neplextech.com)
 
-const AffectedMeme = createTemplate((image: ImageSource) => {
-  return {
-    steps: [
-      {
-        image: [
-          {
-            source: new TemplateImage(ImageFactory.AFFECT),
-            x: 0,
-            y: 0
-          }
-        ]
-      },
-      {
-        image: [
-          {
-            source: new TemplateImage(image),
-            x: 180,
-            y: 383,
-            width: 200,
-            height: 157
-          }
-        ]
-      }
-    ]
-  };
-});
-
-// get target photo to use on "affected" meme image
-const photo = await getPhotoForMemeSomehow();
-const generator = createImageGenerator(AffectedMeme(photo));
-
-// render out the image
-await generator.render();
-
-// get the resulting image in png format
-const affectedMeme = await generator.encode('png');
-```
-
-#### Result
-
-![output](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/canvas/affected.png)
-
-## Creating images using custom builder
-
-This is an advanced method of creating images. Canvacord builder api allows you to create your own image generator using JSX elements and a **subset of tailwind class names**. This is also possible without JSX, you can find an example [here](https://github.com/neplextech/canvacord/blob/7651c1aa51a844c2591cbe68a6e21eb9d1d6287a/benchmark/jsx-renderer.mjs).
-
-> **Note**
-> It does not support many css features such as grid layout. You can use flexbox instead.
-
-If you want to use JSX with typescript, you need to add the following options to your `tsconfig.json`:
-
-```jsonc
-{
-  "compilerOptions": {
-    // other options
-    "jsx": "react",
-    "jsxFactory": "JSX.createElement",
-    "jsxFragmentFactory": "JSX.Fragment"
-  }
-  // other options
-}
-```
-
-You can also use pragma comments to define JSX factory and fragment factory:
-
-```js
-/** @jsx JSX.createElement */
-/** @jsxFrag JSX.Fragment */
-```
-
-```tsx
-// JSX import is required if you want to use JSX syntax
-// Builder is a base class to create your own builders
-// Font is a utility class to load fonts
-import { JSX, Builder, Font } from 'canvacord';
-import { writeFile } from 'fs/promises';
-
-// declare props types
-interface Props {
-  text: string;
-}
-
-class Design extends Builder<Props> {
-  constructor() {
-    // set width and height
-    super(500, 500);
-    // initialize props
-    this.bootstrap({ text: '' });
-  }
-
-  // define custom methods for your builder
-  setText(text: string) {
-    this.options.set('text', text);
-    return this;
-  }
-
-  // this is where you have to define how the resulting image should look like
-  async render() {
-    return (
-      <div className="flex items-center justify-center h-full w-full bg-teal-500">
-        <h1 className="text-white font-bold text-7xl">{this.options.get('text')}</h1>
-      </div>
-    );
-  }
-}
-
-// usage
-// load font
-Font.loadDefault();
-
-// create design
-const design = new Design().setText('Hello World');
-const image = await design.build({ format: 'png' });
-
-// do something with generated image
-await writeFile('./test.png', image);
-```
-
-#### Result
-
-![output](https://github.com/neplextech/canvacord/assets/46562212/c50d09d6-33c4-4b44-81c2-aed6783f503c)
+Mail to [info@neplextech.com](mailto:info@neplextech.com) for any questions or suggestions.
