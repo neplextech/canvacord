@@ -30,6 +30,7 @@ export interface RankCardProps {
   backgroundColor: string;
   overlay: boolean | number | string;
   abbreviate: boolean;
+  calculateProgress: (current: number, required: number) => number;
   texts: Partial<{
     level: string;
     xp: string;
@@ -83,6 +84,8 @@ const Colors = {
   streaming: "#593695",
 };
 
+const clamp = (value: number) => Math.max(0, Math.min(100, value));
+
 export function NeoClassicalCard(props: RankCardProps) {
   const {
     rank,
@@ -98,10 +101,13 @@ export function NeoClassicalCard(props: RankCardProps) {
     texts,
     backgroundColor,
     overlay,
+    calculateProgress,
   } = props;
 
   const shouldSkipStats = currentXP == null && requiredXP == null;
-  const progressWidth = ((currentXP ?? 0) / (requiredXP ?? 0)) * 100;
+  const progress = calculateProgress(currentXP ?? 0, requiredXP ?? 0);
+  const progressWidth =
+    typeof progress !== "number" || isNaN(progress) ? 0 : clamp(progress);
 
   return (
     <div
@@ -182,7 +188,8 @@ export function NeoClassicalCard(props: RankCardProps) {
               <h1
                 className={StyleSheet.cn(
                   "text-white font-semibold text-3xl mb-0",
-                  StyleSheet.tw(styles.username?.name)
+                  StyleSheet.tw(styles.username?.name),
+                  !handle ? "mb-2" : ""
                 )}
                 style={StyleSheet.css(styles.username?.name)}
               >
@@ -197,7 +204,7 @@ export function NeoClassicalCard(props: RankCardProps) {
                 )}
                 style={StyleSheet.css(styles.username?.handle)}
               >
-                @{handle}
+                {handle}
               </p>
             )}
           </div>

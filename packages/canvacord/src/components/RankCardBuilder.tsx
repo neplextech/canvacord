@@ -82,6 +82,8 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
       texts: {},
       username: null,
       fonts: {},
+      calculateProgress: (currentXP, requiredXP) =>
+        ((currentXP ?? 0) / (requiredXP ?? 0)) * 100,
     });
   }
 
@@ -125,7 +127,7 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
    * Sets the username for this rank card.
    * @param name The username for this rank card.
    */
-  public setUsername(name: string) {
+  public setDisplayName(name: string) {
     this.options.set("username", name);
     return this;
   }
@@ -134,7 +136,7 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
    * Sets the handle name for this rank card.
    * @param name The handle name for this rank card.
    */
-  public setHandle(name: string) {
+  public setUsername(name: string) {
     this.options.set("handle", name);
     return this;
   }
@@ -212,6 +214,16 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
   }
 
   /**
+   * Sets the progress calculator for this rank card. The value returned by this calculator defines the width of the progress bar.
+   * Valid range is 0-100. Returning a number less than 0 or greater than 100 will be clamped within this range, or invalid values will result in 0% width.
+   * @param calc The progress calculator for this rank card.
+   */
+  public setProgressCalculator(calc: RankCardProps["calculateProgress"]) {
+    this.options.set("calculateProgress", calc);
+    return this;
+  }
+
+  /**
    * Renders this rank card into the canvas.
    */
   public async render() {
@@ -271,19 +283,9 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
     return (
       <NeoClassicalCard
         {...{
-          abbreviate: options.abbreviate,
+          ...options,
           avatar: avatar.toDataURL(),
           backgroundColor: background!,
-          currentXP: options.currentXP,
-          requiredXP: options.requiredXP,
-          handle: options.handle,
-          level: options.level,
-          overlay: options.overlay,
-          rank: options.rank,
-          status: options.status,
-          texts: options.texts,
-          styles: options.styles,
-          username: options.username,
         }}
       />
     );

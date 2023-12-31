@@ -8,14 +8,20 @@ import { writeFile } from "fs/promises";
 Font.loadDefault();
 
 const card = new RankCardBuilder()
-  .setUsername("Lost Ctrl")
-  .setDisplayName("thearchaeopteryx")
-  .setAvatar("...")
-  .setCurrentXP(3800)
-  .setRequiredXP(2500)
-  .setLevel(54)
-  .setRank(32)
-  .setStatus("online");
+  .setDisplayName("Wumpus 😍")
+  .setUsername("@wumpus")
+  .setAvatar("https://cdn.discordapp.com/embed/avatars/0.png?size=256")
+  .setCurrentXP(300)
+  .setRequiredXP(600)
+  .setProgressCalculator(() => {
+    return Math.floor(Math.random() * 100);
+  })
+  .setLevel(2)
+  .setRank(5)
+  .setOverlay(90)
+  .setBackground("#23272a")
+  .setStatus(RankCardUserStatus.Online)
+  .setGraphemeProvider(BuiltInGraphemeProvider.FluentEmojiFlat);
 
 const image = await card.build({
   format: "png",
@@ -24,4 +30,4 @@ const image = await card.build({
 await writeFileSync("./card.png", data);
 ```
 
-![xp-card](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/jsx/test2.svg)
+![xp-card](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/normal/rankCard.svg)

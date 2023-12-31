@@ -1,4 +1,4 @@
-import { RankCardBuilder, Font } from "../src/index";
+import { RankCardBuilder, Font, BuiltInGraphemeProvider } from "../src/index";
 import { writeFileSync } from "fs";
 import { RankCardUserStatus } from "../src/components/rank-card/NeoClassicalCard";
 
@@ -6,17 +6,21 @@ Font.loadDefault();
 
 async function main() {
   const card = new RankCardBuilder()
-    .setUsername("Wumpus")
-    .setHandle("wumpus")
+    .setDisplayName("Wumpus 😍")
+    .setUsername("@wumpus")
     .setAvatar("https://cdn.discordapp.com/embed/avatars/0.png?size=256")
     .setCurrentXP(300)
     .setRequiredXP(600)
+    .setProgressCalculator(() => {
+      return Math.floor(Math.random() * 100);
+    })
     .setLevel(2)
     .setRank(5)
     .setOverlay(90)
     .setBackground("#23272a")
-    .setBackground(`${__dirname}/minecraft.png`)
-    .setStatus(RankCardUserStatus.None);
+    // .setBackground(`${__dirname}/minecraft.png`)
+    .setStatus(RankCardUserStatus.Online)
+    .setGraphemeProvider(BuiltInGraphemeProvider.FluentEmojiFlat);
 
   card
     .build({

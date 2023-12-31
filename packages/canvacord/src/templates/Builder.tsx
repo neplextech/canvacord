@@ -23,21 +23,21 @@ function emojiToUnicode(emoji: string): string {
   return comp.toString(16).toLowerCase();
 }
 
-const createTwemojiProxy = (
-  graphemeProvider: GraphemeProvider
+export const createEmojiProvider = (
+  builder: (code: string) => string
 ): GraphemeProvider => {
+  const graphemeProvider: GraphemeProvider = {};
+
   const handler: ProxyHandler<GraphemeProvider> = {
     has(target, p) {
       return isEmoji(p as string) || p in target;
     },
     get(target, prop: string) {
       if (isEmoji(prop)) {
-        const url = (code: string) =>
-          `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/${code}.svg`;
         const code = emojiToUnicode(prop);
-        const urlCode = url(code);
+        const url = builder(code);
 
-        return urlCode;
+        return url;
       }
 
       return prop;
@@ -47,9 +47,39 @@ const createTwemojiProxy = (
   return new Proxy(graphemeProvider, handler);
 };
 
+const FluentEmojiBase = (s: string) =>
+  `https://cdn.jsdelivr.net/gh/shuding/fluentui-emoji-unicode/assets/${s}.svg`;
+
 export const BuiltInGraphemeProvider = {
-  TWEMOJI: createTwemojiProxy({}),
+  Twemoji: createEmojiProvider(
+    (code: string) =>
+      `https://cdnjs.cloudflare.com/ajax/libs/twemoji/14.0.2/svg/${code}.svg`
+  ),
+  FluentEmojiHighContrast: createEmojiProvider((code) =>
+    FluentEmojiBase(`${code}_high-contrast`)
+  ),
+  FluentEmojiFlat: createEmojiProvider((code) =>
+    FluentEmojiBase(`${code}_flat`)
+  ),
+  FluentEmojiColor: createEmojiProvider((code) =>
+    FluentEmojiBase(`${code}_color`)
+  ),
+  Openmoji: createEmojiProvider(
+    (code) =>
+      `https://cdn.jsdelivr.net/npm/@svgmoji/openmoji@2.0.0/svg/${code.toUpperCase()}.svg`
+  ),
+  Noto: createEmojiProvider(
+    (code) =>
+      `https://cdn.jsdelivr.net/gh/svgmoji/svgmoji/packages/svgmoji__noto/svg/${code.toUpperCase()}.svg`
+  ),
+  Blobmoji: createEmojiProvider(
+    (code) =>
+      `https://cdn.jsdelivr.net/npm/@svgmoji/blob@2.0.0/svg/${code.toUpperCase()}.svg`
+  ),
+  None: {} as GraphemeProvider,
 };
+
+export const EmojiCache = new Map<string, string>();
 
 /**
  * The builder template.
@@ -124,7 +154,7 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
   /**
    * The grapheme provider of this builder.
    */
-  public graphemeProvider: GraphemeProvider = BuiltInGraphemeProvider.TWEMOJI;
+  public graphemeProvider: GraphemeProvider = BuiltInGraphemeProvider.Twemoji;
 
   /**
    * Create a new builder.
@@ -238,7 +268,32 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
       width: this.width,
       fonts,
       embedFont: true,
-      graphemeImages: this.graphemeProvider,
+      loadAdditionalAsset: async (languageCode, segment) => {
+        const fallback = () =>
+          options?.loadAdditionalAsset?.(languageCode, segment) ?? segment;
+        if (languageCode === "emoji" && this.graphemeProvider) {
+          const cached = EmojiCache.get(segment);
+          if (cached) return cached;
+          const isSupported = segment in this.graphemeProvider;
+          if (!isSupported) return fallback();
+
+          try {
+            const url = this.graphemeProvider[segment];
+            const response = await fetch(url);
+            if (!response.ok) return fallback();
+            const svg = await response.arrayBuffer();
+            const base64 = `data:image/svg+xml;base64,${Buffer.from(
+              svg
+            ).toString("base64")}`;
+            EmojiCache.set(segment, base64);
+            return base64;
+          } catch {
+            return fallback();
+          }
+        }
+
+        return fallback();
+      },
     });
 
     return options?.format === "svg"

@@ -1,47 +1,85 @@
-import { JSX, Builder, Font } from '../dist';
-import { writeFileSync } from 'fs';
+import { JSX, Builder, Font } from "../dist";
+import { writeFileSync } from "fs";
+import { loadImage } from "../src";
 
 interface Props {
-  text: string;
+  displayName: string;
+  type: "welcome" | "goodbye";
+  avatar: string;
+  message: string;
 }
 
-class Design extends Builder<Props> {
+class GreetingsCard extends Builder<Props> {
   constructor() {
     // set width and height
-    super(500, 500);
+    super(930, 280);
     // initialize props
-    this.bootstrap({ text: '' });
+    this.bootstrap({
+      displayName: "",
+      type: "welcome",
+      avatar: "",
+      message: "",
+    });
   }
 
-  setText(text: string) {
-    this.options.set('text', text);
+  setDisplayName(value: string) {
+    this.options.set("displayName", value);
+    return this;
+  }
+
+  setType(value: Props["type"]) {
+    this.options.set("type", value);
+    return this;
+  }
+
+  setAvatar(value: string) {
+    this.options.set("avatar", value);
+    return this;
+  }
+
+  setMessage(value: string) {
+    this.options.set("message", value);
     return this;
   }
 
   // this is where you have to define output ui
   async render() {
+    const { type, displayName, avatar, message } = this.options.getOptions();
+    const image = await loadImage(avatar);
+
     return (
-      <div
-        className="flex items-center justify-center h-full w-full"
-        style={{
-          background: 'linear-gradient(0deg, #5865f2, #00bbff)'
-        }}
-      >
-        <h1 className="text-white font-bold text-7xl">{this.options.get('text')}</h1>
+      <div className="h-full w-full flex flex-col items-center justify-center bg-[#23272A] rounded-xl">
+        <div className="px-6 bg-[#2B2F35AA] w-[96%] h-[84%] rounded-lg flex items-center">
+          <img
+            src={image.toDataURL()}
+            className="flex h-[40] w-[40] rounded-full"
+          />
+          <div className="flex flex-col ml-6">
+            <h1 className="text-5xl text-white font-bold m-0">
+              {type === "welcome" ? "Welcome" : "Goodbye"},{" "}
+              <span className="text-blue-500">{displayName}!</span>
+            </h1>
+            <p className="text-gray-300 text-3xl m-0">{message}</p>
+          </div>
+        </div>
       </div>
     );
   }
 }
 
 // usage
-
 // load font
 Font.loadDefault();
 
-// create design
-const design = new Design().setText('Hello World');
-const image = design.build({ format: 'png' });
+// create card
+const card = new GreetingsCard()
+  .setAvatar("https://cdn.discordapp.com/embed/avatars/0.png")
+  .setDisplayName("Wumpus")
+  .setType("welcome")
+  .setMessage("Welcome to the server!");
+
+const image = card.build({ format: "png" });
 
 image.then((i) => {
-  writeFileSync('test.png', i);
+  writeFileSync("test.png", i);
 });

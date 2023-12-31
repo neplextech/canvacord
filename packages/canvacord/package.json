@@ -12,7 +12,9 @@
         "format": "yarn dlx @biomejs/biome format src --write",
         "build": "tsup",
         "test": "tsx ./test/index.ts",
+        "test:lb": "tsx ./test/leaderboard.ts",
         "test:jsx": "tsx ./test/jsxTest.tsx",
+        "test:demo": "tsx ./test/demo.tsx",
         "bench": "cd ./benchmark && node jsx-renderer.mjs",
         "lint": "yarn dlx @biomejs/biome lint src"
     },
