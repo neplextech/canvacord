@@ -1,7 +1,7 @@
 {
     "name": "canvacord",
     "description": "Easily generate images using html and css in nodejs. Canvacord is suitable for creating dynamic images such as social media posts, greetings cards, memes, etc. It is also possible to create your own templates and builders to generate images. You are only limited by your imagination.",
-    "version": "6.0.0",
+    "version": "6.0.1",
     "main": "./dist/index.js",
     "types": "./dist/index.d.ts",
     "module": "./dist/index.mjs",
