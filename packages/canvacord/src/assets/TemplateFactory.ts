@@ -28,6 +28,7 @@ export class TemplateImage {
    */
   public async resolve(): Promise<Image> {
     if (this.#resolved) return this.#resolved;
+    // biome-ignore lint: assignment should not be an expression
     return (this.#resolved = await createCanvasImage(this.source));
   }
 }
@@ -36,7 +37,11 @@ export class TemplateImage {
  * Creates a new template from the provided template.
  * @param template The template to create from
  */
-export const createTemplate = <F extends (...args: any[]) => any, P extends Parameters<F>>(
+export const createTemplate = <
+  // biome-ignore lint: any is tolerable here
+  F extends (...args: any[]) => any,
+  P extends Parameters<F>,
+>(
   cb: (...args: P) => IImageGenerationTemplate,
 ) => {
   return (...args: Parameters<typeof cb>) => {

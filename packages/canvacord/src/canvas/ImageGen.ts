@@ -315,7 +315,13 @@ export class ImageGen extends Encodable {
   }
 
   async #inferSize() {
-    if (this.template.isInferrable()) return { width: this.template.getWidth()!, height: this.template.getHeight()! };
+    if (this.template.isInferrable())
+      return {
+        // biome-ignore lint: non-null assertion
+        width: this.template.getWidth()!,
+        // biome-ignore lint: non-null assertion
+        height: this.template.getHeight()!,
+      };
 
     if (!this.template.steps.length) throw new Error("Cannot infer size from empty template");
     const firstImg = this.template.steps.find((s) => s.image?.length)?.image?.[0];
@@ -344,6 +350,7 @@ export class ImageGen extends Encodable {
     if (options.framerate != null) encoder.setFramerate(options.framerate);
     if (options.transparent != null) encoder.setTransparent(options.transparent);
 
+    // biome-ignore lint: assignment should not be an expression
     const canvas = (this._canvas = createCanvas(width, height));
     const ctx = canvas.getContext("2d");
 
@@ -368,6 +375,7 @@ export class ImageGen extends Encodable {
   public async render() {
     const { width, height } = await this.#inferSize();
 
+    // biome-ignore lint: assignment should not be an expression
     const canvas = (this._canvas = createCanvas(width, height));
     const ctx = canvas.getContext("2d");
 

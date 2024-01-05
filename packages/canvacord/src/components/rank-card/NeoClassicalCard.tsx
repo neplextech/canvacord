@@ -100,7 +100,7 @@ export function NeoClassicalCard(props: RankCardProps) {
 
   const shouldSkipStats = currentXP == null && requiredXP == null;
   const progress = calculateProgress(currentXP ?? 0, requiredXP ?? 0);
-  const progressWidth = typeof progress !== "number" || isNaN(progress) ? 0 : clamp(progress);
+  const progressWidth = typeof progress !== "number" || Number.isNaN(progress) ? 0 : clamp(progress);
 
   return (
     <div
@@ -111,8 +111,8 @@ export function NeoClassicalCard(props: RankCardProps) {
       )}
       style={StyleSheet.compose(
         {
-          backgroundImage: backgroundColor && backgroundColor.startsWith("url(") ? backgroundColor : undefined,
-          backgroundSize: backgroundColor && backgroundColor.startsWith("url(") ? "100% 100%" : undefined,
+          backgroundImage: backgroundColor?.startsWith("url(") ? backgroundColor : undefined,
+          backgroundSize: backgroundColor?.startsWith("url(") ? "100% 100%" : undefined,
         },
         StyleSheet.css(styles.background),
       )}
@@ -134,6 +134,7 @@ export function NeoClassicalCard(props: RankCardProps) {
           style={StyleSheet.css(styles.avatar?.container)}
         >
           <img
+            alt="avatar"
             src={avatar}
             className={StyleSheet.cn("h-38 w-38 rounded-full ml-4", StyleSheet.tw(styles.avatar?.image))}
             style={StyleSheet.css(styles.avatar?.image)}

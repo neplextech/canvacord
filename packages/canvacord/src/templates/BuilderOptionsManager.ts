@@ -1,3 +1,4 @@
+// biome-ignore lint: any is tolerated here
 export class BuilderOptionsManager<T extends Record<string, any>> {
   /**
    * Creates a new builder options manager.

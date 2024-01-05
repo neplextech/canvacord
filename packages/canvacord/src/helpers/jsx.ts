@@ -13,6 +13,7 @@ export type ElementInit = {
   type: string;
   props: Record<string, unknown>;
   key?: React.Key | null;
+  // biome-ignore lint: any is tolerated here
   children?: any;
 };
 
@@ -35,6 +36,7 @@ export class Element {
   /**
    * The children of the element.
    */
+  // biome-ignore lint: any is tolerated here
   public children?: any;
 
   /**
@@ -72,8 +74,10 @@ export const JSX = {
   createElement(type: string | Element, props: Record<string, unknown>, ...children: Element[]): Element {
     if (type instanceof Element) return type;
 
+    // biome-ignore lint: reassigning function parameter
     props ??= {};
 
+    // biome-ignore lint: delete is necessary here
     if (isObjectEmpty(props.style)) delete props.style;
 
     // monkey-patch layout issues
@@ -107,18 +111,17 @@ export const JSX = {
  * Renders the components.
  */
 export function render(components: (Node | Element | unknown)[]) {
-  return components
-    .map((component) => {
-      if (component == null) return [];
-      if (component instanceof Element) return component;
-      if (isNode(component)) return component.toElement();
+  return components.flatMap((component) => {
+    if (component == null) return [];
+    if (component instanceof Element) return component;
+    if (isNode(component)) return component.toElement();
 
-      const child = String(component) as unknown as Element;
-      return JSX.createElement("span", { children: child }, child);
-    })
-    .flat(1);
+    const child = String(component) as unknown as Element;
+    return JSX.createElement("span", { children: child }, child);
+  });
 }
 
+// biome-ignore lint: any is tolerated here
 function isObjectEmpty(obj: any) {
-  return obj ? Object.keys(obj).length === 0 : false;
+  return typeof obj === "object" && obj != null ? Object.keys(obj).length === 0 : false;
 }

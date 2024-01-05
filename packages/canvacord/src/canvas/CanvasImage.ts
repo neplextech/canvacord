@@ -35,7 +35,9 @@ export class CanvasImage extends ImageFilterer {
     this.steps.push(async (ctx) => {
       const img = this.#img || this.#setImg(await createCanvasImage(this.source));
 
+      // biome-ignore lint: reassignment
       width ??= this.width;
+      // biome-ignore lint: reassignment
       height ??= this.height;
 
       ctx.drawImage(img, x, y, width, height);
@@ -51,7 +53,9 @@ export class CanvasImage extends ImageFilterer {
    */
   public circle(width?: number, height?: number) {
     this.steps.push((ctx) => {
+      // biome-ignore lint: reassignment
       width ??= ctx.canvas.width;
+      // biome-ignore lint: reassignment
       height ??= ctx.canvas.height;
 
       ctx.globalCompositeOperation = "destination-in";

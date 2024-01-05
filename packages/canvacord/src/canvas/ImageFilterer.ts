@@ -136,6 +136,7 @@ export class ImageFilterer extends CanvasHelper {
     if (this.#filters.length) ctx.filter = this.#filters.join(" ");
 
     while (this.steps.length > 0) {
+      // biome-ignore lint: non-null assertion
       await this.steps.shift()!(ctx);
     }
   }

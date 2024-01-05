@@ -15,7 +15,7 @@ const isEmoji = (str: string) => {
 
 function emojiToUnicode(emoji: string): string {
   if (emoji.length === 1) return emoji.charCodeAt(0).toString(16);
-  let comp = (emoji.charCodeAt(0) - 0xd800) * 0x400 + (emoji.charCodeAt(1) - 0xdc00) + 0x10000;
+  const comp = (emoji.charCodeAt(0) - 0xd800) * 0x400 + (emoji.charCodeAt(1) - 0xdc00) + 0x10000;
   if (comp < 0) return emoji.charCodeAt(0).toString(16);
   return comp.toString(16).toLowerCase();
 }
@@ -120,12 +120,13 @@ export interface Node {
   toElement(): Element;
 }
 
+// biome-ignore lint: we do not know the type of the component
 export class Builder<T extends Record<string, any> = Record<string, unknown>> {
   #style: CSSPropertiesLike = {};
   /**
    * The tailwind subset to apply to this builder.
    */
-  public tw: string = "";
+  public tw = "";
   /**
    * The components of this builder.
    */
@@ -188,8 +189,14 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
    * @param component the component to add.
    */
   public addComponent<T extends Node | Element>(component: T | T[]) {
-    if (component instanceof Element && (component.type as unknown as Function) === JSX.Fragment)
+    if (
+      component instanceof Element &&
+      // biome-ignore lint: Function could be a component
+      (component.type as unknown as Function) === JSX.Fragment
+    )
+      // biome-ignore lint: Reassigning is considered
       component = component.children;
+    // biome-ignore lint: Reassigning is considered
     if (!Array.isArray(component)) component = [component];
     this.components.push(...component);
     return this;
@@ -213,14 +220,12 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
   }
 
   private _render() {
-    return this.components
-      .map((component) => {
-        if (component == null) return [];
-        if (component instanceof Element) return component;
-        if (component.toElement) return component.toElement();
-        return <span>{String(component)}</span>;
-      })
-      .flat(1) as React.ReactNode[];
+    return this.components.flatMap((component) => {
+      if (component == null) return [];
+      if (component instanceof Element) return component;
+      if (component.toElement) return component.toElement();
+      return <span>{String(component)}</span>;
+    }) as React.ReactNode[];
   }
 
   /**
@@ -286,7 +291,7 @@ export class Builder<T extends Record<string, any> = Record<string, unknown>> {
    * Create a builder from builder template.
    */
   public static from(template: BuilderTemplate) {
-    const builder = new this(template.width, template.height);
+    const builder = new Builder(template.width, template.height);
 
     if (template.style) builder.style = template.style;
     builder.components = template.components;

@@ -274,6 +274,7 @@ export class RankCardBuilder extends Builder<RankCardBuilderProps> {
         {...{
           ...options,
           avatar: avatar.toDataURL(),
+          // biome-ignore lint: forbidden non-null assertion
           backgroundColor: background!,
         }}
       />

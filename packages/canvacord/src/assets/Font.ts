@@ -101,6 +101,6 @@ export class Font {
    
    */
   public static loadDefault() {
-    return this.fromBuffer(Fonts.Geist, "geist");
+    return Font.fromBuffer(Fonts.Geist, "geist");
   }
 }

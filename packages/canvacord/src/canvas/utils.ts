@@ -7,7 +7,6 @@ import { loadImage as createImage, SKRSContext2D } from "@napi-rs/canvas";
  * @returns The canvas image
  *
  * const image = await createCanvasImage('https://example.com/image.png');
- 
  */
 export const createCanvasImage = async (img: ImageSource) => {
   const canvacordImg = await loadImage(img);

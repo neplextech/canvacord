@@ -8,8 +8,10 @@ import { Image } from "@napi-rs/canvas";
 import { buffer } from "stream/consumers";
 import { Transformer } from "@napi-rs/image";
 
+// biome-ignore lint: declare variables separately
 let http: typeof import("http"), https: typeof import("https");
 
+// biome-ignore lint: declare variables separately
 const MAX_REDIRECTS = 20,
   REDIRECT_STATUSES = new Set([301, 302]),
   DATA_URI = /^\s*data:/;
@@ -80,31 +82,31 @@ export async function loadImage(source: ImageSource, options: LoadImageOptions =
     // if the source exists as a file, construct image from that file
     if (await exists(source)) {
       return createImage(await fs.promises.readFile(source));
-    } else {
-      if (typeof fetch !== "undefined") {
-        return fetch(source, {
-          redirect: "follow",
-          // @ts-expect-error
-          headers: options.requestOptions?.headers,
-        }).then(async (res) => {
-          if (!res.ok) throw new Error(`remote source rejected with status code ${res.status}`);
-          return await createImage(Buffer.from(await res.arrayBuffer()));
-        });
-      }
-      // the source is a remote url here
-      source = source instanceof URL ? source : new URL(source);
-      // attempt to download the remote source and construct image
-      const data = await new Promise<Buffer>((resolve, reject) =>
-        makeRequest(
-          source as URL,
-          resolve,
-          reject,
-          typeof options.maxRedirects === "number" && options.maxRedirects >= 0 ? options.maxRedirects : MAX_REDIRECTS,
-          options.requestOptions || {},
-        ),
-      );
-      return createImage(data);
     }
+    if (typeof fetch !== "undefined") {
+      return fetch(source, {
+        redirect: "follow",
+        // @ts-expect-error
+        headers: options.requestOptions?.headers,
+      }).then(async (res) => {
+        if (!res.ok) throw new Error(`remote source rejected with status code ${res.status}`);
+        return await createImage(Buffer.from(await res.arrayBuffer()));
+      });
+    }
+    // the source is a remote url here
+    // biome-ignore lint: any is tolerated here
+    source = source instanceof URL ? source : new URL(source);
+    // attempt to download the remote source and construct image
+    const data = await new Promise<Buffer>((resolve, reject) =>
+      makeRequest(
+        source as URL,
+        resolve,
+        reject,
+        typeof options.maxRedirects === "number" && options.maxRedirects >= 0 ? options.maxRedirects : MAX_REDIRECTS,
+        options.requestOptions || {},
+      ),
+    );
+    return createImage(data);
   }
 
   // throw error as don't support that source
@@ -122,17 +124,28 @@ function makeRequest(
   // lazy load the lib
   const lib: typeof import("http") = isHttps
     ? !https
-      ? (https = require("https"))
+      ? // biome-ignore lint: assignment should not be an expression
+        (https = require("https"))
       : https
     : !http
-      ? (http = require("http"))
+      ? // biome-ignore lint: assignment should not be an expression
+        (http = require("http"))
       : http;
 
   lib
     .get(url.toString(), requestOptions || {}, (res) => {
-      const shouldRedirect = REDIRECT_STATUSES.has(res.statusCode!) && typeof res.headers.location === "string";
+      const shouldRedirect =
+        // biome-ignore lint: forbidden non-null-assertion
+        REDIRECT_STATUSES.has(res.statusCode!) && typeof res.headers.location === "string";
       if (shouldRedirect && redirectCount > 0)
-        return makeRequest(new URL(res.headers.location!), resolve, reject, redirectCount - 1, requestOptions);
+        return makeRequest(
+          // biome-ignore lint: forbidden non-null-assertion
+          new URL(res.headers.location!),
+          resolve,
+          reject,
+          redirectCount - 1,
+          requestOptions,
+        );
       if (typeof res.statusCode === "number" && (res.statusCode < 200 || res.statusCode >= 300)) {
         return reject(new Error(`remote source rejected with status code ${res.statusCode}`));
       }

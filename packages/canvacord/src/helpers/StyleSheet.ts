@@ -16,7 +16,11 @@ export type CSSPropertiesLike<K extends string | number | symbol = string> = Rec
 /**
  * Performs object cleanup by deleting all undefined properties that could interfere with builder methods.
  */
-export const performObjectCleanup = (obj: Record<string, any>, deep = false) => {
+export const performObjectCleanup = (
+  // biome-ignore lint: any is tolerated here
+  obj: Record<string, any>,
+  deep = false,
+) => {
   for (const prop in obj) {
     if (obj[prop] === undefined) delete obj[prop];
     if (typeof obj[prop] === "object" && deep) performObjectCleanup(obj[prop], deep);
