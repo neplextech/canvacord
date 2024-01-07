@@ -53,6 +53,7 @@ class GreetingsCard extends Builder<Props> {
           <img
             src={image.toDataURL()}
             className="flex h-[40] w-[40] rounded-full"
+            alt="avatar"
           />
           <div className="flex flex-col ml-6">
             <h1 className="text-5xl text-white font-bold m-0">

@@ -9,6 +9,7 @@ Easily generate images using html and css in nodejs. Canvacord is suitable for c
 - 🪟 **Open source, no privacy issues, 100% transparent** - Canvacord is completely open source and free to use. This makes everything transparent and you can even contribute to the project. Best of all, you dont have to worry about privacy issues 😊.
 - 💪 **Easy to use** - Canvacord provides a simple api to generate images on-the-fly.
 - 🎨 **Customizable** - You can create your own templates and builders to generate images. Canvacord allows you to define how your image should look using html and css. No more hassle learning complicated canvas api.
+- 🔮 **GIF generation** - Canvacord allows you to generate custom GIFs using the builder api.
 - 🚀 **Fast** - Canvacord is powered by highly optimized, battle tested libraries, which makes it fast and reliable.
 - 🔒 **Typescript support** - Canvacord is written in typescript and provides type definitions out of the box.
 - 📸 **Wide formats support** - Canvacord supports many image formats such as png, jpeg, webp, gif, svg, etc.

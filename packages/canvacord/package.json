@@ -16,7 +16,8 @@
         "test:jsx": "tsx ./test/jsxTest.tsx",
         "test:demo": "tsx ./test/demo.tsx",
         "bench": "cd ./benchmark && node jsx-renderer.mjs",
-        "lint": "yarn dlx @biomejs/biome lint src"
+        "lint": "yarn dlx @biomejs/biome lint src",
+        "prepublishOnly": "yarn build"
     },
     "repository": {
         "type": "git",

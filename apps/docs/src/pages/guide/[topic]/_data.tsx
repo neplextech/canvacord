@@ -17,6 +17,11 @@ export const pages = [
         ),
       },
       {
+        name: "gif-generation.md",
+        displayName: "Gif Generation",
+        component: lazy(() => import("../_guides/Examples/gif-generation.md")),
+      },
+      {
         name: "greetings-card.md",
         displayName: "Greetings Card",
         component: lazy(() => import("../_guides/Examples/greetings-card.md")),
