@@ -35,11 +35,19 @@ export async function renderSvg({
   // Transformer.fromSvg gives weird output for some reason
   const output = await renderAsync(svg, opts);
 
+  if (format === "raw") {
+    return output.pixels;
+  }
+
   if (format === "png") {
     return output.asPng();
   }
 
-  const transformer = Transformer.fromRgbaPixels(output.pixels, output.width, output.height);
+  const transformer = Transformer.fromRgbaPixels(
+    output.pixels,
+    output.width,
+    output.height
+  );
 
   options ??= null;
   signal ??= null;

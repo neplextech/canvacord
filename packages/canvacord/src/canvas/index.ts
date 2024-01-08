@@ -1,3 +1,4 @@
+export * from "./createGIF";
 export * from "./CanvasHelper";
 export * from "./CanvasImage";
 export * from "./Encodable";

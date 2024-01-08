@@ -8,6 +8,8 @@ import { Fonts } from "./fonts/fonts";
 
 const randomAlias = () => randomUUID() as string;
 
+let defaultLoaded: Font;
+
 export class Font {
   /**
    * Creates and registers a new Font instance for both canvas and builder apis.
@@ -101,6 +103,8 @@ export class Font {
    
    */
   public static loadDefault() {
-    return Font.fromBuffer(Fonts.Geist, "geist");
+    if (defaultLoaded) return defaultLoaded;
+    defaultLoaded = Font.fromBuffer(Fonts.Geist, "geist");
+    return defaultLoaded;
   }
 }
