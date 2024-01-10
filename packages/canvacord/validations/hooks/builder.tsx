@@ -3,6 +3,19 @@
 import { JSX, useState, Font, createGIF, Builder } from "canvacord";
 import { createWriteStream } from "fs";
 
+// load font
+Font.loadDefault();
+
+class Demo extends Builder {
+  constructor() {
+    super(512, 512);
+  }
+
+  public async render() {
+    return <Rotation />;
+  }
+}
+
 function Rotation() {
   const [count, setCount] = useState(0);
 
@@ -20,23 +33,10 @@ function Rotation() {
   );
 }
 
-class Demo extends Builder {
-  constructor() {
-    super(512, 512);
-  }
-
-  public async render() {
-    return <Rotation />;
-  }
-}
-
-// load font
-Font.loadDefault();
-
 const demo = new Demo();
 demo.setIterations(360);
 
-const gif = createGIF(demo, {
+const gif = await createGIF(demo, {
   repeat: 0,
   delay: 15,
   dispose: 0,
@@ -44,6 +44,4 @@ const gif = createGIF(demo, {
   quality: 10,
 });
 
-gif.then((stream) => {
-  stream.pipe(createWriteStream(`${__dirname}/output/test.gif`));
-});
+gif.pipe(createWriteStream(`${__dirname}/output/test.gif`));

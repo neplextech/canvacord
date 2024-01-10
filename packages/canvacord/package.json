@@ -11,7 +11,9 @@
     "scripts": {
         "format": "yarn dlx @biomejs/biome format src --write",
         "build": "tsup",
-        "test": "tsx ./test/index.ts",
+        "test": "vitest",
+        "coverage": "vitest --coverage",
+        "test:main": "tsx ./test/index.ts",
         "test:lb": "tsx ./test/leaderboard.ts",
         "test:jsx": "tsx ./test/jsxTest.tsx",
         "test:demo": "tsx ./test/demo.tsx",
@@ -48,7 +50,8 @@
         "tsconfig": "workspace:^",
         "tsup": "^7.2.0",
         "tsx": "^3.12.7",
-        "typescript": "^5.1.3"
+        "typescript": "^5.1.3",
+        "vitest": "^1.1.3"
     },
     "dependencies": {
         "@napi-rs/canvas": "^0.1.44",

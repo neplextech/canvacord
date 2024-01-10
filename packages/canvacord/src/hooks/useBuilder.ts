@@ -1,5 +1,8 @@
-import { Builder, ExecutionContext } from "../templates";
+import { Builder, ExecutionContext } from "../runtime";
 
+/**
+ * A hook that returns the builder component.
+ */
 export function useBuilder<
   // biome-ignore lint: we do not know the type of the component
   T extends Record<string, any> = Record<string, unknown>,
@@ -9,7 +12,7 @@ export function useBuilder<
   const context = ExecutionContext.getStore();
   if (!context) {
     throw new Error(
-      `The hook "useBuilder" must be invoked inside a builder component.`
+      'The hook "useBuilder" must be invoked inside a builder component.'
     );
   }
 

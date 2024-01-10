@@ -1,5 +1,4 @@
-import { AsyncLocalStorage } from "node:async_hooks";
-import satori, { type SatoriOptions, type Font } from "satori";
+import satori, { Font, type SatoriOptions } from "satori";
 import { FontFactory } from "../assets/AssetsFactory";
 import { type CSSPropertiesLike, StyleSheet } from "../helpers";
 import { renderSvg, RenderSvgOptions } from "../helpers/image";
@@ -7,6 +6,8 @@ import { JSX, Element } from "../helpers/jsx";
 import { BuilderOptionsManager } from "./BuilderOptionsManager";
 import type { EncodingFormat } from "../canvas";
 import type { CSSProperties } from "react";
+import { initializeContext } from "../hooks/common";
+import { EffectCallback } from "../hooks";
 
 export type GraphemeProvider = Record<string, string>;
 
@@ -93,7 +94,6 @@ export type BuilderResult<O extends BuilderBuildInit> =
     : BuilderResultInner<O>;
 
 export const EmojiCache = new Map<string, string>();
-export const ExecutionContext = new AsyncLocalStorage<Builder>();
 
 /**
  * The builder template.
@@ -150,6 +150,8 @@ export interface Node {
   toElement(): Element;
 }
 
+export const ExecutionContext = initializeContext<Builder>();
+
 export class Builder<
   // biome-ignore lint: we do not know the type of the component
   T extends Record<string, any> = Record<string, unknown>,
@@ -159,9 +161,13 @@ export class Builder<
   #state?: S;
   // svg frames
   #frames: string[] = [];
-  #renderCalls = 0;
   #iterations = 1;
+  #fonts: Font[] = [];
+  #options!: SatoriOptions;
   #resolve?: () => void;
+  #onUnmount?: () => void;
+  #onMount?: EffectCallback;
+  #initialSet = false;
 
   /**
    * The tailwind subset to apply to this builder.
@@ -201,10 +207,38 @@ export class Builder<
   /**
    * Calling this method completes one iteration of this builder.
    */
-  private _tick() {
+  public tick() {
+    if (!this.#resolve) {
+      throw new Error(
+        "Cannot call tick() before calling build() on this builder."
+      );
+    }
+
     if (this.#iterations-- <= 0) {
       this.#resolve?.();
     }
+
+    this.#onUnmount?.();
+
+    // clear unmount listeners
+    this.#onUnmount = undefined;
+  }
+
+  /**
+   * Registers mount listener for this builder.
+   */
+  public onMount(listener: EffectCallback, initialOnly = false) {
+    if (initialOnly && !this.#initialSet) {
+      this.#onMount = listener;
+      this.#initialSet = true;
+    } else if (!initialOnly) this.#onMount = listener;
+  }
+
+  /**
+   * Registers unmount listener for this builder.
+   */
+  public onUnmount(listener: () => void) {
+    this.#onUnmount = listener;
   }
 
   /**
@@ -318,20 +352,45 @@ export class Builder<
     return <div style={this.style}>{this._render()}</div>;
   }
 
-  async #render(options: Partial<BuilderBuildOptions> = {}) {
+  async #render() {
     if (this.#iterations < 0) return;
-    this.#renderCalls++;
     const element = await this.render();
 
-    const fonts = Array.from(FontFactory.values()).map((font) =>
+    this.#onUnmount = undefined;
+
+    const result = this.#onMount?.();
+
+    if (result instanceof Function) {
+      this.#onUnmount = result;
+    }
+
+    this.#onMount = undefined;
+
+    const svg = await satori(element, this.#options);
+
+    this.#frames.push(svg);
+    this.tick();
+  }
+
+  /**
+   * Convert this builder into an image.
+   * @param options the build options.
+   * @returns the image buffer or svg string.
+   */
+  public async build<O extends BuilderBuildInit>(
+    options: O = {} as O
+  ): Promise<BuilderResult<O>> {
+    options.format ??= "png";
+
+    this.#fonts = Array.from(FontFactory.values()).map((font) =>
       font.getData()
     );
 
-    const svg = await satori(element, {
+    this.#options = {
       ...options,
       height: this.height,
       width: this.width,
-      fonts,
+      fonts: this.#fonts,
       embedFont: true,
       loadAdditionalAsset: async (languageCode, segment) => {
         const fallback = () =>
@@ -359,29 +418,13 @@ export class Builder<
 
         return fallback();
       },
-    });
-
-    this.#frames.push(svg);
-    this._tick();
-  }
-
-  /**
-   * Convert this builder into an image.
-   * @param options the build options.
-   * @returns the image buffer or svg string.
-   */
-  public async build<O extends BuilderBuildInit>(
-    options: O = {} as O
-  ): Promise<BuilderResult<O>> {
-    options.format ??= "png";
+    };
 
     await ExecutionContext.run(this, () => {
       // biome-ignore lint:
       return new Promise<void>(async (resolve) => {
         this.#resolve = resolve;
-        this.#render({
-          ...options,
-        });
+        this.#render();
       });
     });
 
@@ -419,9 +462,14 @@ export class Builder<
    */
   public flush() {
     this.#frames = [];
-    this.#renderCalls = 0;
     this.#state = undefined as S;
     this.#iterations = 0;
+    this.#resolve = undefined;
+    this.#onUnmount = undefined;
+    this.#onMount = undefined;
+    this.#options = null as unknown as SatoriOptions;
+    this.#fonts = [];
+    this.#initialSet = false;
   }
 
   /**
@@ -438,5 +486,12 @@ export class Builder<
 
   public static isBuilder(builder: unknown): builder is Builder {
     return builder instanceof Builder;
+  }
+
+  /**
+   * Dispose this builder.
+   */
+  [Symbol.dispose]() {
+    this.flush();
   }
 }

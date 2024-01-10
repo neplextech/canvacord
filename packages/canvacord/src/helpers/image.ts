@@ -32,7 +32,6 @@ export async function renderSvg({
     logLevel: "off",
   };
 
-  // Transformer.fromSvg gives weird output for some reason
   const output = await renderAsync(svg, opts);
 
   if (format === "raw") {
@@ -53,8 +52,6 @@ export async function renderSvg({
   signal ??= null;
 
   switch (format) {
-    // case 'png':
-    //   return transformer.png(options as PngEncodeOptions, signal);
     case "avif":
       return transformer.avif(options as AvifConfig, signal);
     case "jpeg":
