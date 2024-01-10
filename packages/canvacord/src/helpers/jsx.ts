@@ -71,7 +71,11 @@ export const JSX = {
    * @param children The children of the element
    * @returns The created element
    */
-  createElement(type: string | Element, props: Record<string, unknown>, ...children: Element[]): Element {
+  createElement(
+    type: string | Element,
+    props: Record<string, unknown>,
+    ...children: Element[]
+  ): Element {
     if (type instanceof Element) return type;
 
     // biome-ignore lint: reassigning function parameter
@@ -85,7 +89,10 @@ export const JSX = {
 
     if (type === "div") {
       if (!("tw" in props) && !("style" in props)) {
-        props.tw = StyleSheet.cn("flex flex-col content-start shrink-0", props.tw as string);
+        props.tw = StyleSheet.cn(
+          "flex flex-col content-start shrink-0",
+          props.tw as string
+        );
       }
     }
 
@@ -123,5 +130,7 @@ export function render(components: (Node | Element | unknown)[]) {
 
 // biome-ignore lint: any is tolerated here
 function isObjectEmpty(obj: any) {
-  return typeof obj === "object" && obj != null ? Object.keys(obj).length === 0 : false;
+  return typeof obj === "object" && obj != null
+    ? Object.keys(obj).length === 0
+    : false;
 }

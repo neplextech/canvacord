@@ -1,5 +1,5 @@
 import { DisposalCode, GifEncoder } from "@skyra/gifenc";
-import { Builder } from "../templates";
+import { Builder } from "../runtime";
 import type { Readable } from "stream";
 
 export { DisposalCode };

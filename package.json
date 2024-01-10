@@ -15,7 +15,8 @@
     "dev": "turbo dev",
     "format": "turbo format",
     "lint": "turbo lint",
-    "docgen": "tsx ./scripts/docgen.mts"
+    "docgen": "tsx ./scripts/docgen.mts",
+    "test": "turbo test"
   },
   "dependencies": {
     "@biomejs/biome": "1.4.1",

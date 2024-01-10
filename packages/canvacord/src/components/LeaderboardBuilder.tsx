@@ -1,7 +1,7 @@
 import { JSX, loadImage, Stylable, StyleSheet } from "../helpers";
 import { ImageSource } from "../helpers";
 import { fixed } from "../helpers/utils";
-import { Builder } from "../templates";
+import { Builder } from "../runtime";
 
 const DefaultColors = {
   Yellow: "#FFAA00",
