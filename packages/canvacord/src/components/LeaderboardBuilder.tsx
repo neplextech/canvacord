@@ -2,6 +2,7 @@ import { JSX, loadImage, Stylable, StyleSheet } from "../helpers";
 import { ImageSource } from "../helpers";
 import { fixed } from "../helpers/utils";
 import { Builder } from "../runtime";
+import { chunkArrayInGroups } from "../utils/chunkArrayInGroups";
 
 const DefaultColors = {
   Yellow: "#FFAA00",
@@ -99,7 +100,14 @@ const Crown = () => {
 const MIN_RENDER_HEIGHT = 420;
 const HEIGHT_INTERVAL = [394, 498, 594, 690, 786, 882, 978, 1074] as const;
 
+export enum LeaderboardVariants {
+  Default = "default",
+  Horizontal = "horizontal",
+}
+
 export class LeaderboardBuilder extends Builder<LeaderboardProps> {
+  public variant?: LeaderboardVariants;
+
   /**
    * Create a new leaderboard ui builder
    */
@@ -121,6 +129,15 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
     this.setStyle({
       borderRadius: "1.5rem",
     });
+  }
+
+  /**
+   * Set the ui variant for this leaderboard
+   * @param variant ui type
+   */
+  public setVariant(variant: LeaderboardVariants) {
+    this.variant = variant;
+    return this;
   }
 
   /**
@@ -174,6 +191,132 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
    * Render this leaderboard ui on the canvas
    */
   public async render() {
+    if (!this.variant || this.variant === LeaderboardVariants.Default) {
+      return this.renderDefaultVariant();
+    } else {
+      return this.renderHorizontalVariant();
+    }
+  }
+
+  /**
+   * Render players ui on the canvas
+   */
+  public renderDefaultPlayers(players: JSX.Element[]) {
+    return (
+      <div className="mt-4 flex flex-col items-center justify-center w-[95%]">
+        {players}
+      </div>
+    );
+  }
+
+  /**
+   * Render top players ui on the canvas
+   */
+  public async renderDefaultTop({
+    avatar,
+    displayName,
+    level,
+    rank,
+    username,
+    xp,
+  }: LeaderboardProps["players"][number]) {
+    const image = await loadImage(avatar);
+    const currentColor =
+      DefaultColors[rank === 1 ? "Yellow" : rank === 2 ? "Blue" : "Green"];
+    const crown = rank === 1;
+
+    return (
+      <div
+        className={StyleSheet.cn(
+          "relative flex flex-col items-center justify-center p-4 bg-[#1E2237CC] w-[35%] rounded-md",
+          crown ? "-mt-4 bg-[#252A40CC] rounded-b-none h-[113%]" : "",
+          rank === 2 ? "rounded-br-none" : rank === 3 ? "rounded-bl-none" : ""
+        )}
+      >
+        {crown && (
+          <div className="absolute flex -top-16">
+            <Crown />
+          </div>
+        )}
+        <div className="flex items-center justify-center flex-col absolute -top-10">
+          <img
+            src={image.toDataURL()}
+            className={StyleSheet.cn(
+              `border-[3px] border-[${currentColor}] rounded-full h-18 w-18`
+            )}
+            alt="avatar"
+          />
+          <div
+            className={`flex items-center justify-center text-xs p-2 text-center font-bold h-3 w-3 rounded-full text-white absolute bg-[${currentColor}] -bottom-[0.4rem]`}
+          >
+            {rank}
+          </div>
+        </div>
+        <div className="flex flex-col items-center justify-center mt-5">
+          <h1 className="text-white text-base font-extrabold m-0">
+            {displayName}
+          </h1>
+          <h2 className="text-white text-xs font-thin m-0 mb-2">@{username}</h2>
+          <h4 className={`text-sm text-[${currentColor}] m-0`}>
+            {this.options.get("text").level} {level}
+          </h4>
+          <h4 className={`text-sm text-[${currentColor}] m-0`}>
+            {fixed(xp, this.options.get("abbreviate"))}{" "}
+            {this.options.get("text").xp}
+          </h4>
+        </div>
+      </div>
+    );
+  }
+
+  /**
+   * Render player ui on the canvas
+   */
+  public async renderDefaultPlayer({
+    avatar,
+    displayName,
+    level,
+    rank,
+    username,
+    xp,
+  }: LeaderboardProps["players"][number]) {
+    const image = await loadImage(avatar);
+
+    return (
+      <div className="bg-[#252A40BB] p-4 rounded-md flex flex-row justify-between items-center w-full mb-2">
+        <div className="flex flex-row">
+          <div className="flex flex-col items-center justify-center mr-2">
+            <h1 className="text-white font-extrabold text-xl m-0">{rank}</h1>
+            <h4 className="text-white font-medium text-sm m-0">
+              {this.options.get("text").rank}
+            </h4>
+          </div>
+          <img
+            src={image.toDataURL()}
+            className="rounded-full h-14 w-14 mr-2"
+            alt="avatar"
+          />
+          <div className="flex flex-col items-start justify-center">
+            <h1 className="text-white font-extrabold text-xl m-0">
+              {displayName}
+            </h1>
+            <h4 className="text-white font-medium text-sm m-0">@{username}</h4>
+          </div>
+        </div>
+        <div className="flex flex-col items-start justify-center">
+          <h4 className="text-white font-medium text-sm m-0">
+            {this.options.get("text").level} {level}
+          </h4>
+          <h4 className="text-white font-medium text-sm m-0">
+            {fixed(xp, this.options.get("abbreviate"))}{" "}
+            {this.options.get("text").xp}
+          </h4>
+        </div>
+      </div>
+    );
+  }
+
+  public async renderDefaultVariant() {
     const options = this.options.getOptions();
     const total = options.players.length;
 
@@ -235,13 +378,15 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
               winners.length ? "mt-24" : ""
             )}
           >
-            {await Promise.all(winners.map((winner) => this.renderTop(winner)))}
+            {await Promise.all(
+              winners.map((winner) => this.renderDefaultTop(winner))
+            )}
           </div>
-          {this.renderPlayers(
+          {this.renderDefaultPlayers(
             await Promise.all(
               options.players
                 .filter((f) => !winners.includes(f))
-                .map((m) => this.renderPlayer(m))
+                .map((m) => this.renderDefaultPlayer(m))
             )
           )}
         </div>
@@ -249,119 +394,111 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
     );
   }
 
-  /**
-   * Render players ui on the canvas
-   */
-  public renderPlayers(players: JSX.Element[]) {
-    return (
-      <div className="mt-4 flex flex-col items-center justify-center w-[95%]">
-        {players}
-      </div>
-    );
-  }
+  public async renderHorizontalVariant() {
+    const options = this.options.getOptions();
+    const total = options.players.length;
 
-  /**
-   * Render top players ui on the canvas
-   */
-  public async renderTop({
-    avatar,
-    displayName,
-    level,
-    rank,
-    username,
-    xp,
-  }: LeaderboardProps["players"][number]) {
-    const image = await loadImage(avatar);
-    const currentColor =
-      DefaultColors[rank === 1 ? "Yellow" : rank === 2 ? "Blue" : "Green"];
-    const crown = rank === 1;
+    if (!total) {
+      throw new RangeError("Number of players must be greater than 0");
+    }
+
+    this.width = 1002;
+    this.height = 512;
+
+    this.adjustCanvas();
+
+    // biome-ignore lint: declare variables separately
+    let background, headerImg;
+
+    if (options.background) {
+      background = await loadImage(options.background);
+    }
+
+    if (options.header) {
+      headerImg = await loadImage(options.header.image);
+    }
+
+    const playerGroupChunks = chunkArrayInGroups(options.players, 5) as Array<
+      typeof options.players
+    >;
 
     return (
-      <div
-        className={StyleSheet.cn(
-          "relative flex flex-col items-center justify-center p-4 bg-[#1E2237CC] w-[35%] rounded-md",
-          crown ? "-mt-4 bg-[#252A40CC] rounded-b-none h-[113%]" : "",
-          rank === 2 ? "rounded-br-none" : rank === 3 ? "rounded-bl-none" : ""
-        )}
-      >
-        {crown && (
-          <div className="absolute flex -top-16">
-            <Crown />
-          </div>
-        )}
-        <div className="flex items-center justify-center flex-col absolute -top-10">
-          <img
-            src={image.toDataURL()}
-            className={StyleSheet.cn(
-              `border-[3px] border-[${currentColor}] rounded-full h-18 w-18`
+      <div className="flex relative w-full flex-col">
+        <img
+          src="https://i.imgur.com/PcVzzZu.png"
+          className="absolute top-0 left-0"
+        />
+
+        {/* <---------- HEADER ----------> */}
+        <div className="flex justify-center w-full m-0 my-5">
+          {options.header && headerImg && (
+            <img
+              src={headerImg.toDataURL()}
+              width={49.53}
+              height={50.44}
+              className="rounded-full mr-3"
+            />
+          )}
+          <div className="flex flex-col items-center justify-center">
+            {options.header?.title && (
+              <div className="text-white font-semibold text-2xl">
+                {options.header.title}
+              </div>
             )}
-            alt="avatar"
-          />
-          <div
-            className={`flex items-center justify-center text-xs p-2 text-center font-bold h-3 w-3 rounded-full text-white absolute bg-[${currentColor}] -bottom-[0.4rem]`}
-          >
-            {rank}
+            {options.header?.subtitle && (
+              <div className="text-gray-300 font-medium">
+                {options.header.subtitle}
+              </div>
+            )}
           </div>
         </div>
-        <div className="flex flex-col items-center justify-center mt-5">
-          <h1 className="text-white text-base font-extrabold m-0">
-            {displayName}
-          </h1>
-          <h2 className="text-white text-xs font-thin m-0 mb-2">@{username}</h2>
-          <h4 className={`text-sm text-[${currentColor}] m-0`}>
-            {this.options.get("text").level} {level}
-          </h4>
-          <h4 className={`text-sm text-[${currentColor}] m-0`}>
-            {fixed(xp, this.options.get("abbreviate"))}{" "}
-            {this.options.get("text").xp}
-          </h4>
-        </div>
-      </div>
-    );
-  }
 
-  /**
-   * Render player ui on the canvas
-   */
-  public async renderPlayer({
-    avatar,
-    displayName,
-    level,
-    rank,
-    username,
-    xp,
-  }: LeaderboardProps["players"][number]) {
-    const image = await loadImage(avatar);
+        {/* <---------- USER LIST ----------> */}
+        <div className="flex text-white p-2 px-3" style={{ gap: "6" }}>
+          {playerGroupChunks.map((playerGroup) => (
+            <div className="flex flex-col flex-1" style={{ gap: 6 }}>
+              {playerGroup.map((player) => (
+                <div className="flex items-center bg-white/15 rounded-xl p-2 px-3 justify-between">
+                  <div className="flex justify-between items-center">
+                    <div className="mr-2 text-2xl w-[25px]">1</div>
 
-    return (
-      <div className="bg-[#252A40BB] p-4 rounded-md flex flex-row justify-between items-center w-full mb-2">
-        <div className="flex flex-row">
-          <div className="flex flex-col items-center justify-center mr-2">
-            <h1 className="text-white font-extrabold text-xl m-0">{rank}</h1>
-            <h4 className="text-white font-medium text-sm m-0">
-              {this.options.get("text").rank}
-            </h4>
-          </div>
-          <img
-            src={image.toDataURL()}
-            className="rounded-full h-14 w-14 mr-2"
-            alt="avatar"
-          />
-          <div className="flex flex-col items-start justify-center">
-            <h1 className="text-white font-extrabold text-xl m-0">
-              {displayName}
-            </h1>
-            <h4 className="text-white font-medium text-sm m-0">@{username}</h4>
-          </div>
-        </div>
-        <div className="flex flex-col items-start justify-center">
-          <h4 className="text-white font-medium text-sm m-0">
-            {this.options.get("text").level} {level}
-          </h4>
-          <h4 className="text-white font-medium text-sm m-0">
-            {fixed(xp, this.options.get("abbreviate"))}{" "}
-            {this.options.get("text").xp}
-          </h4>
+                    <img
+                      src="https://cdn.discordapp.com/embed/avatars/0.png?size=256"
+                      width={49.25}
+                      height={49.58}
+                      className="rounded-full"
+                    />
+
+                    <div className="flex flex-col justify-center ml-3">
+                      {player.displayName && (
+                        <div className="text-xl font-semibold -mb-1">
+                          {player.displayName}
+                        </div>
+                      )}
+                      {player.username && (
+                        <div className="text-lg font-medium text-gray-300">
+                          {player.username}
+                        </div>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col items-end">
+                    {player.xp && (
+                      <div className="text-xl font-medium">
+                        {fixed(player.xp, this.options.get("abbreviate"))} XP
+                      </div>
+                    )}
+                    {player.level && (
+                      <div className="text-xl font-medium">
+                        Level {player.level}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </div>
     );
