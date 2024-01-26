@@ -1,5 +1,6 @@
 import { JSX, loadImage, Stylable, StyleSheet } from "../helpers";
 import { ImageSource } from "../helpers";
+import { CanvacordImage } from "../helpers/image";
 import { fixed } from "../helpers/utils";
 import { Builder } from "../runtime";
 import { chunkArrayInGroups } from "../utils/chunkArrayInGroups";
@@ -422,12 +423,22 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
       typeof options.players
     >;
 
+    // TODO: Use Promise.all() to speed up loading images
+    for (const playerGroup of playerGroupChunks) {
+      for (const player of playerGroup) {
+        player.avatar = await loadImage(player.avatar);
+      }
+    }
+
     return (
       <div className="flex relative w-full flex-col">
-        <img
-          src="https://i.imgur.com/PcVzzZu.png"
-          className="absolute top-0 left-0"
-        />
+        {background && (
+          <img
+            src="https://i.imgur.com/PcVzzZu.png"
+            className="absolute top-0 left-0"
+            alt="background"
+          />
+        )}
 
         {/* <---------- HEADER ----------> */}
         <div className="flex justify-center w-full m-0 my-5">
@@ -437,6 +448,7 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
               width={49.53}
               height={50.44}
               className="rounded-full mr-3"
+              alt="header image"
             />
           )}
           <div className="flex flex-col items-center justify-center">
@@ -453,20 +465,21 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
           </div>
         </div>
 
-        {/* <---------- USER LIST ----------> */}
+        {/* <---------- PLAYER LIST ----------> */}
         <div className="flex text-white p-2 px-3" style={{ gap: "6" }}>
           {playerGroupChunks.map((playerGroup) => (
-            <div className="flex flex-col flex-1" style={{ gap: 6 }}>
+            <div className="flex flex-col flex-1" style={{ gap: "6" }}>
               {playerGroup.map((player) => (
                 <div className="flex items-center bg-white/15 rounded-xl p-2 px-3 justify-between">
                   <div className="flex justify-between items-center">
-                    <div className="mr-2 text-2xl w-[25px]">1</div>
+                    <div className="mr-2 text-2xl w-[25px]">{player.rank}</div>
 
                     <img
-                      src="https://cdn.discordapp.com/embed/avatars/0.png?size=256"
+                      src={(player.avatar as CanvacordImage).toDataURL()}
                       width={49.25}
                       height={49.58}
                       className="rounded-full"
+                      alt="avatar"
                     />
 
                     <div className="flex flex-col justify-center ml-3">

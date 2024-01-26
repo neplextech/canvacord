@@ -51,7 +51,46 @@ async function main() {
         xp: 2280,
         rank: 5,
       },
-      // ...
+      {
+        avatar: "https://github.com/twlite.png",
+        username: "twlite",
+        displayName: "Archaeopteryx",
+        level: 32,
+        xp: 2420,
+        rank: 6,
+      },
+      {
+        avatar: "https://github.com/notunderctrl.png",
+        username: "avrajs",
+        displayName: "Avraj",
+        level: 30,
+        xp: 2390,
+        rank: 7,
+      },
+      {
+        avatar: "https://github.com/insypher.png",
+        username: "insypher01",
+        displayName: "insypher",
+        level: 29,
+        xp: 2280,
+        rank: 9,
+      },
+      {
+        avatar: "https://github.com/Luna-devv.png",
+        username: "mwlica",
+        displayName: "Luna",
+        level: 27,
+        xp: 2280,
+        rank: 9,
+      },
+      {
+        avatar: "https://github.com/insypher.png",
+        username: "com6235",
+        displayName: "CatGPT",
+        level: 24,
+        xp: 2280,
+        rank: 10,
+      },
     ])
     .setVariant(LeaderboardVariants.Horizontal);
 
