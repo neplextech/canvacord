@@ -59,6 +59,7 @@ async function main() {
         xp: 2420,
         rank: 6,
       },
+
       {
         avatar: "https://github.com/notunderctrl.png",
         username: "avrajs",
@@ -92,14 +93,15 @@ async function main() {
         rank: 10,
       },
     ])
-    .setVariant(LeaderboardVariants.Horizontal);
+    .setVariant(LeaderboardVariants.Horizontal)
+    .setBackground("https://i.imgur.com/PcVzzZu.png");
 
   leaderboard
     .build({
       format: "png",
     })
     .then((data) => {
-      writeFileSync(`${__dirname}/normal/leaderboard2.png`, data);
+      writeFileSync(`${__dirname}/normal/leaderboard.png`, data);
     });
 
   leaderboard

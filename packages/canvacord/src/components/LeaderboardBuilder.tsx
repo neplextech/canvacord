@@ -395,6 +395,57 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
     );
   }
 
+  public async renderHorizontalPlayer({
+    avatar,
+    displayName,
+    level,
+    rank,
+    username,
+    xp,
+  }: LeaderboardProps["players"][number]) {
+    const image = await loadImage(avatar);
+
+    return (
+      <div className="flex items-center bg-white/15 rounded-xl p-2 px-3 justify-between">
+        <div className="flex justify-between items-center">
+          <div className="flex mr-2 text-2xl w-[25px]">{rank}</div>
+
+          <img
+            src={image.toDataURL()}
+            width={49.25}
+            height={49.58}
+            className="rounded-full flex"
+            alt="avatar"
+          />
+
+          <div className="flex flex-col justify-center ml-3">
+            {displayName && (
+              <div className="text-xl font-semibold -mb-1 flex">
+                {displayName}
+              </div>
+            )}
+            {username && (
+              <div className="text-lg font-medium text-gray-300 flex">
+                {username}
+              </div>
+            )}
+          </div>
+        </div>
+
+        <div className="flex flex-col items-end">
+          {xp && (
+            <div className="text-xl font-medium flex">
+              {fixed(xp, this.options.get("abbreviate"))} XP
+            </div>
+          )}
+          {level && (
+            <div className="text-xl font-medium flex">Level {level}</div>
+          )}
+        </div>
+      </div>
+    );
+  }
+
   public async renderHorizontalVariant() {
     const options = this.options.getOptions();
     const total = options.players.length;
@@ -423,19 +474,21 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
       typeof options.players
     >;
 
-    // TODO: Use Promise.all() to speed up loading images
-    for (const playerGroup of playerGroupChunks) {
-      for (const player of playerGroup) {
-        player.avatar = await loadImage(player.avatar);
-      }
-    }
+    const processedPlayerGroups = await Promise.all(
+      playerGroupChunks.map(async (playerGroup) => {
+        const renderedPlayers = await Promise.all(
+          playerGroup.map((player) => this.renderHorizontalPlayer(player))
+        );
+        return renderedPlayers;
+      })
+    );
 
     return (
       <div className="flex relative w-full flex-col">
         {background && (
           <img
             src="https://i.imgur.com/PcVzzZu.png"
-            className="absolute top-0 left-0"
+            className="flex absolute top-0 left-0"
             alt="background"
           />
         )}
@@ -447,18 +500,18 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
               src={headerImg.toDataURL()}
               width={49.53}
               height={50.44}
-              className="rounded-full mr-3"
+              className="flex rounded-full mr-3"
               alt="header image"
             />
           )}
           <div className="flex flex-col items-center justify-center">
             {options.header?.title && (
-              <div className="text-white font-semibold text-2xl">
+              <div className="text-white font-semibold text-2xl flex">
                 {options.header.title}
               </div>
             )}
             {options.header?.subtitle && (
-              <div className="text-gray-300 font-medium">
+              <div className="text-gray-300 font-medium flex">
                 {options.header.subtitle}
               </div>
             )}
@@ -467,49 +520,9 @@ export class LeaderboardBuilder extends Builder<LeaderboardProps> {
 
         {/* <---------- PLAYER LIST ----------> */}
         <div className="flex text-white p-2 px-3" style={{ gap: "6" }}>
-          {playerGroupChunks.map((playerGroup) => (
+          {processedPlayerGroups.map((renderedPlayers) => (
             <div className="flex flex-col flex-1" style={{ gap: "6" }}>
-              {playerGroup.map((player) => (
-                <div className="flex items-center bg-white/15 rounded-xl p-2 px-3 justify-between">
-                  <div className="flex justify-between items-center">
-                    <div className="mr-2 text-2xl w-[25px]">{player.rank}</div>
-
-                    <img
-                      src={(player.avatar as CanvacordImage).toDataURL()}
-                      width={49.25}
-                      height={49.58}
-                      className="rounded-full"
-                      alt="avatar"
-                    />
-
-                    <div className="flex flex-col justify-center ml-3">
-                      {player.displayName && (
-                        <div className="text-xl font-semibold -mb-1">
-                          {player.displayName}
-                        </div>
-                      )}
-                      {player.username && (
-                        <div className="text-lg font-medium text-gray-300">
-                          {player.username}
-                        </div>
-                      )}
-                    </div>
-                  </div>
-
-                  <div className="flex flex-col items-end">
-                    {player.xp && (
-                      <div className="text-xl font-medium">
-                        {fixed(player.xp, this.options.get("abbreviate"))} XP
-                      </div>
-                    )}
-                    {player.level && (
-                      <div className="text-xl font-medium">
-                        Level {player.level}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              ))}
+              {renderedPlayers}
             </div>
           ))}
         </div>
