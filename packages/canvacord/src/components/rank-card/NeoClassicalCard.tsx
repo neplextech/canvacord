@@ -8,9 +8,10 @@ export enum RankCardUserStatus {
   Offline = "offline",
   Streaming = "streaming",
   None = "none",
+  Invisible = "invisible"
 }
 
-export type StatusData = "online" | "idle" | "dnd" | "offline" | "streaming" | "none";
+export type StatusData = "online" | "idle" | "dnd" | "offline" | "streaming" | "none" | "invisible";
 
 export interface RankCardProps {
   handle: string | null;
