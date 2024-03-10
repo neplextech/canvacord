@@ -1,6 +1,7 @@
-import { renderAsync, type ResvgRenderOptions } from "@resvg/resvg-js";
+import type { ResvgRenderOptions } from "@resvg/resvg-js";
 import { EncodingFormat } from "../canvas/Encodable";
 import { AvifConfig, PngEncodeOptions, Transformer } from "@napi-rs/image";
+import { getResvg, getSharp } from "./decoder";
 
 /**
  * The options for rendering the svg.
@@ -32,6 +33,25 @@ export async function renderSvg({
     logLevel: "off",
   };
 
+  const sharp = await getSharp();
+
+  if (sharp) {
+    const input = Buffer.isBuffer(svg) ? svg : Buffer.from(svg);
+    const img = sharp(input)
+      .toFormat(format, {
+        quality: 100,
+      })
+      .toBuffer();
+
+    return img;
+  }
+
+  const renderAsync = await getResvg();
+
+  if (!renderAsync) {
+    throw new Error("Could not load @resvg/resvg-js package");
+  }
+
   const output = await renderAsync(svg, opts);
 
   if (format === "raw") {
@@ -42,11 +62,7 @@ export async function renderSvg({
     return output.asPng();
   }
 
-  const transformer = Transformer.fromRgbaPixels(
-    output.pixels,
-    output.width,
-    output.height
-  );
+  const transformer = Transformer.fromRgbaPixels(output.pixels, output.width, output.height);
 
   options ??= null;
   signal ??= null;
@@ -63,8 +79,14 @@ export async function renderSvg({
   }
 }
 
+const createSvgBase64 = (svg: string | Buffer) =>
+  `data:image/svg+xml;base64,${Buffer.isBuffer(svg) ? svg.toString("base64") : Buffer.from(svg).toString("base64")}`;
+
 export class CanvacordImage {
-  public constructor(public data: Buffer, public mime: string) {}
+  public constructor(
+    public data: Buffer,
+    public mime: string,
+  ) {}
 
   public toBase64() {
     return this.data.toString("base64");

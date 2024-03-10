@@ -6,7 +6,7 @@ import { CanvacordImage } from "./image";
 import * as fileType from "file-type";
 import { Image } from "@napi-rs/canvas";
 import { buffer } from "stream/consumers";
-import { Transformer } from "@napi-rs/image";
+import { OutputType, decodeImage } from "./decoder";
 
 // biome-ignore lint: declare variables separately
 let http: typeof import("http"), https: typeof import("https");
@@ -16,7 +16,7 @@ const MAX_REDIRECTS = 20,
   REDIRECT_STATUSES = new Set([301, 302]),
   DATA_URI = /^\s*data:/;
 
-const NEEDS_TRANSFORMATION = ["image/webp", "image/gif", "image/bmp", "image/icns", "image/tiff"];
+const NEEDS_TRANSFORMATION = ["image/webp", "image/gif", "image/bmp", "image/icns", "image/tiff", "image/avif"];
 
 /**
  * The supported image sources. It can be a buffer, a readable stream, a string, a URL instance or an Image instance.
@@ -158,10 +158,12 @@ function makeRequest(
 async function createImage(src: Buffer) {
   const mime = await fileType.fromBuffer(src);
   if (!mime?.mime) throw new Error("failed to load image");
+
   if (NEEDS_TRANSFORMATION.includes(mime.mime)) {
-    const transformed = await new Transformer(src).png();
+    const transformed = await decodeImage(src, OutputType.PNG);
     return new CanvacordImage(transformed, "image/png");
   }
+
   return new CanvacordImage(src, mime.mime);
 }
 

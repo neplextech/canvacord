@@ -22,10 +22,7 @@ export abstract class Encodable {
    * @param format The encoding format - `jpeg` or `webp`
    * @param [options] The quality of the image
    */
-  public async encode(
-    format: "jpeg" | "webp",
-    options?: number
-  ): Promise<Buffer>;
+  public async encode(format: "jpeg" | "webp", options?: number): Promise<Buffer>;
   /**
    * Encodes the canvas to an avif buffer.
    * @param format The encoding format - `avif`
@@ -37,10 +34,7 @@ export abstract class Encodable {
    * @param format The encoding format
    * @param [options] The encoding options or quality
    */
-  public async encode(
-    format: EncodingFormat = "png",
-    options?: number | AvifConfig
-  ): Promise<Buffer> {
+  public async encode(format: EncodingFormat = "png", options?: number | AvifConfig): Promise<Buffer> {
     const canvas = await this.getFinalCanvas();
 
     switch (format) {

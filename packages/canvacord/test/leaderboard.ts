@@ -1,7 +1,5 @@
-import { Font, LeaderboardBuilder } from "../src/index";
+import { Font, FontFactory, LeaderboardBuilder } from "../src/index";
 import { writeFileSync } from "fs";
-
-Font.loadDefault();
 
 const lb = new LeaderboardBuilder()
   .setHeader({
@@ -34,14 +32,6 @@ const lb = new LeaderboardBuilder()
         level: 29,
         xp: 2280,
         rank: 3,
-      },
-      {
-        avatar: "https://github.com/Luna-devv.png",
-        username: "mwlica",
-        displayName: "Luna",
-        level: 27,
-        xp: 2280,
-        rank: 4,
       },
       {
         avatar: "https://github.com/insypher.png",
@@ -95,12 +85,27 @@ const lb = new LeaderboardBuilder()
   )
   .setBackground(`${__dirname}/bg.png`);
 
-lb.build({
-  format: "svg",
-}).then((res) => {
-  writeFileSync(`${__dirname}/leaderboard.svg`, res);
-});
+(async () => {
+  Font.loadDefault();
+  for (const e of ["leaderboard", "leaderboard2"]) {
+    // FontFactory.clear();
+    if (e === "leaderboard2") {
+      lb.setVariant("horizontal");
+    } else {
+      lb.setVariant("default");
+      // Font.fromFileSync(`${__dirname}/Poppins-Regular.ttf`);
+    }
 
-lb.build().then((res) => {
-  writeFileSync(`${__dirname}/leaderboard.png`, res);
-});
+    await lb
+      .build({
+        format: "svg",
+      })
+      .then((res) => {
+        writeFileSync(`${__dirname}/${e}.svg`, res);
+      });
+
+    await lb.build().then((res) => {
+      writeFileSync(`${__dirname}/${e}.png`, res);
+    });
+  }
+})();

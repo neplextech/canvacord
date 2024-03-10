@@ -20,7 +20,10 @@ export class Font {
    * const font = new Font(data, 'my-font');
    
    */
-  public constructor(public data: Buffer, public alias = randomAlias()) {
+  public constructor(
+    public data: Buffer,
+    public alias = randomAlias(),
+  ) {
     GlobalFonts.register(data, alias);
     FontFactory.set(this.alias, this);
   }
@@ -106,5 +109,12 @@ export class Font {
     if (defaultLoaded) return defaultLoaded;
     defaultLoaded = Font.fromBuffer(Fonts.Geist, "geist");
     return defaultLoaded;
+  }
+
+  /**
+   * Unloads the font from the canvas and builder apis.
+   */
+  public unloadAll() {
+    FontFactory.clear();
   }
 }

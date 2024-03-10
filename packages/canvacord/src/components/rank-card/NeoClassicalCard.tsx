@@ -1,17 +1,20 @@
 import { JSX, Stylable, StyleSheet } from "../..";
 import { fixed } from "../../helpers/utils";
 
-export enum RankCardUserStatus {
-  Online = "online",
-  Idle = "idle",
-  DoNotDisturb = "dnd",
-  Offline = "offline",
-  Streaming = "streaming",
-  None = "none",
-  Invisible = "invisible"
-}
+export const RankCardUserStatus = {
+  Online: "online",
+  Idle: "idle",
+  DoNotDisturb: "dnd",
+  Offline: "offline",
+  Streaming: "streaming",
+  None: "none",
+  Invisible: "invisible",
+} as const;
 
-export type StatusData = "online" | "idle" | "dnd" | "offline" | "streaming" | "none" | "invisible";
+export type RankCardUserStatus = (typeof RankCardUserStatus)[keyof typeof RankCardUserStatus];
+
+// backwards compatibility
+export type StatusData = RankCardUserStatus;
 
 export interface RankCardProps {
   handle: string | null;

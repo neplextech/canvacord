@@ -1,6 +1,5 @@
 export * from "./assets";
 export * from "./components";
 export * from "./helpers";
-export * from "./runtime";
+export * from "./template";
 export * from "./canvas";
-export * from "./hooks";

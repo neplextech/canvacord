@@ -12,7 +12,11 @@ export class CanvasImage extends ImageFilterer {
    * @param [width] The width of the image
    * @param [height] The height of the image
    */
-  public constructor(public source: ImageSource, width = -1, height = -1) {
+  public constructor(
+    public source: ImageSource,
+    width = -1,
+    height = -1,
+  ) {
     super(width, height);
     if (source instanceof Image) this.#setImg(source);
   }

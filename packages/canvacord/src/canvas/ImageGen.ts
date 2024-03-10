@@ -183,7 +183,10 @@ export class ImageGenerationTemplate implements IImageGenerationTemplate {
    * @param width The width of the template
    * @param height The height of the template
    */
-  public constructor(public readonly width?: number, public readonly height?: number) {}
+  public constructor(
+    public readonly width?: number,
+    public readonly height?: number,
+  ) {}
 
   /**
    * Sets the steps. This will overwrite any existing steps.

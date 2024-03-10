@@ -15,3 +15,13 @@ export const fixed = (v: number, r: boolean) => {
 export const getDefaultFont = () => {
   return (FontFactory.values().next().value ?? null) as Font | null;
 };
+
+export const chunkArrayInGroups = <T>(arr: T[], size: number): T[][] => {
+  const result: T[][] = [];
+
+  for (let i = 0; i < arr.length; i += size) {
+    result.push(arr.slice(i, i + size));
+  }
+
+  return result;
+};

@@ -41,14 +41,6 @@ const lb = new LeaderboardBuilder()
       rank: 3,
     },
     {
-      avatar: "https://github.com/Luna-devv.png",
-      username: "mwlica",
-      displayName: "Luna",
-      level: 27,
-      xp: 2280,
-      rank: 4,
-    },
-    {
       avatar: "https://github.com/insypher.png",
       username: "com6235",
       displayName: "CatGPT",
@@ -60,6 +52,11 @@ const lb = new LeaderboardBuilder()
   ])
   .setBackground("./my-background-image.jpg");
 
+// changing variant
+lb.setVariant("horizontal");
+// or
+lb.setVariant("default");
+
 const image = await lb.build({ format: "png" });
 ```
 
@@ -67,4 +64,10 @@ Canvacord automatically adjusts the size of the output image based on the number
 
 # Output
 
+### Default variant
+
 ![Leaderboard](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/leaderboard.svg)
+
+### Horizontal variant
+
+![Leaderboard](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/leaderboard2.svg)

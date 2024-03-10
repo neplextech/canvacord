@@ -14,7 +14,10 @@ export abstract class CanvasHelper extends Encodable {
    * @param width The width of the canvas
    * @param height The height of the canvas
    */
-  public constructor(public width: number, public height: number) {
+  public constructor(
+    public width: number,
+    public height: number,
+  ) {
     super();
   }
 

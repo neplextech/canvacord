@@ -1,8 +1,8 @@
 import { expect, test, describe } from "vitest";
 
-// TODO: Write tests for hooks
-describe("hooks", () => {
-  test("useState() works", () => {
+// TODO: Write tests
+describe("test", () => {
+  test("test", () => {
     expect(true).not.toBe(false);
   });
 });

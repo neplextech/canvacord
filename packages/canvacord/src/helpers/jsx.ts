@@ -1,6 +1,6 @@
 import type * as React from "react";
 import { performObjectCleanup, StyleSheet } from "./StyleSheet";
-import { Node } from "..";
+import { Node } from "../template/Builder";
 
 const isNode = (node: unknown): node is Node => {
   return typeof node === "object" && node != null && "toElement" in node;

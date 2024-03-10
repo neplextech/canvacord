@@ -1,0 +1,21 @@
+{
+    "name": "@neplex/canvacord",
+    "version": "6.0.4",
+    "exports": "./src/index.ts",
+    "publish": {
+        "include": [
+            "src/**",
+            "jsr.json",
+            "package.json",
+            "LICENSE",
+            "README.md"
+        ],
+        "exclude": [
+            "**",
+            "!jsr.json",
+            "!src",
+            "!README.md",
+            "!LICENSE"
+        ]
+    }
+}
