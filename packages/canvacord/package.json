@@ -14,6 +14,7 @@
         "test": "vitest",
         "coverage": "vitest --coverage",
         "test:main": "tsx ./test/index.ts",
+        "test:translation": "tsx ./test/cards-translation.ts",
         "test:lb": "tsx ./test/leaderboard.ts",
         "test:jsx": "tsx ./test/jsxTest.tsx",
         "test:demo": "tsx ./test/demo.tsx",

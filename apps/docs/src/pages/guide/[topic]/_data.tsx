@@ -45,6 +45,11 @@ export const pages = [
         displayName: "Rank Card",
         component: lazy(() => import("../_guides/Examples/rank-card.md")),
       },
+      {
+        name: "cards-translation.md",
+        displayName: "Cards Translation",
+        component: lazy(() => import("../_guides/Examples/cards-translation.md")),
+      },
     ],
   },
   {
