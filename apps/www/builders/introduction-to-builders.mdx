@@ -1,0 +1,106 @@
+Builders provide a way to create complex images using React-like components API. Canvacord under the hood abstracts over [satori](https://github.com/vercel/satori), an enlightened library to convert HTML and CSS to SVG by providing JSX interface as well as rendering the SVG to other numerous formats like PNG, JPEG, WEBP, etc. This makes it possible to create complex images with little to no configuration.
+
+## Anatomy of a Builder
+
+A builder is a class that extends the `Builder` class exported by Canvacord. This class contains all the complex logic behind rendering the jsx.
+
+<CodeGroup>
+
+```tsx TypeScript
+import { JSX, Builder } from "canvacord";
+
+// Options for the builder
+interface Props {
+  message: string;
+}
+
+class MyBuilder extends Builder<Props> {
+  public constructor() {
+    // The super constructor takes the width and height of the output image
+    super(500, 500);
+  }
+
+  public setMessage(value: string) {
+    // The set method is used to set the value of a property
+    this.options.set("message", value);
+    return this;
+  }
+
+  // The render method is where the JSX is rendered
+  public async render() {
+    const message = this.options.get("message");
+    // You can render any component you want
+    // this markup describes the shape/content of output image
+    return <h1>{message}</h1>;
+  }
+}
+```
+
+```jsx ES Modules
+import { JSX, Builder } from "canvacord";
+
+class MyBuilder extends Builder {
+  constructor() {
+    // The super constructor takes the width and height of the output image
+    super(500, 500);
+  }
+
+  setMessage(value) {
+    // The set method is used to set the value of a property
+    this.options.set("message", value);
+    return this;
+  }
+
+  // The render method is where the JSX is rendered
+  async render() {
+    const message = this.options.get("message");
+    // You can render any component you want
+    // this markup describes the shape/content of output image
+    return <h1>{message}</h1>;
+  }
+}
+```
+
+```jsx CommonJS
+const { JSX, Builder } = require("canvacord");
+
+class MyBuilder extends Builder {
+  constructor() {
+    // The super constructor takes the width and height of the output image
+    super(500, 500);
+  }
+
+  setMessage(value) {
+    // The set method is used to set the value of a property
+    this.options.set("message", value);
+    return this;
+  }
+
+  // The render method is where the JSX is rendered
+  async render() {
+    const message = this.options.get("message");
+    // You can render any component you want
+    // this markup describes the shape/content of output image
+    return <h1>{message}</h1>;
+  }
+}
+```
+
+</CodeGroup>
+
+<Note>
+  **Good to know:** Rendering a text requires you to register at least one font.
+</Note>
+
+## Usage
+
+```tsx
+// Create an instance of the builder
+const builder = new MyBuilder()
+  // Set the message property
+  .setMessage("Hello, World!");
+
+// Render the builder into image
+const result = await builder.build();
+// ^ result is by default a png buffer
+```

@@ -1,0 +1,194 @@
+---
+title: "Stewie Griffin"
+description: "Become Stewie Griffin from Family Guy using Canvacord."
+---
+
+## Code
+
+<CodeGroup>
+
+```ts TypeScript
+import { join } from "path";
+import {
+  createTemplate,
+  createImageGenerator,
+  TemplateImage,
+  type ImageSource,
+} from "canvacord";
+
+const StewieGriffin = createTemplate((image: ImageSource) => {
+  return {
+    width: 1024,
+    height: 1024,
+    steps: [
+      {
+        image: [
+          {
+            source: new TemplateImage(image),
+            x: 180,
+            y: 0,
+            width: 680,
+            height: 680,
+          },
+        ],
+      },
+      {
+        image: [
+          {
+            source: new TemplateImage(
+              join(import.meta.dirname, "stewie-griffin-source.png")
+            ),
+            x: 0,
+            y: 0,
+          },
+        ],
+      },
+    ],
+  };
+});
+
+export async function stewieGriffin(image: ImageSource) {
+  const output = await createImageGenerator(StewieGriffin(image)).render();
+  const result = await output.encode("png");
+
+  return result;
+}
+```
+
+```js ES Modules
+import { join } from "path";
+import { createTemplate, createImageGenerator, TemplateImage } from "canvacord";
+
+const StewieGriffin = createTemplate((image) => {
+  return {
+    width: 1024,
+    height: 1024,
+    steps: [
+      {
+        image: [
+          {
+            source: new TemplateImage(image),
+            x: 180,
+            y: 0,
+            width: 680,
+            height: 680,
+          },
+        ],
+      },
+      {
+        image: [
+          {
+            source: new TemplateImage(
+              join(import.meta.dirname, "stewie-griffin-source.png")
+            ),
+            x: 0,
+            y: 0,
+          },
+        ],
+      },
+    ],
+  };
+});
+
+export async function stewieGriffin(image) {
+  const output = await createImageGenerator(StewieGriffin(image)).render();
+  const result = await output.encode("png");
+
+  return result;
+}
+```
+
+```js CommonJS
+const { join } = require("path");
+const {
+  createTemplate,
+  createImageGenerator,
+  TemplateImage,
+} = require("canvacord");
+
+const StewieGriffin = createTemplate((image) => {
+  return {
+    width: 1024,
+    height: 1024,
+    steps: [
+      {
+        image: [
+          {
+            source: new TemplateImage(image),
+            x: 180,
+            y: 0,
+            width: 680,
+            height: 680,
+          },
+        ],
+      },
+      {
+        image: [
+          {
+            source: new TemplateImage(
+              join(__dirname, "stewie-griffin-source.png")
+            ),
+            x: 0,
+            y: 0,
+          },
+        ],
+      },
+    ],
+  };
+});
+
+module.exports.stewieGriffin = async function (image) {
+  const output = await createImageGenerator(StewieGriffin(image)).render();
+  const result = await output.encode("png");
+
+  return result;
+};
+```
+
+</CodeGroup>
+
+## Usage
+
+<CodeGroup>
+
+```ts TypeScript
+import { writeFile } from "node:fs/promises";
+import { stewieGriffin } from "./stewie-griffin";
+
+const targetImage = "https://cdn.discordapp.com/embed/avatars/0.png";
+
+const result = await stewieGriffin(targetImage);
+
+await writeFile("./stewie-griffin-result.png", result);
+```
+
+```js ES Modules
+import { writeFile } from "node:fs/promises";
+import { stewieGriffin } from "./stewie-griffin.js";
+
+const targetImage = "https://cdn.discordapp.com/embed/avatars/0.png";
+
+const result = await stewieGriffin(targetImage);
+
+await writeFile("./stewie-griffin-result.png", result);
+```
+
+```js CommonJS
+const { writeFile } = require("node:fs/promises");
+const { stewieGriffin } = require("./stewie-griffin.js");
+
+async function main() {
+  const targetImage = "https://cdn.discordapp.com/embed/avatars/0.png";
+  const result = await stewieGriffin(targetImage);
+
+  await writeFile("./stewie-griffin-result.png", result);
+}
+
+main();
+```
+
+</CodeGroup>
+
+## Result
+
+![stewie-griffin](/images/examples/manipulation/stewie-griffin.png)

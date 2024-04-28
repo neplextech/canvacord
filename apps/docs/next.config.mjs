@@ -32,7 +32,13 @@ const nextConfig = {
     eslint: {
         ignoreDuringBuilds: true
     },
-    swcMinify: true
+    swcMinify: true,
+    redirects: async () => {
+        return [
+            { source: '/guide', destination: 'https://canvacord.neplex.dev', permanent: true },
+            { source: '/examples', destination: 'https://canvacord.neplex.dev/examples/introduction', permanent: true }
+        ]
+    }
     // experimental: {
     //     mdxRs: true
     // }

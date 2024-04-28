@@ -1,0 +1,152 @@
+---
+title: "JSX Syntax"
+description: "Learn how to use JSX syntax with Canvacord."
+---
+
+JSX is a syntax extension for JavaScript that looks similar to HTML. It allows you to write HTML-like code in your JavaScript files. If you're familiar with React, you'll feel right at home with JSX. A basic example of JSX syntax is shown below:
+
+```jsx
+const message = <h1>Hello, world!</h1>;
+//              ^^^^^^^^^^^^^^^^^^^^^^ JSX syntax
+```
+
+Notice how we are not using strings to define the HTML elements. Instead, we are using a syntax that looks like HTML.
+
+## But this is not a valid JavaScript syntax!
+
+You are right! JSX is not a valid JavaScript syntax. It needs to be transformed into a valid JavaScript syntax before it can be executed by the JavaScript engine. This is where the transpiler comes into play. The transpiler is a tool that converts magical stuff, including the JSX syntax into the equivalent JavaScript code. Some of the most popular transpilers for JSX are [Babel](https://babeljs.io/), [TypeScript](https://www.typescriptlang.org/), [SWC](https://swc.rs/), [esbuild](https://esbuild.github.io/), etc.
+
+<Note>
+  If you are TypeScript user, you dont even need to add anything else to your
+  project, just use the `@jsx` pragma and you are good to go.
+</Note>
+
+## The JSX pragma
+
+The JSX pragma is a comment that tells the transpiler how to transform JSX into the equivalent JavaScript code. The pragma is used to define the function that will be called when the JSX syntax is encountered. The pragma is defined at the top of the file and is usually in the form of a comment.
+
+```js
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+```
+
+The above pragma comment tells the transpiler to use the `JSX.createElement` function to transform the JSX syntax into the equivalent JavaScript code. The `JSX.Fragment` is used to wrap multiple elements in a single parent element. These functions are exported by `canvacord` as `JSX` namespace.
+
+## TypeScript global JSX pragma
+
+You can also set the pragma globally in your project by adding the following to your `tsconfig.json` file:
+
+<CodeGroup>
+
+```json tsconfig.json
+{
+  "compilerOptions": {
+    "jsx": "react", // Canvacord uses React-like JSX
+    "jsxFactory": "JSX.createElement", // works as @jsx
+    "jsxFragmentFactory": "JSX.Fragment" // works as @jsxFrag
+  }
+}
+```
+
+</CodeGroup>
+
+## Don't want to/Can't use JSX?
+
+If you don't want to use JSX or can't use JSX in your project, you can still use Canvacord. Canvacord provides a way to create images without using JSX. You can use the `Builder` class to create images without using JSX. The `Builder` class provides a way to create images using a more traditional approach.
+
+### Element object
+
+You can return element object from the render method as an alternative approach to JSX.
+
+```js
+async render() {
+    return {
+        type: 'h1',
+        props: {
+            children: 'hello, world',
+        },
+    };
+}
+```
+
+### Calling JSX function
+
+You can also call the JSX function directly to create elements.
+
+```js
+async render() {
+    return JSX.createElement('h1', {}, 'hello, world');
+}
+```
+
+## Using JSX with Canvacord
+
+<Tabs>
+
+<Tab title="With JSX">
+<CodeGroup>
+
+```tsx TypeScript
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+
+import { JSX } from "canvacord";
+
+const message = <h1>Hello, world!</h1>;
+```
+
+```jsx ES Modules
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+
+import { JSX } from "canvacord";
+
+const message = <h1>Hello, world!</h1>;
+```
+
+```jsx CommonJS
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+
+const { JSX } = require("canvacord");
+
+const message = <h1>Hello, world!</h1>;
+```
+
+</CodeGroup>
+</Tab>
+
+<Tab title="Without JSX">
+<CodeGroup>
+
+```tsx TypeScript
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+
+import { JSX } from "canvacord";
+
+const message = <h1>Hello, world!</h1>;
+```
+
+```jsx ES Modules
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+
+import { JSX } from "canvacord";
+
+const message = <h1>Hello, world!</h1>;
+```
+
+```jsx CommonJS
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+
+const { JSX } = require("canvacord");
+
+const message = <h1>Hello, world!</h1>;
+```
+
+</CodeGroup>
+</Tab>
+
+</Tabs>

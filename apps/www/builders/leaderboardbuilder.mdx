@@ -1,0 +1,152 @@
+---
+title: "Leaderboard Builder"
+description: "A builtin builder to create leaderboard images."
+---
+
+<Note>This page is a work in progress.</Note>
+
+Leaderboard builder is another builtin builder provided by Canvacord to create leaderboard images. It is useful for creating leaderboards for games, servers, or any other application where you need to display a list of players with their ranks, levels, and experience points.
+
+## API Documentation
+
+Refer to [https://canvacord.js.org](https://canvacord.js.org/docs/canvacord/class/LeaderboardBuilder) for the complete API documentation. In the following sections, we will only cover the most common use cases.
+
+## Let's get started
+
+### Leaderboard image generation
+
+<CodeGroup>
+
+```js ES Modules
+import { Font, LeaderboardBuilder } from "canvacord";
+
+// load font
+Font.loadDefault();
+
+// generate image
+const lb = new LeaderboardBuilder()
+  // set title, image and subtitle
+  .setHeader({
+    title: "NeplexLabs",
+    image: "https://github.com/neplextech.png",
+    subtitle: "3258 members",
+  })
+  // set players, usually you would get this from a database but for this example we will hardcode it
+  .setPlayers([
+    {
+      avatar: "https://github.com/twlite.png",
+      username: "twlite",
+      displayName: "Archaeopteryx",
+      level: 32,
+      xp: 2420,
+      rank: 1,
+    },
+    {
+      avatar: "https://github.com/notunderctrl.png",
+      username: "avrajs",
+      displayName: "Avraj",
+      level: 30,
+      xp: 2390,
+      rank: 2,
+    },
+    {
+      avatar: "https://github.com/insypher.png",
+      username: "insypher01",
+      displayName: "insypher",
+      level: 29,
+      xp: 2280,
+      rank: 3,
+    },
+    {
+      avatar: "https://github.com/insypher.png",
+      username: "com6235",
+      displayName: "CatGPT",
+      level: 24,
+      xp: 2280,
+      rank: 5,
+    },
+    // ...
+  ])
+  .setBackground("./my-background-image.jpg");
+
+// changing variant
+lb.setVariant("horizontal");
+// or
+lb.setVariant("default");
+
+const image = await lb.build({ format: "png" });
+```
+
+```js CommonJS
+const { Font, LeaderboardBuilder } = require("canvacord");
+
+// load font
+Font.loadDefault();
+
+// generate image
+const lb = new LeaderboardBuilder()
+  // set title, image and subtitle
+  .setHeader({
+    title: "NeplexLabs",
+    image: "https://github.com/neplextech.png",
+    subtitle: "3258 members",
+  })
+  // set players, usually you would get this from a database but for this example we will hardcode it
+  .setPlayers([
+    {
+      avatar: "https://github.com/twlite.png",
+      username: "twlite",
+      displayName: "Archaeopteryx",
+      level: 32,
+      xp: 2420,
+      rank: 1,
+    },
+    {
+      avatar: "https://github.com/notunderctrl.png",
+      username: "avrajs",
+      displayName: "Avraj",
+      level: 30,
+      xp: 2390,
+      rank: 2,
+    },
+    {
+      avatar: "https://github.com/insypher.png",
+      username: "insypher01",
+      displayName: "insypher",
+      level: 29,
+      xp: 2280,
+      rank: 3,
+    },
+    {
+      avatar: "https://github.com/insypher.png",
+      username: "com6235",
+      displayName: "CatGPT",
+      level: 24,
+      xp: 2280,
+      rank: 5,
+    },
+    // ...
+  ])
+  .setBackground("./my-background-image.jpg");
+
+// changing variant
+lb.setVariant("horizontal");
+// or
+lb.setVariant("default");
+
+const image = await lb.build({ format: "png" });
+```
+
+</CodeGroup>
+
+Canvacord automatically adjusts the size of the output image based on the number of players. Maximum number of players is 10, but recommended size is 8 players or less.
+
+# Output
+
+### Default variant
+
+![Leaderboard](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/leaderboard.svg)
+
+### Horizontal variant
+
+![Leaderboard](https://raw.githubusercontent.com/neplextech/canvacord/main/packages/canvacord/test/leaderboard2.svg)

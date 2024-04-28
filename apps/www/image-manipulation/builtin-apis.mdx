@@ -1,0 +1,261 @@
+---
+title: "Built-in Image Manipulation APIs"
+description: "Use Canvacord's built-in builders to generate commonly used memes, such as triggered gif, jail image, and more."
+---
+
+<Note>This page is still a work in progress.</Note>
+
+## Usage
+
+Canvacord's built-in image manipulation APIs can be used from `canvacord` object. You need to import the `canvacord` object from the package as shown below:
+
+<CodeGroup>
+
+```ts TypeScript
+import { canvacord } from "canvacord";
+```
+
+```js ES Modules
+import { canvacord } from "canvacord";
+```
+
+```js CommonJS
+const { canvacord } = require("canvacord");
+```
+
+</CodeGroup>
+
+## Image Manipulation (Filters)
+
+The filters API can be used to apply filters to an image, such as hue rotation, saturation, brightness, contrast, and more.
+
+<CodeGroup>
+
+```ts TypeScript
+import { canvacord } from "canvacord";
+
+const output = await canvacord(image).hueRotate(70).encode();
+// or
+const output = await canvacord
+  .filters(500, 500)
+  .drawImage(image)
+  .hueRotate(70)
+  .encode();
+```
+
+```js ES Modules
+import { canvacord } from "canvacord";
+
+const output = await canvacord(image).hueRotate(70).encode();
+// or
+const output = await canvacord
+  .filters(500, 500)
+  .drawImage(image)
+  .hueRotate(70)
+  .encode();
+```
+
+```js CommonJS
+const { canvacord } = require("canvacord");
+
+const output = await canvacord(image).hueRotate(70).encode();
+// or
+const output = await canvacord
+  .filters(500, 500)
+  .drawImage(image)
+  .hueRotate(70)
+  .encode();
+```
+
+</CodeGroup>
+
+## Image Manipulation (Image Generation)
+
+The image generation API can be used to generate images, such as affected image, triggered gif, beautiful image, and more.
+
+<CodeGroup>
+
+```ts TypeScript
+import { canvacord } from "canvacord";
+import { createWriteStream, promises as fs } from "fs";
+
+const img = "image-1.png";
+const img2 = "image-2.png";
+const img3 = "image-3.png";
+
+// template
+const affected = await canvacord.affect(img);
+fs.writeFile("./affected.png", affected);
+
+// gif
+const triggered = await canvacord.triggered(img);
+triggered.pipe(createWriteStream("./triggered.gif"));
+
+// fuse
+const fused = await canvacord.fuse(img, img2);
+fs.writeFile("./fused.png", fused);
+
+// kiss
+const kissed = await canvacord.kiss(img, img2);
+fs.writeFile("./kissed.png", kissed);
+
+// spank
+const spanked = await canvacord.spank(img, img2);
+fs.writeFile("./spanked.png", spanked);
+
+// slap
+const slapped = await canvacord.slap(img, img2);
+fs.writeFile("./slapped.png", slapped);
+
+// beautiful
+const beautiful = await canvacord.beautiful(img);
+fs.writeFile("./beautiful.png", beautiful);
+
+// facepalm
+const facepalm = await canvacord.facepalm(img);
+fs.writeFile("./facepalm.png", facepalm);
+
+// rainbow
+const rainbow = await canvacord.rainbow(img);
+fs.writeFile("./rainbow.png", rainbow);
+
+// rip
+const rip = await canvacord.rip(img);
+fs.writeFile("./rip.png", rip);
+
+// trash
+const trash = await canvacord.trash(img);
+fs.writeFile("./trash.png", trash);
+
+// hitler
+const hitler = await canvacord.hitler(img);
+fs.writeFile("./hitler.png", hitler);
+
+// distracted
+const distracted = await canvacord.distracted(img, img2, img3);
+fs.writeFile("./distracted.png", distracted);
+```
+
+```js ES Modules
+import { canvacord } from "canvacord";
+import { createWriteStream, promises as fs } from "fs";
+
+const img = "image-1.png";
+const img2 = "image-2.png";
+const img3 = "image-3.png";
+
+// template
+const affected = await canvacord.affect(img);
+fs.writeFile("./affected.png", affected);
+
+// gif
+const triggered = await canvacord.triggered(img);
+triggered.pipe(createWriteStream("./triggered.gif"));
+
+// fuse
+const fused = await canvacord.fuse(img, img2);
+fs.writeFile("./fused.png", fused);
+
+// kiss
+const kissed = await canvacord.kiss(img, img2);
+fs.writeFile("./kissed.png", kissed);
+
+// spank
+const spanked = await canvacord.spank(img, img2);
+fs.writeFile("./spanked.png", spanked);
+
+// slap
+const slapped = await canvacord.slap(img, img2);
+fs.writeFile("./slapped.png", slapped);
+
+// beautiful
+const beautiful = await canvacord.beautiful(img);
+fs.writeFile("./beautiful.png", beautiful);
+
+// facepalm
+const facepalm = await canvacord.facepalm(img);
+fs.writeFile("./facepalm.png", facepalm);
+
+// rainbow
+const rainbow = await canvacord.rainbow(img);
+fs.writeFile("./rainbow.png", rainbow);
+
+// rip
+const rip = await canvacord.rip(img);
+fs.writeFile("./rip.png", rip);
+
+// trash
+const trash = await canvacord.trash(img);
+fs.writeFile("./trash.png", trash);
+
+// hitler
+const hitler = await canvacord.hitler(img);
+fs.writeFile("./hitler.png", hitler);
+
+// distracted
+const distracted = await canvacord.distracted(img, img2, img3);
+fs.writeFile("./distracted.png", distracted);
+```
+
+```js CommonJS
+const { canvacord } = require("canvacord");
+const { createWriteStream, promises: fs } = require("fs");
+
+const img = "image-1.png";
+const img2 = "image-2.png";
+const img3 = "image-3.png";
+
+// template
+const affected = await canvacord.affect(img);
+fs.writeFile("./affected.png", affected);
+
+// gif
+const triggered = await canvacord.triggered(img);
+triggered.pipe(createWriteStream("./triggered.gif"));
+
+// fuse
+const fused = await canvacord.fuse(img, img2);
+fs.writeFile("./fused.png", fused);
+
+// kiss
+const kissed = await canvacord.kiss(img, img2);
+fs.writeFile("./kissed.png", kissed);
+
+// spank
+const spanked = await canvacord.spank(img, img2);
+fs.writeFile("./spanked.png", spanked);
+
+// slap
+const slapped = await canvacord.slap(img, img2);
+fs.writeFile("./slapped.png", slapped);
+
+// beautiful
+const beautiful = await canvacord.beautiful(img);
+fs.writeFile("./beautiful.png", beautiful);
+
+// facepalm
+const facepalm = await canvacord.facepalm(img);
+fs.writeFile("./facepalm.png", facepalm);
+
+// rainbow
+const rainbow = await canvacord.rainbow(img);
+fs.writeFile("./rainbow.png", rainbow);
+
+// rip
+const rip = await canvacord.rip(img);
+fs.writeFile("./rip.png", rip);
+
+// trash
+const trash = await canvacord.trash(img);
+fs.writeFile("./trash.png", trash);
+
+// hitler
+const hitler = await canvacord.hitler(img);
+fs.writeFile("./hitler.png", hitler);
+
+// distracted
+const distracted = await canvacord.distracted(img, img2, img3);
+fs.writeFile("./distracted.png", distracted);
+```
+
+</CodeGroup>

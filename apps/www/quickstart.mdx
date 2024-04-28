@@ -1,0 +1,332 @@
+---
+title: "Quickstart"
+description: "Get started with Canvacord"
+---
+
+## Setup your development environment
+
+To get started with Canvacord, you need to have a few things set up on your local machine.
+
+- [Node.js](https://nodejs.org/en/download/): Canvacord is built on Node.js, so you need to have it installed on your machine.
+- [NPM](https://www.npmjs.com/get-npm): NPM is the package manager for Node.js. You will need it to install Canvacord and its dependencies.
+- Optionally [TypeScript](https://www.typescriptlang.org/download): To get the best out of Canvacord, we recommend you use TypeScript, but it's not required.
+
+### Installation
+
+<CodeGroup>
+
+```bash npm
+npm i canvacord
+```
+
+```bash yarn
+yarn add canvacord
+```
+
+```bash pnpm
+pnpm add canvacord
+```
+
+```bash bun
+bun add canvacord
+```
+
+</CodeGroup>
+
+### Use it in your project
+
+You can use Canvacord with or without JSX. JSX is a syntax extension for JavaScript that looks similar to HTML. It allows you to write HTML-like code in your JavaScript files. If you're familiar with React, you'll feel right at home with JSX.
+
+<Tabs>
+
+  <Tab title="With JSX">
+
+    #### Using Canvacord with JSX
+
+<CodeGroup>
+
+```jsx ES Modules
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+
+// The JSX pragma tells transpiler how to transform JSX into the equivalent JavaScript code
+
+// import Canvacord
+// Builder = The base class for creating custom builders
+// JSX = The JSX pragma for creating elements
+// Font = The Font class for loading custom fonts
+// FontFactory = The FontFactory for managing fonts
+import { Builder, JSX, Font, FontFactory } from "canvacord";
+import { writeFile } from "node:fs/promises";
+
+// define a builder
+class Generator extends Builder {
+  constructor() {
+    // set the size of the image
+    super(300, 300);
+
+    // if no fonts are loaded, load the default font
+    if (!FontFactory.size) Font.loadDefault();
+  }
+
+  async render() {
+    // declare the shape of the image
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "white",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <h1>Hello, World!</h1>
+      </div>
+    );
+  }
+}
+
+// create an instance of the builder
+const generator = new Generator();
+// build the image and save it to a file
+const image = await generator.build({ format: "png" });
+
+await writeFile("image.png", image);
+```
+
+```jsx CommonJS
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+
+// The JSX pragma tells transpiler how to transform JSX into the equivalent JavaScript code
+
+// import Canvacord
+// Builder = The base class for creating custom builders
+// JSX = The JSX pragma for creating elements
+// Font = The Font class for loading custom fonts
+// FontFactory = The FontFactory for managing fonts
+const { Builder, JSX, Font, FontFactory } = require("canvacord");
+const { writeFile } = require("node:fs/promises");
+
+// define a builder
+class Generator extends Builder {
+  constructor() {
+    // set the size of the image
+    super(300, 300);
+
+    // if no fonts are loaded, load the default font
+    if (!FontFactory.size) Font.loadDefault();
+  }
+
+  async render() {
+    // declare the shape of the image
+    return (
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "white",
+          width: "100%",
+          height: "100%",
+        }}
+      >
+        <h1>Hello, World!</h1>
+      </div>
+    );
+  }
+}
+
+async function main() {
+  // create an instance of the builder
+  const generator = new Generator();
+  // build the image and save it to a file
+  const image = await generator.build({ format: "png" });
+
+  await writeFile("image.png", image);
+}
+
+main();
+```
+
+</CodeGroup>
+
+  </Tab>
+
+  <Tab title="Without JSX (Vanilla)">
+
+    #### Using Canvacord without JSX
+
+    <CodeGroup>
+
+```js ES Modules
+// import Canvacord
+// Builder = The base class for creating custom builders
+// JSX = The JSX pragma for creating elements
+// Font = The Font class for loading custom fonts
+// FontFactory = The FontFactory for managing fonts
+import { Builder, JSX, Font, FontFactory } from "canvacord";
+import { writeFile } from "node:fs/promises";
+
+// define a builder
+class Generator extends Builder {
+  constructor() {
+    // set the size of the image
+    super(300, 300);
+
+    // if no fonts are loaded, load the default font
+    if (!FontFactory.size) Font.loadDefault();
+  }
+
+  async render() {
+    // declare the shape of the image
+    return JSX.createElement(
+      "div",
+      {
+        style: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "white",
+          width: "100%",
+          height: "100%",
+        },
+      },
+      JSX.createElement("h1", null, "Hello, World!")
+    );
+  }
+}
+
+// create an instance of the builder
+const generator = new Generator();
+// build the image and save it to a file
+const image = await generator.build({ format: "png" });
+
+await writeFile("image.png", image);
+```
+
+```js CommonJS
+// import Canvacord
+// Builder = The base class for creating custom builders
+// JSX = The JSX pragma for creating elements
+// Font = The Font class for loading custom fonts
+// FontFactory = The FontFactory for managing fonts
+const { Builder, JSX, Font, FontFactory } = require("canvacord");
+const { writeFile } = require("node:fs/promises");
+
+// define a builder
+class Generator extends Builder {
+  constructor() {
+    // set the size of the image
+    super(300, 300);
+
+    // if no fonts are loaded, load the default font
+    if (!FontFactory.size) Font.loadDefault();
+  }
+
+  async render() {
+    // declare the shape of the image
+    return JSX.createElement(
+      "div",
+      {
+        style: {
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "white",
+          width: "100%",
+          height: "100%",
+        },
+      },
+      JSX.createElement("h1", null, "Hello, World!")
+    );
+  }
+}
+
+async function main() {
+  // create an instance of the builder
+  const generator = new Generator();
+  // build the image and save it to a file
+  const image = await generator.build({ format: "png" });
+
+  await writeFile("image.png", image);
+}
+
+main();
+```
+
+</CodeGroup>
+
+  </Tab>
+
+</Tabs>
+
+## Result of the above code
+
+<img
+  style={{ borderRadius: "0.5rem", height: "300px", width: "300px" }}
+  alt="canvacord-quickstart-output"
+  src="/images/assets/canvacord-quickstart-output.png"
+/>
+
+## Further reading
+
+To learn more about Canvacord, check out the following resources:
+
+<CardGroup>
+
+<Card
+  title="Image Generation"
+  icon="paintbrush"
+  href="/builders/introduction-to-builders"
+>
+  Learn how to generate custom images using Canvacord's builder api.
+</Card>
+
+<Card
+  title="Image Manipulation"
+  icon="image"
+  href="/image-manipulation/image-manipulation-api"
+>
+  Learn how to manipulate images using Canvacord's built-in image manipulation
+  utilities.
+</Card>
+
+<Card
+  title="Built-in image builders"
+  icon="wrench"
+  href="/builders/builtin-builders"
+>
+  Use Canvacord's built-in builders to create commonly used images quickly, such
+  as rank cards, leaderboard images, and more.
+</Card>
+
+<Card
+  title="Built-in image manipulators"
+  icon="wrench"
+  href="/image-manipulation/builtin-apis"
+>
+  Use Canvacord's built-in builders to generate commonly used memes, such as
+  triggered gif, jail image, and more.
+</Card>
+
+<Card
+  title="Looking for examples?"
+  icon="browser"
+  href="/examples/introduction"
+>
+  Find a list of builder examples that you can copy and paste into your project.
+</Card>
+
+<Card
+  title="Have a suggestion?"
+  icon="book"
+  href="https://github.com/neplextech/canvacord/issues"
+>
+  Create an issue on GitHub if you have a suggestion or found a bug in
+  Canvacord.
+</Card>
+
+</CardGroup>

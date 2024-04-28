@@ -1,0 +1,13 @@
+{
+    "name": "@canvacord/website",
+    "version": "0.0.0",
+    "private": true,
+    "scripts": {
+        "dev": "mintlify dev",
+        "broken-links": "mintlify broken-links",
+        "rename": "mintlify rename"
+    },
+    "devDependencies": {
+        "mintlify": "^4.0.150"
+    }
+}

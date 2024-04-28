@@ -1,0 +1,141 @@
+{
+  "$schema": "https://mintlify.com/schema.json",
+  "name": "Canvacord",
+  "seo": {
+    "indexHiddenPages": true
+  },
+  "search": {
+    "prompt": "Search documentation..."
+  },
+  "modeToggle": {
+    "default": "dark"
+  },
+  "feedback": {
+    "raiseIssue": true,
+    "suggestEdit": true,
+    "thumbsRating": true
+  },
+  "metadata": {
+    "title": "Canvacord",
+    "description": "A simple, easy-to-use image manipulation library for Discord bots.",
+    "author": "Neplex",
+    "twitter": "@neplextech",
+    "image": "/logo/dark.svg",
+    "keywords": "Canvacord, Canvacord.js, Canvacord.js.org, Canvacord.js.org/docs, Canvacord.js.org/documentation, Canvacord.js.org/api, Canvacord.js.org/examples, Canvacord.js.org/builders, Canvacord.js.org/image-manipulation, Canvacord.js.org/quickstart, Canvacord.js.org/introduction"
+  },
+  "logo": {
+    "dark": "/logo/dark.svg",
+    "light": "/logo/light.svg"
+  },
+  "favicon": "/favicon.svg",
+  "colors": {
+    "primary": "#470d93",
+    "light": "#7d1fdb",
+    "dark": "#8324a6",
+    "anchors": {
+      "from": "#470d93",
+      "to": "#7d1fdb"
+    }
+  },
+  "topbarLinks": [
+    {
+      "name": "v5.x.x",
+      "url": "https://canvacord-v5.neplextech.com"
+    },
+    {
+      "name": "GitHub",
+      "url": "https://github.com/neplextech/canvacord"
+    }
+  ],
+  "topbarCtaButton": {
+    "name": "Discord",
+    "url": "https://neplextech.com/discord"
+  },
+  "tabs": [
+    {
+      "name": "Examples",
+      "url": "examples"
+    }
+  ],
+  "anchors": [
+    {
+      "name": "Documentation",
+      "icon": "book-open-cover",
+      "url": "/introduction"
+    },
+    {
+      "name": "API Documentation",
+      "icon": "code",
+      "url": "https://canvacord.js.org/docs"
+    },
+    {
+      "name": "Discord",
+      "icon": "discord",
+      "url": "https://neplextech.com/discord"
+    },
+    {
+      "name": "GitHub",
+      "icon": "github",
+      "url": "https://github.com/neplextech"
+    }
+  ],
+  "navigation": [
+    {
+      "group": "Get Started",
+      "pages": [
+        "introduction",
+        "quickstart"
+      ]
+    },
+    {
+      "group": "Builders",
+      "pages": [
+        "builders/introduction-to-builders",
+        "builders/jsx-syntax",
+        "builders/rankcardbuilder",
+        "builders/leaderboardbuilder"
+      ]
+    },
+    {
+      "group": "Image Manipulation",
+      "pages": [
+        "image-manipulation/image-manipulation-api",
+        "image-manipulation/builtin-apis"
+      ]
+    },
+    {
+      "group": "Examples",
+      "pages": [
+        "examples/introduction",
+        {
+          "group": "Builders",
+          "pages": [
+            "examples/builders/greetings-card",
+            "examples/builders/music-card",
+            "examples/builders/instagram-post",
+            "examples/builders/tweet-card",
+            "examples/builders/analog-clock",
+            "examples/builders/discord-embed",
+            "examples/builders/discord-profile-large",
+            "examples/builders/discord-profile-small"
+          ],
+          "icon": "wrench",
+          "iconType": "solid"
+        },
+        {
+          "group": "Image Manipulation",
+          "pages": [
+            "examples/image-manipulation/stewie-griffin"
+          ],
+          "icon": "image",
+          "iconType": "solid"
+        }
+      ]
+    }
+  ],
+  "footerSocials": {
+    "discord": "https://neplextech.com/discord",
+    "github": "https://neplextech.com/neplextech",
+    "linkedin": "https://www.linkedin.com/company/neplex"
+  }
+}

@@ -1,0 +1,563 @@
+---
+title: "Music Card"
+description: "Music player card with custom text and image."
+---
+
+## Code
+
+<CodeGroup>
+
+```tsx TypeScript
+/** @jsx JSX.createElement */
+/** @jsxFrag JSX.Fragment */
+
+import { JSX, Builder, loadImage } from "canvacord";
+
+interface Props {
+  image: string;
+  title: string;
+  author: string;
+  currentTime: string;
+  totalTime: string;
+  progress: number;
+}
+
+export class MusicCard extends Builder<Props> {
+  constructor() {
+    super(377, 523);
+    this.bootstrap({
+      author: "",
+      currentTime: "00:00",
+      totalTime: "00:00",
+      progress: 0,
+      image: "",
+      title: "",
+    });
+  }
+
+  setImage(image: string) {
+    this.options.set("image", image);
+    return this;
+  }
+
+  setTitle(title: string) {
+    this.options.set("title", title);
+    return this;
+  }
+
+  setAuthor(author: string) {
+    this.options.set("author", author);
+    return this;
+  }
+
+  setCurrentTime(time: string) {
+    this.options.set("currentTime", time);
+    return this;
+  }
+
+  setTotalTime(time: string) {
+    this.options.set("totalTime", time);
+    return this;
+  }
+
+  setProgress(progress: number) {
+    this.options.set("progress", progress);
+    return this;
+  }
+
+  async render() {
+    const { author, currentTime, image, progress, title, totalTime } =
+      this.options.getOptions();
+
+    const art = await loadImage(image);
+
+    return (
+      <div
+        style={{
+          background: "linear-gradient(to top, #120C17, #010424, #201C5B)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+          borderRadius: "0.5rem",
+          height: "100%",
+          width: "100%",
+        }}
+      >
+        <img
+          src={art.toDataURL()}
+          alt="img"
+          style={{
+            borderRadius: "50%",
+            height: "12rem",
+            width: "12rem",
+          }}
+        />
+        <div
+          style={{
+            color: "white",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          }}
+        >
+          <h1
+            style={{
+              fontSize: "1.5rem",
+              lineHeight: 2,
+              marginBottom: 0,
+              marginTop: "0.75rem",
+            }}
+          >
+            {title}
+          </h1>
+          <h4
+            style={{
+              fontSize: "1.125rem",
+              lineHeight: 1,
+              marginTop: 0,
+              color: "#FFFFFFAA",
+              fontWeight: 500,
+            }}
+          >
+            {author}
+          </h4>
+        </div>
+        <div
+          style={{
+            display: "flex",
+            flexDirection: "column",
+          }}
+        >
+          <div
+            style={{
+              position: "relative",
+              height: "0.5rem",
+              width: "20rem",
+              backgroundColor: "white",
+              display: "flex",
+              flexDirection: "column",
+            }}
+          >
+            <div
+              style={{
+                position: "absolute",
+                height: "0.5rem",
+                width: `${progress}%`,
+                maxWidth: "20rem",
+                backgroundColor: "#9333EA",
+              }}
+            />
+          </div>
+          <div
+            style={{
+              marginTop: "3px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              fontSize: "14",
+              fontWeight: "500",
+              color: "#FFFFFFAA",
+            }}
+          >
+            <span>{currentTime}</span>
+            <span>{totalTime}</span>
+          </div>
+        </div>
+      </div>
+    );
+  }
+}
+```
+
+```js ES Modules
+import { JSX, Builder, loadImage } from "canvacord";
+
+export class MusicCard extends Builder {
+  constructor() {
+    super(930, 280);
+    this.bootstrap({
+      author: "",
+      currentTime: "00:00",
+      totalTime: "00:00",
+      progress: 0,
+      image: "",
+      title: "",
+    });
+  }
+
+  setImage(image) {
+    this.options.set("image", image);
+    return this;
+  }
+
+  setTitle(title) {
+    this.options.set("title", title);
+    return this;
+  }
+
+  setAuthor(author) {
+    this.options.set("author", author);
+    return this;
+  }
+
+  setCurrentTime(time) {
+    this.options.set("currentTime", time);
+    return this;
+  }
+
+  setTotalTime(time) {
+    this.options.set("totalTime", time);
+    return this;
+  }
+
+  setProgress(progress) {
+    this.options.set("progress", progress);
+    return this;
+  }
+
+  async render() {
+    const { author, currentTime, image, progress, title, totalTime } =
+      this.options.getOptions();
+    const art = await loadImage(image);
+    return JSX.createElement(
+      "div",
+      {
+        style: {
+          background: "linear-gradient(to top, #120C17, #010424, #201C5B)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+          borderRadius: "0.5rem",
+          height: "100%",
+          width: "100%",
+        },
+      },
+      JSX.createElement("img", {
+        src: art.toDataURL(),
+        alt: "img",
+        style: {
+          borderRadius: "50%",
+          height: "12rem",
+          width: "12rem",
+        },
+      }),
+      JSX.createElement(
+        "div",
+        {
+          style: {
+            color: "white",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          },
+        },
+        JSX.createElement(
+          "h1",
+          {
+            style: {
+              fontSize: "1.5rem",
+              lineHeight: 2,
+              marginBottom: 0,
+              marginTop: "0.75rem",
+            },
+          },
+          title
+        ),
+        JSX.createElement(
+          "h4",
+          {
+            style: {
+              fontSize: "1.125rem",
+              lineHeight: 1,
+              marginTop: 0,
+              color: "#FFFFFFAA",
+              fontWeight: 500,
+            },
+          },
+          author
+        )
+      ),
+      JSX.createElement(
+        "div",
+        {
+          style: {
+            display: "flex",
+            flexDirection: "column",
+          },
+        },
+        JSX.createElement(
+          "div",
+          {
+            style: {
+              position: "relative",
+              height: "0.5rem",
+              width: "20rem",
+              backgroundColor: "white",
+              display: "flex",
+              flexDirection: "column",
+            },
+          },
+          JSX.createElement("div", {
+            style: {
+              position: "absolute",
+              height: "0.5rem",
+              width: `${progress}%`,
+              maxWidth: "20rem",
+              backgroundColor: "#9333EA",
+            },
+          })
+        ),
+        JSX.createElement(
+          "div",
+          {
+            style: {
+              marginTop: "3px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              fontSize: "14",
+              fontWeight: "500",
+              color: "#FFFFFFAA",
+            },
+          },
+          JSX.createElement("span", null, currentTime),
+          JSX.createElement("span", null, totalTime)
+        )
+      )
+    );
+  }
+}
+```
+
+```js CommonJS
+const { JSX, Builder, loadImage } = require("canvacord");
+
+class MusicCard extends Builder {
+  constructor() {
+    super(930, 280);
+    this.bootstrap({
+      author: "",
+      currentTime: "00:00",
+      totalTime: "00:00",
+      progress: 0,
+      image: "",
+      title: "",
+    });
+  }
+
+  setImage(image) {
+    this.options.set("image", image);
+    return this;
+  }
+
+  setTitle(title) {
+    this.options.set("title", title);
+    return this;
+  }
+
+  setAuthor(author) {
+    this.options.set("author", author);
+    return this;
+  }
+
+  setCurrentTime(time) {
+    this.options.set("currentTime", time);
+    return this;
+  }
+
+  setTotalTime(time) {
+    this.options.set("totalTime", time);
+    return this;
+  }
+
+  setProgress(progress) {
+    this.options.set("progress", progress);
+    return this;
+  }
+
+  async render() {
+    const { author, currentTime, image, progress, title, totalTime } =
+      this.options.getOptions();
+    const art = await loadImage(image);
+    return JSX.createElement(
+      "div",
+      {
+        style: {
+          background: "linear-gradient(to top, #120C17, #010424, #201C5B)",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: 8,
+          borderRadius: "0.5rem",
+          height: "100%",
+          width: "100%",
+        },
+      },
+      JSX.createElement("img", {
+        src: art.toDataURL(),
+        alt: "img",
+        style: {
+          borderRadius: "50%",
+          height: "12rem",
+          width: "12rem",
+        },
+      }),
+      JSX.createElement(
+        "div",
+        {
+          style: {
+            color: "white",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+          },
+        },
+        JSX.createElement(
+          "h1",
+          {
+            style: {
+              fontSize: "1.5rem",
+              lineHeight: 2,
+              marginBottom: 0,
+              marginTop: "0.75rem",
+            },
+          },
+          title
+        ),
+        JSX.createElement(
+          "h4",
+          {
+            style: {
+              fontSize: "1.125rem",
+              lineHeight: 1,
+              marginTop: 0,
+              color: "#FFFFFFAA",
+              fontWeight: 500,
+            },
+          },
+          author
+        )
+      ),
+      JSX.createElement(
+        "div",
+        {
+          style: {
+            display: "flex",
+            flexDirection: "column",
+          },
+        },
+        JSX.createElement(
+          "div",
+          {
+            style: {
+              position: "relative",
+              height: "0.5rem",
+              width: "20rem",
+              backgroundColor: "white",
+              display: "flex",
+              flexDirection: "column",
+            },
+          },
+          JSX.createElement("div", {
+            style: {
+              position: "absolute",
+              height: "0.5rem",
+              width: `${progress}%`,
+              maxWidth: "20rem",
+              backgroundColor: "#9333EA",
+            },
+          })
+        ),
+        JSX.createElement(
+          "div",
+          {
+            style: {
+              marginTop: "3px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              fontSize: "14",
+              fontWeight: "500",
+              color: "#FFFFFFAA",
+            },
+          },
+          JSX.createElement("span", null, currentTime),
+          JSX.createElement("span", null, totalTime)
+        )
+      )
+    );
+  }
+}
+
+module.exports = { MusicCard };
+```
+
+</CodeGroup>
+
+## Usage
+
+<CodeGroup>
+
+```ts TypeScript
+import { MusicCard } from "./MusicCard";
+
+const card = new MusicCard()
+  .setAuthor("JVKE")
+  .setTitle("Golden Hour")
+  .setImage(
+    "https://lh3.googleusercontent.com/i1qCCS4BbP6z11E08FkQg6fN-83Uj4fQg4bmBsD2E6SvGQ3RW7nXxpQ3hmcSlI5Ipek10H7R4BjV5mAY=w544-h544-l90-rj"
+  )
+  .setProgress(39)
+  .setCurrentTime("01:58")
+  .setTotalTime("02:59");
+
+const image = await card.build();
+// now do something with the image buffer
+```
+
+```js ES Modules
+import { MusicCard } from "./MusicCard.js";
+
+const card = new MusicCard()
+  .setAuthor("JVKE")
+  .setTitle("Golden Hour")
+  .setImage(
+    "https://lh3.googleusercontent.com/i1qCCS4BbP6z11E08FkQg6fN-83Uj4fQg4bmBsD2E6SvGQ3RW7nXxpQ3hmcSlI5Ipek10H7R4BjV5mAY=w544-h544-l90-rj"
+  )
+  .setProgress(39)
+  .setCurrentTime("01:58")
+  .setTotalTime("02:59");
+
+const image = await card.build();
+// now do something with the image buffer
+```
+
+```js CommonJS
+const { MusicCard } = require("./MusicCard.js");
+
+const card = new MusicCard()
+  .setAuthor("JVKE")
+  .setTitle("Golden Hour")
+  .setImage(
+    "https://lh3.googleusercontent.com/i1qCCS4BbP6z11E08FkQg6fN-83Uj4fQg4bmBsD2E6SvGQ3RW7nXxpQ3hmcSlI5Ipek10H7R4BjV5mAY=w544-h544-l90-rj"
+  )
+  .setProgress(39)
+  .setCurrentTime("01:58")
+  .setTotalTime("02:59");
+
+async function main() {
+  const image = await card.build();
+  // now do something with the image buffer
+}
+```
+
+</CodeGroup>
+
+## Result
+
+<img src="/images/examples/builders/music-card.png" height={200} width={400} />
