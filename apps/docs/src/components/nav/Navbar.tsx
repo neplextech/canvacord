@@ -38,7 +38,7 @@ export default function Navbar() {
                 Documentation
               </Link>
               <Link
-                href="/guide"
+                href="https://canvacord.neplex.dev"
                 className={cn(
                   "transition-colors hover:text-foreground/80",
                   pathname?.startsWith("/guide")
@@ -48,8 +48,8 @@ export default function Navbar() {
               >
                 Guide
               </Link>
-              {/* <Link
-                href="/showcase"
+              <Link
+                href="https://canvacord.neplex.dev/examples/introduction"
                 className={cn(
                   "transition-colors hover:text-foreground/80",
                   pathname?.startsWith("/showcase")
@@ -57,8 +57,8 @@ export default function Navbar() {
                     : "text-foreground/60"
                 )}
               >
-                Showcase
-              </Link> */}
+                Examples
+              </Link>
               <Link
                 href={"https://github.com/neplextech/canvacord"}
                 className={cn(
@@ -83,7 +83,7 @@ export default function Navbar() {
                 <span className="sr-only">Discord</span>
                 <DiscordIcon className="h-5 w-5 cursor-pointer" />
               </Link>
-              <button aria-label="Toggle Theme" onClick={toggle}>
+              <button aria-label="Toggle Theme" onClick={toggle} type="button">
                 {isDark ? (
                   <SunIcon className="h-5 w-5" />
                 ) : (
@@ -150,7 +150,7 @@ function MobileNav() {
                   onClick={() => {
                     setOpen(false);
                   }}
-                  href="/guide"
+                  href="https://canvacord.neplex.dev"
                   className={cn(
                     "transition-colors hover:text-foreground/80",
                     pathname?.startsWith("/guide")
@@ -160,11 +160,11 @@ function MobileNav() {
                 >
                   Guide
                 </Link>
-                {/* <Link
+                <Link
                   onClick={() => {
                     setOpen(false);
                   }}
-                  href="/showcase"
+                  href="https://canvacord.neplex.dev/examples/introduction"
                   className={cn(
                     "transition-colors hover:text-foreground/80",
                     pathname?.startsWith("/showcase")
@@ -172,8 +172,8 @@ function MobileNav() {
                       : "text-foreground/60"
                   )}
                 >
-                  Showcase
-                </Link> */}
+                  Examples
+                </Link>
                 <Link
                   onClick={() => {
                     setOpen(false);
@@ -199,7 +199,11 @@ function MobileNav() {
                     <span className="sr-only">Discord</span>
                     <DiscordIcon className="h-5 w-5 cursor-pointer" />
                   </Link>
-                  <button aria-label="Toggle Theme" onClick={theme.toggle}>
+                  <button
+                    aria-label="Toggle Theme"
+                    onClick={theme.toggle}
+                    type="button"
+                  >
                     {theme.isDark ? (
                       <SunIcon className="h-5 w-5" />
                     ) : (

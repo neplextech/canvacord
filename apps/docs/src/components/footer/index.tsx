@@ -14,11 +14,14 @@ export default function Footer() {
             <Link href="/docs" className="text-blue-500">
               Documentation
             </Link>
-            <Link href="/guide" className="text-blue-500">
+            <Link href="https://canvacord.neplex.dev" className="text-blue-500">
               Guides
             </Link>
-            <Link href="/showcase" className="text-blue-500">
-              Showcase
+            <Link
+              href="https://canvacord.neplex.dev/examples/introduction"
+              className="text-blue-500"
+            >
+              Examples
             </Link>
           </div>
           <div className="flex items-start flex-col text-sm">
