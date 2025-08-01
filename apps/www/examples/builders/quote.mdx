@@ -1,0 +1,256 @@
+---
+title: "Quote card"
+description: "Create an quote card with Canvacord."
+---
+
+## Code
+
+<CodeGroup>
+
+```js CommonJS
+const { JSX, Builder, loadImage, Font, FontFactory } = require("canvacord");
+
+class QuoteCard extends Builder {
+  constructor() {
+    super(1200, 630);
+    this.bootstrap({
+      text: "",
+      author: "",
+      tag: "",
+      bgcolor: true,
+      watermark: "",
+      backgroundImage: "",
+    });
+
+    if (!FontFactory.size) Font.loadDefault();
+  }
+
+  setText(value) {
+    this.options.set("text", value);
+    return this;
+  }
+
+  setAuthor(value) {
+    this.options.set("author", value);
+    return this;
+  }
+
+  setTag(value) {
+    this.options.set("tag", value);
+    return this;
+  }
+
+  setColor(value) {
+    this.options.set("bgcolor", value);
+    return this;
+  }
+
+  setWatermark(value) {
+    this.options.set("watermark", value);
+    return this;
+  }
+
+  setBackgroundImage(value) {
+    this.options.set("backgroundImage", value);
+    return this;
+  }
+
+  async render() {
+    const { text, author, tag, watermark, bgcolor, backgroundImage } =
+      this.options.getOptions();
+    const img = await loadImage(backgroundImage);
+
+    return JSX.createElement(
+      "div",
+      {
+        className: "w-full h-full flex relative",
+        style: {
+          backgroundColor: "#000000",
+          borderRadius: "0.5rem",
+          overflow: "hidden",
+        },
+      },
+      JSX.createElement(
+        "div",
+        {
+          className: "w-1/2 flex relative",
+          style: {
+            width: "50%",
+            height: "100%",
+          },
+        },
+        JSX.createElement("img", {
+          src: img.toDataURL(),
+          className: "h-full w-full",
+          style: {
+            objectFit: "cover",
+            objectPosition: "center",
+            width: "100%",
+            height: "100%",
+            filter: bgcolor
+              ? "none"
+              : "grayscale(100%) brightness(0.9) contrast(1.2)",
+          },
+        }),
+        JSX.createElement("div", {
+          className: "absolute inset-0 flex",
+          style: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background:
+              "linear-gradient(60deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 25%, rgba(0,0,0,0.4) 45%, rgba(0,0,0,0.8) 65%, rgba(0,0,0,0.95) 85%, #000000 100%)",
+          },
+        }),
+        JSX.createElement("div", {
+          className: "absolute inset-0 flex",
+          style: {
+            position: "absolute",
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background:
+              "linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.2) 70%, rgba(0,0,0,0.9) 100%)",
+          },
+        })
+      ),
+
+      JSX.createElement(
+        "div",
+        {
+          className:
+            "w-1/2 relative flex flex-col justify-center items-center text-center",
+          style: {
+            display: "flex",
+            position: "relative",
+            width: "50%",
+            height: "100%",
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "center",
+            textAlign: "center",
+            padding: "2rem",
+          },
+        },
+        JSX.createElement(
+          "div",
+          {
+            style: {
+              display: "flex",
+              position: "relative",
+              width: "100%",
+              height: "100%",
+              flexDirection: "column",
+              justifyContent: "center",
+              alignItems: "center",
+            },
+          },
+          JSX.createElement(
+            "h2",
+            {
+              className: "text-white flex font-bold",
+              style: {
+                fontSize: "3rem",
+                fontWeight: "bold",
+                color: "#ffffff",
+                marginBottom: "1rem",
+                lineHeight: "1.2",
+              },
+            },
+            text
+          ),
+          author &&
+            JSX.createElement(
+              "p",
+              {
+                className: "text-white flex",
+                style: {
+                  fontSize: "1.5rem",
+                  color: "#ffffff",
+                  marginBottom: "0.5rem",
+                },
+              },
+              `- ${author}`
+            ),
+          tag &&
+            JSX.createElement(
+              "p",
+              {
+                className: "text-gray-400 flex",
+                style: {
+                  fontSize: "1rem",
+                  color: "#9ca3af",
+                  marginBottom: "2rem",
+                },
+              },
+              tag
+            ),
+          watermark &&
+            JSX.createElement(
+              "div",
+              {
+                style: {
+                  position: "absolute",
+                  display: "flex",
+
+                  bottom: "1rem",
+                  right: "1rem",
+                },
+              },
+              JSX.createElement(
+                "p",
+                {
+                  className: "text-gray-500 flex",
+                  style: {
+                    fontSize: "0.875rem",
+                    color: "#6b7280",
+                  },
+                },
+                watermark
+              )
+            )
+        )
+      )
+    );
+  }
+}
+
+module.exports = { QuoteCard };
+```
+
+</CodeGroup>
+
+## Usage
+
+<CodeGroup>
+
+```js CommonJS
+const { QuoteCard } = require("./QuoteCard");
+
+const card = new QuoteCard()
+  .setText("hello")
+  .setAuthor("Ziji")
+  .setTag("__ziji")
+  .setWatermark("Ziji#7063")
+  .setBackgroundImage(
+    "https://lh3.googleusercontent.com/pw/AP1GczN0ncQYhFuV0qUcW68KX4a5DCwXw7MlobnY0aGOLnpUeareeV1pNxZoF4PayOrcqgBapur4iM0MlxdiW6T9uhwMqmlLP1A1TBKUIPOt7E0-eH0EV2FddVDvyyXHnx7tyGCLwheiZjiaVA9xSQ4a8xTnDw=w780-h712-s-no-gm"
+  )
+  .setColor(true);
+
+const result = await card.build({ format: "png" });
+// now do something with the image buffer
+```
+
+</CodeGroup>
+
+## Result
+
+<img
+  width="1200"
+  height="630"
+  alt="image"
+  src="https://github.com/user-attachments/assets/056205b5-0993-4d90-9302-7fc689f38b40"
+/>
