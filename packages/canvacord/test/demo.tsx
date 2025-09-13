@@ -1,4 +1,4 @@
-import { JSX, Builder, Font } from "../dist";
+import { JSX, Builder, Font } from "../src";
 import { writeFileSync } from "fs";
 import { loadImage } from "../src";
 

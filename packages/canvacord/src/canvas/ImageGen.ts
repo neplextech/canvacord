@@ -19,22 +19,38 @@ export interface ImageGenerationStep {
   /**
    * The function to call before processing this step.
    */
-  preprocess?: (canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) => Awaited<void>;
+  preprocess?: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    step: ImageGenerationStep
+  ) => Awaited<void>;
   /**
    * The function to call when processing this step.
    */
-  process?: (canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) => Awaited<void>;
+  process?: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    step: ImageGenerationStep
+  ) => Awaited<void>;
   /**
    * The function to call after processing has finished.
    */
-  postprocess?: (canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) => Awaited<void>;
+  postprocess?: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    step: ImageGenerationStep
+  ) => Awaited<void>;
 }
 
 export interface CustomGenerationStep {
   /**
    * The function to call when processing this step.
    */
-  process: (canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) => Awaited<void>;
+  process: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    step: ImageGenerationStep
+  ) => Awaited<void>;
 }
 
 export interface ImgenStep {
@@ -61,15 +77,27 @@ export interface ImgenStep {
   /**
    * The function to call before processing this step.
    */
-  preprocess?: (canvas: Canvas, ctx: SKRSContext2D, source: ImgenStep) => Awaited<void>;
+  preprocess?: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    source: ImgenStep
+  ) => Awaited<void>;
   /**
    * The function to call when processing this step.
    */
-  process?: (canvas: Canvas, ctx: SKRSContext2D, source: ImgenStep) => Awaited<void>;
+  process?: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    source: ImgenStep
+  ) => Awaited<void>;
   /**
    * The function to call after processing has finished.
    */
-  postprocess?: (canvas: Canvas, ctx: SKRSContext2D, source: ImgenStep) => Awaited<void>;
+  postprocess?: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    source: ImgenStep
+  ) => Awaited<void>;
 }
 
 export interface TextGenerationStep {
@@ -124,15 +152,27 @@ export interface TextGenerationStep {
   /**
    * The function to call before processing this step.
    */
-  preprocess?: (canvas: Canvas, ctx: SKRSContext2D, text: TextGenerationStep) => Awaited<void>;
+  preprocess?: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    text: TextGenerationStep
+  ) => Awaited<void>;
   /**
    * The function to call when processing this step.
    */
-  process?: (canvas: Canvas, ctx: SKRSContext2D, text: TextGenerationStep) => Awaited<void>;
+  process?: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    text: TextGenerationStep
+  ) => Awaited<void>;
   /**
    * The function to call after processing has finished.
    */
-  postprocess?: (canvas: Canvas, ctx: SKRSContext2D, text: TextGenerationStep) => Awaited<void>;
+  postprocess?: (
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    text: TextGenerationStep
+  ) => Awaited<void>;
 }
 
 /**
@@ -185,7 +225,7 @@ export class ImageGenerationTemplate implements IImageGenerationTemplate {
    */
   public constructor(
     public readonly width?: number,
-    public readonly height?: number,
+    public readonly height?: number
   ) {}
 
   /**
@@ -326,8 +366,10 @@ export class ImageGen extends Encodable {
         height: this.template.getHeight()!,
       };
 
-    if (!this.template.steps.length) throw new Error("Cannot infer size from empty template");
-    const firstImg = this.template.steps.find((s) => s.image?.length)?.image?.[0];
+    if (!this.template.steps.length)
+      throw new Error("Cannot infer size from empty template");
+    const firstImg = this.template.steps.find((s) => s.image?.length)
+      ?.image?.[0];
     if (!firstImg) throw new Error("Cannot infer size from non-image template");
 
     const img = await firstImg.source.resolve();
@@ -339,7 +381,8 @@ export class ImageGen extends Encodable {
    * Generates a readable stream containing GIF data by applying the steps.
    */
   public async generateGif() {
-    if (this.template.gif == null) throw new Error("Cannot generate gif on non-gif template");
+    if (this.template.gif == null)
+      throw new Error("Cannot generate gif on non-gif template");
     const options = this.template.gif;
 
     const { width, height } = await this.#inferSize();
@@ -351,7 +394,8 @@ export class ImageGen extends Encodable {
     if (options.quality != null) encoder.setQuality(options.quality);
     if (options.dispose != null) encoder.setDispose(options.dispose);
     if (options.framerate != null) encoder.setFramerate(options.framerate);
-    if (options.transparent != null) encoder.setTransparent(options.transparent);
+    if (options.transparent != null)
+      encoder.setTransparent(options.transparent);
 
     // biome-ignore lint: assignment should not be an expression
     const canvas = (this._canvas = createCanvas(width, height));
@@ -364,7 +408,7 @@ export class ImageGen extends Encodable {
     for (const step of this.template.steps) {
       ctx.clearRect(0, 0, canvas.width, canvas.height);
       await this.#applyGeneration(canvas, ctx, step);
-      encoder.addFrame(ctx);
+      encoder.addFrame(ctx as any);
     }
 
     encoder.finish();
@@ -393,11 +437,18 @@ export class ImageGen extends Encodable {
    * Returns the canvas instance by applying the steps.
    */
   public getFinalCanvas(): Promise<Canvas> {
-    if (!this._canvas) throw new Error("render() or generateGif() must be called before accessing the final canvas");
+    if (!this._canvas)
+      throw new Error(
+        "render() or generateGif() must be called before accessing the final canvas"
+      );
     return Promise.resolve(this._canvas);
   }
 
-  async #applyGeneration(canvas: Canvas, ctx: SKRSContext2D, step: ImageGenerationStep) {
+  async #applyGeneration(
+    canvas: Canvas,
+    ctx: SKRSContext2D,
+    step: ImageGenerationStep
+  ) {
     if (step.preprocess) {
       await step.preprocess(canvas, ctx, step);
     }
@@ -445,13 +496,19 @@ export class ImageGen extends Encodable {
             await text.process(canvas, ctx, text);
           } else {
             if (text.font != null) ctx.font = text.font;
-            if (text.color != null) ctx[text.stroke ? "strokeStyle" : "fillStyle"] = text.color;
+            if (text.color != null)
+              ctx[text.stroke ? "strokeStyle" : "fillStyle"] = text.color;
             if (text.align != null) ctx.textAlign = text.align;
             if (text.baseline != null) ctx.textBaseline = text.baseline;
             if (text.direction != null) ctx.direction = text.direction;
             if (text.lineWidth != null) ctx.lineWidth = text.lineWidth;
 
-            ctx[text.stroke ? "strokeText" : "fillText"](text.value, text.x, text.y, text.maxWidth);
+            ctx[text.stroke ? "strokeText" : "fillText"](
+              text.value,
+              text.x,
+              text.y,
+              text.maxWidth
+            );
           }
 
           if (text.postprocess) {
